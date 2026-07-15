@@ -1,0 +1,76 @@
+---
+title: "Práctica 9 — Ortología y xenología"
+subtitle: "Sesión 9 (9 oct) · Cómputo del día: ciclos"
+author: "Jero"
+---
+
+::: {.pendiente}
+Los comandos exactos y los archivos de datos faltan. La estructura y el diseño del ejercicio están
+decididos.
+:::
+
+**Teoría de la mañana:** [Homología: ortólogo, parálogo, xenólogo](/contenido/03-alineamientos/homologia.qmd).
+
+**Concepto de cómputo:** ciclos (`for`, `while`). El RBH es el pretexto perfecto — no se puede hacer
+sin un ciclo.
+
+## Parte 1 — Pipeline de RBH
+
+Reciprocal Best Hits entre dos genomas bacterianos, a mano, con BLAST+.
+
+1. `makeblastdb` sobre cada proteoma.
+2. BLAST de A contra B y de B contra A.
+3. Quedarse con el mejor hit de cada consulta (`sort`, `awk`).
+4. Cruzar ambas listas y quedarse con los pares recíprocos (`comm`, o un ciclo `while read`).
+5. Contar cuántos pares salieron.
+
+::: {.callout-box}
+**El punto pedagógico no es que el RBH funcione, sino que falle.** Al terminar, busquen casos
+ambiguos: genes sin par recíproco, genes con varios candidatos empatados, familias duplicadas. Ahí
+es donde el ~60% de falsos negativos de Dalquen & Dessimoz (2013) deja de ser un número del
+capítulo y se vuelve algo que vieron con sus manos.
+:::
+
+## Parte 2 — Xenología: CTX-M y *Kluyvera*
+
+El ejercicio estrella: reconstruir la historia de un gen de resistencia y ver que **no** coincide con
+la historia de las especies que lo portan.
+
+1. Bajar de NCBI Protein: **CTX-M-15**, **TEM-1**, **SHV-1** y los ***bla*~KLU~** cromosómicos de
+   *Kluyvera*.
+2. Alinear (CLUSTAL Omega o MAFFT).
+3. Construir el árbol del gen.
+4. Contrastarlo con el árbol de las especies portadoras.
+5. Discutir: ¿por qué *Kluyvera* —una bacteria ambiental que nadie considera patógena— aparece en la
+   raíz de un gen que está en *E. coli* y *K. pneumoniae* clínicos?
+
+**Lo que deben ver:** los grupos de CTX-M mapean a especies distintas de *Kluyvera* (grupos 1 y 2 →
+*K. ascorbata*; grupos 8 y 9 → *K. georgiana*), y la identidad dentro de un grupo (>94%) es mucho
+mayor que entre grupos (≤90%). El gen saltó, y saltó varias veces.
+
+### Datos sugeridos
+
+| Recurso | Para qué |
+|---------|----------|
+| [BLDB](http://bldb.eu) — Beta-Lactamase DataBase | Curada y específica; la mejor para clase |
+| NCBI Protein | TEM-1, SHV-1, CTX-M-15, NDM-1, KPC-2, OXA-48, *bla*~KLU~ |
+| CARD, ResFinder, NCBI AMRFinderPlus | Alternativas / extensión |
+
+Taxids útiles: *E. coli* 562, *K. pneumoniae* 573, *Kluyvera ascorbata* 51288, *A. baumannii* 470.
+
+::: {.pendiente}
+Verificar el taxid de *K. georgiana* antes de repartir el material.
+:::
+
+## Entregable
+
+Script de RBH + tabla de ortólogos entre las dos especies + **un párrafo sobre qué casos quedaron
+ambiguos y por qué**. El párrafo es la parte que se califica en serio.
+
+## Fuentes {.unnumbered}
+
+- Heladia Salgado — [Homología y ciclos](https://lcg-cursos.github.io/material/introbioinfo/blast_var_for_scripts.html#34)
+- Dalquen DA & Dessimoz C (2013) *Genome Biol Evol* 5(10):1800–1806.
+  [doi:10.1093/gbe/evt132](https://doi.org/10.1093/gbe/evt132)
+- Cantón R et al. (2012) "CTX-M Enzymes: Origin and Diffusion", *Front Microbiol* 3:110.
+  [doi:10.3389/fmicb.2012.00110](https://doi.org/10.3389/fmicb.2012.00110)

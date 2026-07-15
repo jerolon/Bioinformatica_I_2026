@@ -1,0 +1,18 @@
+---
+title: "3 · Alineamientos y homología"
+subtitle: "Sesiones 6–9 (18 sep – 9 oct) · Wilbert (6) y Jero (7–9)"
+---
+
+El corazón del curso. Cómo se comparan dos secuencias de forma exacta, cómo se hace trampa para comparar contra millones, y qué significa realmente que dos secuencias se parezcan.
+
+## Capítulos
+
+| Capítulo | Sesión | Docente |
+|----------|--------|---------|
+| [Alineamiento por pares](alineamiento-por-pares.qmd) | 6 | Wilbert |
+| [Algoritmos: Needleman–Wunsch y Smith–Waterman](algoritmos.qmd) | 7 | Jero |
+| [BLAST](blast.qmd) | 8 | Jero |
+| [Alineamiento múltiple (CLUSTAL, MAFFT)](alineamiento-multiple.qmd) | 8 | Jero |
+| [Homología: ortólogo, parálogo, xenólogo](homologia.qmd) | 9 | Jero |
+
+: {tbl-colwidths="[60,20,20]"}

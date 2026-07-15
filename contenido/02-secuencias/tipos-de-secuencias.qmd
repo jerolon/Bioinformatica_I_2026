@@ -1,0 +1,24 @@
+---
+title: "Tipos de secuencias"
+subtitle: "Unidad 2 · Sesión 2–3"
+author: "Wilbert"
+---
+
+::: {.pendiente}
+Capítulo por escribir.
+:::
+
+## Idea central
+
+<!-- Una o dos frases: qué se lleva el alumno de aquí. -->
+
+## Desarrollo
+
+## Práctica
+
+<!-- Ejercicios de terminal. Ver también practicas/. -->
+
+## Fuentes {.unnumbered}
+
+- [Evelia — Anotación y tipos de secuencia](https://eveliacoss.github.io/LCG2025_IntroBioinfo_S1/Anotation_ejercicios.html)
+

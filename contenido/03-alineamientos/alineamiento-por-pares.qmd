@@ -1,0 +1,24 @@
+---
+title: "Alineamiento por pares"
+subtitle: "Unidad 3 · Sesión 6"
+author: "Wilbert"
+---
+
+::: {.pendiente}
+Capítulo por escribir.
+:::
+
+## Idea central
+
+<!-- Una o dos frases: qué se lleva el alumno de aquí. -->
+
+## Desarrollo
+
+## Práctica
+
+<!-- Ejercicios de terminal. Ver también practicas/. -->
+
+## Fuentes {.unnumbered}
+
+- [Heladia — Alineamientos](https://lcg-cursos.github.io/material/introbioinfo/alineamientos.html)
+

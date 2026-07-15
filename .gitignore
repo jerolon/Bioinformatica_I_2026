@@ -1,0 +1,57 @@
+# Material interno: NO se sube. El repo es público.
+#
+#   planeacion/ — notas de planeación, acuerdos con los otros profesores,
+#                 decisiones pendientes. Van con nombres de colegas.
+#   research/   — material de investigación en bruto para escribir capítulos,
+#                 con marcas [VERIFICAR] y notas de método.
+#
+# Ojo: estas carpetas ya estaban excluidas del RENDER en _quarto.yml (no salen
+# en el sitio), pero eso no las excluía del REPO. Esto sí.
+# Su respaldo es OneDrive, no git. Si algún día el repo se vuelve privado, o se
+# hace un repo interno aparte, esto se puede quitar.
+planeacion/
+research/
+
+# Quarto
+/_site/
+/.quarto/
+*_files/
+*_cache/
+/_freeze/
+
+# R
+.Rproj.user/
+.Rhistory
+.RData
+.Rprofile.user
+*.Rproj
+
+# Python
+__pycache__/
+*.pyc
+.venv/
+.ipynb_checkpoints/
+
+# Datos pesados: el dato crudo no vive en git.
+# Si una práctica necesita datos, se baja con un script.
+data/raw/
+*.fastq
+*.fastq.gz
+*.bam
+*.bai
+*.sra
+
+# Claude Code: settings.local.json es configuración de cada máquina.
+# .claude/settings.json (sin "local") sí se versionaría, si algún día hace falta.
+.claude/settings.local.json
+
+# Sistema
+.DS_Store
+Thumbs.db
+desktop.ini
+~$*
+
+# OneDrive
+*.tmp
+
+**/*.quarto_ipynb

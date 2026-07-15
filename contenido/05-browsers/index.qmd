@@ -1,0 +1,18 @@
+---
+title: "5 · Genome browsers"
+subtitle: "Sesión 11 (23 oct) · Jero"
+---
+
+El genoma como sistema de coordenadas. Ensamblados, tracks, y los formatos de anotación donde vive todo lo demás.
+
+## Capítulos
+
+| Capítulo | Sesión | Docente |
+|----------|--------|---------|
+| [Ensamblados y coordenadas (hg19, hg38, T2T)](ensamblados.qmd) | 11 | Jero |
+| [UCSC Genome Browser](ucsc.qmd) | 11 | Jero |
+| [Ensembl y BioMart](ensembl.qmd) | 11 | Jero |
+| [Formatos: GTF/GFF3, BED, VCF](formatos-de-anotacion.qmd) | 11 | Jero |
+| [IGV](igv.qmd) | 11 | Jero |
+
+: {tbl-colwidths="[60,20,20]"}

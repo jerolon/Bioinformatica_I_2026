@@ -1,0 +1,26 @@
+---
+title: "IGV"
+subtitle: "Unidad 5 · Sesión 11"
+author: "Jero"
+---
+
+::: {.pendiente}
+Capítulo por escribir.
+:::
+
+## Idea central
+
+<!-- Una o dos frases: qué se lleva el alumno de aquí. -->
+
+## Desarrollo
+
+## Práctica
+
+<!-- Ejercicios de terminal. Ver también practicas/. -->
+
+## Fuentes {.unnumbered}
+
+::: {.pendiente}
+Sin material fuente asignado todavía.
+:::
+

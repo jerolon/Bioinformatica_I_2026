@@ -1,0 +1,58 @@
+---
+title: "Créditos y licencias"
+---
+
+## Contenido del curso
+
+El material escrito por el equipo docente (capítulos, prácticas, presentaciones) se publica bajo
+**[CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/deed.es)** — la misma
+licencia de los cursos de los que deriva. Puedes reusarlo y adaptarlo con atribución, sin fines
+comerciales, compartiendo bajo la misma licencia.
+
+## Material fuente
+
+Este curso adapta material de dos cursos previos de la LCG, ambos CC BY-NC-SA 4.0:
+
+**Evelia Coss, PhD** — [Introducción a la Bioinformática, LCG 2025](https://eveliacoss.github.io/LCG2025_IntroBioinfo_S1/)
+De aquí vienen las secciones de buenas prácticas, Markdown y los ejercicios de anotación
+(FASTA, GTF, BED, `awk`).
+
+**Heladia Salgado** — [Introducción a la Bioinformática](https://lcg-cursos.github.io/material/introbioinfo/)
+De aquí viene la columna vertebral de las prácticas: shell, archivos y GenBank, alineamientos,
+BLAST/variables/scripts, homología y ciclos, y análisis de genomas.
+
+## Plantilla del sitio
+
+La portada usa **[Prologue](https://html5up.net/prologue)**, de
+**[HTML5 UP](https://html5up.net)** ([@ajlkn](https://twitter.com/ajlkn)), libre para uso personal
+y comercial bajo la licencia
+**[Creative Commons Attribution 3.0](https://html5up.net/license)**.
+
+Modificaciones respecto a la plantilla original:
+
+- La paleta se recoloreó al tema teal del curso, en `assets/css/tema-lgc.css`. El CSS original de
+  Prologue (`assets/prologue/css/main.css`) **no se modificó**: el tema se aplica como una capa
+  encima, así se puede actualizar la plantilla sin perder los cambios.
+- El contenido, las secciones y la navegación se reescribieron para el curso.
+- Las **imágenes de demostración no se incluyen**. Las fotos de la demo original son de
+  [Felicia Simion](http://ineedchemicalx.deviantart.com/) y su autor pide explícitamente que no se
+  reusen sin permiso. En su lugar, la portada usa un degradado.
+
+## Componentes de terceros
+
+| Componente | Autor | Licencia |
+|------------|-------|----------|
+| [Prologue](https://html5up.net/prologue) | HTML5 UP (@ajlkn) | [CC BY 3.0](https://html5up.net/license) |
+| [Font Awesome](https://fontawesome.com) | Fonticons, Inc. | [CC BY 4.0 / SIL OFL 1.1 / MIT](https://fontawesome.com/license/free) |
+| [jQuery](https://jquery.com) | OpenJS Foundation | MIT |
+| [Scrollex](https://github.com/ajlkn/jquery.scrollex) | @ajlkn | MIT |
+| [Responsive Tools](https://github.com/ajlkn/responsive-tools) | @ajlkn | MIT |
+| [Source Sans Pro](https://fonts.google.com/specimen/Source+Sans+Pro) | Paul D. Hunt (Adobe) | SIL OFL 1.1 |
+| [Quarto](https://quarto.org) | Posit, PBC | MIT |
+| [Bootstrap / Cosmo](https://bootswatch.com/cosmo/) | Thomas Park | MIT |
+
+## Equipo docente
+
+- **Jerónimo Roberto Miranda Rodríguez** — sesión 1 y unidades 3–5.
+- **Wilbert** — unidad 2.
+- *(Por definir)* — unidad 6, Introducción a R.

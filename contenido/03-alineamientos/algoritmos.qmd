@@ -1,0 +1,25 @@
+---
+title: "Algoritmos: Needleman–Wunsch y Smith–Waterman"
+subtitle: "Unidad 3 · Sesión 7"
+author: "Jero"
+---
+
+::: {.pendiente}
+Capítulo por escribir.
+:::
+
+## Idea central
+
+<!-- Una o dos frases: qué se lleva el alumno de aquí. -->
+
+## Desarrollo
+
+## Práctica
+
+<!-- Ejercicios de terminal. Ver también practicas/. -->
+
+## Fuentes {.unnumbered}
+
+- [Compeau & Pevzner, cap. 5 — How Do We Compare Biological Sequences?](https://bioinformaticsalgorithms.org)
+- [Rosalind — GLOB, LOCA, EDIT](https://rosalind.info)
+

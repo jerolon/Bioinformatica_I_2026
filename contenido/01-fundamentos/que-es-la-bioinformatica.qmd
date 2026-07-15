@@ -1,0 +1,24 @@
+---
+title: "¿Qué es la bioinformática?"
+subtitle: "Unidad 1 · Sesión 1"
+author: "Jero"
+---
+
+::: {.pendiente}
+Capítulo por escribir.
+:::
+
+## Idea central
+
+<!-- Una o dos frases: qué se lleva el alumno de aquí. -->
+
+## Desarrollo
+
+## Práctica
+
+<!-- Ejercicios de terminal. Ver también practicas/. -->
+
+## Fuentes {.unnumbered}
+
+- [Compeau & Pevzner — Bioinformatics Algorithms](https://bioinformaticsalgorithms.org)
+

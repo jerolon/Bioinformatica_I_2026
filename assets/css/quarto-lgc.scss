@@ -1,0 +1,203 @@
+/*-- scss:defaults --*/
+
+// quarto-lgc.scss — tema de las páginas de contenido.
+//
+// Misma paleta y tipografía que la portada Prologue y que las presentaciones
+// revealjs del curso (custom.scss). El objetivo es que diapositivas, portada y
+// capítulos se lean como un solo material.
+//
+//   teal oscuro  #1a7a8a   ·   teal claro  #2bb5c6   ·   texto  #2c3e50
+//
+// Source Sans Pro es la tipografía que ya trae Prologue; la reusamos aquí.
+
+$font-family-sans-serif: "Source Sans Pro", "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif !default;
+$font-family-monospace: "SFMono-Regular", Menlo, Consolas, "Liberation Mono", monospace !default;
+
+$teal-oscuro: #1a7a8a;
+$teal-claro:  #2bb5c6;
+$sidebar-bg:  #14343d;
+
+$body-color:       #2c3e50;
+$body-bg:          #ffffff;
+$link-color:       $teal-oscuro;
+$link-hover-color: $teal-claro;
+
+$primary:   $teal-oscuro;
+$secondary: #6c757d;
+$success:   #4caf50;
+$warning:   #ff9800;
+$danger:    #e74c3c;
+
+$code-color:     #e74c3c;
+$code-bg:        #f5fafa;
+$code-block-bg:  #f8f9fa;
+
+$navbar-bg: $sidebar-bg;
+$navbar-fg: #ffffff;
+
+$toc-color:        $teal-oscuro;
+$toc-active-border: $teal-claro;
+
+$headings-font-weight: 700;
+
+/*-- scss:rules --*/
+
+// Firefox en modo oscuro pinta todo negro si no se fija el color-scheme.
+// Nos pasó antes en las presentaciones; mismo remedio aquí.
+html, body {
+  color-scheme: light only;
+}
+
+h1, h2, h3, h4 {
+  color: $teal-oscuro;
+  letter-spacing: -0.01em;
+}
+
+h1 {
+  padding-bottom: 0.2em;
+  border-bottom: 3px solid $teal-oscuro;
+}
+
+h2 {
+  margin-top: 1.8rem;
+}
+
+// Barra lateral de navegación
+.sidebar-navigation .sidebar-item a {
+  color: $body-color;
+}
+
+.sidebar-navigation .sidebar-item a:hover,
+.sidebar-navigation .sidebar-item a.active {
+  color: $teal-oscuro;
+}
+
+.sidebar-item-container .active,
+.sidebar-item-container .show > .nav-link {
+  color: $teal-oscuro;
+  font-weight: 600;
+}
+
+// Cajas reutilizadas de las presentaciones, para que el material de la clase se
+// pueda pegar aquí sin retocar clases.
+.callout-box {
+  margin: 1em 0;
+  padding: 0.7em 1em;
+  border: 1px solid #b2ebf2;
+  border-radius: 8px;
+  background: #e0f7fa;
+}
+
+.ventaja {
+  margin: 0.5em 0;
+  padding: 0.5em 1em;
+  border-left: 5px solid #4caf50;
+  border-radius: 4px;
+  background: #e8f5e9;
+}
+
+.desventaja {
+  margin: 0.5em 0;
+  padding: 0.5em 1em;
+  border-left: 5px solid #ff9800;
+  border-radius: 4px;
+  background: #fff3e0;
+}
+
+// Estatus epistémico. La idea es que el alumno vea de un golpe si algo está
+// cerrado o si sigue en discusión: es la diferencia entre un dato y un frente
+// abierto, y casi ningún libro de texto la marca.
+.consenso,
+.debate,
+.mito {
+  margin: 1.2em 0;
+  padding: 0.75em 1em 0.75em 1.15em;
+  border-radius: 4px;
+  font-size: 0.95em;
+}
+
+.consenso::before,
+.debate::before,
+.mito::before {
+  display: block;
+  margin-bottom: 0.35em;
+  font-size: 0.75em;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.consenso {
+  border-left: 5px solid #4caf50;
+  background: #f1f8f2;
+}
+
+.consenso::before {
+  content: "Consenso";
+  color: #2e7d32;
+}
+
+.debate {
+  border-left: 5px solid #ff9800;
+  background: #fff8ef;
+}
+
+.debate::before {
+  content: "Debate activo";
+  color: #e65100;
+}
+
+.mito {
+  border-left: 5px solid #e74c3c;
+  background: #fdf2f1;
+}
+
+.mito::before {
+  content: "Mito vs realidad";
+  color: #c0392b;
+}
+
+.ref {
+  color: #888;
+  font-size: 0.85em;
+  font-style: italic;
+}
+
+.small  { font-size: 0.85em; }
+.medium { font-size: 0.95em; }
+
+// Aviso de capítulo sin escribir. Se quita al llenar el capítulo.
+.pendiente {
+  margin: 1.5em 0;
+  padding: 0.75em 1em;
+  border: 1px dashed #b0bec5;
+  border-radius: 6px;
+  background: #fafafa;
+  color: #607d8b;
+  font-size: 0.9em;
+}
+
+.pendiente::before {
+  content: "Pendiente · ";
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+table {
+  font-size: 0.95em;
+}
+
+thead th {
+  background-color: $teal-oscuro;
+  color: #fff;
+}
+
+img {
+  max-width: 100%;
+  border-radius: 6px;
+}
+
+.navbar-brand {
+  font-weight: 700;
+}

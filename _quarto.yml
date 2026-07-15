@@ -1,0 +1,148 @@
+project:
+  type: website
+  output-dir: _site
+  # La portada (index.html) es Prologue puro y NO la renderiza Quarto: se copia
+  # tal cual como recurso. Quarto sólo renderiza el material de referencia.
+  render:
+    - "creditos.qmd"
+    - "contenido/**/*.qmd"
+    - "practicas/**/*.qmd"
+    - "recursos/**/*.qmd"
+    - "!planeacion/"
+    # research/ es material de investigación en bruto, para el autor del capítulo:
+    # trae marcas [VERIFICAR], notas de método y pendientes. No es para los alumnos.
+    - "!research/"
+    - "!README.md"
+    - "!CONTRIBUIR.md"
+    - "!ATRIBUCIONES.md"
+  resources:
+    - "index.html"
+    - "assets/**"
+    - "LICENSE"
+
+website:
+  title: "Bioinformática I"
+  description: "Material de referencia · LCG, 3er semestre, 2026"
+  site-url: "https://jerolon.github.io/Bioinformatica_I_2026/"
+  repo-url: "https://github.com/jerolon/Bioinformatica_I_2026"
+  # Pone un enlace "Editar esta página" en cada capítulo: así Wilbert puede
+  # corregir directo en GitHub sin clonar nada.
+  repo-actions: [edit, issue]
+  repo-branch: main
+  page-navigation: true
+  back-to-top-navigation: true
+
+  navbar:
+    background: "#14343d"
+    foreground: "#ffffff"
+    left:
+      - text: "Portada"
+        href: /index.html
+      - text: "Temario"
+        href: contenido/01-fundamentos/index.qmd
+      - text: "Prácticas"
+        href: practicas/index.qmd
+      - text: "Recursos"
+        href: recursos/index.qmd
+    right:
+      - icon: github
+        href: "https://github.com/jerolon/Bioinformatica_I_2026"
+        aria-label: "Repositorio en GitHub"
+
+  sidebar:
+    style: "floating"
+    collapse-level: 2
+    contents:
+      - section: "1 · Fundamentos"
+        href: contenido/01-fundamentos/index.qmd
+        contents:
+          - contenido/01-fundamentos/que-es-la-bioinformatica.qmd
+          - contenido/01-fundamentos/terminal.qmd
+          - contenido/01-fundamentos/markdown.qmd
+          - contenido/01-fundamentos/git.qmd
+          - contenido/01-fundamentos/buenas-practicas.qmd
+      - section: "2 · Secuencias y genomas"
+        href: contenido/02-secuencias/index.qmd
+        contents:
+          - contenido/02-secuencias/tipos-de-secuencias.qmd
+          - contenido/02-secuencias/codigo-genetico.qmd
+          - contenido/02-secuencias/matrices-de-sustitucion.qmd
+          - contenido/02-secuencias/formatos.qmd
+      - section: "3 · Alineamientos y homología"
+        href: contenido/03-alineamientos/index.qmd
+        contents:
+          - contenido/03-alineamientos/alineamiento-por-pares.qmd
+          - contenido/03-alineamientos/algoritmos.qmd
+          - contenido/03-alineamientos/blast.qmd
+          - contenido/03-alineamientos/alineamiento-multiple.qmd
+          - contenido/03-alineamientos/homologia.qmd
+      - section: "4 · Bases de datos"
+        href: contenido/04-bases-datos/index.qmd
+        contents:
+          - contenido/04-bases-datos/ncbi.qmd
+          - contenido/04-bases-datos/insdc.qmd
+          - contenido/04-bases-datos/uniprot.qmd
+          - contenido/04-bases-datos/accesiones.qmd
+      - section: "5 · Browsers"
+        href: contenido/05-browsers/index.qmd
+        contents:
+          - contenido/05-browsers/ensamblados.qmd
+          - contenido/05-browsers/ucsc.qmd
+          - contenido/05-browsers/ensembl.qmd
+          - contenido/05-browsers/formatos-de-anotacion.qmd
+          - contenido/05-browsers/igv.qmd
+      - section: "6 · Introducción a R"
+        href: contenido/06-introduccion-r/index.qmd
+        contents:
+          - contenido/06-introduccion-r/primeros-pasos.qmd
+      - text: "---"
+      - section: "Prácticas"
+        href: practicas/index.qmd
+        contents:
+          - practicas/clase09-homologia.qmd
+      - recursos/index.qmd
+      - creditos.qmd
+
+  # Los enlaces del pie van con "/" al inicio: si no, Quarto los resuelve
+  # relativos a cada página y se rompen en los subdirectorios.
+  #
+  # Ojo: para archivos que NO son .qmd (p. ej. /LICENSE), Quarto en Windows
+  # reescribe la ruta con backslash ("../..\LICENSE") y el enlace se rompe en el
+  # servidor. Por eso el enlace de la licencia va a la URL canónica de Creative
+  # Commons; el archivo LICENSE del repo se enlaza desde el README y creditos.qmd.
+  page-footer:
+    background: "#14343d"
+    left: "Bioinformática I — LCG 2026"
+    center: |
+      Contenido [CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/deed.es) · Plantilla [Prologue](https://html5up.net) por [HTML5 UP](https://html5up.net) ([CCA 3.0](https://html5up.net/license))
+    right: |
+      [Créditos](/creditos.qmd)
+
+format:
+  html:
+    theme:
+      - cosmo
+      - assets/css/quarto-lgc.scss
+    toc: true
+    toc-title: "En esta página"
+    toc-depth: 3
+    number-sections: false
+    code-copy: true
+    code-overflow: wrap
+    highlight-style: github
+    link-external-newwindow: true
+    link-external-icon: false
+    anchor-sections: true
+    smooth-scroll: true
+
+lang: es
+
+execute:
+  freeze: auto
+  warning: false
+  message: false
+
+knitr:
+  opts_chunk:
+    comment: "#>"
+    collapse: true

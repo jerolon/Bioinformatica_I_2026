@@ -1,0 +1,45 @@
+---
+title: "Prácticas"
+---
+
+Cada sesión de 5 horas se parte en dos: **teoría** por la mañana y **práctica en terminal** por la
+tarde. Bash, Markdown y buenas prácticas no son sesiones aparte — son el bloque de la tarde,
+siempre. La biología del día es el pretexto para el concepto de cómputo del día.
+
+## Estructura de la tarde
+
+| Horario | Bloque |
+|---------|--------|
+| 10:00–11:45 | Teoría — presentación, pizarra, discusión |
+| 11:45–12:15 | Descanso |
+| 12:15–14:30 | **Práctica** — terminal, en vivo, sobre el tema de la mañana |
+| 14:30–15:00 | Cierre, dudas, entregable de la semana |
+
+## Hilo de cómputo
+
+| Sesión | Biología | Cómputo | Práctica |
+|--------|----------|---------|----------|
+| 1 | Panorama | Terminal, Markdown, git, estructura de proyecto | *(por escribir)* |
+| 7 | Alineamiento | Variables, primer script con argumentos | *(por escribir)* |
+| 8 | BLAST | Scripts, `cut`/`sort`, salida tabular | *(por escribir)* |
+| 9 | Homología | Ciclos (`for`, `while`) | *(por escribir)* |
+| 10 | Bases de datos | `awk`, tuberías, redirección, `md5sum` | *(por escribir)* |
+| 11 | Browsers | Expresiones regulares, `grep`/`sed` | *(por escribir)* |
+
+: {tbl-colwidths="[10,25,40,25]"}
+
+::: {.pendiente}
+Las prácticas se escriben como archivos `.qmd` en esta carpeta y se agregan al índice de arriba y
+a la barra lateral en `_quarto.yml`.
+:::
+
+## Entregables
+
+| Sesión | Entregable |
+|--------|------------|
+| 1 | Repo del curso con estructura de carpetas y `README.md` en Markdown |
+| 7 | Matriz de Needleman–Wunsch resuelta a mano (foto) + script que corra `needle` |
+| 8 | Script que reciba un FASTA, corra BLAST contra una base local y reporte los top-5 hits |
+| 9 | Script de RBH + tabla de ortólogos + párrafo sobre los casos ambiguos |
+| 10 | Script que baje un proteoma de RefSeq, verifique el checksum y cuente proteínas |
+| 11 | Reporte en Markdown: tabla de BioMart, análisis de GTF con `awk` y capturas del browser |

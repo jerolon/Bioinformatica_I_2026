@@ -1,0 +1,24 @@
+---
+title: "BLAST"
+subtitle: "Unidad 3 · Sesión 8"
+author: "Jero"
+---
+
+::: {.pendiente}
+Capítulo por escribir.
+:::
+
+## Idea central
+
+<!-- Una o dos frases: qué se lleva el alumno de aquí. -->
+
+## Desarrollo
+
+## Práctica
+
+<!-- Ejercicios de terminal. Ver también practicas/. -->
+
+## Fuentes {.unnumbered}
+
+- [Heladia — Blast, variables y scripts](https://lcg-cursos.github.io/material/introbioinfo/blast_var_for_scripts.html)
+

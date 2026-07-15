@@ -1,0 +1,26 @@
+---
+title: "Matrices de sustitución (PAM, BLOSUM)"
+subtitle: "Unidad 2 · Sesión 4"
+author: "Wilbert"
+---
+
+::: {.pendiente}
+Capítulo por escribir.
+:::
+
+## Idea central
+
+<!-- Una o dos frases: qué se lleva el alumno de aquí. -->
+
+## Desarrollo
+
+## Práctica
+
+<!-- Ejercicios de terminal. Ver también practicas/. -->
+
+## Fuentes {.unnumbered}
+
+::: {.pendiente}
+Sin material fuente asignado todavía.
+:::
+

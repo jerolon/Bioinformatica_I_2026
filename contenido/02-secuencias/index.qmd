@@ -1,0 +1,17 @@
+---
+title: "2 · Secuencias y genomas"
+subtitle: "Sesiones 2–5 (21 ago – 11 sep) · Wilbert"
+---
+
+De la molécula al archivo: qué tipos de secuencia existen, cómo se traducen, cómo se puntúa su parecido y en qué formatos viven.
+
+## Capítulos
+
+| Capítulo | Sesión | Docente |
+|----------|--------|---------|
+| [Tipos de secuencias](tipos-de-secuencias.qmd) | 2–3 | Wilbert |
+| [Código genético](codigo-genetico.qmd) | 3 | Wilbert |
+| [Matrices de sustitución (PAM, BLOSUM)](matrices-de-sustitucion.qmd) | 4 | Wilbert |
+| [Formatos de secuencia: FASTA](formatos.qmd) | 5 | Wilbert |
+
+: {tbl-colwidths="[60,20,20]"}

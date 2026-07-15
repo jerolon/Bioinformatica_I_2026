@@ -1,0 +1,211 @@
+/*
+	tema-lgc.css — Bioinformática I, LCG 2026
+
+	Capa de tema sobre la plantilla Prologue de HTML5 UP (html5up.net, CCA 3.0).
+	Se carga DESPUÉS de assets/prologue/css/main.css y sólo sobreescribe color y
+	tipografía. La plantilla original no se modifica: así la atribución queda
+	limpia y se puede actualizar Prologue sin perder nuestros cambios.
+
+	Paleta: la misma de las presentaciones revealjs del curso (custom.scss),
+	para que diapositivas y sitio se vean como una sola cosa.
+		teal oscuro  #1a7a8a
+		teal claro   #2bb5c6
+		texto        #2c3e50
+	Prologue ya usa Source Sans Pro, así que la tipografía coincide sin tocar nada.
+*/
+
+:root {
+	--lgc-teal:        #1a7a8a;
+	--lgc-teal-claro:  #2bb5c6;
+	--lgc-teal-oscuro: #146470;
+	--lgc-texto:       #2c3e50;
+	--lgc-sidebar:     #14343d;
+}
+
+/* --- Barra lateral -------------------------------------------------------- */
+/* Prologue trae #222729; lo tintamos hacia el teal del curso conservando la
+   textura overlay.png original de la plantilla. */
+
+#header {
+	background-color: var(--lgc-sidebar);
+}
+
+@media screen and (min-width: 737px) {
+	#header {
+		background: var(--lgc-sidebar) url('../prologue/css/images/overlay.png');
+	}
+}
+
+#logo .logo-mark {
+	display: inline-block;
+	margin-bottom: 0.6em;
+	padding: 0.35em 0.7em;
+	border: 2px solid var(--lgc-teal-claro);
+	border-radius: 4px;
+	color: var(--lgc-teal-claro);
+	font-size: 0.7em;
+	font-weight: 600;
+	letter-spacing: 0.25em;
+	text-indent: 0.25em;
+	text-transform: uppercase;
+}
+
+#logo #title {
+	color: #fff;
+}
+
+/* Ítem activo del menú: Prologue lo pinta rosa (#e27689). */
+#nav ul li a.active span:before,
+#nav ul li.active a span:before {
+	color: var(--lgc-teal-claro);
+}
+
+#nav ul li a:hover span:before {
+	color: var(--lgc-teal-claro);
+}
+
+/* --- Enlaces y botones ---------------------------------------------------- */
+
+body {
+	color: var(--lgc-texto);
+}
+
+a {
+	color: var(--lgc-teal);
+}
+
+a:hover {
+	color: var(--lgc-teal-claro) !important;
+}
+
+.button,
+input[type="submit"],
+input[type="reset"],
+input[type="button"],
+button {
+	background-color: var(--lgc-teal);
+}
+
+.button:hover,
+input[type="submit"]:hover,
+input[type="reset"]:hover,
+input[type="button"]:hover,
+button:hover {
+	background-color: var(--lgc-teal-claro);
+}
+
+.button:active,
+input[type="submit"]:active,
+input[type="reset"]:active,
+input[type="button"]:active,
+button:active {
+	background-color: var(--lgc-teal-oscuro);
+}
+
+input[type="text"]:focus,
+input[type="email"]:focus,
+select:focus,
+textarea:focus {
+	box-shadow: 0 0 2px 1px var(--lgc-teal-claro);
+}
+
+/* --- Portada -------------------------------------------------------------- */
+/* Prologue espera images/banner.jpg de la demo, que NO incluimos (no está
+   licenciada para reuso). En su lugar, un degradado teal. */
+
+#main > section.cover {
+	background-image: linear-gradient(135deg, #1a7a8a 0%, #2bb5c6 100%) !important;
+	background-attachment: fixed;
+	background-size: cover;
+}
+
+#main > section.cover header h2.alt strong {
+	border-bottom-color: rgba(255, 255, 255, 0.5);
+}
+
+#main > section.cover .button {
+	background-color: rgba(255, 255, 255, 0.15);
+	border: 2px solid rgba(255, 255, 255, 0.75);
+	color: #fff;
+}
+
+#main > section.cover .button:hover {
+	background-color: rgba(255, 255, 255, 0.3);
+}
+
+/* --- Encabezados de sección ---------------------------------------------- */
+
+#main > section header h2 {
+	color: var(--lgc-teal);
+}
+
+#main > section.dark header h2 {
+	color: #fff;
+}
+
+#main > section header h2:after {
+	background-color: var(--lgc-teal-claro);
+}
+
+.item header h3 a {
+	color: var(--lgc-teal);
+	border-bottom: none;
+	font-weight: 600;
+}
+
+/* --- Tabla del calendario ------------------------------------------------- */
+
+.table-wrapper {
+	overflow-x: auto;
+}
+
+table {
+	width: 100%;
+	margin-bottom: 1.5em;
+	border-collapse: collapse;
+	font-size: 0.95em;
+}
+
+table thead th {
+	padding: 0.6em 0.75em;
+	background-color: var(--lgc-teal);
+	color: #fff;
+	font-weight: 600;
+	text-align: left;
+}
+
+table tbody td {
+	padding: 0.5em 0.75em;
+	border-bottom: 1px solid #e3e8e8;
+}
+
+table tbody tr:nth-child(odd) {
+	background-color: #f5fafa;
+}
+
+table tbody tr:hover {
+	background-color: #e0f7fa;
+}
+
+.nota {
+	color: #777;
+	font-size: 0.9em;
+	font-style: italic;
+}
+
+.lista-recursos {
+	list-style: disc;
+	padding-left: 1.25em;
+	text-align: left;
+}
+
+.lista-recursos li {
+	margin-bottom: 0.6em;
+}
+
+/* --- Pie ------------------------------------------------------------------ */
+
+#footer .copyright li {
+	color: #888;
+	font-size: 0.85em;
+}

@@ -1,0 +1,14 @@
+---
+title: "6 · Introducción a R"
+subtitle: "Sesiones 12–15 (30 oct – 20 nov) · por definir"
+---
+
+Primeros pasos en R para análisis de datos biológicos.
+
+## Capítulos
+
+| Capítulo | Sesión | Docente |
+|----------|--------|---------|
+| [Primeros pasos en R](primeros-pasos.qmd) | 12–15 | Por definir |
+
+: {tbl-colwidths="[60,20,20]"}

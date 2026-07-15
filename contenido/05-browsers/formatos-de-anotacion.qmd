@@ -1,0 +1,24 @@
+---
+title: "Formatos: GTF/GFF3, BED, VCF"
+subtitle: "Unidad 5 · Sesión 11"
+author: "Jero"
+---
+
+::: {.pendiente}
+Capítulo por escribir.
+:::
+
+## Idea central
+
+<!-- Una o dos frases: qué se lleva el alumno de aquí. -->
+
+## Desarrollo
+
+## Práctica
+
+<!-- Ejercicios de terminal. Ver también practicas/. -->
+
+## Fuentes {.unnumbered}
+
+- [Heladia — Análisis de un genoma](https://lcg-cursos.github.io/material/introbioinfo/L6-conteos.html)
+
