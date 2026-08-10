@@ -1,14 +1,21 @@
 ---
 title: "6 · Introducción a R"
-subtitle: "Sesiones 12–15 (30 oct – 20 nov) · por definir"
+subtitle: "Sesiones 12–15 (6 nov – 27 nov) · Haydeé Peruyero"
 ---
 
 Primeros pasos en R para análisis de datos biológicos.
+
+El bloque no empieza con `iris` ni con pingüinos: empieza con
+Needleman-Wunsch, que estos alumnos ya entienden, y termina con un reporte
+reproducible hecho con sus propios resultados del semestre.
 
 ## Capítulos
 
 | Capítulo | Sesión | Docente |
 |----------|--------|---------|
-| [Primeros pasos en R](primeros-pasos.qmd) | 12–15 | Por definir |
+| [R desde un algoritmo que ya conocen](01-fundamentos.qmd) | 12 | Haydeé Peruyero |
+| [Datos: del vector al data frame](02-datos.qmd) | 13 | Haydeé Peruyero |
+| [Rangos y gráficas](03-rangos-y-graficas.qmd) | 14 | Haydeé Peruyero |
+| [El reporte reproducible](04-reporte.qmd) | 15 | Haydeé Peruyero |
 
 : {tbl-colwidths="[60,20,20]"}

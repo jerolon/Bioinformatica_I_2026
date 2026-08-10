@@ -1,0 +1,61 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<svg xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink' width='453.60pt' height='280.80pt' viewBox='0 0 453.60 280.80'>
+<g class='svglite'>
+<defs>
+  <style type='text/css'><![CDATA[
+    .svglite line, .svglite polyline, .svglite polygon, .svglite path, .svglite rect, .svglite circle {
+      fill: none;
+      stroke: #000000;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+      stroke-miterlimit: 10.00;
+    }
+    .svglite text {
+      white-space: pre;
+    }
+    .svglite g.glyphgroup path {
+      fill: inherit;
+      stroke: none;
+    }
+  ]]></style>
+</defs>
+<rect width='100%' height='100%' style='stroke: none; fill: none;'/>
+<defs>
+  <clipPath id='cpMC4wMHw0NTMuNjB8MC4wMHwyODAuODA='>
+    <rect x='0.00' y='0.00' width='453.60' height='280.80' />
+  </clipPath>
+</defs>
+<g clip-path='url(#cpMC4wMHw0NTMuNjB8MC4wMHwyODAuODA=)'>
+<polyline points='123.96,232.45 123.96,3.99 ' style='stroke-width: 0.75; stroke: #666666; stroke-opacity: 0.16; stroke-linecap: butt;' />
+<polyline points='180.15,232.45 180.15,3.99 ' style='stroke-width: 0.75; stroke: #666666; stroke-opacity: 0.16; stroke-linecap: butt;' />
+<polyline points='236.33,232.45 236.33,3.99 ' style='stroke-width: 0.75; stroke: #666666; stroke-opacity: 0.16; stroke-linecap: butt;' />
+<polyline points='292.51,232.45 292.51,3.99 ' style='stroke-width: 0.75; stroke: #666666; stroke-opacity: 0.16; stroke-linecap: butt;' />
+<polyline points='348.69,232.45 348.69,3.99 ' style='stroke-width: 0.75; stroke: #666666; stroke-opacity: 0.16; stroke-linecap: butt;' />
+<polyline points='404.88,232.45 404.88,3.99 ' style='stroke-width: 0.75; stroke: #666666; stroke-opacity: 0.16; stroke-linecap: butt;' />
+<rect x='123.96' y='145.42' width='234.50' height='54.40' style='stroke-width: 1.07; stroke: none; stroke-linecap: butt; stroke-linejoin: miter; fill: #666666;' />
+<rect x='123.96' y='36.62' width='98.88' height='54.40' style='stroke-width: 1.07; stroke: none; stroke-linecap: butt; stroke-linejoin: miter; fill: #2E7D32;' />
+<text x='365.77' y='176.10' style='font-size: 9.96px; font-weight: bold;fill: #1A1A1A; font-family: "Source Sans Pro", "Segoe UI", "Roboto", "Helvetica Neue", "Arial", sans-serif;'>149 234 636</text>
+<text x='230.15' y='67.31' style='font-size: 9.96px; font-weight: bold;fill: #1A1A1A; font-family: "Source Sans Pro", "Segoe UI", "Roboto", "Helvetica Neue", "Arial", sans-serif;'>    575 503</text>
+<text x='143.20' y='121.90' style='font-size: 10.53px;fill: #1A1A1A; font-family: "Source Sans Pro", "Segoe UI", "Roboto", "Helvetica Neue", "Arial", sans-serif;'>≈ 260× más secuencias que anotación revisada</text>
+<text x='119.03' y='169.97' text-anchor='end' style='font-size: 9.46px;fill: #1A1A1A; font-family: "Source Sans Pro", "Segoe UI", "Roboto", "Helvetica Neue", "Arial", sans-serif;'>Anotadas automáticamente</text>
+<text x='119.03' y='181.89' text-anchor='end' style='font-size: 9.46px;fill: #1A1A1A; font-family: "Source Sans Pro", "Segoe UI", "Roboto", "Helvetica Neue", "Arial", sans-serif;'>(TrEMBL)</text>
+<text x='119.03' y='61.17' text-anchor='end' style='font-size: 9.46px;fill: #1A1A1A; font-family: "Source Sans Pro", "Segoe UI", "Roboto", "Helvetica Neue", "Arial", sans-serif;'>Revisadas a mano</text>
+<text x='119.03' y='73.09' text-anchor='end' style='font-size: 9.46px;fill: #1A1A1A; font-family: "Source Sans Pro", "Segoe UI", "Roboto", "Helvetica Neue", "Arial", sans-serif;'>(Swiss-Prot)</text>
+<polyline points='123.96,232.45 431.68,232.45 ' style='stroke-width: 0.75; stroke: #666666; stroke-linecap: butt;' />
+<polyline points='123.96,234.94 123.96,232.45 ' style='stroke-width: 0.75; stroke: #666666; stroke-linecap: butt;' />
+<polyline points='180.15,234.94 180.15,232.45 ' style='stroke-width: 0.75; stroke: #666666; stroke-linecap: butt;' />
+<polyline points='236.33,234.94 236.33,232.45 ' style='stroke-width: 0.75; stroke: #666666; stroke-linecap: butt;' />
+<polyline points='292.51,234.94 292.51,232.45 ' style='stroke-width: 0.75; stroke: #666666; stroke-linecap: butt;' />
+<polyline points='348.69,234.94 348.69,232.45 ' style='stroke-width: 0.75; stroke: #666666; stroke-linecap: butt;' />
+<polyline points='404.88,234.94 404.88,232.45 ' style='stroke-width: 0.75; stroke: #666666; stroke-linecap: butt;' />
+<text x='123.96' y='246.50' text-anchor='middle' style='font-size: 9.46px;fill: #1A1A1A; font-family: "Source Sans Pro", "Segoe UI", "Roboto", "Helvetica Neue", "Arial", sans-serif;'>10 K</text>
+<text x='180.15' y='246.50' text-anchor='middle' style='font-size: 9.46px;fill: #1A1A1A; font-family: "Source Sans Pro", "Segoe UI", "Roboto", "Helvetica Neue", "Arial", sans-serif;'>100 K</text>
+<text x='236.33' y='246.50' text-anchor='middle' style='font-size: 9.46px;fill: #1A1A1A; font-family: "Source Sans Pro", "Segoe UI", "Roboto", "Helvetica Neue", "Arial", sans-serif;'>1 M</text>
+<text x='292.51' y='246.50' text-anchor='middle' style='font-size: 9.46px;fill: #1A1A1A; font-family: "Source Sans Pro", "Segoe UI", "Roboto", "Helvetica Neue", "Arial", sans-serif;'>10 M</text>
+<text x='348.69' y='246.50' text-anchor='middle' style='font-size: 9.46px;fill: #1A1A1A; font-family: "Source Sans Pro", "Segoe UI", "Roboto", "Helvetica Neue", "Arial", sans-serif;'>100 M</text>
+<text x='404.88' y='246.50' text-anchor='middle' style='font-size: 9.46px;fill: #1A1A1A; font-family: "Source Sans Pro", "Segoe UI", "Roboto", "Helvetica Neue", "Arial", sans-serif;'>1 G</text>
+<text x='277.82' y='258.86' text-anchor='middle' style='font-size: 10.56px;fill: #1A1A1A; font-family: "Source Sans Pro", "Segoe UI", "Roboto", "Helvetica Neue", "Arial", sans-serif;'>entradas en UniProtKB (escala logarítmica)</text>
+<text x='3.99' y='274.93' style='font-size: 8.03px; font-style: italic;fill: #666666; font-family: "Source Sans Pro", "Segoe UI", "Roboto", "Helvetica Neue", "Arial", sans-serif;'>Fuente: UniProt 2026_02 (junio 2026). Escala logarítmica. Cifras sujetas a cambio en cada versión.</text>
+</g>
+</g>
+</svg>

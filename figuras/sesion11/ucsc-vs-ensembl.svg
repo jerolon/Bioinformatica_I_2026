@@ -1,0 +1,61 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<svg xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink' width='396.85pt' height='283.46pt' viewBox='0 0 396.85 283.46'>
+<g class='svglite'>
+<defs>
+  <style type='text/css'><![CDATA[
+    .svglite line, .svglite polyline, .svglite polygon, .svglite path, .svglite rect, .svglite circle {
+      fill: none;
+      stroke: #000000;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+      stroke-miterlimit: 10.00;
+    }
+    .svglite text {
+      white-space: pre;
+    }
+    .svglite g.glyphgroup path {
+      fill: inherit;
+      stroke: none;
+    }
+  ]]></style>
+</defs>
+<rect width='100%' height='100%' style='stroke: none; fill: none;'/>
+<defs>
+  <clipPath id='cpMC4wMHwzOTYuODV8MC4wMHwyODMuNDY='>
+    <rect x='0.00' y='0.00' width='396.85' height='283.46' />
+  </clipPath>
+</defs>
+<g clip-path='url(#cpMC4wMHwzOTYuODV8MC4wMHwyODMuNDY=)'>
+<rect x='0.00' y='0.00' width='396.85' height='283.46' style='stroke-width: 0.00; stroke: none;' />
+<rect x='11.34' y='77.66' width='374.17' height='21.85' style='stroke-width: 0.97; stroke: none; stroke-linecap: butt; stroke-linejoin: miter; fill: #2BB5C6; fill-opacity: 0.071;' />
+<rect x='11.34' y='127.26' width='374.17' height='21.85' style='stroke-width: 0.97; stroke: none; stroke-linecap: butt; stroke-linejoin: miter; fill: #2BB5C6; fill-opacity: 0.071;' />
+<rect x='11.34' y='176.87' width='374.17' height='21.85' style='stroke-width: 0.97; stroke: none; stroke-linecap: butt; stroke-linejoin: miter; fill: #2BB5C6; fill-opacity: 0.071;' />
+<polyline points='123.31,29.53 124.25,28.72 125.20,27.92 126.14,27.12 127.09,26.35 128.03,25.59 128.98,24.86 129.92,24.16 130.87,23.50 131.81,22.87 132.76,22.29 133.70,21.75 134.65,21.27 135.59,20.83 136.54,20.46 137.48,20.14 138.43,19.88 139.37,19.69 140.31,19.56 141.26,19.50 142.20,19.50 143.15,19.56 144.09,19.69 145.04,19.88 145.98,20.14 146.93,20.46 147.87,20.83 148.82,21.27 149.76,21.75 150.71,22.29 151.65,22.87 152.60,23.50 153.54,24.16 154.49,24.86 155.43,25.59 156.38,26.35 157.32,27.12 158.27,27.92 159.21,28.72 160.16,29.53 ' style='stroke-width: 1.07; stroke: #1A7A8A; stroke-linecap: butt;' />
+<polyline points='123.31,29.53 124.25,30.34 125.20,31.14 126.14,31.93 127.09,32.71 128.03,33.46 128.98,34.19 129.92,34.89 130.87,35.56 131.81,36.18 132.76,36.77 133.70,37.30 134.65,37.79 135.59,38.22 136.54,38.60 137.48,38.91 138.43,39.17 139.37,39.36 140.31,39.49 141.26,39.56 142.20,39.56 143.15,39.49 144.09,39.36 145.04,39.17 145.98,38.91 146.93,38.60 147.87,38.22 148.82,37.79 149.76,37.30 150.71,36.77 151.65,36.18 152.60,35.56 153.54,34.89 154.49,34.19 155.43,33.46 156.38,32.71 157.32,31.93 158.27,31.14 159.21,30.34 160.16,29.53 ' style='stroke-width: 1.07; stroke: #1A7A8A; stroke-linecap: butt;' />
+<polygon points='141.73,23.92 142.50,23.97 143.25,24.14 143.97,24.42 144.64,24.81 145.26,25.29 145.80,25.85 146.26,26.49 146.63,27.20 146.90,27.95 147.06,28.73 147.12,29.53 147.12,29.53 147.06,30.33 146.90,31.11 146.63,31.86 146.26,32.56 145.80,33.20 145.26,33.77 144.64,34.25 143.97,34.63 143.25,34.91 142.50,35.08 141.73,35.14 141.73,35.14 140.97,35.08 140.21,34.91 139.49,34.63 138.82,34.25 138.21,33.77 137.66,33.20 137.20,32.56 136.83,31.86 136.56,31.11 136.40,30.33 136.35,29.53 136.35,29.53 136.40,28.73 136.56,27.95 136.83,27.20 137.20,26.49 137.66,25.85 138.21,25.29 138.82,24.81 139.49,24.42 140.21,24.14 140.97,23.97 141.73,23.92 ' style='stroke-width: 0.97; stroke: none; stroke-linecap: butt; fill: #1A7A8A;' />
+<polygon points='305.01,25.39 305.37,25.42 305.73,25.50 306.07,25.63 306.39,25.82 306.68,26.04 306.94,26.31 307.15,26.61 307.33,26.95 307.46,27.30 307.53,27.67 307.56,28.05 307.56,37.50 307.53,37.88 307.46,38.25 307.33,38.60 307.15,38.94 306.94,39.24 306.68,39.51 306.39,39.74 306.07,39.92 305.73,40.05 305.37,40.13 305.01,40.16 273.26,40.16 272.90,40.13 272.54,40.05 272.20,39.92 271.88,39.74 271.59,39.51 271.33,39.24 271.11,38.94 270.94,38.60 270.81,38.25 270.73,37.88 270.71,37.50 270.71,28.05 270.73,27.67 270.81,27.30 270.94,26.95 271.11,26.61 271.33,26.31 271.59,26.04 271.88,25.82 272.20,25.63 272.54,25.50 272.90,25.42 273.26,25.39 ' style='stroke-width: 1.07; stroke: #2E7D32; stroke-linecap: butt;' />
+<line x1='289.13' y1='17.13' x2='289.13' y2='33.07' style='stroke-width: 1.28; stroke: #2E7D32; stroke-linecap: butt;' />
+<polygon points='286.30,28.16 289.13,33.07 291.97,28.16 ' style='stroke-width: 1.28; stroke: #2E7D32; stroke-linecap: butt; fill: #2E7D32;' />
+<text x='141.73' y='61.95' text-anchor='middle' style='font-size: 8.25px; font-weight: bold;fill: #1A7A8A; font-family: "Source Sans Pro", "Segoe UI", "Roboto", "Helvetica Neue", "Arial", sans-serif;'>UCSC</text>
+<text x='289.13' y='61.95' text-anchor='middle' style='font-size: 8.25px; font-weight: bold;fill: #2E7D32; font-family: "Source Sans Pro", "Segoe UI", "Roboto", "Helvetica Neue", "Arial", sans-serif;'>Ensembl</text>
+<line x1='11.34' y1='71.46' x2='385.51' y2='71.46' style='stroke-width: 0.75; stroke: #666666; stroke-opacity: 0.45; stroke-linecap: butt;' />
+<text x='14.17' y='90.72' style='font-size: 6.12px;fill: #666666; font-family: "Source Sans Pro", "Segoe UI", "Roboto", "Helvetica Neue", "Arial", sans-serif;'>Fuerte en</text>
+<text x='14.17' y='115.53' style='font-size: 6.12px;fill: #666666; font-family: "Source Sans Pro", "Segoe UI", "Roboto", "Helvetica Neue", "Arial", sans-serif;'>Herramienta insignia</text>
+<text x='14.17' y='140.33' style='font-size: 6.12px;fill: #666666; font-family: "Source Sans Pro", "Segoe UI", "Roboto", "Helvetica Neue", "Arial", sans-serif;'>Acceso programático</text>
+<text x='14.17' y='165.13' style='font-size: 6.12px;fill: #666666; font-family: "Source Sans Pro", "Segoe UI", "Roboto", "Helvetica Neue", "Arial", sans-serif;'>Cromosomas</text>
+<text x='14.17' y='189.94' style='font-size: 6.12px;fill: #666666; font-family: "Source Sans Pro", "Segoe UI", "Roboto", "Helvetica Neue", "Arial", sans-serif;'>Formato propio</text>
+<text x='141.73' y='90.72' text-anchor='middle' style='font-size: 6.12px;fill: #1A1A1A; font-family: "Source Sans Pro", "Segoe UI", "Roboto", "Helvetica Neue", "Arial", sans-serif;'>explorar visualmente</text>
+<text x='141.73' y='115.53' text-anchor='middle' style='font-size: 6.12px;fill: #1A1A1A; font-family: "Source Sans Pro", "Segoe UI", "Roboto", "Helvetica Neue", "Arial", sans-serif;'>Table Browser</text>
+<text x='141.73' y='140.33' text-anchor='middle' style='font-size: 6.12px;fill: #1A1A1A; font-family: "Source Sans Pro", "Segoe UI", "Roboto", "Helvetica Neue", "Arial", sans-serif;'>API REST</text>
+<text x='289.13' y='90.72' text-anchor='middle' style='font-size: 6.12px;fill: #1A1A1A; font-family: "Source Sans Pro", "Segoe UI", "Roboto", "Helvetica Neue", "Arial", sans-serif;'>traer datos en bloque</text>
+<text x='289.13' y='115.53' text-anchor='middle' style='font-size: 6.12px;fill: #1A1A1A; font-family: "Source Sans Pro", "Segoe UI", "Roboto", "Helvetica Neue", "Arial", sans-serif;'>BioMart</text>
+<text x='289.13' y='140.33' text-anchor='middle' style='font-size: 6.12px;fill: #1A1A1A; font-family: "Source Sans Pro", "Segoe UI", "Roboto", "Helvetica Neue", "Arial", sans-serif;'>API REST + biomaRt</text>
+<text x='141.73' y='164.94' text-anchor='middle' style='font-size: 6.12px;fill: #1A1A1A; font-family: "Source Code Pro", "Consolas", "DejaVu Sans Mono", "Courier New", monospace;'>chr17</text>
+<text x='141.73' y='189.75' text-anchor='middle' style='font-size: 6.12px;fill: #1A1A1A; font-family: "Source Code Pro", "Consolas", "DejaVu Sans Mono", "Courier New", monospace;'>.2bit, bigWig, bigBed</text>
+<text x='289.13' y='164.94' text-anchor='middle' style='font-size: 6.12px;fill: #1A1A1A; font-family: "Source Code Pro", "Consolas", "DejaVu Sans Mono", "Courier New", monospace;'>17</text>
+<text x='289.13' y='189.75' text-anchor='middle' style='font-size: 6.12px;fill: #1A1A1A; font-family: "Source Code Pro", "Consolas", "DejaVu Sans Mono", "Courier New", monospace;'>GTF, FASTA por especie</text>
+<line x1='11.34' y1='227.36' x2='385.51' y2='227.36' style='stroke-width: 0.75; stroke: #666666; stroke-opacity: 0.45; stroke-linecap: butt;' />
+<text x='198.43' y='251.22' text-anchor='middle' style='font-size: 9.10px; font-weight: bold;fill: #1A1A1A; font-family: "Source Sans Pro", "Segoe UI", "Roboto", "Helvetica Neue", "Arial", sans-serif;'>UCSC para mirar, Ensembl para traer.</text>
+</g>
+</g>
+</svg>

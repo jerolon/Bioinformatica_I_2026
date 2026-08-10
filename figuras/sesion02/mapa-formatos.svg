@@ -1,0 +1,91 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<svg xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink' width='453.54pt' height='283.46pt' viewBox='0 0 453.54 283.46'>
+<g class='svglite'>
+<defs>
+  <style type='text/css'><![CDATA[
+    .svglite line, .svglite polyline, .svglite polygon, .svglite path, .svglite rect, .svglite circle {
+      fill: none;
+      stroke: #000000;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+      stroke-miterlimit: 10.00;
+    }
+    .svglite text {
+      white-space: pre;
+    }
+    .svglite g.glyphgroup path {
+      fill: inherit;
+      stroke: none;
+    }
+  ]]></style>
+</defs>
+<rect width='100%' height='100%' style='stroke: none; fill: none;'/>
+<defs>
+  <clipPath id='cpMC4wMHw0NTMuNTR8MC4wMHwyODMuNDY='>
+    <rect x='0.00' y='0.00' width='453.54' height='283.46' />
+  </clipPath>
+</defs>
+<g clip-path='url(#cpMC4wMHw0NTMuNTR8MC4wMHwyODMuNDY=)'>
+<rect x='0.00' y='0.00' width='453.54' height='283.46' style='stroke-width: 0.00; stroke: none;' />
+<text x='28.35' y='20.24' text-anchor='middle' style='font-size: 6.83px;fill: #1A1A1A; font-family: "Source Sans Pro", "Segoe UI", "Roboto", "Helvetica Neue", "Arial", sans-serif;'>Secuenciar</text>
+<text x='130.39' y='20.24' text-anchor='middle' style='font-size: 6.83px;fill: #1A1A1A; font-family: "Source Sans Pro", "Segoe UI", "Roboto", "Helvetica Neue", "Arial", sans-serif;'>Alinear</text>
+<text x='255.12' y='20.24' text-anchor='middle' style='font-size: 6.83px;fill: #1A1A1A; font-family: "Source Sans Pro", "Segoe UI", "Roboto", "Helvetica Neue", "Arial", sans-serif;'>Llamar variantes</text>
+<text x='379.84' y='20.24' text-anchor='middle' style='font-size: 6.83px;fill: #1A1A1A; font-family: "Source Sans Pro", "Segoe UI", "Roboto", "Helvetica Neue", "Arial", sans-serif;'>Interpretar</text>
+<line x1='55.56' y1='17.85' x2='108.79' y2='17.85' style='stroke-width: 0.85; stroke: #666666; stroke-linecap: butt;' />
+<polygon points='104.87,20.11 108.79,17.85 104.87,15.58 ' style='stroke-width: 0.85; stroke: #666666; stroke-linecap: butt; fill: #666666;' />
+<line x1='151.99' y1='17.85' x2='216.68' y2='17.85' style='stroke-width: 0.85; stroke: #666666; stroke-linecap: butt;' />
+<polygon points='212.75,20.11 216.68,17.85 212.75,15.58 ' style='stroke-width: 0.85; stroke: #666666; stroke-linecap: butt; fill: #666666;' />
+<line x1='293.56' y1='17.85' x2='350.76' y2='17.85' style='stroke-width: 0.85; stroke: #666666; stroke-linecap: butt;' />
+<polygon points='346.83,20.11 350.76,17.85 346.83,15.58 ' style='stroke-width: 0.85; stroke: #666666; stroke-linecap: butt; fill: #666666;' />
+<rect x='8.50' y='38.67' width='39.69' height='32.72' style='stroke-width: 0.96; stroke: #1A7A8A; stroke-linecap: butt; stroke-linejoin: miter;' />
+<rect x='65.20' y='38.67' width='39.69' height='32.72' style='stroke-width: 0.96; stroke: #1A7A8A; stroke-linecap: butt; stroke-linejoin: miter;' />
+<rect x='212.60' y='38.67' width='39.69' height='32.72' style='stroke-width: 0.96; stroke: #1A7A8A; stroke-linecap: butt; stroke-linejoin: miter;' />
+<rect x='314.65' y='38.67' width='39.69' height='32.72' style='stroke-width: 0.96; stroke: #1A7A8A; stroke-linecap: butt; stroke-linejoin: miter;' />
+<rect x='360.00' y='38.67' width='39.69' height='32.72' style='stroke-width: 0.96; stroke: #1A7A8A; stroke-linecap: butt; stroke-linejoin: miter;' />
+<rect x='405.35' y='38.67' width='39.69' height='32.72' style='stroke-width: 0.96; stroke: #1A7A8A; stroke-linecap: butt; stroke-linejoin: miter;' />
+<rect x='110.55' y='38.67' width='39.69' height='32.72' style='stroke-width: 1.71; stroke: #1A7A8A; stroke-linecap: butt; stroke-linejoin: miter; fill: #1A7A8A; fill-opacity: 0.16;' />
+<rect x='155.91' y='38.67' width='39.69' height='32.72' style='stroke-width: 1.71; stroke: #1A7A8A; stroke-linecap: butt; stroke-linejoin: miter; fill: #1A7A8A; fill-opacity: 0.16;' />
+<rect x='257.95' y='38.67' width='39.69' height='32.72' style='stroke-width: 1.71; stroke: #1A7A8A; stroke-linecap: butt; stroke-linejoin: miter; fill: #1A7A8A; fill-opacity: 0.16;' />
+<text x='28.35' y='53.37' text-anchor='middle' style='font-size: 7.11px;fill: #1A1A1A; font-family: "Source Code Pro", "Consolas", "DejaVu Sans Mono", "Courier New", monospace;'>FASTQ</text>
+<text x='85.04' y='53.37' text-anchor='middle' style='font-size: 7.11px;fill: #1A1A1A; font-family: "Source Code Pro", "Consolas", "DejaVu Sans Mono", "Courier New", monospace;'>SAM</text>
+<text x='130.39' y='53.37' text-anchor='middle' style='font-size: 7.11px;fill: #1A1A1A; font-family: "Source Code Pro", "Consolas", "DejaVu Sans Mono", "Courier New", monospace;'>BAM</text>
+<text x='175.75' y='53.37' text-anchor='middle' style='font-size: 7.11px;fill: #1A1A1A; font-family: "Source Code Pro", "Consolas", "DejaVu Sans Mono", "Courier New", monospace;'>CRAM</text>
+<text x='232.44' y='53.37' text-anchor='middle' style='font-size: 7.11px;fill: #1A1A1A; font-family: "Source Code Pro", "Consolas", "DejaVu Sans Mono", "Courier New", monospace;'>VCF</text>
+<text x='277.80' y='53.37' text-anchor='middle' style='font-size: 7.11px;fill: #1A1A1A; font-family: "Source Code Pro", "Consolas", "DejaVu Sans Mono", "Courier New", monospace;'>BCF</text>
+<text x='334.49' y='53.37' text-anchor='middle' style='font-size: 7.11px;fill: #1A1A1A; font-family: "Source Code Pro", "Consolas", "DejaVu Sans Mono", "Courier New", monospace;'>GFF3</text>
+<text x='379.84' y='53.37' text-anchor='middle' style='font-size: 7.11px;fill: #1A1A1A; font-family: "Source Code Pro", "Consolas", "DejaVu Sans Mono", "Courier New", monospace;'>GTF</text>
+<text x='425.20' y='53.37' text-anchor='middle' style='font-size: 7.11px;fill: #1A1A1A; font-family: "Source Code Pro", "Consolas", "DejaVu Sans Mono", "Courier New", monospace;'>BED</text>
+<text x='28.35' y='64.67' text-anchor='middle' style='font-size: 5.12px;fill: #666666; font-family: "Source Sans Pro", "Segoe UI", "Roboto", "Helvetica Neue", "Arial", sans-serif;'>no aplica</text>
+<text x='85.04' y='64.67' text-anchor='middle' style='font-size: 5.12px;fill: #666666; font-family: "Source Sans Pro", "Segoe UI", "Roboto", "Helvetica Neue", "Arial", sans-serif;'>1-based</text>
+<text x='130.39' y='64.67' text-anchor='middle' style='font-size: 5.12px;fill: #666666; font-family: "Source Sans Pro", "Segoe UI", "Roboto", "Helvetica Neue", "Arial", sans-serif;'>1-based</text>
+<text x='175.75' y='64.67' text-anchor='middle' style='font-size: 5.12px;fill: #666666; font-family: "Source Sans Pro", "Segoe UI", "Roboto", "Helvetica Neue", "Arial", sans-serif;'>1-based</text>
+<text x='232.44' y='64.67' text-anchor='middle' style='font-size: 5.12px;fill: #666666; font-family: "Source Sans Pro", "Segoe UI", "Roboto", "Helvetica Neue", "Arial", sans-serif;'>1-based</text>
+<text x='277.80' y='64.67' text-anchor='middle' style='font-size: 5.12px;fill: #666666; font-family: "Source Sans Pro", "Segoe UI", "Roboto", "Helvetica Neue", "Arial", sans-serif;'>1-based</text>
+<text x='334.49' y='64.67' text-anchor='middle' style='font-size: 5.12px;fill: #666666; font-family: "Source Sans Pro", "Segoe UI", "Roboto", "Helvetica Neue", "Arial", sans-serif;'>1-based</text>
+<text x='379.84' y='64.67' text-anchor='middle' style='font-size: 5.12px;fill: #666666; font-family: "Source Sans Pro", "Segoe UI", "Roboto", "Helvetica Neue", "Arial", sans-serif;'>1-based</text>
+<text x='425.20' y='64.67' text-anchor='middle' style='font-size: 5.12px;fill: #D98C00; font-family: "Source Sans Pro", "Segoe UI", "Roboto", "Helvetica Neue", "Arial", sans-serif;'>0-based</text>
+<line x1='5.67' y1='107.08' x2='447.87' y2='107.08' style='stroke-width: 0.64; stroke: #666666; stroke-dasharray: 1.00,3.00; stroke-linecap: butt;' />
+<text x='447.87' y='117.89' text-anchor='end' style='font-size: 5.41px;fill: #666666; font-family: "Source Sans Pro", "Segoe UI", "Roboto", "Helvetica Neue", "Arial", sans-serif;'>no pertenecen a una etapa: alimentan a varias</text>
+<line x1='104.88' y1='129.39' x2='130.39' y2='75.85' style='stroke-width: 0.53; stroke: #666666; stroke-opacity: 0.55; stroke-linecap: butt;' />
+<polyline points='130.68,79.52 130.39,75.85 127.36,77.94 ' style='stroke-width: 0.53; stroke: #666666; stroke-opacity: 0.55; stroke-linecap: butt;' />
+<line x1='104.88' y1='129.39' x2='255.12' y2='75.85' style='stroke-width: 0.53; stroke: #666666; stroke-opacity: 0.55; stroke-linecap: butt;' />
+<polyline points='252.73,78.65 255.12,75.85 251.49,75.18 ' style='stroke-width: 0.53; stroke: #666666; stroke-opacity: 0.55; stroke-linecap: butt;' />
+<line x1='104.88' y1='129.39' x2='379.84' y2='75.85' style='stroke-width: 0.53; stroke: #666666; stroke-opacity: 0.55; stroke-linecap: butt;' />
+<polyline points='377.06,78.27 379.84,75.85 376.36,74.65 ' style='stroke-width: 0.53; stroke: #666666; stroke-opacity: 0.55; stroke-linecap: butt;' />
+<rect x='56.69' y='130.87' width='96.38' height='53.54' style='stroke-width: 0.96; stroke: #1A7A8A; stroke-linecap: butt; stroke-linejoin: miter;' />
+<rect x='289.13' y='130.87' width='119.06' height='53.54' style='stroke-width: 0.96; stroke: #1A7A8A; stroke-linecap: butt; stroke-linejoin: miter;' />
+<text x='104.88' y='149.20' text-anchor='middle' style='font-size: 7.11px;fill: #1A1A1A; font-family: "Source Code Pro", "Consolas", "DejaVu Sans Mono", "Courier New", monospace;'>FASTA</text>
+<text x='348.66' y='149.20' text-anchor='middle' style='font-size: 7.11px;fill: #1A1A1A; font-family: "Source Code Pro", "Consolas", "DejaVu Sans Mono", "Courier New", monospace;'>GenBank / EMBL</text>
+<text x='104.88' y='161.81' text-anchor='middle' style='font-size: 5.12px;fill: #666666; font-family: "Source Sans Pro", "Segoe UI", "Roboto", "Helvetica Neue", "Arial", sans-serif;'>la secuencia de referencia</text>
+<text x='348.66' y='161.81' text-anchor='middle' style='font-size: 5.12px;fill: #666666; font-family: "Source Sans Pro", "Segoe UI", "Roboto", "Helvetica Neue", "Arial", sans-serif;'>secuencia y anotación</text>
+<text x='104.88' y='173.11' text-anchor='middle' style='font-size: 5.12px;fill: #666666; font-family: "Source Sans Pro", "Segoe UI", "Roboto", "Helvetica Neue", "Arial", sans-serif;'>no aplica</text>
+<text x='348.66' y='173.11' text-anchor='middle' style='font-size: 5.12px;fill: #666666; font-family: "Source Sans Pro", "Segoe UI", "Roboto", "Helvetica Neue", "Arial", sans-serif;'>1-based</text>
+<rect x='28.35' y='211.92' width='25.51' height='16.36' style='stroke-width: 0.96; stroke: #1A7A8A; stroke-linecap: butt; stroke-linejoin: miter;' />
+<rect x='153.07' y='211.92' width='25.51' height='16.36' style='stroke-width: 1.71; stroke: #1A7A8A; stroke-linecap: butt; stroke-linejoin: miter; fill: #1A7A8A; fill-opacity: 0.16;' />
+<text x='59.53' y='222.09' style='font-size: 5.69px;fill: #1A1A1A; font-family: "Source Sans Pro", "Segoe UI", "Roboto", "Helvetica Neue", "Arial", sans-serif;'>formato de texto</text>
+<text x='184.25' y='222.09' style='font-size: 5.69px;fill: #1A1A1A; font-family: "Source Sans Pro", "Segoe UI", "Roboto", "Helvetica Neue", "Arial", sans-serif;'>formato binario</text>
+<text x='28.35' y='245.79' style='font-size: 5.41px;fill: #D98C00; font-family: "Source Sans Pro", "Segoe UI", "Roboto", "Helvetica Neue", "Arial", sans-serif;'>El 0-based de BED va en naranja: es la única excepción de coordenadas de todo el mapa.</text>
+<text x='5.67' y='281.74' style='font-size: 7.30px; font-style: italic;fill: #666666; font-family: "Source Sans Pro", "Segoe UI", "Roboto", "Helvetica Neue", "Arial", sans-serif;'>FASTA se trata a fondo en la sesión de formatos de secuencia.</text>
+</g>
+</g>
+</svg>

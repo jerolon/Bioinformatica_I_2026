@@ -1,0 +1,275 @@
+---
+title: "Práctica: reciprocal best hits"
+subtitle: "Unidad 3 · Sesión 10"
+author: "Jero"
+---
+
+## De qué se trata
+
+En el capítulo vimos que RBH es la heurística que todo el mundo usa para
+inferir ortología y que falla más de lo que se admite. Hoy la
+implementan ustedes, y de paso miden en sus propios datos qué tanto
+falla.
+
+El concepto de cómputo del día son los ciclos. No es decorativo: RBH
+requiere correr la búsqueda en las dos direcciones, y hacerlo dos veces
+a mano es exactamente el tipo de trabajo repetitivo que un ciclo existe
+para evitar.
+
+Trabajamos con dos levaduras: *Saccharomyces cerevisiae* y
+*Schizosaccharomyces pombe*. Se separaron hace unos 500 millones de años,
+que es distancia suficiente para que el ejercicio no sea trivial.
+
+## Preparación
+
+Los proteomas ya están en el servidor, recortados a unas 500 proteínas
+cada uno para que las búsquedas corran en segundos.
+
+```bash
+ssh usuario@ken.lavis.unam.mx
+mkdir -p ~/bioinfo1/sesion10/{datos,resultados}
+cd ~/bioinfo1/sesion10
+cp /datos/cursos/bioinfo1/sesion10/*.fasta datos/
+ls -lh datos/
+```
+
+::: callout-box
+`ken` es un nodo compartido. Las búsquedas de hoy son chicas, pero
+úsenlas con `-num_threads 2` y no más. Treinta personas pidiendo ocho
+hilos cada una son doscientos cuarenta hilos en una máquina que no los
+tiene.
+:::
+
+### Ejercicio 1. Construir las dos bases con un ciclo
+
+Necesitan una base BLAST por proteoma. Son dos comandos casi idénticos,
+así que es el primer pretexto para un ciclo.
+
+```bash
+cd ~/bioinfo1/sesion10
+for especie in cerevisiae pombe; do
+  makeblastdb -in datos/${especie}.fasta \
+              -dbtype prot \
+              -parse_seqids \
+              -out datos/${especie}
+done
+ls datos/
+```
+
+::: {.callout-note collapse="true"}
+## Solución
+
+El ciclo `for` recorre una lista de palabras y ejecuta el cuerpo una vez
+por cada una, sustituyendo `${especie}` por el valor en turno. Corrió
+`makeblastdb` dos veces sin que ustedes escribieran el comando dos
+veces.
+
+`ls datos/` debe mostrar, por cada especie, varios archivos con el mismo
+prefijo y extensiones como `.phr`, `.pin`, `.psq`. Son los índices de la
+base; no se editan ni se leen a mano.
+
+`-parse_seqids` conserva los identificadores originales. Sin esa
+bandera, BLAST los reemplaza por identificadores internos y después no
+van a poder cruzar las tablas, que es justo lo que necesitamos hoy.
+:::
+
+### Ejercicio 2. Buscar en las dos direcciones
+
+Acá está el corazón del método. RBH necesita las dos búsquedas: cada
+proteoma como consulta contra el otro como base.
+
+```bash
+blastp -query datos/cerevisiae.fasta -db datos/pombe \
+       -outfmt "6 qseqid sseqid pident length evalue bitscore" \
+       -evalue 1e-5 -max_target_seqs 20 -num_threads 2 \
+       -out resultados/cere_vs_pombe.tsv
+
+blastp -query datos/pombe.fasta -db datos/cerevisiae \
+       -outfmt "6 qseqid sseqid pident length evalue bitscore" \
+       -evalue 1e-5 -max_target_seqs 20 -num_threads 2 \
+       -out resultados/pombe_vs_cere.tsv
+
+wc -l resultados/*.tsv
+```
+
+Por qué `-max_target_seqs 20` y no 1, si solo queremos el mejor?
+
+::: {.callout-note collapse="true"}
+## Solución
+
+Por la trampa que vieron en la sesión de BLAST. `-max_target_seqs 1` no
+devuelve el mejor hit: devuelve el primero que supera el umbral, que no
+tiene por qué ser el de mayor score. Pedimos veinte y filtramos nosotros
+por `bitscore`, que es la forma correcta.
+
+Las dos tablas tienen seis columnas separadas por tabulador, sin
+encabezado, en este orden: identificador de la consulta, identificador
+del sujeto, porcentaje de identidad, longitud del alineamiento, E-value
+y bit score.
+
+Fíjense en que las dos búsquedas **no** son simétricas. El mejor hit de
+A en el proteoma de B no tiene por qué tener a A como su mejor hit de
+regreso. Esa asimetría es exactamente lo que RBH explota.
+:::
+
+### Ejercicio 3. Quedarse con el mejor hit por consulta
+
+De cada tabla necesitan una sola línea por consulta: la de mayor bit
+score.
+
+```bash
+cd ~/bioinfo1/sesion10
+
+for archivo in cere_vs_pombe pombe_vs_cere; do
+  sort -k1,1 -k6,6gr resultados/${archivo}.tsv \
+    | awk '!seen[$1]++' \
+    | cut -f1,2,6 \
+    > resultados/${archivo}.best.tsv
+done
+
+head -3 resultados/cere_vs_pombe.best.tsv
+wc -l resultados/*.best.tsv
+```
+
+::: {.callout-note collapse="true"}
+## Solución
+
+Tres pasos encadenados, léanlos de izquierda a derecha.
+
+`sort -k1,1 -k6,6gr` ordena primero por identificador de consulta
+(columna 1) y, dentro de cada uno, por bit score (columna 6) de mayor a
+menor. La `g` es orden numérico general, que maneja notación científica;
+la `r` invierte.
+
+`awk '!seen[$1]++'` es un idiom que vale la pena entender. `seen` es un
+arreglo asociativo; `seen[$1]++` devuelve el valor actual y luego lo
+incrementa. La primera vez que aparece un identificador vale 0, que en
+awk es falso, y el `!` lo vuelve verdadero, así que la línea se imprime.
+La segunda vez ya vale 1, verdadero, negado es falso, y la línea se
+descarta. Resultado: **la primera línea de cada consulta**, que por el
+`sort` anterior es la de mayor bit score.
+
+`cut -f1,2,6` se queda con consulta, sujeto y bit score.
+
+El número de líneas debe ser menor que el de proteínas del proteoma:
+las que no tuvieron ningún hit bajo el umbral de E-value no aparecen.
+:::
+
+### Ejercicio 4. Cruzar las tablas y encontrar los recíprocos
+
+Ya tienen el mejor hit en cada dirección. Un par es RBH si A apunta a B
+y B apunta a A.
+
+```bash
+awk 'NR==FNR {best[$1]=$2; next} best[$2]==$1 {print $1"\t"$2}' \
+  resultados/pombe_vs_cere.best.tsv \
+  resultados/cere_vs_pombe.best.tsv \
+  > resultados/rbh.tsv
+
+wc -l resultados/rbh.tsv
+head -5 resultados/rbh.tsv
+```
+
+::: {.callout-note collapse="true"}
+## Solución
+
+Este `awk` lee dos archivos y hace cosas distintas con cada uno.
+
+`NR==FNR` es la condición que distingue el primer archivo del segundo.
+`NR` es el número de línea global y `FNR` el número de línea dentro del
+archivo actual; solo coinciden mientras se lee el primero. Durante esa
+fase, `best[$1]=$2` guarda el mejor hit de cada proteína de pombe, y
+`next` salta al siguiente renglón sin evaluar el resto.
+
+Cuando empieza el segundo archivo, `NR==FNR` es falso y se evalúa
+`best[$2]==$1`: para cada proteína de cerevisiae y su mejor hit en
+pombe, pregunta si el mejor hit de esa proteína de pombe es, de regreso,
+la de cerevisiae. Si sí, es un par recíproco.
+
+Ese `NR==FNR` es uno de los idioms más útiles de awk y lo van a
+reconocer en scripts ajenos toda la vida.
+:::
+
+### Ejercicio 5. Cuánto perdimos
+
+Comparen cuántos mejores hits había con cuántos sobrevivieron a la
+reciprocidad.
+
+```bash
+echo "Proteínas de cerevisiae con algún hit:"
+wc -l < resultados/cere_vs_pombe.best.tsv
+echo "Pares recíprocos (RBH):"
+wc -l < resultados/rbh.tsv
+```
+
+Qué fracción se perdió, y por qué?
+
+::: {.callout-note collapse="true"}
+## Solución
+
+Los números exactos dependen del recorte de proteomas, pero el patrón
+es robusto: una fracción sustancial de las proteínas que tenían mejor
+hit **no** forman par recíproco.
+
+Cada pérdida tiene una explicación posible de las que listamos en el
+capítulo. Una duplicación específica de linaje rompe la reciprocidad
+porque el mejor hit de regreso cae en la copia hermana. Una pérdida
+diferencial de genes hace que gane un parálogo. Tasas evolutivas
+dispares hacen que un parálogo lento le gane el best hit al ortólogo
+verdadero.
+
+Y acá está el punto: **lo que acaban de perder no son necesariamente
+falsos positivos que RBH filtró bien. Buena parte son ortólogos
+verdaderos que RBH no puede ver.** Dalquen y Dessimoz midieron que en
+clados ricos en duplicación se pierde hasta el 60%.
+
+RBH no filtra ruido. Filtra complejidad, y se queda solo con las
+relaciones uno a uno.
+:::
+
+### Ejercicio 6. Encontrar un caso de uno a muchos
+
+Busquen una proteína de cerevisiae que tenga varios hits muy buenos en
+pombe, no solo uno.
+
+```bash
+awk '$6 > 100' resultados/cere_vs_pombe.tsv \
+  | cut -f1 | sort | uniq -c | sort -rn | head -5
+```
+
+Tomen el identificador que más se repite y mírenlo completo:
+
+```bash
+grep "IDENTIFICADOR" resultados/cere_vs_pombe.tsv | sort -k6,6gr | head
+```
+
+::: {.callout-note collapse="true"}
+## Solución
+
+Van a encontrar proteínas con cinco, diez o más hits de bit score alto.
+Son familias que se expandieron por duplicación en uno de los dos
+linajes, o dominios muy conservados que aparecen en muchas proteínas
+distintas.
+
+Para esas, la pregunta "¿cuál es el ortólogo?" está mal planteada. La
+respuesta correcta es un conjunto, no un elemento: si la duplicación
+ocurrió después de la separación de los linajes, todas las copias son
+**co-ortólogas** del gen de la otra especie, colectivamente. Eso es lo
+que el capítulo llamó in-paralogs.
+
+RBH devuelve, cuando mucho, una de ellas, y la elección entre copias
+casi idénticas la decide el ruido. Por eso existen OrthoFinder y los
+métodos basados en árboles: no son RBH mejorado, son otra forma de
+plantear la pregunta.
+:::
+
+## Para entregar
+
+En su repositorio, dentro de `sesion10/`:
+
+- `procedencia.md` con la fecha, los proteomas usados y los comandos.
+- `resultados/rbh.tsv` (es chico, este sí se versiona).
+- Un párrafo respondiendo: qué fracción de mejores hits sobrevivió a la
+  reciprocidad, y un caso concreto de uno a muchos que hayan encontrado.
+
+No suban los `.fasta` ni los archivos de índice de las bases.

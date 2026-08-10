@@ -1,76 +1,88 @@
 ---
 title: "Homología: ortólogo, parálogo, xenólogo"
-subtitle: "Unidad 3 · Sesión 9"
+subtitle: "Unidad 3 · Sesión 10"
 author: "Jero"
+editor: 
+  markdown: 
+    wrap: 72
 ---
 
 ## Idea central
 
-**La homología es binaria.** Dos secuencias comparten un ancestro común o no lo comparten. No existe
-"45% homólogas", igual que no existe "30% embarazada".
+**La homología es binaria.** Dos secuencias comparten un ancestro común
+o no lo comparten. No existe "45% homólogas", igual que no existe "30%
+embarazada".
 
-Lo que sí es continuo es la **similitud**: el porcentaje de residuos idénticos o parecidos. La
-similitud se *mide*; la homología se *infiere* a partir de ella. Son categorías distintas, y
-confundirlas es el error más extendido del campo.
+Lo que sí es continuo es la similitud: el porcentaje de residuos
+idénticos o parecidos. La similitud se mide; la homología se infiere a
+partir de ella. Son categorías distintas, y confundirlas es el error más
+extendido del campo.
 
 De ahí los dos objetivos de la clase:
 
 - Que nunca más escriban "76% de homología".
-- Que entiendan por qué el mejor hit de BLAST **no** es necesariamente el ortólogo.
+- Que entiendan por qué el mejor hit de BLAST no es necesariamente el
+  ortólogo.
 
 ## 1. De dónde viene la palabra
 
-La homología es un concepto **anterior a la biología molecular y anterior a Darwin**. La biología
-molecular no la inventó: heredó un concepto morfológico de 1843 y lo trasladó a secuencias.
+La homología es un concepto anterior a la biología molecular y anterior
+a Darwin. La biología molecular no la inventó: heredó un concepto
+morfológico de 1843 y lo trasladó a secuencias.
 
-::: {.consenso}
-Richard Owen acuñó el uso biológico del término en 1843, estudiando aletas y extremidades de
-vertebrados:
+::: consenso
+Richard Owen acuñó el uso biológico del término en 1843, estudiando
+aletas y extremidades de vertebrados:
 
-> *"the same organ in different animals under every variety of form and function"* — homólogo.
+> *"the same organ in different animals under every variety of form and
+> function"* (homólogo).
 >
-> *"a part or organ in one animal which has the same function as another part or organ in a
-> different animal"* — análogo.
+> *"a part or organ in one animal which has the same function as another
+> part or organ in a different animal"* (análogo).
 
-Owen fijó tres criterios para juzgar homología: **posición, desarrollo y composición**. Su marco era
-**tipológico** —el *arquetipo*, el Bauplan— y no tenía mecanismo evolutivo.
+Owen fijó tres criterios para juzgar homología: **posición, desarrollo y
+composición**. Su marco era tipológico (el arquetipo, el Bauplan) y no
+tenía mecanismo evolutivo.
 :::
 
-**Darwin (1859) puso el mecanismo:** la homología surge por descendencia con modificación desde un
-ancestro común. El arquetipo de los morfólogos fue reemplazado por el ancestro. La palabra sobrevivió;
-lo que cambió fue qué la explica.
+Darwin (1859) puso el mecanismo: la homología surge por descendencia con
+modificación desde un ancestro común, y el arquetipo de los morfólogos
+fue reemplazado por el ancestro. Los antecedentes son aún más viejos:
+Aristóteles, y Pierre Belon comparando esqueletos de ave y humano en
+1555.
 
-Los antecedentes son aún más viejos: Aristóteles, y Pierre Belon comparando esqueletos de ave y humano
-en 1555.
-
-::: {.callout-box}
-El ejemplo morfológico canónico sigue siendo el mejor: el ala de murciélago, la aleta de ballena y el
-brazo humano son **homólogos** —mismos huesos, mismas posiciones relativas, distinta función—. El ala
-de ave y el ala de insecto son **análogas**: misma función, sin ancestro común alado.
+::: callout-box
+El ejemplo morfológico canónico: el ala de murciélago, la aleta de
+ballena y el brazo humano son homólogos (mismos huesos, mismas
+posiciones relativas, distinta función). El ala de ave y el ala de
+insecto son análogas: misma función, sin ancestro común alado.
 :::
 
 ## 2. Fitch 1970: ortólogo y parálogo
 
-Las definiciones que usamos todos los días vienen de un solo párrafo:
+Las definiciones que usamos todos los días vienen de un solo párrafo.
+Fitch propuso que cuando la homología resulta de una duplicación génica,
+y las dos copias descienden lado a lado en la historia del organismo (su
+ejemplo: α y β hemoglobina), los genes son **parálogos**, de *para* = en
+paralelo. Cuando resulta de una especiación, de modo que la historia del
+gen refleja la de las especies (α hemoglobina de humano y de ratón), son
+**ortólogos**, de *ortho* = exacto. Y cerró con la frase que todavía se
+cita:
 
-> *"Where the homology is the result of gene duplication so that both copies have descended side by
-> side during the history of an organism (for example, α and β hemoglobin) the genes should be called
-> **paralogous** (para = in parallel). Where the homology is the result of speciation so that the
-> history of the gene reflects the history of the species (for example α hemoglobin in man and mouse)
-> the genes should be called **orthologous** (ortho = exact). Phylogenies require orthologous, not
-> paralogous, genes."*
+> *"Phylogenies require orthologous, not paralogous, genes."*
 >
 > — Fitch (1970), *Systematic Zoology* 19(2):99–113
 
-Lo contraintuitivo: **el artículo no trataba de eso**. Su objetivo era un método estadístico para
-distinguir homología de analogía; "ortólogo" y "parálogo" fueron casi un subproducto de ese párrafo.
-Treinta años después, Fitch (2000) escribió *"Homology: a personal view on some of the problems"* — un
+El artículo no trataba de eso. Su objetivo era un método estadístico
+para distinguir homología de analogía, y "ortólogo" y "parálogo" fueron
+casi un subproducto de ese párrafo. Treinta años después, Fitch (2000)
+publicó *"Homology: a personal view on some of the problems"*, un
 lamento sobre en qué se había convertido el uso del término.
 
 ### El vocabulario completo
 
 | Término | Relación | Origen del término |
-|---------|----------|--------------------|
+|------------------|-------------------|------------------------------------|
 | **Ortólogo** | Separados por **especiación** | Fitch 1970 |
 | **Parálogo** | Separados por **duplicación** | Fitch 1970 |
 | **Xenólogo** | Separados por **transferencia horizontal (HGT)** | Gray & Fitch 1983 |
@@ -78,509 +90,398 @@ lamento sobre en qué se había convertido el uso del término.
 | **In-paralog** | Duplicado **después** de la especiación considerada | Remm et al. 2001 |
 | **Out-paralog** | Duplicado **antes** de la especiación considerada | Sonnhammer & Koonin 2002 |
 
-: {tbl-colwidths="[18,52,30]"}
+Los in-paralogs son **co-ortólogos** en conjunto respecto al gen de la
+otra especie: si un gen se duplicó después de que los linajes se
+separaron, ambas copias son ortólogas del gen de la otra especie,
+colectivamente. Los out-paralogs nunca son ortólogos entre sí respecto a
+esa especiación. Distinguirlos es lo que permite manejar bien las
+relaciones uno-a-muchos y muchos-a-muchos, que son la norma y no la
+excepción.
 
-Los **in-paralogs** son **co-ortólogos** en conjunto respecto al gen de la otra especie: si un gen se
-duplicó después de que los linajes se separaron, ambas copias son ortólogas del gen de la otra especie,
-colectivamente. Los **out-paralogs** nunca son ortólogos entre sí respecto a esa especiación.
-Distinguirlos es lo que permite manejar bien las relaciones **uno-a-muchos** y **muchos-a-muchos**, que
-son la norma y no la excepción.
+::: mito
+**"Los ortólogos están en distintas especies y los parálogos en la misma
+especie."** Falso, y es la confusión más común del tema.
 
-::: {.mito}
-**"Los ortólogos están en distintas especies y los parálogos en la misma especie."** Falso, y es la
-confusión más común del tema.
-
-La α-hemoglobina de ratón y la β-hemoglobina de humano son **parálogas**, aunque estén en especies
-distintas: descienden de una duplicación en un ancestro común. Lo que define la relación es **el evento
-que separó las copias** —duplicación o especiación—, no en qué organismo acabaron.
+La α-hemoglobina de ratón y la β-hemoglobina de humano son parálogas,
+aunque estén en especies distintas: descienden de una duplicación en un
+ancestro común. Lo que define la relación es el evento que separó las
+copias (duplicación o especiación), no en qué organismo acabaron.
 :::
 
-## 3. El error central: "porcentaje de homología"
+::: callout-box
+**Recordatorio, porque va a doler si se les olvida.** La homología es
+binaria: dos secuencias comparten ancestro o no lo comparten. No existe
+"76% de homología". Lo que se mide en porcentaje es la **identidad** o
+la **similitud**, que son la evidencia; la homología es la conclusión
+que se infiere a partir de ellas.
 
-En 1987, seis autores de peso —incluidos Doolittle, Fitch y Dickerson— publicaron una carta en *Cell*
-con un título que no deja lugar a dudas: *"'Homology' in proteins and nucleic acids: a terminology
-muddle and a way out of it"*. La prescripción:
+El argumento completo, con la carta de Reeck et al. de 1987 que intentó
+frenar el mal uso, lo vieron en el capítulo de alineamiento por pares.
+Acá solo lo damos por sabido y lo usamos.
 
-> *"homology should mean 'possessing a common evolutionary origin' and in the vast majority of reports
-> should have no other meaning."*
-
-La carta generó una página de comentario editorial en *Science*. El precedente conceptual era Ghiselin
-(1969), y Patterson (1988) siguió la discusión.
-
-| | Homología | Similitud / identidad |
-|---|-----------|----------------------|
-| **Naturaleza** | Cualitativa, **binaria** | Cuantitativa, **continua** |
-| **Cómo se obtiene** | Se **infiere** | Se **mide** |
-| **¿Se observa?** | No directamente | Sí |
-| **Papel** | Es la conclusión | Es la evidencia |
-
-: {tbl-colwidths="[25,37,38]"}
-
-Decir "porcentaje de homología" mezcla las dos columnas. Es un **error categorial**, no un descuido de
-estilo — por eso no basta con corregirlo al vuelo: hay que entender por qué está mal.
-
-::: {.callout-box}
-**"Homología parcial" sí puede ser correcta**, pero sólo con un significado preciso: *esta parte de la
-secuencia 1 es homóloga a aquella parte de la secuencia 2*. Es lo que ocurre tras fusión o fisión
-génica, o cuando dos proteínas comparten un dominio. **No** es sinónimo de "% de identidad".
+Una excepción legítima: **"homología parcial"** sí es correcta cuando
+significa que *esta región* de una secuencia es homóloga a *aquella
+región* de la otra. Ocurre tras fusión o fisión génica, o cuando dos
+proteínas comparten un dominio. No es sinónimo de porcentaje de
+identidad.
 :::
 
-El error persiste décadas después de 1987 — Marabotti & Facchiano (2009) lo denunciaron en un artículo
-titulado, con resignación, *"When it comes to homology, bad habits die hard"*, y propusieron que los
-revisores exijan el uso correcto.
+## 3. Árbol de genes ≠ árbol de especies
 
-### Los casos que rompen la intuición
-
-**Similitud sin homología.** Dos secuencias cortas pueden alcanzar ~25% de identidad por puro azar. La
-similitud alta es *evidencia* de homología, no la homología misma.
-
-**Homología sin similitud detectable.** Proteínas homólogas en la *twilight zone* (<20–30% de
-identidad) cuya relación sólo aparece con perfiles o con estructura. La homología está ahí; la
-similitud de secuencia se borró. Volvemos a esto en la §7 — es lo que hace interesante a Foldseek.
-
-**Homología transitiva.** Si GenX–GenY son homólogos y GenY–GenZ son homólogos en la misma región,
-entonces GenX–GenZ son homólogos, aunque BLAST no lo detecte directamente.
-
-## 4. Árbol de genes ≠ árbol de especies
-
-De aquí sale toda la confusión que queda.
-
-Un árbol de genes puede no reflejar el árbol de especies por cinco razones: **duplicación**, **pérdida
-de genes**, **transferencia horizontal**, ***incomplete lineage sorting* (ILS)** e
+Un árbol de genes puede no reflejar el árbol de especies por cinco
+razones: **duplicación**, **pérdida de genes**, **transferencia
+horizontal**, **incomplete lineage sorting (ILS)** e
 **hibridación/introgresión**.
 
-::: {.consenso}
-El modelo **DTL (Duplication–Transfer–Loss)** mapea el árbol de genes sobre el árbol de especies y
-asigna a cada nodo interno un evento. La correspondencia es exacta y vale la pena memorizarla:
+::: consenso
+El modelo **DTL (Duplication–Transfer–Loss)** mapea el árbol de genes
+sobre el árbol de especies y asigna a cada nodo interno un evento. La
+correspondencia es exacta:
 
 | Nodo del árbol de genes | Relación entre las hojas que descienden |
-|-------------------------|------------------------------------------|
-| **Especiación** | Ortólogos |
-| **Duplicación** | Parálogos |
-| **Transferencia** | Xenólogos |
+|-------------------------|-----------------------------------------|
+| **Especiación**         | Ortólogos                               |
+| **Duplicación**         | Parálogos                               |
+| **Transferencia**       | Xenólogos                               |
 
 Es la base de todos los métodos de reconciliación.
 :::
 
-Tres ejemplos para el aula:
+Dos ejemplos para el aula:
 
-- **Globinas** — α y β hemoglobina, parálogos por duplicación. El ejemplo original de Fitch.
-- **β-lactamasas** — el árbol del gen *bla*~CTX-M~ **no** coincide con el árbol de las especies que lo
-  portan. Es la incongruencia más visual, y la que usamos en la práctica (§8).
-- **ILS** — el trío humano–chimpancé–gorila: hay regiones del genoma donde humano agrupa con gorila.
+- **Globinas.** α y β hemoglobina, parálogos por duplicación. El ejemplo
+  original de Fitch, y el que van a reconocer en cualquier árbol de
+  genes mal enraizado.
+- **ILS.** El trío humano, chimpancé y gorila: hay regiones del genoma
+  donde humano agrupa con gorila y no con chimpancé, sin que nadie haya
+  transferido nada. El árbol de especies es uno; el de cada región del
+  genoma no siempre lo respeta.
 
-## 5. Cómo se infiere ortología
+::: callout-box
+**Cómo se delata una transferencia horizontal.** Un gen que llegó de
+otro linaje suele traer tres marcas:
 
-### 5.1 Reciprocal Best Hits: simple, omnipresente, sesgado
+- **Composición atípica.** Contenido de GC y uso de codones que no
+  cuadran con el resto del genoma huésped. Los dos conceptos vienen de
+  las sesiones 2 y 3.
+- **Distribución filogenética irregular.** El mismo gen aparece en
+  géneros no emparentados y falta en parientes cercanos. Es
+  exactamente la incongruencia entre árbol de genes y árbol de especies
+  que acabamos de describir.
+- **Contexto genómico.** Elementos móviles flanqueando el gen:
+  secuencias de inserción, transposones, integrones.
 
-La heurística que todo el mundo usa: A es ortólogo de B si A es el mejor hit de B **y** B es el mejor
-hit de A. Viene de los COGs (Tatusov, Koonin & Lipman 1997) y de Overbeek et al. (1999).
+Ninguna de las tres prueba nada por sí sola. Las tres juntas son un
+caso sólido.
+:::
 
-El **supuesto oculto** es que los ortólogos son las secuencias que menos han divergido entre dos
-especies, porque hasta la especiación eran el mismo gen. Ese supuesto falla, y falla mucho.
+## 4. Cómo se infiere ortología
 
-::: {.mito}
+Antes de los métodos, una propiedad que van a usar sin darse cuenta.
+La homología es **transitiva**: si el gen X es homólogo del gen Y, y el
+gen Y es homólogo del gen Z en la misma región, entonces X y Z son
+homólogos, aunque BLAST no encuentre parecido directo entre ellos. Es
+la propiedad que permite construir familias de proteínas encadenando
+parecidos débiles, y la que hace que los métodos de perfil funcionen.
+
+### 4.1 Reciprocal Best Hits
+
+La heurística que todo el mundo usa: A es ortólogo de B si A es el mejor
+hit de B y B es el mejor hit de A. Viene de los COGs (Tatusov, Koonin &
+Lipman 1997) y de Overbeek et al. (1999).
+
+El supuesto oculto es que los ortólogos son las secuencias que menos han
+divergido entre dos especies, porque hasta la especiación eran el mismo
+gen. Ese supuesto falla, y falla mucho.
+
+::: mito
 **"RBH es el estándar de oro para ortología."**
 
-Dalquen & Dessimoz (2013) lo midieron: en clados ricos en duplicación —plantas y animales, es decir,
-casi todo lo que nos interesa— **hasta ~60% de las relaciones ortólogas se pierden** con el criterio
-BBH. RBH no maneja relaciones muchos-a-muchos.
+Dalquen & Dessimoz (2013) lo midieron: en clados ricos en duplicación
+(plantas y animales, es decir, casi todo lo que nos interesa) hasta
+\~60% de las relaciones ortólogas se pierden con el criterio BBH. RBH no
+maneja relaciones muchos-a-muchos.
 
-Y Johnson (2007) mostró que, además, RBH **no es una condición lógicamente suficiente** para ortología.
-Ni necesaria.
+Y Johnson (2007) mostró que, además, RBH no es una condición lógicamente
+suficiente para ortología. Ni necesaria.
 
-Úsenlo como heurística rápida. No como verdad.
+Úsenlo como heurística rápida, no como verdad.
 :::
 
 Los modos de falla documentados, que conviene reconocer:
 
-- **Duplicaciones específicas de linaje** — rompen la reciprocidad.
-- **Pérdida diferencial de genes** — el ortólogo verdadero ya no está; gana otro.
-- **Tasas evolutivas dispares** — un parálogo que evolucionó más lento "gana" el best hit.
-- **Genes fusionados / arquitecturas de dominios** — el best hit cae sobre un dominio compartido.
+- **Duplicaciones específicas de linaje.** Rompen la reciprocidad.
+- **Pérdida diferencial de genes.** El ortólogo verdadero ya no está y
+  gana otro.
+- **Tasas evolutivas dispares.** Un parálogo que evolucionó más lento
+  gana el best hit.
+- **Genes fusionados o arquitecturas de dominios.** El best hit cae
+  sobre un dominio compartido.
 - **Errores de modelo génico** y genes de evolución rápida.
 
-### 5.2 Métodos de grafos y de árboles
+### 4.2 Métodos de grafos y de árboles
 
-**Basados en grafos:** OrthoMCL, InParanoid / InParanoiDB 9, SonicParanoid, Broccoli, Proteinortho,
-Hieranoid.
+**Basados en grafos:** OrthoMCL, InParanoid / InParanoiDB 9,
+SonicParanoid, Broccoli, Proteinortho, Hieranoid.
 
-**Basados en árboles (reconciliación):** comparan el árbol de genes con el de especies para identificar
-qué nodos son duplicación y cuáles especiación. Es lo que hacen TreeFam, **Ensembl Compara**, PhylomeDB
-y PANTHER. El fundamento es Page & Charleston (1997).
+**Basados en árboles (reconciliación):** comparan el árbol de genes con
+el de especies para identificar qué nodos son duplicación y cuáles
+especiación. Es lo que hacen TreeFam, Ensembl Compara, PhylomeDB y
+PANTHER. El fundamento es Page & Charleston (1997).
 
-**OrthoFinder** (Emms & Kelly 2015, 2019) es hoy el método de referencia: el más preciso en el
-benchmark Quest for Orthologs, y produce orthogroups, árboles de genes enraizados, eventos de
-duplicación y un árbol de especies enraizado, a velocidad comparable a las heurísticas.
+**OrthoFinder** (Emms & Kelly 2015, 2019) es hoy el método de
+referencia: el más preciso en el benchmark Quest for Orthologs, y
+produce orthogroups, árboles de genes enraizados, eventos de duplicación
+y un árbol de especies enraizado, a velocidad comparable a las
+heurísticas.
 
-### 5.3 Bases de datos
+### 4.3 Bases de datos
 
-- **OrthoDB** — catálogo jerárquico; es la base de BUSCO.
-- **eggNOG** — pre-clustering por dominios + detección filogenética de especiación/duplicación.
-- **OMA** — [omabrowser.org](https://omabrowser.org).
+- **OrthoDB.** Catálogo jerárquico; es la base de BUSCO.
+- **eggNOG.** Pre-clustering por dominios más detección filogenética de
+  especiación/duplicación.
+- **OMA.** [omabrowser.org](https://omabrowser.org).
 - **Ensembl Compara**, **InParanoiDB 9**, **PANTHER**.
 
-::: {.callout-box}
-**HomoloGene (NCBI) está descontinuada.** Se retiró en **enero de 2024**; su última compilación fue la
-build 68, de **2014**, y llevaba una década sin alinearse con los datos actuales de RefSeq/Gene. Si
-encuentran un tutorial que la use, el tutorial está viejo. El reemplazo es el dataset **NCBI
-Orthologs**, vía NCBI Datasets y la base Gene.
+::: callout-box
+**HomoloGene (NCBI) está descontinuada.** Se retiró en enero de 2024; su
+última compilación fue la build 68, de 2014, y llevaba una década sin
+alinearse con los datos actuales de RefSeq/Gene. Si encuentran un
+tutorial que la use, el tutorial está viejo. El reemplazo es el dataset
+**NCBI Orthologs**, vía NCBI Datasets y la base Gene.
 :::
 
-### 5.4 ¿Qué método uso?
+### 4.4 ¿Qué método uso?
 
-El consorcio **Quest for Orthologs** mantiene un benchmark estandarizado (Altenhoff et al. 2016) y un
-servicio web público — y **deliberadamente no corona un único mejor método**, porque la elección
-depende de para qué:
+El consorcio **Quest for Orthologs** mantiene un benchmark estandarizado
+(Altenhoff et al. 2016) y un servicio web público, y deliberadamente no
+corona un único mejor método, porque la elección depende de para qué:
 
 | Necesitas | Opciones |
-|-----------|----------|
+|----|----|
 | Alta **sensibilidad** | Ensembl Compara, OMA HOGs |
 | Alta **especificidad**, relaciones 1-a-1 | RSD, InParanoid |
-| Análisis propio *de novo* | **OrthoFinder** |
+| Análisis propio de novo | **OrthoFinder** |
 | Especies modelo | Consensus calls del Alliance of Genome Resources |
 
-: {tbl-colwidths="[40,60]"}
+## 5. La conjetura de los ortólogos
 
-## 6. La conjetura de los ortólogos
+Qué afirma: los ortólogos conservan la función ancestral más que los
+parálogos. Es el fundamento de todo el transfer de anotación funcional.
+Cada vez que alguien anota un gen porque "se parece a este otro que sí
+está caracterizado", se está apoyando en esta conjetura, que es
+exactamente eso, una conjetura.
 
-**Qué afirma:** los ortólogos conservan la función ancestral más que los parálogos. Es el fundamento de
-todo el *transfer* de anotación funcional — cada vez que alguien anota un gen porque "se parece a este
-otro que sí está caracterizado", se está apoyando en esta conjetura.
+::: debate
+**2011, el desafío.** Nehrt et al. compararon expresión y anotaciones GO
+en humano y ratón, y encontraron lo contrario de lo esperado: los
+parálogos con alta identidad eran más similares funcionalmente que los
+ortólogos.
 
-Y es exactamente eso: una **conjetura**.
+**2012, las réplicas.** Altenhoff et al. rebatieron con un título que ya
+es la respuesta: *"Orthologs Tend to Be Weakly, but Significantly, More
+Similar in Function than Paralogs"*. Chen & Zhang y Thomas et al.
+señalaron el problema de fondo: las anotaciones GO son un mal
+instrumento para probar esto.
 
-::: {.debate}
-**2011 — el desafío.** Nehrt et al. compararon expresión y anotaciones GO en humano y ratón, y
-encontraron lo contrario de lo esperado: los parálogos con alta identidad eran *más* similares
-funcionalmente que los ortólogos.
+**El confounder.** El sesgo de anotación en Gene Ontology domina el
+resultado: sesgo de autoría, frecuencia desigual de términos por
+especie, y el hecho de que ciertos rasgos sólo se estudian en ciertas
+especies. Si las colas sólo se estudian en ratón, más genes de ratón se
+anotan con funciones "de cola", y el análisis se sesga hacia los
+parálogos intra-especie.
 
-**2012 — las réplicas.** Altenhoff et al. rebatieron con un título que ya es la respuesta: *"Orthologs
-Tend to Be Weakly, but Significantly, More Similar in Function than Paralogs"*. Chen & Zhang y Thomas
-et al. señalaron el problema de fondo: **las anotaciones GO son un mal instrumento para probar esto**.
-
-**El confounder.** El sesgo de anotación en Gene Ontology domina el resultado: sesgo de autoría,
-frecuencia desigual de términos por especie, y el hecho de que ciertos rasgos sólo se estudian en
-ciertas especies. Si las colas sólo se estudian en ratón, más genes de ratón se anotan con funciones
-"de cola", y el análisis se sesga hacia los parálogos intra-especie.
-
-**2016–2020 — hacia dónde se asentó.** Kryuchkova-Mostacci & Robinson-Rechavi (2016), con datos de
-expresión en tejidos —menos sesgados que GO—, apoyaron la conjetura. Stamboulian et al. (2020)
-distinguieron dos lecturas: una **evolutiva** (sobre el tempo de la evolución funcional) y una
-**predictiva** (sobre su utilidad práctica), y concluyeron que **tanto ortólogos como parálogos aportan
-información valiosa** para predecir función.
+**2016–2020, hacia dónde se asentó.** Kryuchkova-Mostacci &
+Robinson-Rechavi (2016), con datos de expresión en tejidos (menos
+sesgados que GO), apoyaron la conjetura. Stamboulian et al. (2020)
+distinguieron dos lecturas, una evolutiva (sobre el tempo de la
+evolución funcional) y una predictiva (sobre su utilidad práctica), y
+concluyeron que tanto ortólogos como parálogos aportan información
+valiosa para predecir función.
 :::
 
-**Veredicto:** la conjetura sobrevive en una forma **débil** — los ortólogos tienden a ser, en promedio,
-algo más conservados funcionalmente. Pero el efecto es pequeño, los parálogos también predicen función,
-y buena parte del debate original fue un artefacto de las anotaciones. Es un debate **parcialmente
-resuelto**, no un dogma.
+**Veredicto:** la conjetura sobrevive en una forma débil. Los ortólogos
+tienden a ser, en promedio, algo más conservados funcionalmente, pero el
+efecto es pequeño, los parálogos también predicen función, y buena parte
+del debate original fue un artefacto de las anotaciones. Es un debate
+parcialmente resuelto, no un dogma.
 
-::: {.callout-box}
-Anécdota que vale la pena contar: Stamboulian et al. describen así la recepción del debate — *"Some
-researchers were 'baffled' that such an obvious assumption would be tested."* Que una suposición parezca
-obvia es precisamente la razón para ponerla a prueba.
+::: callout-box
+Stamboulian et al. describen así la recepción del debate: *"Some
+researchers were 'baffled' that such an obvious assumption would be
+tested."* Que una suposición parezca obvia es precisamente la razón para
+ponerla a prueba.
 :::
 
-## 7. Homología remota: el giro estructural
+## 6. Otros ejemplos
 
-Aquí es donde el tema dejó de ser historia y volvió a moverse.
+### 6.1 Opsinas: parálogos limpios y una convergencia
 
-El principio operativo es viejo: **la estructura se conserva más que la secuencia**. Proteínas homólogas
-mantienen el plegamiento a distancias evolutivas donde la secuencia ya no es reconocible. Lo nuevo es
-que ahora se puede explotar a escala.
+En los catarrinos (primates del Viejo Mundo, nosotros incluidos), una
+duplicación de \~40 kb del gen LWS en la base del linaje (\~30–40 Ma)
+generó los genes L y M yuxtapuestos en el cromosoma X, y con ellos la
+tricromía rutinaria. L y M son \~96% idénticos. De sus 15 diferencias
+aminoacídicas, sólo 3 explican el desplazamiento espectral principal:
+los sitios 180, 277 y 285, con λ~max~ ≈ 560 nm (L) y 530 nm (M).
 
-### 7.1 Foldseek
+En los platirrinos (Nuevo Mundo) la tricromía es polimórfica: un solo
+locus L/M en X con varios alelos, así que las hembras heterocigotas son
+tricromáticas y los machos no.
 
-::: {.consenso}
-van Kempen et al. (2024), *Nature Biotechnology* — búsqueda estructural rápida.
+Las excepciones: *Alouatta*, el mono aullador, evolucionó una
+duplicación L/M independiente, o sea convergencia con los catarrinos. Y
+*Aotus*, el mono nocturno, es monocromático porque perdió la opsina S
+funcional.
 
-El truco es el **alfabeto 3Di**: 20 estados que describen las **interacciones terciarias** entre cada
-residuo y su vecino espacialmente más cercano. **No describe el backbone** — y por eso funciona: tiene
-menor dependencia entre letras consecutivas y concentra la información en los núcleos conservados. Con
-eso, una estructura se vuelve una cadena de letras y se puede buscar como si fuera secuencia, con una
-matriz de sustitución tipo BLOSUM.
+La opsina S es ortóloga entre primates; M es parálogo de L. Un mismo
+sistema visual contiene los tres conceptos.
 
-Del abstract: *"Foldseek decreases computation times by four to five orders of magnitude with 86%, 88%
-and 133% of the sensitivities of Dali, TM-align and CE, respectively"*. En el benchmark SCOPe40 es
-**>4,000× más rápido que TM-align**.
+### 6.2 TP53 en el elefante
+
+El genoma del elefante codifica \~20 copias de TP53: 1 ortólogo canónico
+más \~19 retrogenes (procesados, sin intrones). El relato conocido lo
+conecta con la **paradoja de Peto**, según la cual los animales grandes
+y longevos no tienen más cáncer pese a tener más células y más
+divisiones.
+
+::: debate
+Nunney (2022) reevaluó el caso. El retrogén ancestral ya estaba truncado
+(de 390 a 157 aa por un frameshift) antes de duplicarse; 14 de las 19
+copias están truncadas a ≤88 aa; y no hay evidencia de selección
+positiva ni negativa en esos codones. El patrón encaja con un modelo
+neutral de deriva.
+
+Sirve para dos cosas: como ejemplo de parálogos por retrotransposición,
+y como recordatorio de que un "ejemplo de libro de texto" de adaptación
+puede estar peor sustentado de lo que se cree.
 :::
 
-### 7.2 La escala nueva
+### 6.3 Lactasa: convergencia en el mismo enhancer
 
-**AlphaFold DB** pasó de ~300 mil estructuras en 2021 a **>214 millones** en 2024. La versión 2025 está
-alineada a UniProt 2025_03 e incluye isoformas.
+Las variantes de persistencia de lactasa no están en LCT: están \~14 kb
+upstream, dentro del intrón 13 de MCM6, el gen vecino, que funciona como
+enhancer.
 
-Cuando Barrio-Hernandez et al. (2023) agruparon estructuralmente todo el AFDB, encontraron **2.30
-millones de clusters** no-singleton — y que **~31% carecían de anotación**: familias "oscuras" sin
-homólogos detectables por secuencia. Ahí apareció, entre otras cosas, similitud estructural remota entre
-proteínas humanas de inmunidad y proteínas de procariotas. En paralelo, Durairaj et al. describieron
-plegamientos nuevos.
+Evolucionaron varias veces, de forma independiente, con alelos
+distintos: en Europa −13910\*T (rs4988235); en África y Medio Oriente
+−13915\*G, −14010\*C y −13907\*G (Tishkoff et al. 2007). Mismo fenotipo,
+misma región reguladora, mutaciones distintas. Es convergencia a nivel
+molecular, y uno de los ejemplos canónicos de coevolución gen-cultura.
 
-Ésa es la **materia oscura** del espacio de proteínas, y la homología remota estructural la está
-iluminando.
-
-### 7.3 El panorama es de complementariedad
-
-Los métodos de perfil clásicos **no murieron**. PSI-BLAST, HMMER/jackhmmer y HHblits/HHsearch/HHpred
-siguen siendo la referencia — de hecho HHpred es el control fuerte contra el que se miden los métodos
-nuevos. El orden, creciente en sensibilidad y en costo:
-
-**secuencia** (BLAST, DIAMOND, MMseqs2) → **perfil** (HMMER, HHblits) → **embeddings de modelos de
-lenguaje** (pLM-BLAST, PLMSearch) → **estructura** (Foldseek, AFDB)
-
-::: {.debate}
-**¿Se puede inferir *ortología* —no sólo homología— con estructura?** Frente abierto.
-
-A favor: FoldTree (Moi et al., *Nat Struct Mol Biol* 2025) construye filogenias a partir de la forma;
-Unicore (Kim et al. 2025) reconstruye con genes core estructurales.
-
-En contra, y hay que citarlo para equilibrio: *"Newly Developed Structure-Based Methods Do Not Outperform
-Standard Sequence-Based Methods for Large-Scale Phylogenomics"* (*Mol Biol Evol* 2025) — el modelo de
-secuencia LG **superó** a los métodos estructurales en filogenómica a gran escala.
-
-La **homología remota** por estructura es un avance real y consolidado. La **ortología** por estructura,
-no todavía.
-:::
-
-::: {.mito}
-**"Estructura conservada ⇒ homología."** La conservación del plegamiento es evidencia fuerte, pero no
-prueba absoluta: existe **convergencia estructural**. Y el principio tampoco es universal — las regiones
-de loop y coil no están conservadas.
-:::
-
-## 8. Xenología: β-lactamasas
-
-El caso donde la transferencia horizontal se ve, se rastrea y además importa clínicamente. Es el material
-de la práctica de esta sesión.
-
-### 8.1 El mapa mínimo
-
-La clasificación **Ambler** (molecular) parte en cuatro clases: **A, C y D son serina-β-lactamasas**;
-**B son metalo-β-lactamasas** (dependientes de Zn²⁺). La clasificación **Bush-Jacoby** es funcional, por
-perfil de sustrato.
-
-Las familias que van a ver: **TEM** y **SHV** (clase A, las ESBL clásicas), **CTX-M** (clase A,
-cefotaximasas), **KPC** (clase A, carbapenemasa), **NDM-1** (clase B), **OXA** (clase D).
-
-::: {.callout-box}
-**mecA / PBP2a NO es una β-lactamasa.** Es una PBP (*penicillin-binding protein*) alterada, con baja
-afinidad por β-lactámicos, codificada en el elemento SCC*mec* de *S. aureus* (MRSA). El mecanismo es
-**evasión del blanco**, no hidrólisis del antibiótico. Se confunde seguido; sirve para contrastar dos
-mecanismos distintos de resistencia.
-:::
-
-### 8.2 CTX-M: el xenólogo perfecto
-
-::: {.consenso}
-**El origen es rastreable.** Las cefotaximasas cromosómicas intrínsecas de ***Kluyvera*** spp. son las
-progenitoras de CTX-M (Rodríguez et al. 2004; Poirel et al. 2002). La correspondencia es fina: los
-grupos 1 y 2 vienen de *K. ascorbata*; los grupos 8 y 9 de *K. georgiana*. Dentro de un grupo la
-identidad es >94%; entre grupos, ≤90%.
-
-**La movilización también.** Las secuencias de inserción **ISEcp1** e **ISCR1** sacaron *bla*~CTX-M~ del
-cromosoma y lo llevaron a plásmidos. ISEcp1 aporta además el **promotor fuerte** que le faltaba: en
-*Kluyvera*, *bla*~KLU~ se expresa débilmente. El gen no sólo se mudó — se encendió.
-
-Y ocurrió **al menos 8–9 veces de forma independiente**. Hoy CTX-M-15 y CTX-M-14 son las variantes más
-prevalentes del mundo.
-:::
-
-### 8.3 NDM-1: HGT reciente
-
-Primer aislamiento en 2009 (India; de ahí "New Delhi"). Origen probablemente **quimérico** —los primeros
-6 aminoácidos coinciden con aphA6— con Tn125/ISAba125 como transposón ancestral y *A. baumannii* como
-huésped ancestral probable. Hoy viaja en plásmidos IncX3 e IncF, con contexto genómico variable: la
-firma clásica del HGT.
-
-Hay un trabajo mexicano directamente relevante: Toledano-Tableros et al. (2021) documentan la
-diseminación de *bla*~NDM-1~ entre varios *sequence types* de *K. pneumoniae* en México, por plásmidos
-tipo IncF.
-
-### 8.4 Cómo se delata una transferencia horizontal
-
-- **Composición atípica de GC** y **uso de codones discordante** con el genoma huésped.
-- **Distribución filogenética irregular** — el mismo gen en géneros no emparentados. Esto *es*
-  incongruencia árbol de genes vs árbol de especies (§4).
-- **Contexto genómico** — elementos móviles flanqueantes: ISEcp1, ISCR1, IS26, Tn125, integrones de
-  clase 1.
-
-### 8.5 Por qué importa
-
-::: {.callout-box}
-La **WHO Bacterial Priority Pathogens List 2024** pone en grupo **crítico** a los Enterobacterales
-resistentes a carbapenémicos y a cefalosporinas de 3ª generación — es decir, exactamente CTX-M y NDM.
-
-El estudio GRAM (*The Lancet*, 2024) estimó **1.27 millones** de muertes atribuibles a resistencia
-antimicrobiana en 2019, y proyecta **>39 millones** acumuladas entre 2025 y 2050. Las muertes por MRSA
-se duplicaron entre 1990 y 2021.
-
-El gen que van a alinear en la práctica es parte de eso.
-:::
-
-## 9. Otros ejemplos
-
-### 9.1 Opsinas: parálogos limpios y una convergencia
-
-En los **catarrinos** (primates del Viejo Mundo, nosotros incluidos), una duplicación de ~40 kb del gen
-LWS en la base del linaje (~30–40 Ma) generó los genes **L y M yuxtapuestos en el cromosoma X**, y con
-ellos la **tricromía rutinaria**. L y M son ~96% idénticos. De sus 15 diferencias aminoacídicas, **sólo
-3 explican el desplazamiento espectral principal**: los sitios 180, 277 y 285 — λ~max~ ≈ 560 nm (L) y
-530 nm (M).
-
-En los **platirrinos** (Nuevo Mundo) la tricromía es **polimórfica**: un solo locus L/M en X con varios
-alelos, así que las hembras heterocigotas son tricromáticas y los machos no.
-
-Las excepciones son lo mejor del ejemplo: *Alouatta*, el mono aullador, evolucionó una duplicación L/M
-**independiente** — **convergencia** con los catarrinos. Y *Aotus*, el mono nocturno, es monocromático:
-perdió la opsina S funcional.
-
-La opsina S es **ortóloga** entre primates; M es **parálogo** de L. Un mismo sistema visual contiene los
-tres conceptos.
-
-### 9.2 TP53 en el elefante: cuando el ejemplo de libro se tambalea
-
-El genoma del elefante codifica ~20 copias de TP53: **1 ortólogo canónico + ~19 retrogenes** (procesados,
-sin intrones). El relato conocido lo conecta con la **paradoja de Peto** — los animales grandes y
-longevos no tienen más cáncer pese a tener más células y más divisiones.
-
-::: {.debate}
-Nunney (2022) reevaluó el caso y el resultado incomoda: el retrogén ancestral **ya estaba truncado** (de
-390 a 157 aa por un frameshift) *antes* de duplicarse; **14 de las 19 copias están truncadas** a ≤88 aa;
-y **no hay evidencia de selección positiva ni negativa** en esos codones. El patrón encaja con un
-**modelo neutral** de deriva.
-
-Sirve doble: como ejemplo de parálogos por retrotransposición, y como recordatorio de que un "ejemplo de
-libro de texto" de adaptación puede estar peor sustentado de lo que se cree.
-:::
-
-### 9.3 Lactasa: convergencia en el mismo enhancer
-
-Las variantes de **persistencia de lactasa** no están en LCT: están ~14 kb upstream, dentro del **intrón
-13 de MCM6**, el gen vecino, que funciona como enhancer.
-
-Lo notable es que evolucionaron **varias veces, de forma independiente, con alelos distintos**: en Europa
-**−13910\*T** (rs4988235); en África y Medio Oriente **−13915\*G**, **−14010\*C**, **−13907\*G**
-(Tishkoff et al. 2007). Mismo fenotipo, misma región reguladora, mutaciones distintas — convergencia a
-nivel molecular, y uno de los ejemplos canónicos de **coevolución gen-cultura**.
-
-::: {.callout-box}
-**Advertencia de coordenadas.** Las coordenadas genómicas de rs4988235 **difieren entre hg19 y hg38**. No
-las mezclen. UCSC tiene una página educativa específica sobre lactasa; úsenla para sacar las coordenadas
+::: callout-box
+**Advertencia de coordenadas.** Las coordenadas genómicas de rs4988235
+difieren entre hg19 y hg38. No las mezclen. UCSC tiene una página
+educativa específica sobre lactasa; úsenla para sacar las coordenadas
 correctas en ambos ensamblados. Esto engancha directo con la sesión 11.
 :::
 
 ## Mitos y realidades: el resumen
 
-::: {.mito}
-1. **"Ortólogos = distintas especies, parálogos = misma especie."** Lo que define la relación es el
-   evento (especiación vs duplicación), no el organismo.
-2. **"RBH es el estándar de oro."** Pierde hasta ~60% de los ortólogos en eucariotas con duplicación, y
-   no es lógicamente suficiente.
-3. **"Porcentaje de homología."** Error categorial: la homología es binaria.
-4. **"Estructura conservada ⇒ homología."** Evidencia fuerte, no prueba: existe convergencia estructural.
-5. **"Las 20 copias de TP53 del elefante son adaptación anticáncer."** Cuestionado; el patrón es
-   compatible con deriva neutral.
+::: mito
+1.  **"Ortólogos = distintas especies, parálogos = misma especie."** Lo
+    que define la relación es el evento (especiación vs duplicación), no
+    el organismo.
+2.  **"RBH es el estándar de oro."** Pierde hasta \~60% de los ortólogos
+    en eucariotas con duplicación, y no es lógicamente suficiente.
+3.  **"Porcentaje de homología."** Error categorial: la homología es
+    binaria.
+4.  **"Las 20 copias de TP53 del elefante son adaptación anticáncer."**
+    Cuestionado; el patrón es compatible con deriva neutral.
 :::
 
 ## Práctica
 
-El pipeline de RBH entre dos genomas bacterianos y el ejercicio de xenología con CTX-M están en la
-[práctica de la sesión 9](/practicas/clase09-homologia.qmd). El concepto de cómputo del día son los
-**ciclos** (`for`, `while`) — el RBH es el pretexto perfecto, porque no se puede hacer sin uno.
+La práctica de esta sesión construye un pipeline de **reciprocal best
+hits** entre dos proteomas y está en la [práctica de la sesión
+10](/practicas/clase10-homologia.qmd).
+
+El concepto de cómputo del día son los **ciclos** (`for`, `while`). El
+RBH es el pretexto perfecto porque no se puede hacer sin uno: hay que
+correr la búsqueda en las dos direcciones y después cruzar las dos
+tablas.
 
 ## Fuentes {.unnumbered}
 
 **Definiciones fundacionales**
 
 - Owen R (1843); reimpreso en *On the Nature of Limbs* (1849).
-- Fitch WM (1970) "Distinguishing homologous from analogous proteins", *Syst Zool* 19(2):99–113.
+- Fitch WM (1970) "Distinguishing homologous from analogous proteins",
+  *Syst Zool* 19(2):99–113.
   [doi:10.2307/2412448](https://doi.org/10.2307/2412448)
-- Fitch WM (2000) "Homology: a personal view on some of the problems", *Trends Genet* 16(5):227–231.
+- Fitch WM (2000) "Homology: a personal view on some of the problems",
+  *Trends Genet* 16(5):227–231.
   [doi:10.1016/S0168-9525(00)02005-9](https://doi.org/10.1016/S0168-9525(00)02005-9)
-- Gray GS & Fitch WM (1983) *Mol Biol Evol* 1(1):57–66 — origen de "xenólogo".
+- Una discusión de los anteriores en el obituario de Fitch: Koonin EV (2011) "Obituary: Walter Fitch and the orthology paradigm", *Brief Bioinform* Sep 21;12(5):377–378. [doi:10.1093/bib/bbr058](https://doi.org/10.1093/bib/bbr058)
+- Gray GS & Fitch WM (1983) *Mol Biol Evol* 1(1):57–66. Origen de
+  "xenólogo".
 - Ohno S (1970) *Evolution by Gene Duplication*. Springer-Verlag.
-- Remm M, Storm CE, Sonnhammer ELL (2001) *J Mol Biol* 314:1041–1052 — in-paralogs, InParanoid.
+- Remm M, Storm CE, Sonnhammer ELL (2001) *J Mol Biol* 314:1041–1052.
+  In-paralogs, InParanoid.
 - Sonnhammer ELL & Koonin EV (2002) *Trends Genet* 18(12):619–620.
   [doi:10.1016/S0168-9525(02)02793-2](https://doi.org/10.1016/S0168-9525(02)02793-2)
-- Koonin EV (2005) "Orthologs, paralogs, and evolutionary genomics", *Annu Rev Genet* 39:309–338.
+- Koonin EV (2005) "Orthologs, paralogs, and evolutionary genomics",
+  *Annu Rev Genet* 39:309–338.
   [doi:10.1146/annurev.genet.39.073003.114725](https://doi.org/10.1146/annurev.genet.39.073003.114725)
 
 **El error terminológico**
 
-- Reeck GR, de Haën C, Teller DC, Doolittle RF, Fitch WM, Dickerson RE, et al. (1987) *Cell* 50(5):667.
+- Reeck GR, de Haën C, Teller DC, Doolittle RF, Fitch WM, Dickerson RE,
+  et al. (1987) *Cell* 50(5):667.
   [doi:10.1016/0092-8674(87)90322-9](https://doi.org/10.1016/0092-8674(87)90322-9)
 - Ghiselin MT (1969) *Syst Zool* 18:148–149.
 - Marabotti A & Facchiano AM (2009) *Trends Biochem Sci* 34(3):98–99.
   [doi:10.1016/j.tibs.2008.12.001](https://doi.org/10.1016/j.tibs.2008.12.001)
-- Dessimoz C et al. "Orthology: definitions, inference, and impact on species phylogeny".
+- Dessimoz C et al. "Orthology: definitions, inference, and impact on
+  species phylogeny".
   [arXiv:1903.04530](https://arxiv.org/abs/1903.04530)
 
 **Inferencia de ortología**
 
-- Tatusov RL, Koonin EV, Lipman DJ (1997) — COGs.
-- Dalquen DA & Dessimoz C (2013) "Bidirectional best hits miss many orthologs…", *Genome Biol Evol*
-  5(10):1800–1806. [doi:10.1093/gbe/evt132](https://doi.org/10.1093/gbe/evt132)
-- Johnson (2007) "Reciprocal best hits are not a logically sufficient condition for orthology".
+- Tatusov RL, Koonin EV, Lipman DJ (1997). COGs.
+- Dalquen DA & Dessimoz C (2013) "Bidirectional best hits miss many
+  orthologs…", *Genome Biol Evol* 5(10):1800–1806.
+  [doi:10.1093/gbe/evt132](https://doi.org/10.1093/gbe/evt132)
+- Johnson (2007) "Reciprocal best hits are not a logically sufficient
+  condition for orthology".
   [arXiv:0706.0117](https://arxiv.org/abs/0706.0117)
-- Emms DM & Kelly S (2019) "OrthoFinder: phylogenetic orthology inference…", *Genome Biol* 20:238.
+- Emms DM & Kelly S (2019) "OrthoFinder: phylogenetic orthology
+  inference…", *Genome Biol* 20:238.
   [doi:10.1186/s13059-019-1832-y](https://doi.org/10.1186/s13059-019-1832-y)
-- Altenhoff AM et al. (2016) "Standardized benchmarking in the quest for orthologs", *Nat Methods*
-  13:425–430. [doi:10.1038/nmeth.3830](https://doi.org/10.1038/nmeth.3830)
-- Altenhoff AM et al. (2024) "OMA orthology in 2024", *Nucleic Acids Res* 52(D1):D513–D521.
+- Altenhoff AM et al. (2016) "Standardized benchmarking in the quest for
+  orthologs", *Nat Methods* 13:425–430.
+  [doi:10.1038/nmeth.3830](https://doi.org/10.1038/nmeth.3830)
+- Altenhoff AM et al. (2024) "OMA orthology in 2024", *Nucleic Acids
+  Res* 52(D1):D513–D521.
   [doi:10.1093/nar/gkad1020](https://doi.org/10.1093/nar/gkad1020)
-- Page RDM & Charleston MA (1997) *Mol Phylogenet Evol* 7:231–240 — reconciliación.
+- Page RDM & Charleston MA (1997) *Mol Phylogenet Evol* 7:231–240.
+  Reconciliación.
 
 **Ortholog conjecture**
 
 - Nehrt NL et al. (2011) *PLoS Comput Biol*.
-- Altenhoff AM et al. (2012) "Resolving the Ortholog Conjecture…", *PLoS Comput Biol*.
+- Altenhoff AM et al. (2012) "Resolving the Ortholog Conjecture…", *PLoS
+  Comput Biol*.
 - Stamboulian M et al. (2020) *Bioinformatics* 36(Suppl_1):i219–i226.
   [doi:10.1093/bioinformatics/btaa468](https://doi.org/10.1093/bioinformatics/btaa468)
 - Kryuchkova-Mostacci N & Robinson-Rechavi M (2016).
 
-**Homología remota y estructura**
-
-- van Kempen M et al. (2024) "Fast and accurate protein structure search with Foldseek", *Nat Biotechnol*
-  42(2):243–246. [doi:10.1038/s41587-023-01773-0](https://doi.org/10.1038/s41587-023-01773-0)
-- Varadi M et al. (2024) "AlphaFold Protein Structure Database in 2024…", *Nucleic Acids Res*
-  52(D1):D368–D375. [doi:10.1093/nar/gkad1011](https://doi.org/10.1093/nar/gkad1011)
-- Barrio-Hernandez I et al. (2023) "Clustering predicted structures at the scale of the known protein
-  universe", *Nature* 622:637–645.
-  [doi:10.1038/s41586-023-06510-w](https://doi.org/10.1038/s41586-023-06510-w)
-- Moi D et al. (2025) FoldTree, *Nat Struct Mol Biol*.
-  [doi:10.1038/s41594-025-01649-8](https://doi.org/10.1038/s41594-025-01649-8)
-- "Newly Developed Structure-Based Methods Do Not Outperform Standard Sequence-Based Methods for
-  Large-Scale Phylogenomics" (2025) *Mol Biol Evol* 42(7):msaf149.
-  [doi:10.1093/molbev/msaf149](https://doi.org/10.1093/molbev/msaf149)
-- Kaminski K et al. (2023) "pLM-BLAST…", *Bioinformatics* 39(10):btad579.
-  [doi:10.1093/bioinformatics/btad579](https://doi.org/10.1093/bioinformatics/btad579)
-
-**β-lactamasas y xenología**
-
-- Rodríguez MM et al. (2004) *Antimicrob Agents Chemother* 48:4895–4897.
-- Poirel L et al. (2003) "ISEcp1B is involved in expression and mobilization of a blaCTX-M…",
-  *Antimicrob Agents Chemother* 47:2938–2945.
-- Cantón R, González-Alba JM, Galán JC (2012) "CTX-M Enzymes: Origin and Diffusion", *Front Microbiol*
-  3:110. [doi:10.3389/fmicb.2012.00110](https://doi.org/10.3389/fmicb.2012.00110)
-- Acman M et al. (2022) "Role of mobile genetic elements in the global dissemination of blaNDM",
-  *Nat Commun* 13:1131. [doi:10.1038/s41467-022-28819-2](https://doi.org/10.1038/s41467-022-28819-2)
-- Toledano-Tableros JE et al. (2021) *Front Microbiol* 12:611274.
-  [doi:10.3389/fmicb.2021.611274](https://doi.org/10.3389/fmicb.2021.611274)
-- Sati H et al. (2025) "The WHO Bacterial Priority Pathogens List 2024", *Lancet Infect Dis*.
-  [doi:10.1016/S1473-3099(25)00118-5](https://doi.org/10.1016/S1473-3099(25)00118-5)
-- GBD 2021 Antimicrobial Resistance Collaborators (2024) *The Lancet* 404:1199–1226.
-  [doi:10.1016/S0140-6736(24)01867-1](https://doi.org/10.1016/S0140-6736(24)01867-1)
-
 **Otros ejemplos**
 
-- Dulai KS et al. (1999) *Genome Res* 9:629 — duplicación de opsinas.
+- Dulai KS et al. (1999) *Genome Res* 9:629. Duplicación de opsinas.
+
 - Abegglen LM et al. (2015) *JAMA* 314:1850–1860.
   [doi:10.1001/jama.2015.13134](https://doi.org/10.1001/jama.2015.13134)
-- Sulak M et al. (2016) *eLife* 5:e11994. [doi:10.7554/eLife.11994](https://doi.org/10.7554/eLife.11994)
-- Nunney L (2022) "Cancer suppression and the evolution of multiple retrogene copies of TP53 in
-  elephants: A re-evaluation", *Evol Appl* 15. [doi:10.1111/eva.13383](https://doi.org/10.1111/eva.13383)
+
+- Sulak M et al. (2016) *eLife* 5:e11994.
+  [doi:10.7554/eLife.11994](https://doi.org/10.7554/eLife.11994)
+
+- Nunney L (2022) "Cancer suppression and the evolution of multiple
+  retrogene copies of TP53 in elephants: A re-evaluation", *Evol
+  Appl* 15. [doi:10.1111/eva.13383](https://doi.org/10.1111/eva.13383)
+
 - Tishkoff SA et al. (2007) *Nat Genet* 39:31.
+
 - Ségurel L & Bon C (2017) *Annu Rev Genomics Hum Genet* 18:297.
 
-- Heladia Salgado — [Homología y ciclos](https://lcg-cursos.github.io/material/introbioinfo/blast_var_for_scripts.html#34)
+- Heladia Salgado, [Homología y
+  ciclos](https://lcg-cursos.github.io/material/introbioinfo/blast_var_for_scripts.html#34)

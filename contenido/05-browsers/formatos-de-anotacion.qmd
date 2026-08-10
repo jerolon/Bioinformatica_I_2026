@@ -1,24 +1,174 @@
 ---
-title: "Formatos: GTF/GFF3, BED, VCF"
+title: "Formatos de anotación en la práctica"
 subtitle: "Unidad 5 · Sesión 11"
 author: "Jero"
 ---
 
-::: {.pendiente}
-Capítulo por escribir.
-:::
-
 ## Idea central
 
-<!-- Una o dos frases: qué se lleva el alumno de aquí. -->
+En la sesión 2 vieron el mapa de formatos: qué guarda cada uno y en qué
+se distinguen. Hoy no repetimos el mapa. Hoy operamos.
+
+Y operar significa, básicamente, cruzar intervalos. Casi toda la
+genómica computacional del día a día se reduce a preguntar qué se solapa
+con qué.
 
 ## Desarrollo
 
-## Práctica
+### El único verbo que importa
 
-<!-- Ejercicios de terminal. Ver también practicas/. -->
+Tienen unos exones y unas variantes, y quieren saber cuáles variantes
+caen dentro de cuáles exones. Tienen unos picos de ChIP-seq y unos
+promotores, y quieren saber cuáles coinciden. Tienen unas regiones
+conservadas y unos genes, y quieren la intersección.
+
+Todas son la misma operación sobre intervalos, y hay una herramienta que
+la hace: **bedtools**.
+
+```bash
+# Qué de A se solapa con B
+bedtools intersect -a genes.bed -b variantes.bed -wa -wb
+
+# Fundir intervalos que se traslapan entre sí
+bedtools merge -i ordenado.bed
+
+# Quitarle a A lo que se solape con B
+bedtools subtract -a a.bed -b b.bed
+
+# Para cada intervalo de A, el más cercano de B
+bedtools closest -a consulta.bed -b elementos.bed
+
+# Sacar la secuencia de unos intervalos
+bedtools getfasta -fi genoma.fa -bed regiones.bed -fo salida.fa
+```
+
+`intersect` con `-wa -wb` imprime las dos líneas que se solaparon, la de
+A y la de B, para que sepan qué pegó con qué. Sin esas banderas solo
+obtienen la intersección geométrica y pierden la identidad.
+
+`merge` exige que la entrada esté **ordenada**, y esa es la primera
+fuente de resultados raros:
+
+```bash
+sort -k1,1 -k2,2n entrada.bed > ordenado.bed
+```
+
+### La trampa, ahora en serio
+
+Ya saben que BED es 0-based semiabierto y que GTF y VCF son 1-based
+cerrados. Lo vieron con figura y ejercicio (@fig-coordenadas).
+
+![Recordatorio de la sesión 2: el mismo intervalo, contado de las dos maneras.](../../figuras/sesion02/coordenadas.svg){#fig-coordenadas}
+
+Lo que no han hecho es equivocarse con datos reales, así que va el caso.
+
+Quieren los exones de un GTF como archivo BED. La conversión ingenua:
+
+```bash
+awk -F'\t' '$3=="exon"{print $1"\t"$4"\t"$5}' anotacion.gtf > mal.bed
+```
+
+Eso está mal, y no lo van a notar. Cada intervalo queda **corrido una
+base a la derecha**, porque copiaron un inicio 1-based a un campo que se
+lee como 0-based. La conversión correcta resta uno al inicio y deja el
+final igual:
+
+```bash
+awk -F'\t' 'BEGIN{OFS="\t"} $3=="exon"{print $1, $4-1, $5}' anotacion.gtf > bien.bed
+```
+
+Un `-1`. Eso separa un conteo correcto de uno equivocado en todos los
+exones del genoma, sin un solo mensaje de error.
+
+::: callout-box
+Los dos errores silenciosos de este capítulo son el mismo tipo de bicho:
+**producen resultados plausibles**.
+
+La nomenclatura de cromosomas da cero intersecciones. La conversión de
+coordenadas da intersecciones corridas una base. Ninguno de los dos
+levanta una excepción, y los dos pasan revisión por pares con
+frecuencia.
+
+El hábito defensivo es sencillo: cuando un cruce dé cero, sospechen de
+`chr`. Cuando dé un número que no cuadra por poquito, sospechen del
+off-by-one. Y siempre, siempre, miren las primeras líneas del archivo
+antes de operar con él.
+:::
+
+### Comprimir e indexar
+
+Un GTF humano completo pesa cientos de megabytes y casi siempre solo
+necesitan un pedazo. Para eso está indexar.
+
+```bash
+sort -k1,1 -k4,4n anotacion.gtf > ordenado.gtf
+bgzip ordenado.gtf
+tabix -p gff ordenado.gtf.gz
+
+# Ahora una consulta por región es instantánea
+tabix ordenado.gtf.gz 17:7668421-7687490
+```
+
+Lo mismo funciona con VCF y con BED, cambiando `-p vcf` o `-p bed`.
+
+Y acá está el detalle que ya vieron con `samtools faidx` en la sesión 5:
+**`tabix` necesita `bgzip`, no `gzip`**. `bgzip` escribe en bloques
+independientes que permiten saltar; `gzip` obliga a descomprimir desde el
+principio. Un archivo comprimido con `gzip` normal no se puede indexar, y
+ese es un error que van a ver.
+
+### Leer un GTF con awk
+
+El GTF tiene nueve columnas separadas por tabuladores. Las que usan a
+diario: la 1 es el cromosoma, la 3 el tipo de feature, la 4 y la 5 son
+inicio y fin, la 7 la hebra, la 9 los atributos.
+
+```bash
+# Cuántos exones hay en el cromosoma 17
+awk -F'\t' '$1=="17" && $3=="exon"' anotacion.gtf | wc -l
+
+# Qué tipos de feature existen
+cut -f3 anotacion.gtf | sort | uniq -c | sort -rn
+
+# Las líneas de un gen por nombre
+awk -F'\t' '$9 ~ /gene_name "TP53"/' anotacion.gtf
+```
+
+Ese último usa un match de expresión regular sobre la columna 9, que es
+texto libre con pares clave-valor. Es funcional y es frágil: `TP53`
+también hace match con `TP53TG1`. Para trabajo serio conviene delimitar
+mejor o usar una biblioteca.
+
+### Leer un VCF
+
+Un VCF tiene tres partes. Las líneas que empiezan con `##` son metadatos:
+versión del formato, las líneas `##contig` con los cromosomas y sus
+longitudes (que es donde se puede identificar el ensamblado), y las
+definiciones de los campos INFO y FORMAT.
+
+La línea que empieza con un solo `#` son los encabezados de columna:
+`CHROM POS ID REF ALT QUAL FILTER INFO` y, si hay muestras, `FORMAT` más
+una columna por muestra.
+
+Y de ahí para abajo, una variante por renglón.
+
+```bash
+# Ver solo la cabecera
+bcftools view -h variantes.vcf.gz | tail -20
+
+# Las primeras variantes, en columnas legibles
+bcftools query -f '%CHROM\t%POS\t%REF\t%ALT\n' variantes.vcf.gz | head
+```
+
+Con leer `CHROM`, `POS`, `REF` y `ALT` tienen lo suficiente para saber
+qué cambió y dónde. El resto lo van a necesitar cuando lleguen a llamado
+de variantes, que no es este curso.
 
 ## Fuentes {.unnumbered}
 
-- [Heladia — Análisis de un genoma](https://lcg-cursos.github.io/material/introbioinfo/L6-conteos.html)
-
+- Quinlan, A. R. & Hall, I. M. (2010). BEDTools: a flexible suite of utilities for comparing genomic features. *Bioinformatics* 26(6): 841-842. [doi:10.1093/bioinformatics/btq033](https://doi.org/10.1093/bioinformatics/btq033)
+- Documentación de bedtools. <https://bedtools.readthedocs.io/>
+- Li, H. (2011). Tabix: fast retrieval of sequence features from generic TAB-delimited files. *Bioinformatics* 27(5): 718-719. [doi:10.1093/bioinformatics/btq671](https://doi.org/10.1093/bioinformatics/btq671)
+- Danecek, P. et al. (2011). The variant call format and VCFtools. *Bioinformatics* 27(15): 2156-2158. [doi:10.1093/bioinformatics/btr330](https://doi.org/10.1093/bioinformatics/btr330)
+- Especificaciones de VCF y de los índices. <https://samtools.github.io/hts-specs/>
+- Especificación de GFF3, Sequence Ontology. <https://github.com/The-Sequence-Ontology/Specifications/blob/master/gff3.md>

@@ -5,21 +5,30 @@ title: "Créditos y licencias"
 ## Contenido del curso
 
 El material escrito por el equipo docente (capítulos, prácticas, presentaciones) se publica bajo
-**[CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/deed.es)** — la misma
-licencia de los cursos de los que deriva. Puedes reusarlo y adaptarlo con atribución, sin fines
-comerciales, compartiendo bajo la misma licencia.
+**[CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/deed.es)**, la misma
+licencia con la que Evelia Coss comparte el material del que parte. Puedes reusarlo y adaptarlo con
+atribución, sin fines comerciales, compartiendo bajo la misma licencia.
 
 ## Material fuente
 
-Este curso adapta material de dos cursos previos de la LCG, ambos CC BY-NC-SA 4.0:
-
 **Evelia Coss, PhD** — [Introducción a la Bioinformática, LCG 2025](https://eveliacoss.github.io/LCG2025_IntroBioinfo_S1/)
-De aquí vienen las secciones de buenas prácticas, Markdown y los ejercicios de anotación
-(FASTA, GTF, BED, `awk`).
+Material **CC BY-NC-SA 4.0** declarado en su sitio, y con **permiso explícito de la autora** para
+adaptarlo. De aquí, con atribución en cada capítulo, vienen las secciones de buenas prácticas,
+Markdown y los ejercicios de anotación (FASTA, GTF, BED, `awk`).
 
 **Heladia Salgado** — [Introducción a la Bioinformática](https://lcg-cursos.github.io/material/introbioinfo/)
-De aquí viene la columna vertebral de las prácticas: shell, archivos y GenBank, alineamientos,
-BLAST/variables/scripts, homología y ciclos, y análisis de genomas.
+Su curso nos sirve como **referencia de qué temas cubrir y en qué orden**: shell, archivos y
+GenBank, alineamientos, BLAST, homología y ciclos, análisis de genomas. **Su sitio no declara una
+licencia y no hemos podido confirmarla, así que lo tratamos como todos los derechos reservados:** lo
+citamos y lo enlazamos, pero no adaptamos su texto, sus ejercicios, sus datos ni sus figuras. Si eso
+cambia, se actualiza aquí.
+
+## Bibliografía
+
+Los libros y sitios que citamos como bibliografía son de sus autores: sólo los enlazamos, no
+redistribuimos nada. En particular, de **Compeau & Pevzner**
+([*Bioinformatics Algorithms*](https://bioinformaticsalgorithms.org)) adaptamos su marco
+pedagógico con el visto bueno del autor (el Manhattan Tourist Problem).
 
 ## Plantilla del sitio
 
@@ -55,4 +64,4 @@ Modificaciones respecto a la plantilla original:
 
 - **Jerónimo Roberto Miranda Rodríguez** — sesión 1 y unidades 3–5.
 - **Wilbert** — unidad 2.
-- *(Por definir)* — unidad 6, Introducción a R.
+- **Haydeé Peruyero** — unidad 6, Introducción a R.

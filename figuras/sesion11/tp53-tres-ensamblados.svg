@@ -1,0 +1,63 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<svg xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink' width='453.54pt' height='226.77pt' viewBox='0 0 453.54 226.77'>
+<g class='svglite'>
+<defs>
+  <style type='text/css'><![CDATA[
+    .svglite line, .svglite polyline, .svglite polygon, .svglite path, .svglite rect, .svglite circle {
+      fill: none;
+      stroke: #000000;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+      stroke-miterlimit: 10.00;
+    }
+    .svglite text {
+      white-space: pre;
+    }
+    .svglite g.glyphgroup path {
+      fill: inherit;
+      stroke: none;
+    }
+  ]]></style>
+</defs>
+<rect width='100%' height='100%' style='stroke: none; fill: none;'/>
+<defs>
+  <clipPath id='cpMC4wMHw0NTMuNTR8MC4wMHwyMjYuNzc='>
+    <rect x='0.00' y='0.00' width='453.54' height='226.77' />
+  </clipPath>
+</defs>
+<g clip-path='url(#cpMC4wMHw0NTMuNTR8MC4wMHwyMjYuNzc=)'>
+<rect x='0.00' y='0.00' width='453.54' height='226.77' style='stroke-width: 0.00; stroke: none;' />
+<rect x='102.05' y='45.39' width='238.11' height='19.26' style='stroke-width: 0.75; stroke: #B0B0B0; stroke-linecap: butt; stroke-linejoin: miter; fill: #E8E8E8; fill-opacity: 0.75;' />
+<rect x='102.05' y='100.41' width='238.11' height='19.26' style='stroke-width: 0.75; stroke: #B0B0B0; stroke-linecap: butt; stroke-linejoin: miter; fill: #E8E8E8; fill-opacity: 0.75;' />
+<rect x='102.05' y='155.42' width='238.11' height='19.26' style='stroke-width: 0.75; stroke: #B0B0B0; stroke-linecap: butt; stroke-linejoin: miter; fill: #E8E8E8; fill-opacity: 0.75;' />
+<line x1='138.95' y1='64.65' x2='276.19' y2='100.41' style='stroke-width: 0.64; stroke: #D98C00; stroke-opacity: 0.55; stroke-dasharray: 1.00,3.00; stroke-linecap: butt;' />
+<line x1='166.02' y1='64.65' x2='303.25' y2='100.41' style='stroke-width: 0.64; stroke: #D98C00; stroke-opacity: 0.55; stroke-dasharray: 1.00,3.00; stroke-linecap: butt;' />
+<line x1='276.19' y1='119.66' x2='140.09' y2='155.42' style='stroke-width: 0.64; stroke: #D98C00; stroke-opacity: 0.55; stroke-dasharray: 1.00,3.00; stroke-linecap: butt;' />
+<line x1='303.25' y1='119.66' x2='167.14' y2='155.42' style='stroke-width: 0.64; stroke: #D98C00; stroke-opacity: 0.55; stroke-dasharray: 1.00,3.00; stroke-linecap: butt;' />
+<rect x='138.95' y='45.39' width='27.07' height='19.26' style='stroke-width: 0.97; stroke: none; stroke-linecap: butt; stroke-linejoin: miter; fill: #D98C00;' />
+<rect x='276.19' y='100.41' width='27.07' height='19.26' style='stroke-width: 0.97; stroke: none; stroke-linecap: butt; stroke-linejoin: miter; fill: #D98C00;' />
+<rect x='140.09' y='155.42' width='27.04' height='19.26' style='stroke-width: 0.97; stroke: none; stroke-linecap: butt; stroke-linejoin: miter; fill: #D98C00;' />
+<text x='11.34' y='53.51' style='font-size: 6.69px; font-weight: bold;fill: #1A1A1A; font-family: "Source Sans Pro", "Segoe UI", "Roboto", "Helvetica Neue", "Arial", sans-serif;'>GRCh37 / hg19</text>
+<text x='11.34' y='108.52' style='font-size: 6.69px; font-weight: bold;fill: #1A1A1A; font-family: "Source Sans Pro", "Segoe UI", "Roboto", "Helvetica Neue", "Arial", sans-serif;'>GRCh38 / hg38</text>
+<text x='11.34' y='163.54' style='font-size: 6.69px; font-weight: bold;fill: #1A1A1A; font-family: "Source Sans Pro", "Segoe UI", "Roboto", "Helvetica Neue", "Arial", sans-serif;'>T2T-CHM13v2.0</text>
+<text x='11.34' y='63.39' style='font-size: 5.55px;fill: #666666; font-family: "Source Code Pro", "Consolas", "DejaVu Sans Mono", "Courier New", monospace;'>NC_000017.10</text>
+<text x='11.34' y='118.40' style='font-size: 5.55px;fill: #666666; font-family: "Source Code Pro", "Consolas", "DejaVu Sans Mono", "Courier New", monospace;'>NC_000017.11</text>
+<text x='11.34' y='173.42' style='font-size: 5.55px;fill: #666666; font-family: "Source Code Pro", "Consolas", "DejaVu Sans Mono", "Courier New", monospace;'>NC_060941.1</text>
+<text x='152.49' y='40.05' text-anchor='middle' style='font-size: 5.69px; font-weight: bold;fill: #D98C00; font-family: "Source Code Pro", "Consolas", "DejaVu Sans Mono", "Courier New", monospace;'>7,571,739 - 7,590,808</text>
+<text x='289.72' y='95.07' text-anchor='middle' style='font-size: 5.69px; font-weight: bold;fill: #D98C00; font-family: "Source Code Pro", "Consolas", "DejaVu Sans Mono", "Courier New", monospace;'>7,668,421 - 7,687,490</text>
+<text x='153.62' y='150.09' text-anchor='middle' style='font-size: 5.69px; font-weight: bold;fill: #D98C00; font-family: "Source Code Pro", "Consolas", "DejaVu Sans Mono", "Courier New", monospace;'>7,572,544 - 7,591,594</text>
+<text x='351.50' y='94.95' style='font-size: 6.26px; font-weight: bold;fill: #D98C00; font-family: "Source Sans Pro", "Segoe UI", "Roboto", "Helvetica Neue", "Arial", sans-serif;'>el mismo gen,</text>
+<text x='351.50' y='103.59' style='font-size: 6.26px; font-weight: bold;fill: #D98C00; font-family: "Source Sans Pro", "Segoe UI", "Roboto", "Helvetica Neue", "Arial", sans-serif;'>tres direcciones,</text>
+<text x='351.50' y='112.22' style='font-size: 6.26px; font-weight: bold;fill: #D98C00; font-family: "Source Sans Pro", "Segoe UI", "Roboto", "Helvetica Neue", "Arial", sans-serif;'>ninguna convertible</text>
+<text x='351.50' y='120.86' style='font-size: 6.26px; font-weight: bold;fill: #D98C00; font-family: "Source Sans Pro", "Segoe UI", "Roboto", "Helvetica Neue", "Arial", sans-serif;'>a las otras sin un</text>
+<text x='351.50' y='129.50' style='font-size: 6.26px; font-weight: bold;fill: #D98C00; font-family: "Source Sans Pro", "Segoe UI", "Roboto", "Helvetica Neue", "Arial", sans-serif;'>archivo de cadenas</text>
+<line x1='311.77' y1='195.31' x2='340.16' y2='195.31' style='stroke-width: 0.85; stroke: #666666; stroke-linecap: butt;' />
+<line x1='311.77' y1='198.06' x2='311.77' y2='192.56' style='stroke-width: 0.85; stroke: #666666; stroke-linecap: butt;' />
+<line x1='340.16' y1='198.06' x2='340.16' y2='192.56' style='stroke-width: 0.85; stroke: #666666; stroke-linecap: butt;' />
+<text x='345.83' y='197.20' style='font-size: 5.41px;fill: #666666; font-family: "Source Sans Pro", "Segoe UI", "Roboto", "Helvetica Neue", "Arial", sans-serif;'>20 kb</text>
+<text x='11.34' y='197.20' style='font-size: 5.41px;fill: #666666; font-family: "Source Sans Pro", "Segoe UI", "Roboto", "Helvetica Neue", "Arial", sans-serif;'>misma ventana en las tres: 168 kb del cromosoma 17</text>
+<text x='5.67' y='217.17' style='font-size: 7.30px; font-style: italic;fill: #666666; font-family: "Source Sans Pro", "Segoe UI", "Roboto", "Helvetica Neue", "Arial", sans-serif;'>Coordenadas del modelo de genes de RefSeq/NCBI, verificadas el 2026-08-07 contra NCBI Datasets (GRCh38, T2T) y la API de UCSC</text>
+<text x='5.67' y='225.05' style='font-size: 7.30px; font-style: italic;fill: #666666; font-family: "Source Sans Pro", "Segoe UI", "Roboto", "Helvetica Neue", "Arial", sans-serif;'>(hg19). Ensembl da un tramo distinto para el mismo gen: son dos modelos sobre el mismo genoma.</text>
+</g>
+</g>
+</svg>

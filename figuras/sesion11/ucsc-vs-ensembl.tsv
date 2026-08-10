@@ -1,0 +1,6 @@
+fila	ucsc	ensembl
+Fuerte en	explorar visualmente	traer datos en bloque
+Herramienta insignia	Table Browser	BioMart
+Acceso programático	API REST	API REST + biomaRt
+Cromosomas	chr17	17
+Formato propio	.2bit, bigWig, bigBed	GTF, FASTA por especie

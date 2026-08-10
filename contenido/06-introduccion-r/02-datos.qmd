@@ -1,0 +1,455 @@
+---
+title: "Datos: del vector al data frame"
+subtitle: "Unidad 6 · Sesión 13"
+author: "Haydeé Peruyero"
+---
+
+::: callout-box
+**Lo que estos alumnos ya traen, y que no hay que volver a enseñar.**
+
+Once sesiones de este curso. En concreto: terminal de Linux en un cluster
+compartido; git y GitHub desde línea de comandos, con commits, remotos y
+`.gitignore`; Markdown; disciplina de procedencia con accession, versión,
+fecha y checksum; manipulación de FASTA con grep, tr, awk, seqkit y
+samtools; matrices de sustitución y el marco log-odds; alineamiento por
+pares incluyendo el problema del turista de Manhattan, el camino más
+largo en un grafo dirigido acíclico, el grafo de alineamiento y la
+explosión combinatoria; programación dinámica con Needleman-Wunsch y
+Smith-Waterman, vistos algorítmicamente; BLAST y BLAT con valores E;
+alineamiento múltiple; inferencia de ortología, que implementaron ellos
+mismos en bash con awk; bases de datos y accesiones; ensamblados,
+coordenadas y liftOver; y formatos de anotación con bedtools y tabix.
+
+**No enseñar de nuevo**: qué es un directorio de trabajo, qué es control
+de versiones, por qué importa la reproducibilidad, qué es un archivo
+FASTA o BED, ni qué es un alineamiento.
+
+Además, de la sesión 12: vectores con nombre, matrices, ciclos `for` y
+`while`, condicionales, funciones, y una implementación propia de
+Needleman-Wunsch. Lo único genuinamente nuevo en esta sesión es el data
+frame y los verbos que lo manipulan.
+:::
+
+## Idea central
+
+La sesión pasada trabajamos con matrices de números. Los datos reales
+casi nunca son así: son tablas con columnas de tipos distintos, con
+nombres inconsistentes, con celdas vacías.
+
+Hoy vemos cómo se manejan esas tablas en R. Y lo vamos a hacer con **sus
+propios resultados**, los que llevan acumulados desde agosto en su
+repositorio.
+
+Esa es la diferencia entre este curso y un tutorial: no van a ordenar
+datos de flores.
+
+## Desarrollo
+
+### Data frames y tibbles
+
+Un **data frame** es una colección de columnas, como una hoja de cálculo.
+Cada columna tiene nombre, cada renglón es una observación, y **dentro de
+una columna todos los elementos son del mismo tipo**, aunque columnas
+distintas puedan tener tipos distintos.
+
+Es la diferencia con una matriz, donde todo tiene que ser del mismo tipo.
+
+```r
+df <- data.frame(
+  gen = c("TP53", "BRCA1", "EGFR"),
+  cromosoma = c(17, 17, 7),
+  codificante = c(TRUE, TRUE, TRUE)
+)
+df
+str(df)
+```
+
+Un **tibble** es un data frame mejorado del tidyverse. Nunca cambia los
+tipos de lo que le dan, nunca cambia los nombres de las variables, nunca
+inventa nombres de renglón, y se imprime de forma legible en lugar de
+vomitar diez mil líneas a la consola.
+
+```r
+library(tidyverse)
+tb <- as_tibble(df)
+tb
+```
+
+Usen tibbles. La única razón para tocar `data.frame()` es cuando una
+función vieja lo exija.
+
+### Paquetes, y la palabra que todos confunden
+
+R trae funciones de base, y todo lo demás viene en **paquetes**.
+
+```r
+install.packages("tidyverse")   # se hace una vez
+library(tidyverse)              # se hace en cada sesión
+```
+
+::: callout-box
+**Paquete no es lo mismo que biblioteca**, y la confusión es universal
+porque la función se llama `library()`.
+
+La analogía de Hadley Wickham: un paquete es como un libro, y la
+biblioteca es como la biblioteca. `library()` es sacar el libro de la
+biblioteca. El paquete es lo que instalan; la biblioteca es la carpeta
+donde viven todos los paquetes instalados.
+
+Y en español hay una trampa adicional: `library` es **biblioteca**, no
+librería. Una librería es donde se venden libros.
+:::
+
+Hay dos repositorios que importan. **CRAN** es el archivo general de R,
+con paquetes de todo tipo. **Bioconductor** es el de genómica, con más de
+dos mil cuatrocientos paquetes revisados.
+
+Y son distintos en más que el contenido. Bioconductor libera **dos veces
+al año, en abril y octubre**, con todos los paquetes probados unos contra
+otros y contra una versión fija de R. CRAN es continuo. La consecuencia
+práctica: en Bioconductor uno instala con `BiocManager::install()`, no con
+`install.packages()`, y mezclar versiones de Bioconductor rompe cosas.
+
+```r
+install.packages("BiocManager")
+BiocManager::install("Biostrings")
+BiocManager::valid()   # revisa si su instalación es coherente
+```
+
+### El tidyverse
+
+El **tidyverse** es un conjunto de paquetes con una filosofía de diseño
+común. Los que van a usar hoy:
+
+**readr** lee archivos. **tibble** es la tabla mejorada. **dplyr**
+manipula tablas. **tidyr** las reordena. **stringr** maneja texto.
+**ggplot2** grafica, y le toca la sesión siguiente.
+
+### Leer sus propios datos
+
+Traigan la tabla de BLAST de la sesión 8.
+
+```r
+library(tidyverse)
+
+hits <- read_tsv("resultados/blast_hits.tsv",
+                 col_names = c("query", "subject", "pident", "length",
+                               "mismatch", "gapopen", "qstart", "qend",
+                               "sstart", "send", "evalue", "bitscore"))
+hits
+```
+
+Los nombres van a mano porque la salida `-outfmt 6` de BLAST no trae
+encabezado. Es la primera lección del día: **los datos reales llegan sin
+documentación**, y hay que saber qué son las columnas.
+
+### Mirar antes de tocar
+
+Antes de analizar, hay que ver qué hay.
+
+```r
+glimpse(hits)
+summary(hits)
+
+library(skimr)
+skim_without_charts(hits)
+```
+
+`glimpse()` muestra las columnas con su tipo y las primeras entradas.
+`skim_without_charts()` da un resumen completo: valores faltantes,
+estadísticas por columna, distribución.
+
+Y si los nombres vienen sucios, con acentos, espacios o mayúsculas
+inconsistentes:
+
+```r
+library(janitor)
+hits <- clean_names(hits)
+names(hits)
+```
+
+`clean_names()` deja solo letras minúsculas, números y guiones bajos.
+Quita acentos y eñes. Es lo primero que corre uno con cualquier tabla que
+venga de Excel.
+
+### Los verbos de dplyr
+
+Cinco verbos hacen casi todo.
+
+```r
+# Filtrar renglones
+hits %>% filter(evalue < 1e-20)
+
+# Escoger columnas
+hits %>% select(query, subject, pident, evalue)
+
+# Crear columnas
+hits %>% mutate(log_evalue = -log10(evalue + 1e-300))
+
+# Ordenar
+hits %>% arrange(desc(bitscore))
+
+# Resumir, casi siempre agrupando primero
+hits %>%
+  group_by(query) %>%
+  summarise(n_hits = n(),
+            mejor_bitscore = max(bitscore),
+            identidad_media = mean(pident))
+```
+
+El `%>%` es el **pipe**, y hace exactamente lo que el `|` de bash: pasa el
+resultado de la izquierda como primer argumento de la derecha. El atajo en
+RStudio es Ctrl+Shift+M.
+
+Si ya piensan en pipes desde bash, esto no es nuevo. Es la misma idea con
+otra sintaxis.
+
+::: callout-box
+R moderno también tiene un pipe nativo, `|>`, que no necesita ningún
+paquete. Hace casi lo mismo que `%>%` y es el que van a ver cada vez más
+en código nuevo. Para lo que hacemos hoy son intercambiables.
+:::
+
+Ahora armen la pregunta completa: cuál es el mejor hit de cada consulta?
+
+```r
+mejores <- hits %>%
+  group_by(query) %>%
+  slice_max(bitscore, n = 1) %>%
+  ungroup()
+
+mejores
+```
+
+Compárenlo con lo que hicieron en bash en la sesión 10:
+
+```bash
+sort -k1,1 -k12,12gr hits.tsv | awk '!seen[$1]++'
+```
+
+Mismo resultado, y la versión de R dice lo que hace. La de bash es más
+rápida de teclear y funciona en cualquier máquina sin instalar nada. Las
+dos herramientas son legítimas; sepan cuándo conviene cada una.
+
+### Datos ordenados
+
+Hay una forma canónica de organizar una tabla y se llama **tidy data**,
+definida por Hadley Wickham en 2014. Tres reglas:
+
+Cada **variable** es una columna. Cada **observación** es un renglón. Cada
+**valor** tiene su propia celda.
+
+Suena obvio y casi ningún dato real llega así. El caso más común es el
+formato **ancho**, donde varias columnas son en realidad valores de una
+misma variable.
+
+```r
+# Ancho: cada muestra es una columna
+ancho <- tibble(
+  gen = c("TP53", "BRCA1"),
+  muestra_A = c(120, 45),
+  muestra_B = c(98, 51),
+  muestra_C = c(140, 39)
+)
+ancho
+
+# Largo: "muestra" es una variable
+largo <- ancho %>%
+  pivot_longer(cols = starts_with("muestra_"),
+               names_to = "muestra",
+               values_to = "expresion")
+largo
+
+# Y de regreso
+largo %>% pivot_wider(names_from = muestra, values_from = expresion)
+```
+
+Por qué importa: **ggplot2 y casi todo el tidyverse esperan datos
+largos**. Si su gráfica no sale, la primera hipótesis es que la tabla está
+ancha.
+
+### Por qué siempre hay que graficar
+
+Última sección, y es la que engancha con la sesión siguiente.
+
+En 1973, Francis Anscombe publicó cuatro conjuntos de datos con
+estadísticas de resumen prácticamente idénticas: misma media en x, misma
+media en y, misma varianza, misma correlación, misma recta de regresión.
+
+```r
+library(datasets)
+anscombe
+
+# Las cuatro correlaciones
+sapply(1:4, function(i) cor(anscombe[[paste0("x", i)]],
+                            anscombe[[paste0("y", i)]]))
+```
+
+Los cuatro dan alrededor de 0.816. Al graficarlos, uno es una relación
+lineal limpia, otro es una curva, otro tiene un valor atípico que arrastra
+la recta, y el cuarto es una columna de puntos más un punto solitario.
+
+La versión moderna es el **Datasaurus Dozen**, doce conjuntos con las
+mismas estadísticas donde uno de ellos es un dinosaurio:
+
+```r
+install.packages("datasauRus")
+library(datasauRus)
+
+datasaurus_dozen %>%
+  group_by(dataset) %>%
+  summarise(media_x = mean(x), media_y = mean(y), cor = cor(x, y))
+```
+
+Todas las filas casi idénticas. Y son cosas completamente distintas.
+
+La moraleja es la que van a usar el resto de su vida: **las estadísticas
+de resumen no sustituyen a mirar los datos**. La sesión que viene es
+sobre cómo mirarlos bien.
+
+## Práctica
+
+### Ejercicio 1. Traer y limpiar
+
+Carguen su tabla de RBH de la sesión 10 y su tabla de BLAST. Límpienlas
+con `clean_names()` y descríbanlas con `skim_without_charts()`.
+
+Cuántas filas tiene cada una? Hay valores faltantes?
+
+::: {.callout-note collapse="true"}
+## Solución
+
+```r
+rbh <- read_tsv("resultados/rbh.tsv",
+                col_names = c("cerevisiae", "pombe")) %>%
+  clean_names()
+
+skim_without_charts(rbh)
+nrow(rbh)
+```
+
+Si `skim` reporta valores faltantes en una tabla que no debería tenerlos,
+casi siempre es un problema de separadores: una columna con un tabulador
+de más parte el renglón. Revísenlo con:
+
+```r
+problems(rbh)
+```
+
+`read_tsv()` guarda ahí los renglones que no pudo leer bien, y es de lo
+primero que hay que revisar cuando algo huele raro.
+:::
+
+### Ejercicio 2. Los cinco verbos
+
+Con su tabla de BLAST, contesten: cuántas consultas tuvieron al menos un
+hit con E-value menor a 1e-50? Cuál es la identidad promedio de esos hits?
+
+::: {.callout-note collapse="true"}
+## Solución
+
+```r
+hits %>%
+  filter(evalue < 1e-50) %>%
+  summarise(n_consultas = n_distinct(query),
+            identidad_media = mean(pident),
+            n_hits = n())
+```
+
+`n_distinct()` cuenta valores únicos, que no es lo mismo que `n()`. Una
+consulta puede tener veinte hits significativos; la pregunta era cuántas
+consultas, no cuántos hits.
+
+Esa distinción entre contar filas y contar entidades es de los errores
+más frecuentes al resumir tablas.
+:::
+
+### Ejercicio 3. De ancho a largo
+
+Su tabla de ventanas de GC de la sesión 5 tiene posición y porcentaje.
+Supongan que además tuvieran las ventanas de otros dos genomas en columnas
+separadas. Cómo las pasarían a formato largo, y por qué querrían hacerlo?
+
+::: {.callout-note collapse="true"}
+## Solución
+
+```r
+gc_ancho <- read_tsv("resultados/gc_varios.tsv")
+# columnas: posicion, lambda, phix174, ecoli
+
+gc_largo <- gc_ancho %>%
+  pivot_longer(cols = -posicion,
+               names_to = "genoma",
+               values_to = "gc")
+gc_largo
+```
+
+El `cols = -posicion` significa "todas menos posicion", que es más robusto
+que listarlas: si mañana agregan un cuarto genoma, el código sigue
+funcionando.
+
+Y la razón para hacerlo: en formato largo, graficar los tres genomas en un
+panel cada uno es una sola línea de ggplot2 con `facet_wrap(~ genoma)`. En
+formato ancho hay que escribir una capa por genoma a mano.
+:::
+
+### Ejercicio 4. Anscombe
+
+Calculen las estadísticas de resumen de los cuatro conjuntos de Anscombe y
+después grafíquenlos. Qué concluyen?
+
+::: {.callout-note collapse="true"}
+## Solución
+
+```r
+# Pasar anscombe a formato largo, que viene ancho
+anscombe_largo <- anscombe %>%
+  pivot_longer(everything(),
+               names_to = c(".value", "conjunto"),
+               names_pattern = "(.)(.)")
+
+anscombe_largo %>%
+  group_by(conjunto) %>%
+  summarise(media_x = mean(x), media_y = mean(y),
+            sd_x = sd(x), sd_y = sd(y), cor = cor(x, y))
+```
+
+Las cinco estadísticas coinciden hasta el segundo o tercer decimal en los
+cuatro conjuntos.
+
+Ese `names_pattern = "(.)(.)"` con `".value"` es de lo más avanzado del
+tidyverse y no espero que lo inventen: separa `x1` en la variable `x` y el
+conjunto `1`. Lo pongo porque `anscombe` viene en un formato
+particularmente incómodo, que es en sí mismo una lección sobre datos
+reales.
+
+Graficarlo es la sesión que viene, y ahí van a ver que los cuatro son
+cosas completamente distintas.
+:::
+
+```{=html}
+<!-- NOTA PARA EL INSTRUCTOR, no renderizar.
+TIEMPOS ESTIMADOS:
+  Data frames y tibbles          30 min
+  Paquetes, CRAN, Bioconductor   25 min
+  Leer y explorar datos propios  45 min
+  Verbos de dplyr                75 min
+  Datos ordenados y pivot        60 min
+  Anscombe y Datasaurus          30 min
+ORDEN DE RECORTE:
+  1. Ejercicio 4 (Anscombe) -> demostrarlo, no que lo hagan
+  2. pivot_wider -> mencionar, solo enseñar pivot_longer
+  3. skimr -> usar glimpse() nada más
+NO RECORTAR: los verbos de dplyr sobre sus propios datos.
+-->
+```
+
+## Fuentes {.unnumbered}
+
+- Wickham, H. (2014). Tidy Data. *Journal of Statistical Software* 59(10): 1-23. [doi:10.18637/jss.v059.i10](https://doi.org/10.18637/jss.v059.i10)
+- Wickham, H., Çetinkaya-Rundel, M. & Grolemund, G. *R for Data Science* (2a ed.). <https://r4ds.hadley.nz/>
+- Versión en español: *R para Ciencia de Datos*. <https://es.r4ds.hadley.nz/>
+- Anscombe, F. J. (1973). Graphs in Statistical Analysis. *The American Statistician* 27(1): 17-21. [doi:10.1080/00031305.1973.10478966](https://doi.org/10.1080/00031305.1973.10478966)
+- Matejka, J. & Fitzmaurice, G. (2017). Same Stats, Different Graphs. *CHI '17*. [doi:10.1145/3025453.3025912](https://doi.org/10.1145/3025453.3025912)
+- Huber, W. et al. (2015). Orchestrating high-throughput genomic analysis with Bioconductor. *Nature Methods* 12(2): 115-121. [doi:10.1038/nmeth.3252](https://doi.org/10.1038/nmeth.3252)
+- Bioconductor. <https://bioconductor.org/>

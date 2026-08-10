@@ -1,0 +1,9 @@
+acc	prefijo	cuerpo	version	que	pista
+NM_000546.6	NM_	000546	.6	RefSeq · mRNA curado	el guión bajo delata RefSeq
+X02469	X	02469		INSDC · envío original	nunca lleva guión bajo
+NC_000017.11	NC_	000017	.11	RefSeq · cromosoma	la 2ª letra es la molécula: C = cromosoma
+P04637	P	04637		UniProt · proteína	seis o diez alfanuméricos, sin puntos
+ENSG00000141510	ENSG	00000141510		Ensembl · gen	el prefijo ENS
+SRR1234567	SRR	1234567		SRA · corrida (NCBI)	la 1ª letra dice el socio: S = NCBI
+ERR1234567	ERR	1234567		SRA · corrida (ENA)	E de EMBL-EBI; D sería DDBJ
+PRJNA12345	PRJNA	12345		BioProject (NCBI)	PRJ + NA / EB / DB

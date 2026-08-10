@@ -1,0 +1,5 @@
+matriz	bits_por_posicion	bits_objetivo	residuos_minimos	lambda_ncbi	fuente
+BLOSUM45	0.3795	50	131.8	0.2291	NCBI BLAST (parámetros de blastp)
+BLOSUM62	0.6979	50	71.6	0.3176	NCBI BLAST (parámetros de blastp)
+BLOSUM80	0.9868	50	50.7	0.343	NCBI BLAST (parámetros de blastp)
+BLOSUM90	1.1806	50	42.4	NA	NCBI BLAST (parámetros de blastp)

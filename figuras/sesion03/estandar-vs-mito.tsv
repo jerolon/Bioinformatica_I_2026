@@ -1,0 +1,5 @@
+codon	codon_arn	aa_estandar	nombre_estandar	aa_mito	nombre_mito
+AGA	AGA	R	Arg	*	Paro
+AGG	AGG	R	Arg	*	Paro
+ATA	AUA	I	Ile	M	Met
+TGA	UGA	*	Paro	W	Trp

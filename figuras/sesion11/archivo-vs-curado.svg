@@ -1,0 +1,64 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<svg xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink' width='453.54pt' height='283.46pt' viewBox='0 0 453.54 283.46'>
+<g class='svglite'>
+<defs>
+  <style type='text/css'><![CDATA[
+    .svglite line, .svglite polyline, .svglite polygon, .svglite path, .svglite rect, .svglite circle {
+      fill: none;
+      stroke: #000000;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+      stroke-miterlimit: 10.00;
+    }
+    .svglite text {
+      white-space: pre;
+    }
+    .svglite g.glyphgroup path {
+      fill: inherit;
+      stroke: none;
+    }
+  ]]></style>
+</defs>
+<rect width='100%' height='100%' style='stroke: none; fill: none;'/>
+<defs>
+  <clipPath id='cpMC4wMHw0NTMuNTR8MC4wMHwyODMuNDY='>
+    <rect x='0.00' y='0.00' width='453.54' height='283.46' />
+  </clipPath>
+</defs>
+<g clip-path='url(#cpMC4wMHw0NTMuNTR8MC4wMHwyODMuNDY=)'>
+<rect x='0.00' y='0.00' width='453.54' height='283.46' style='stroke-width: 0.00; stroke: none;' />
+<text x='82.20' y='17.45' text-anchor='middle' style='font-size: 7.68px; font-weight: bold;fill: #666666; font-family: "Source Sans Pro", "Segoe UI", "Roboto", "Helvetica Neue", "Arial", sans-serif;'>archivo primario</text>
+<text x='351.50' y='17.45' text-anchor='middle' style='font-size: 7.68px; font-weight: bold;fill: #1A7A8A; font-family: "Source Sans Pro", "Segoe UI", "Roboto", "Helvetica Neue", "Arial", sans-serif;'>capa curada</text>
+<text x='82.20' y='29.16' text-anchor='middle' style='font-size: 5.69px;fill: #666666; font-family: "Source Sans Pro", "Segoe UI", "Roboto", "Helvetica Neue", "Arial", sans-serif;'>redundante, sin conciliar</text>
+<text x='351.50' y='29.16' text-anchor='middle' style='font-size: 5.69px;fill: #1A7A8A; font-family: "Source Sans Pro", "Segoe UI", "Roboto", "Helvetica Neue", "Arial", sans-serif;'>un representante por molécula</text>
+<rect x='34.02' y='41.63' width='96.38' height='8.27' style='stroke-width: 0.64; stroke: #B0B0B0; stroke-linecap: butt; stroke-linejoin: miter; fill: #E8E8E8; fill-opacity: 0.90;' />
+<rect x='41.39' y='51.97' width='85.04' height='8.27' style='stroke-width: 0.64; stroke: #B0B0B0; stroke-linecap: butt; stroke-linejoin: miter; fill: #E8E8E8; fill-opacity: 0.90;' />
+<rect x='30.05' y='62.30' width='102.05' height='8.27' style='stroke-width: 0.64; stroke: #B0B0B0; stroke-linecap: butt; stroke-linejoin: miter; fill: #E8E8E8; fill-opacity: 0.90;' />
+<rect x='43.65' y='72.64' width='79.37' height='8.27' style='stroke-width: 0.64; stroke: #B0B0B0; stroke-linecap: butt; stroke-linejoin: miter; fill: #E8E8E8; fill-opacity: 0.90;' />
+<rect x='36.28' y='82.97' width='93.54' height='8.27' style='stroke-width: 0.64; stroke: #B0B0B0; stroke-linecap: butt; stroke-linejoin: miter; fill: #E8E8E8; fill-opacity: 0.90;' />
+<rect x='27.78' y='93.31' width='87.87' height='8.27' style='stroke-width: 0.64; stroke: #B0B0B0; stroke-linecap: butt; stroke-linejoin: miter; fill: #E8E8E8; fill-opacity: 0.90;' />
+<rect x='39.12' y='103.64' width='99.21' height='8.27' style='stroke-width: 0.64; stroke: #B0B0B0; stroke-linecap: butt; stroke-linejoin: miter; fill: #E8E8E8; fill-opacity: 0.90;' />
+<rect x='34.02' y='142.03' width='96.38' height='8.27' style='stroke-width: 0.64; stroke: #B0B0B0; stroke-linecap: butt; stroke-linejoin: miter; fill: #E8E8E8; fill-opacity: 0.90;' />
+<rect x='41.39' y='152.36' width='85.04' height='8.27' style='stroke-width: 0.64; stroke: #B0B0B0; stroke-linecap: butt; stroke-linejoin: miter; fill: #E8E8E8; fill-opacity: 0.90;' />
+<rect x='30.05' y='162.70' width='102.05' height='8.27' style='stroke-width: 0.64; stroke: #B0B0B0; stroke-linecap: butt; stroke-linejoin: miter; fill: #E8E8E8; fill-opacity: 0.90;' />
+<rect x='43.65' y='173.03' width='79.37' height='8.27' style='stroke-width: 0.64; stroke: #B0B0B0; stroke-linecap: butt; stroke-linejoin: miter; fill: #E8E8E8; fill-opacity: 0.90;' />
+<rect x='36.28' y='183.37' width='93.54' height='8.27' style='stroke-width: 0.64; stroke: #B0B0B0; stroke-linecap: butt; stroke-linejoin: miter; fill: #E8E8E8; fill-opacity: 0.90;' />
+<rect x='27.78' y='193.70' width='87.87' height='8.27' style='stroke-width: 0.64; stroke: #B0B0B0; stroke-linecap: butt; stroke-linejoin: miter; fill: #E8E8E8; fill-opacity: 0.90;' />
+<rect x='39.12' y='204.04' width='99.21' height='8.27' style='stroke-width: 0.64; stroke: #B0B0B0; stroke-linecap: butt; stroke-linejoin: miter; fill: #E8E8E8; fill-opacity: 0.90;' />
+<polygon points='408.76,60.53 409.48,60.59 410.19,60.75 410.88,61.01 411.51,61.38 412.10,61.83 412.61,62.37 413.05,62.97 413.40,63.64 413.65,64.35 413.81,65.09 413.86,65.85 413.86,87.70 413.81,88.45 413.65,89.19 413.40,89.90 413.05,90.57 412.61,91.18 412.10,91.71 411.51,92.17 410.88,92.53 410.19,92.80 409.48,92.96 408.76,93.01 294.24,93.01 293.51,92.96 292.80,92.80 292.12,92.53 291.48,92.17 290.89,91.71 290.38,91.18 289.94,90.57 289.59,89.90 289.34,89.19 289.19,88.45 289.13,87.70 289.13,65.85 289.19,65.09 289.34,64.35 289.59,63.64 289.94,62.97 290.38,62.37 290.89,61.83 291.48,61.38 292.12,61.01 292.80,60.75 293.51,60.59 294.24,60.53 ' style='stroke-width: 1.07; stroke: #1A7A8A; stroke-linecap: butt; fill: #2BB5C6; fill-opacity: 0.20;' />
+<polygon points='408.76,160.93 409.48,160.98 410.19,161.14 410.88,161.41 411.51,161.77 412.10,162.22 412.61,162.76 413.05,163.37 413.40,164.03 413.65,164.74 413.81,165.48 413.86,166.24 413.86,188.09 413.81,188.85 413.65,189.59 413.40,190.30 413.05,190.96 412.61,191.57 412.10,192.11 411.51,192.56 410.88,192.93 410.19,193.19 409.48,193.35 408.76,193.41 294.24,193.41 293.51,193.35 292.80,193.19 292.12,192.93 291.48,192.56 290.89,192.11 290.38,191.57 289.94,190.96 289.59,190.30 289.34,189.59 289.19,188.85 289.13,188.09 289.13,166.24 289.19,165.48 289.34,164.74 289.59,164.03 289.94,163.37 290.38,162.76 290.89,162.22 291.48,161.77 292.12,161.41 292.80,161.14 293.51,160.98 294.24,160.93 ' style='stroke-width: 1.07; stroke: #1A7A8A; stroke-linecap: butt; fill: #2BB5C6; fill-opacity: 0.20;' />
+<line x1='149.67' y1='76.77' x2='277.80' y2='76.77' style='stroke-width: 1.07; stroke: #2E7D32; stroke-linecap: butt;' />
+<polygon points='271.90,80.17 277.80,76.77 271.90,73.37 ' style='stroke-width: 1.07; stroke: #2E7D32; stroke-linecap: butt; fill: #2E7D32;' />
+<line x1='149.67' y1='177.17' x2='277.80' y2='177.17' style='stroke-width: 1.07; stroke: #2E7D32; stroke-linecap: butt;' />
+<polygon points='271.90,180.57 277.80,177.17 271.90,173.76 ' style='stroke-width: 1.07; stroke: #2E7D32; stroke-linecap: butt; fill: #2E7D32;' />
+<text x='213.73' y='68.82' text-anchor='middle' style='font-size: 5.98px; font-style: italic;fill: #2E7D32; font-family: "Source Sans Pro", "Segoe UI", "Roboto", "Helvetica Neue", "Arial", sans-serif;'>curación</text>
+<text x='213.73' y='169.22' text-anchor='middle' style='font-size: 5.98px; font-style: italic;fill: #2E7D32; font-family: "Source Sans Pro", "Segoe UI", "Roboto", "Helvetica Neue", "Arial", sans-serif;'>curación</text>
+<text x='82.20' y='126.51' text-anchor='middle' style='font-size: 7.11px; font-weight: bold;fill: #666666; font-family: "Source Sans Pro", "Segoe UI", "Roboto", "Helvetica Neue", "Arial", sans-serif;'>GenBank / INSDC</text>
+<text x='82.20' y='226.90' text-anchor='middle' style='font-size: 7.11px; font-weight: bold;fill: #666666; font-family: "Source Sans Pro", "Segoe UI", "Roboto", "Helvetica Neue", "Arial", sans-serif;'>UniProtKB / TrEMBL</text>
+<text x='351.50' y='79.26' text-anchor='middle' style='font-size: 7.11px; font-weight: bold;fill: #1A7A8A; font-family: "Source Sans Pro", "Segoe UI", "Roboto", "Helvetica Neue", "Arial", sans-serif;'>RefSeq</text>
+<text x='351.50' y='179.66' text-anchor='middle' style='font-size: 7.11px; font-weight: bold;fill: #1A7A8A; font-family: "Source Sans Pro", "Segoe UI", "Roboto", "Helvetica Neue", "Arial", sans-serif;'>Swiss-Prot</text>
+<text x='226.77' y='257.32' text-anchor='middle' style='font-size: 9.67px; font-weight: bold;fill: #1A1A1A; font-family: "Source Sans Pro", "Segoe UI", "Roboto", "Helvetica Neue", "Arial", sans-serif;'>GenBank : RefSeq  ::  TrEMBL : Swiss-Prot</text>
+<text x='226.77' y='276.80' text-anchor='middle' style='font-size: 6.26px; font-style: italic;fill: #666666; font-family: "Source Sans Pro", "Segoe UI", "Roboto", "Helvetica Neue", "Arial", sans-serif;'>El archivo guarda lo que se envió. La capa curada guarda lo que alguien decidió que está bien.</text>
+</g>
+</g>
+</svg>

@@ -1,26 +1,544 @@
 ---
 title: "Alineamiento múltiple (CLUSTAL, MAFFT)"
-subtitle: "Unidad 3 · Sesión 8"
+subtitle: "Unidad 3 · Sesión 9"
 author: "Jero"
+editor:
+  markdown:
+    wrap: 72
 ---
-
-::: {.pendiente}
-Capítulo por escribir.
-:::
 
 ## Idea central
 
-<!-- Una o dos frases: qué se lleva el alumno de aquí. -->
+**Alinear tres o más secuencias a la vez es un problema NP-completo.
+Todos los programas que usan (CLUSTAL, MAFFT, MUSCLE) son heurísticas
+sin garantía de optimalidad. Y el alineamiento que producen no es un
+dato observado: es una estimación con error, y ese error se propaga a
+todo lo que hagan después.**
 
-## Desarrollo
+Ese segundo punto es el que casi nunca se enseña y el que más importa.
+Un árbol filogenético, un análisis de selección, una anotación de
+dominios: todos parten de un alineamiento múltiple, y casi todos lo
+tratan como si fuera la verdad. No lo es. Es la mejor conjetura de un
+programa heurístico, y cambiar de programa puede cambiar la
+conclusión.
+
+## 1. Por qué la programación dinámica no escala
+
+En la sesión 7 vimos que alinear dos secuencias por programación
+dinámica llena una matriz de dos dimensiones. Alinear $N$ secuencias
+exige un hipercubo de $N$ dimensiones: el costo es del orden de $L^N$,
+exponencial en el número de secuencias. Para tres secuencias todavía
+se puede; para veinte, ni de lejos (@fig-escalamiento).
+
+![El costo de la programación dinámica exacta crece como $L^N$ y sale
+de cualquier escala imaginable con apenas unas cuantas secuencias. El
+alineamiento progresivo, en cambio, crece de forma polinomial (del
+orden de $N^2L^2$): por eso es el que todo el mundo usa. La línea
+punteada marca lo que una supercomputadora de un petaflop podría
+calcular en un año.](../../figuras/svg/msa_escalamiento.svg){#fig-escalamiento}
+
+Y no es que falte un algoritmo listo. Wang y Jiang (1994) demostraron
+que decidir si existe un alineamiento múltiple con puntuación de suma
+de pares mejor que un umbral dado es **NP-completo**; Elias (2006)
+cerró los casos que quedaban abiertos, incluyendo alfabetos tan chicos
+como el del DNA. Just (2001) fue más lejos por otro camino: el
+problema es APX-difícil, es decir, no existe un esquema que se
+aproxime tanto como uno quiera al óptimo en tiempo polinomial, salvo
+que P = NP. Ojo con el matiz: eso no prohíbe toda aproximación. El
+método de la estrella central (center star) garantiza quedar a lo más
+al doble del costo óptimo para la versión métrica del problema
+(Gusfield 1993). Lo que está prohibido es acercarse arbitrariamente.
+
+La implicación es honesta y hay que decirla en voz alta: **no existe,
+ni existirá, un programa que garantice el mejor alineamiento
+múltiple**. Todo lo que se usa son atajos.
+
+## 2. Cómo se califica: la suma de pares
+
+Antes de hablar de atajos hay que decir qué se está optimizando. La
+puntuación estándar es la **suma de pares** (SP, sum of pairs): la
+puntuación de una columna es la suma, sobre todos los pares de
+renglones, del puntaje de ese par. Residuo contra residuo se califica
+con la matriz de sustitución de la sesión de matrices; residuo contra
+gap paga la penalización de gap; y un par gap contra gap, por
+convención, vale cero. La puntuación del alineamiento es la suma de
+sus columnas. Con $N$ secuencias, cada columna aporta
+$\binom{N}{2}$ pares.
+
+Un ejemplo diminuto, con un esquema didáctico (coincidencia $+1$, no
+coincidencia $-1$, residuo contra gap $-2$, gap contra gap $0$):
+
+```
+s1  W K L
+s2  W - L
+s3  W K M
+```
+
+La columna 1 tiene tres pares (W,W): $+3$. La columna 2 tiene (K,-),
+(K,K) y (-,K): $-2 + 1 - 2 = -3$. La columna 3 tiene (L,L), (L,M) y
+(L,M): $+1 - 1 - 1 = -1$. Total: $-1$.
+
+Fíjate en algo incómodo: si cambias la penalización de gap de $-2$ a
+$-1$, el mismo alineamiento ahora vale $+1$. La puntuación, y con ella
+cuál alineamiento resulta "el óptimo", depende de decisiones de
+modelado que alguien tomó por ti. Esto ya lo viste con los
+alineamientos de pares; con $N$ secuencias el efecto se multiplica por
+$\binom{N}{2}$.
+
+## 3. Alineamiento progresivo y el árbol guía
+
+El atajo dominante es el **alineamiento progresivo**, de Feng y
+Doolittle (1987). La idea: no alinear todo a la vez, sino por partes,
+empezando por los pares más parecidos. Primero se calcula un **árbol
+guía** (guide tree) a partir de las similitudes entre secuencias;
+luego se alinean los pares más cercanos, y se van agregando secuencias
+y grupos siguiendo el árbol, de las ramas a la raíz.
+
+Es rápido y funciona sorprendentemente bien. Pero arrastra un problema
+que Feng y Doolittle ya vieron: los gaps que se ponen al alinear A con
+B no tienen por qué coincidir con los que se pondrían al alinear A con
+C. El orden en que se van juntando las secuencias determina el
+resultado.
+
+## 4. El pecado original: "once a gap, always a gap"
+
+De ese diseño sale la regla que define, y limita, al alineamiento
+progresivo: **un gap que se introduce temprano nunca se quita ni se
+mueve; a lo más, se agranda**. La formulación es de los propios
+autores: "In particular, this rule is followed: 'once a gap, always a
+gap'" (Feng y Doolittle 1987, p. 351).
+
+La lógica era razonable: la mejor información sobre dónde va un gap
+está entre las secuencias más parecidas, así que conviene fijar esos
+gaps temprano y respetarlos. El costo es que **un error temprano no se
+corrige nunca** (@fig-progresivo).
+
+![El alineamiento progresivo sigue un árbol guía, fusionando primero las secuencias más parecidas (orden 1 → 2 → 3). El hueco que se introduce al alinear las dos primeras, A y B, se queda en su columna para siempre («once a gap, always a gap») aunque el conjunto completo sugiera que va en otro lado. Un error temprano se propaga a todo el alineamiento.](../../figuras/svg/msa_progresivo.svg){#fig-progresivo}
+
+Si el árbol guía se equivoca de orden, o si dos secuencias cercanas
+sugieren un gap que el conjunto completo desmentiría, ese gap se queda
+ahí, propagándose hacia arriba. La crítica estándar es que a menudo
+hay mejor información en el alineamiento completo sobre dónde van
+realmente los gaps, y el progresivo puro no la usa.
+
+Casi toda la historia posterior del alineamiento múltiple es un
+intento de mitigar ese pecado original: pesar las secuencias, refinar
+iterativamente, o abandonar la avaricia del progresivo por un criterio
+de consistencia.
+
+## 5. La caja de herramientas
+
+Cuatro familias, cada una con una idea distinta de cómo hacerlo mejor.
+
+- **CLUSTAL.** El linaje más citado: CLUSTAL (Higgins y Sharp 1988),
+  CLUSTAL W (1994), Clustal Omega (2011). CLUSTAL W aportó pesos por
+  secuencia, penalizaciones de gap dependientes de la posición, y
+  elección de matriz según la divergencia. Clustal Omega cambió el
+  motor para escalar: árboles guía por mBed (un embedding que ordena
+  cientos de miles de secuencias en una PC; Blackshields et al. 2010)
+  y alineamiento de perfiles HMM contra HMM para la precisión. Los
+  perfiles son la misma idea que las PSSM de PSI-BLAST que viste en la
+  sesión 8: una columna deja de ser una letra y se vuelve una
+  distribución de letras. Sobre lo citado no hay que exagerar, porque
+  no hace falta: en el conteo que Nature publicó en 2014, el artículo
+  de CLUSTAL W era el número 10 de los 100 más citados de toda la
+  ciencia, y el de ClustalX el 28, por encima de los de BLAST (Van
+  Noorden et al. 2014). La versión estable actual, 1.2.4, no cambia
+  desde 2016: es software terminado, no abandonado.
+- **MAFFT.** Usa la transformada rápida de Fourier para localizar
+  bloques homólogos: convierte cada residuo en dos números, volumen y
+  polaridad, y busca correlaciones entre las señales resultantes
+  (Katoh et al. 2002). Trae una familia de estrategias, y elegir la
+  correcta es media práctica: `FFT-NS-2` (rápida, progresiva pura, el
+  default, hasta unas 30,000 secuencias), `L-INS-i` (precisa, para
+  menos de unas 200 secuencias, con información de pares locales
+  estilo Smith-Waterman), `G-INS-i` (pares globales), `E-INS-i`
+  (regiones grandes no alineables). `mafft --auto` elige entre
+  L-INS-i, FFT-NS-i y FFT-NS-2 según el tamaño.
+- **MUSCLE.** Progresivo más refinamiento iterativo desde su primera
+  versión (Edgar 2004). Su versión reciente, MUSCLE5, cambia el juego
+  (sección 6).
+- **T-Coffee.** En vez de ser avaro, construye una biblioteca de
+  alineamientos por pares, locales y globales, y busca el alineamiento
+  múltiple más **consistente** con toda esa biblioteca (Notredame et
+  al. 2000). Mitiga el error del progresivo, a cambio de ser más lento
+  y escalar mal.
+
+Dos ideas cruzan toda la tabla. El **refinamiento iterativo** consiste
+en romper el dogma del gap eterno: una vez construido el alineamiento
+progresivo, se parte en dos grupos, se realinean entre sí, y se acepta
+el cambio si mejora la puntuación; se repite muchas veces. Es la "i"
+de `L-INS-i` y lo que controla `--maxiterate` en MAFFT. La
+**consistencia** es la apuesta de T-Coffee: usar la información de
+todos los pares desde el principio, en lugar de corregir después.
+
+## 6. El alineamiento es una estimación, no un dato
+
+Aquí está el giro conceptual de la sesión, y es reciente.
+
+Wong, Suchard y Huelsenbeck (2008) tomaron 853 genes ortólogos de
+siete especies de levadura y los alinearon con siete programas
+distintos. Resultado incómodo: **programas de alineamiento distintos
+llevaron a conclusiones filogenéticas distintas**. En el reanálisis de
+Wu, Chatterji y Eisen (2012), cerca del 46% de los genes produjo uno o
+más árboles diferentes según el alineador usado. El problema de fondo es
+que los métodos estadísticos río abajo, los que construyen árboles o
+detectan selección, tratan el alineamiento como una observación fija y
+no propagan su incertidumbre. Si el alineamiento está mal, el árbol
+está mal, y nadie se entera.
+
+MUSCLE5 (Edgar 2022) convierte ese diagnóstico en método. En vez de
+producir un alineamiento, produce un **ensemble** de réplicas: cada
+réplica se genera perturbando los parámetros del modelo oculto de
+Markov y permutando el árbol guía, de modo que cada una tiene sesgos
+distintos pero precisión comparable. La confianza en cualquier
+inferencia (una columna, una topología) se mide como la fracción del
+ensemble que la sostiene; para las columnas, esa fracción se llama
+column confidence. Los resultados son aleccionadores: topologías con
+bootstrap bajo se resuelven con confianza y, al revés, algunas
+topologías con bootstrap alto resultan estar mal. El mismo trabajo
+recuerda, citando los benchmarks estructurales, que los algoritmos
+actuales colocan mal más del 30% de las columnas. No MUSCLE en
+particular: todos.
+
+En el alineamiento de la práctica lo vas a ver con tus propios datos:
+las columnas donde Clustal Omega y MAFFT no se ponen de acuerdo se
+concentran en unas cuantas regiones (@fig-desacuerdo), y son las
+mismas que los métodos de confianza marcan como poco fiables.
+
+![Acuerdo por columna entre los alineamientos de Clustal Omega y MAFFT
+para la familia de globinas de la práctica. Para cada columna del
+alineamiento de Clustal Omega se calcula qué fracción de sus pares de
+residuos sigue junta en el alineamiento de MAFFT. Los bloques
+conservados coinciden casi por completo; el desacuerdo se concentra en
+las regiones ricas en gaps.](../../figuras/svg/msa_desacuerdo.svg){#fig-desacuerdo}
+
+::: consenso
+**El alineamiento múltiple no es un hecho, es una hipótesis con barra
+de error.** Cada réplica de un ensemble usa parámetros elegidos de
+forma independiente, y se promedia sobre réplicas diversas.
+Herramientas como GUIDANCE2 (Sela et al. 2015) puntúan qué columnas
+son confiables, y programas de recorte como trimAl o ClipKIT eliminan
+las columnas poco fiables antes de construir un árbol. Mira el
+alineamiento con la misma sospecha con la que miras cualquier otra
+estimación.
+:::
+
+Sobre cuál método es "el mejor": no se sabe, y conviene decirlo.
+Distintos benchmarks favorecen distintos programas: BAliBASE 3.0 usa
+alineamientos de referencia basados en estructura, PREFAB ya es pieza
+de museo, HomFam mide cómo escala a familias con decenas de miles de
+secuencias, y QuanTest2 evita las referencias fijas midiendo qué tan
+bien el alineamiento predice estructura secundaria. Las referencias
+mismas tienen sesgos. Lo que sí puede decirse: MAFFT es hoy una de las
+opciones por defecto más comunes en servidores y pipelines (es, por
+ejemplo, uno de los motores del Job Dispatcher del EBI) y se mantiene
+activo, mientras que ningún benchmark único consagra a un ganador. Y
+la frontera ya se movió otra vez: los alineadores que incorporan
+estructura predicha o modelos de lenguaje de proteínas son el tema de
+los artículos de estos años. Quédate con la idea, no con los nombres.
+
+## 7. ¿Cuál usar cuándo?
+
+Sin ceremonia:
+
+- **Pocas secuencias (menos de unas 200), máxima precisión:** MAFFT
+  `L-INS-i` o T-Coffee.
+- **Miles a cientos de miles:** Clustal Omega o MAFFT `FFT-NS-2`.
+- **Filogenia seria, donde importa la incertidumbre:** MUSCLE5 con su
+  ensemble.
+- **Default docente equilibrado:** `mafft --auto`, que elige la
+  estrategia por tamaño.
+
+Para la práctica del curso, una familia de genes con decenas de
+secuencias, Clustal Omega o MAFFT `L-INS-i` son ideales.
+
+## Mitos y realidades: el resumen
+
+::: mito
+1.  **"CLUSTAL es el estándar para el alineamiento múltiple."**
+    Inercia de citación: CLUSTAL W fue el artículo número 10 más
+    citado de la ciencia en el conteo de Nature de 2014, pero eso mide
+    historia, no precisión. En muchos pipelines actuales el motor por
+    defecto es MAFFT, y ningún benchmark corona a un solo programa.
+2.  **"El alineamiento múltiple es un dato."** No: es la estimación de
+    un programa heurístico, con error propagable al árbol y a todo lo
+    demás.
+3.  **"Más secuencias, mejor alineamiento."** No necesariamente: sin
+    curaduría, secuencias ruidosas o mal escogidas empeoran el
+    resultado.
+4.  **"Existe el alineamiento correcto y el programa lo encuentra."**
+    El óptimo es NP-completo y aun los mejores métodos yerran más del
+    30% de las columnas en benchmarks estructurales.
+5.  **"El árbol guía es una filogenia."** No: es un agrupamiento
+    rápido por similitud que sirve para ordenar las fusiones. Usarlo
+    como árbol evolutivo es un error clásico.
+:::
 
 ## Práctica
 
-<!-- Ejercicios de terminal. Ver también practicas/. -->
+La práctica continúa el pipeline de la sesión anterior: la familia de
+proteínas que recuperaste con BLAST (las globinas de UniProt, licencia
+CC BY 4.0) ahora se alinea, se compara y se pone en duda.
+
+Las herramientas viven en un ambiente de conda ya creado en ken;
+actívalo con `conda activate msa`. Si algún día necesitas recrearlo:
+
+```bash
+conda create -n msa -c conda-forge -c bioconda \
+    clustalo mafft muscle t-coffee seqkit hmmer
+```
+
+1.  **Alinear con dos métodos.** Clustal Omega:
+
+    ```bash
+    clustalo -i familia.fasta -o familia_clustalo.aln \
+        --outfmt=clu --guidetree-out=arbol.dnd
+    ```
+
+    MAFFT en su modo preciso (esto es, literalmente, `L-INS-i`):
+
+    ```bash
+    mafft --localpair --maxiterate 1000 familia.fasta \
+        > familia_mafft.fasta
+    ```
+
+2.  **Primer vistazo con números.** Antes de mirar letras, mide:
+
+    ```bash
+    seqkit stats -a familia_mafft.fasta
+    esl-alistat familia_clustalo.aln
+    ```
+
+    Anota cuántas columnas tiene cada alineamiento. Si el número
+    difiere entre programas, y casi siempre difiere, ya tienes la
+    primera evidencia de que esto es una estimación.
+
+3.  **Comparación objetiva.** T-Coffee trae un modo que mide el
+    acuerdo entre dos alineamientos de las mismas secuencias:
+
+    ```bash
+    t_coffee -other_pg aln_compare \
+        -al1 familia_clustalo.aln -al2 familia_mafft.fasta
+    ```
+
+    El porcentaje que reporta es el acuerdo de suma de pares entre
+    ambos. Cuidado con la interpretación: como no hay verdad de
+    referencia, esto mide desacuerdo entre programas, no exactitud de
+    ninguno. (Una alternativa clásica, si tienes Java a la mano, es
+    FastSP; Mirarab y Warnow 2011.)
+
+4.  **Mirar el árbol guía.** El `.dnd` que guardó Clustal Omega está
+    en formato Newick; míralo con `cat arbol.dnd`. Es el orden en que
+    el programa fue pegando las secuencias: el mismo objeto que
+    gobierna el pecado original de la sección 4.
+
+    ::: {.callout-warning}
+    El árbol guía no es un árbol filogenético. Se construye con
+    distancias crudas, sin modelo evolutivo, y su único propósito es
+    ordenar las fusiones. La documentación de T-Coffee lo dice sin
+    rodeos: no debe usarse para inferir relaciones evolutivas.
+    :::
+
+5.  **Confianza por columna.** Genera un ensemble con MUSCLE5 y
+    pregúntale al propio método de qué columnas desconfía:
+
+    ```bash
+    muscle -align familia.fasta -output ensamble.efa -stratified
+    muscle -maxcc ensamble.efa -output mejor.afa
+    muscle -letterconf ensamble.efa -ref mejor.afa \
+        -output confianza.afa -html confianza.html \
+        -jalview confianza.features
+    ```
+
+    `-stratified` genera 16 réplicas y es suficiente para la clase;
+    `-diversified` genera 100 y es la opción seria. Abre
+    `confianza.html` en tu navegador: cada letra trae su confianza de
+    0 a 9.
+
+6.  **Ver el alineamiento.** Descarga los archivos a tu laptop y
+    ábrelos en Jalview (jalview.org; hay instaladores para Linux, Mac
+    y Windows). Colorea por conservación e importa
+    `confianza.features` para sobreponer la confianza de MUSCLE5. Si
+    Java se pone difícil, el MSA Viewer del NCBI en el navegador es el
+    plan B.
+
+El entregable no es "el alineamiento", sino un párrafo sobre **dónde
+los dos métodos no se pusieron de acuerdo y por qué**, señalando dos
+regiones concretas (con posiciones) y diciendo si coinciden con las
+columnas de baja confianza del paso 5. Ésa es la parte que se califica
+en serio, porque es la que enseña a desconfiar del dato.
+
+## Ejercicios
+
+### Ejercicio 1: la suma de pares a mano
+
+Usa el esquema didáctico de la sección 2 (coincidencia $+1$, no
+coincidencia $-1$, residuo contra gap $-2$, gap contra gap $0$) y el
+alineamiento:
+
+```
+s1  W K L
+s2  W - L
+s3  W K M
+```
+
+a.  Verifica, columna por columna, que la puntuación total es $-1$.
+b.  Recalcula con residuo contra gap en $-1$. ¿Cuánto vale ahora?
+c.  Considera el alineamiento alternativo donde el gap de s2 se mueve
+    a la última columna:
+
+    ```
+    s1  W K L
+    s2  W L -
+    s3  W K M
+    ```
+
+    Puntúalo bajo los dos esquemas. ¿Cuál alineamiento gana en cada
+    caso?
+d.  En este ejemplo el ganador no cambia, pero el margen sí. Explica
+    por qué, en general, cambiar la matriz de sustitución o las
+    penalizaciones puede cambiar cuál alineamiento resulta óptimo.
+
+### Ejercicio 2: el orden de fusión decide
+
+Tres secuencias inventadas:
+
+```
+A  M S T K K L L L
+B  M S T K L L L
+C  M S T K W L L L
+```
+
+Trabaja con el mismo esquema del ejercicio 1.
+
+a.  Calcula los tres alineamientos óptimos de pares y sus
+    puntuaciones. Verifica que A contra C da 6 sin ningún gap, y que A
+    contra B y B contra C dan 5. Verifica además que A contra B tiene
+    dos soluciones co-óptimas: el gap de B puede ir bajo cualquiera de
+    las dos K de A. (Este empate te debe sonar de la sesión 7: los
+    alineamientos óptimos no son únicos.)
+b.  Con esas similitudes, ¿qué par junta primero el árbol guía?
+    Construye el alineamiento progresivo siguiendo ese orden y
+    verifica que el resultado es:
+
+    ```
+    A  M S T K K L L L
+    C  M S T K W L L L
+    B  M S T K - L L L
+    ```
+
+c.  Ahora supón que el árbol guía, calculado con alguna distancia
+    aproximada, hubiera juntado primero A con B, y que el programa
+    hubiera elegido la otra solución co-óptima, con el gap bajo la
+    primera K. Termina el alineamiento progresivo agregando C sin
+    mover el gap ya fijado.
+d.  Puntúa con suma de pares los dos alineamientos finales de (b) y
+    (c). Debes obtener 16 y 14. El orden de fusión, y hasta un empate
+    roto arbitrariamente, cambió el resultado final, y el algoritmo
+    progresivo que tomó el camino de (c) no tiene ninguna manera de
+    arrepentirse. Di en una frase qué regla de la sección 4 acabas de
+    presenciar.
+
+### Ejercicio 3: preguntas conceptuales
+
+a.  Dos programas producen alineamientos distintos de las mismas
+    secuencias. ¿Qué significa eso y qué no significa?
+b.  ¿Por qué reportar un solo alineamiento, sin ninguna medida de
+    incertidumbre, puede sesgar todo el análisis que venga después?
+c.  ¿En qué circunstancias agregar más secuencias empeora el
+    alineamiento en lugar de mejorarlo?
+d.  Tu compañero pone el `arbol.dnd` de Clustal Omega en su tesis como
+    "la filogenia de la familia". ¿Qué le dices?
 
 ## Fuentes {.unnumbered}
 
-::: {.pendiente}
-Sin material fuente asignado todavía.
-:::
+**Complejidad**
 
+- Wang L & Jiang T (1994) "On the complexity of multiple sequence
+  alignment", *J Comput Biol* 1(4):337-348.
+  [doi:10.1089/cmb.1994.1.337](https://doi.org/10.1089/cmb.1994.1.337)
+- Just W (2001) "Computational complexity of multiple sequence
+  alignment with SP-score", *J Comput Biol* 8(6):615-623.
+  [doi:10.1089/106652701753307511](https://doi.org/10.1089/106652701753307511)
+- Elias I (2006) "Settling the intractability of multiple alignment",
+  *J Comput Biol* 13(7):1323-1339.
+  [doi:10.1089/cmb.2006.13.1323](https://doi.org/10.1089/cmb.2006.13.1323)
+- Gusfield D (1993) "Efficient methods for multiple sequence alignment
+  with guaranteed error bounds", *Bull Math Biol* 55(1):141-154.
+  [doi:10.1007/BF02460299](https://doi.org/10.1007/BF02460299)
+
+**Métodos**
+
+- Feng DF & Doolittle RF (1987) "Progressive sequence alignment as a
+  prerequisite to correct phylogenetic trees", *J Mol Evol*
+  25(4):351-360.
+  [doi:10.1007/BF02603120](https://doi.org/10.1007/BF02603120)
+- Higgins DG & Sharp PM (1988) "CLUSTAL: a package for performing
+  multiple sequence alignment on a microcomputer", *Gene*
+  73(1):237-244.
+  [doi:10.1016/0378-1119(88)90330-7](https://doi.org/10.1016/0378-1119(88)90330-7)
+- Thompson JD, Higgins DG, Gibson TJ (1994) "CLUSTAL W…", *Nucleic
+  Acids Res* 22(22):4673-4680.
+  [doi:10.1093/nar/22.22.4673](https://doi.org/10.1093/nar/22.22.4673)
+- Blackshields G, Sievers F, Shi W, Wilm A, Higgins DG (2010)
+  "Sequence embedding for fast construction of guide trees for
+  multiple sequence alignment", *Algorithms Mol Biol* 5:21.
+  [doi:10.1186/1748-7188-5-21](https://doi.org/10.1186/1748-7188-5-21)
+- Sievers F et al. (2011) "Fast, scalable generation of high-quality
+  protein multiple sequence alignments using Clustal Omega", *Mol Syst
+  Biol* 7:539.
+  [doi:10.1038/msb.2011.75](https://doi.org/10.1038/msb.2011.75)
+- Katoh K, Misawa K, Kuma K, Miyata T (2002) "MAFFT: a novel method
+  for rapid multiple sequence alignment based on fast Fourier
+  transform", *Nucleic Acids Res* 30(14):3059-3066.
+  [doi:10.1093/nar/gkf436](https://doi.org/10.1093/nar/gkf436)
+- Katoh K & Standley DM (2013) "MAFFT multiple sequence alignment
+  software version 7", *Mol Biol Evol* 30(4):772-780.
+  [doi:10.1093/molbev/mst010](https://doi.org/10.1093/molbev/mst010)
+- Edgar RC (2004) "MUSCLE: multiple sequence alignment with high
+  accuracy and high throughput", *Nucleic Acids Res*
+  32(5):1792-1797.
+  [doi:10.1093/nar/gkh340](https://doi.org/10.1093/nar/gkh340)
+- Edgar RC (2022) "Muscle5: High-accuracy alignment ensembles enable
+  unbiased assessments of sequence homology and phylogeny", *Nat
+  Commun* 13:6968.
+  [doi:10.1038/s41467-022-34630-w](https://doi.org/10.1038/s41467-022-34630-w)
+- Notredame C, Higgins DG, Heringa J (2000) "T-Coffee: A novel method
+  for fast and accurate multiple sequence alignment", *J Mol Biol*
+  302(1):205-217.
+  [doi:10.1006/jmbi.2000.4042](https://doi.org/10.1006/jmbi.2000.4042)
+
+**Incertidumbre y comparación de alineamientos**
+
+- Wong KM, Suchard MA, Huelsenbeck JP (2008) "Alignment uncertainty
+  and genomic analysis", *Science* 319(5862):473-476.
+  [doi:10.1126/science.1151532](https://doi.org/10.1126/science.1151532)
+- Wu M, Chatterji S, Eisen JA (2012) "Accounting for alignment
+  uncertainty in phylogenomics", *PLoS ONE* 7(1):e30288.
+  [doi:10.1371/journal.pone.0030288](https://doi.org/10.1371/journal.pone.0030288)
+- Sela I, Ashkenazy H, Katoh K, Pupko T (2015) "GUIDANCE2: accurate
+  detection of unreliable alignment regions…", *Nucleic Acids Res*
+  43(W1):W7-W14.
+  [doi:10.1093/nar/gkv318](https://doi.org/10.1093/nar/gkv318)
+- Mirarab S & Warnow T (2011) "FastSP: linear time calculation of
+  alignment accuracy", *Bioinformatics* 27(23):3250-3258.
+  [doi:10.1093/bioinformatics/btr553](https://doi.org/10.1093/bioinformatics/btr553)
+- Sievers F & Higgins DG (2020) "QuanTest2: benchmarking multiple
+  sequence alignments using secondary structure prediction",
+  *Bioinformatics* 36(1):90-95.
+  [doi:10.1093/bioinformatics/btz552](https://doi.org/10.1093/bioinformatics/btz552)
+
+**Historia y contexto**
+
+- Van Noorden R, Maher B, Nuzzo R (2014) "The top 100 papers",
+  *Nature* 514(7524):550-553.
+  [doi:10.1038/514550a](https://doi.org/10.1038/514550a)
+
+**Herramientas**
+
+- Clustal Omega: <http://www.clustal.org/omega/> ·
+  MAFFT: <https://mafft.cbrc.jp/alignment/software/> ·
+  MUSCLE5: <https://drive5.com/muscle5/> ·
+  Jalview: <https://www.jalview.org/> ·
+  GUIDANCE2: <http://guidance.tau.ac.il/>

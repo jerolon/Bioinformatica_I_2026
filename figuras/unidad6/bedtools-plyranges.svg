@@ -1,0 +1,78 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<svg xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink' width='453.54pt' height='311.81pt' viewBox='0 0 453.54 311.81'>
+<g class='svglite'>
+<defs>
+  <style type='text/css'><![CDATA[
+    .svglite line, .svglite polyline, .svglite polygon, .svglite path, .svglite rect, .svglite circle {
+      fill: none;
+      stroke: #000000;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+      stroke-miterlimit: 10.00;
+    }
+    .svglite text {
+      white-space: pre;
+    }
+    .svglite g.glyphgroup path {
+      fill: inherit;
+      stroke: none;
+    }
+  ]]></style>
+</defs>
+<rect width='100%' height='100%' style='stroke: none; fill: none;'/>
+<defs>
+  <clipPath id='cpMC4wMHw0NTMuNTR8MC4wMHwzMTEuODE='>
+    <rect x='0.00' y='0.00' width='453.54' height='311.81' />
+  </clipPath>
+</defs>
+<g clip-path='url(#cpMC4wMHw0NTMuNTR8MC4wMHwzMTEuODE=)'>
+</g>
+<defs>
+  <clipPath id='cpMC4wMHw0NTMuNTR8My45MHwzMDcuOTE='>
+    <rect x='0.00' y='3.90' width='453.54' height='304.02' />
+  </clipPath>
+</defs>
+<g clip-path='url(#cpMC4wMHw0NTMuNTR8My45MHwzMDcuOTE=)'>
+<rect x='0.00' y='3.90' width='453.54' height='304.02' style='stroke-width: 0.00; stroke: none;' />
+</g>
+<g clip-path='url(#cpMC4wMHw0NTMuNTR8MC4wMHwzMTEuODE=)'>
+</g>
+<defs>
+  <clipPath id='cpNS42N3w0NDcuODd8My45MHwzMDcuOTE='>
+    <rect x='5.67' y='3.90' width='442.20' height='304.02' />
+  </clipPath>
+</defs>
+<g clip-path='url(#cpNS42N3w0NDcuODd8My45MHwzMDcuOTE=)'>
+<text x='16.72' y='34.62' style='font-size: 8.82px; font-weight: bold;fill: #666666; font-family: "Source Sans Pro", "Segoe UI", "Roboto", "Helvetica Neue", "Arial", sans-serif;'>en la terminal (sesión 11)</text>
+<text x='232.30' y='34.62' style='font-size: 8.82px; font-weight: bold;fill: #666666; font-family: "Source Sans Pro", "Segoe UI", "Roboto", "Helvetica Neue", "Arial", sans-serif;'>en R (hoy)</text>
+<line x1='16.72' y1='42.59' x2='436.82' y2='42.59' style='stroke-width: 0.75; stroke: #B0B0B0; stroke-linecap: butt;' />
+<text x='16.72' y='67.42' style='font-size: 8.54px;fill: #1A1A1A; font-family: "Source Code Pro", "Consolas", "DejaVu Sans Mono", "Courier New", monospace;'>bedtools intersect</text>
+<text x='16.72' y='92.30' style='font-size: 8.54px;fill: #1A1A1A; font-family: "Source Code Pro", "Consolas", "DejaVu Sans Mono", "Courier New", monospace;'>bedtools merge</text>
+<text x='16.72' y='117.17' style='font-size: 8.54px;fill: #1A1A1A; font-family: "Source Code Pro", "Consolas", "DejaVu Sans Mono", "Courier New", monospace;'>bedtools sort</text>
+<text x='16.72' y='142.04' style='font-size: 8.54px;fill: #1A1A1A; font-family: "Source Code Pro", "Consolas", "DejaVu Sans Mono", "Courier New", monospace;'>bedtools subtract</text>
+<text x='16.72' y='166.92' style='font-size: 8.54px;fill: #1A1A1A; font-family: "Source Code Pro", "Consolas", "DejaVu Sans Mono", "Courier New", monospace;'>bedtools closest</text>
+<text x='16.72' y='191.79' style='font-size: 8.54px;fill: #1A1A1A; font-family: "Source Code Pro", "Consolas", "DejaVu Sans Mono", "Courier New", monospace;'>bedtools slop</text>
+<text x='16.72' y='227.72' style='font-size: 8.54px;fill: #1A1A1A; font-family: "Source Code Pro", "Consolas", "DejaVu Sans Mono", "Courier New", monospace;'>bedtools getfasta</text>
+<text x='232.30' y='67.42' style='font-size: 8.54px;fill: #1A7A8A; font-family: "Source Code Pro", "Consolas", "DejaVu Sans Mono", "Courier New", monospace;'>join_overlap_inner()</text>
+<text x='232.30' y='92.30' style='font-size: 8.54px;fill: #1A7A8A; font-family: "Source Code Pro", "Consolas", "DejaVu Sans Mono", "Courier New", monospace;'>reduce_ranges()</text>
+<text x='232.30' y='117.17' style='font-size: 8.54px;fill: #1A7A8A; font-family: "Source Code Pro", "Consolas", "DejaVu Sans Mono", "Courier New", monospace;'>arrange()</text>
+<text x='232.30' y='142.04' style='font-size: 8.54px;fill: #1A7A8A; font-family: "Source Code Pro", "Consolas", "DejaVu Sans Mono", "Courier New", monospace;'>setdiff_ranges()</text>
+<text x='232.30' y='166.92' style='font-size: 8.54px;fill: #1A7A8A; font-family: "Source Code Pro", "Consolas", "DejaVu Sans Mono", "Courier New", monospace;'>join_nearest()</text>
+<text x='232.30' y='191.79' style='font-size: 8.54px;fill: #1A7A8A; font-family: "Source Code Pro", "Consolas", "DejaVu Sans Mono", "Courier New", monospace;'>anchor_center() %&gt;% stretch()</text>
+<text x='232.30' y='227.72' style='font-size: 8.54px;fill: #1A7A8A; font-family: "Source Code Pro", "Consolas", "DejaVu Sans Mono", "Courier New", monospace;'>getSeq()</text>
+<text x='204.66' y='68.28' text-anchor='middle' style='font-size: 10.24px;fill: #666666; font-family: "Source Sans Pro", "Segoe UI", "Roboto", "Helvetica Neue", "Arial", sans-serif;'>↔</text>
+<text x='204.66' y='93.16' text-anchor='middle' style='font-size: 10.24px;fill: #666666; font-family: "Source Sans Pro", "Segoe UI", "Roboto", "Helvetica Neue", "Arial", sans-serif;'>↔</text>
+<text x='204.66' y='118.03' text-anchor='middle' style='font-size: 10.24px;fill: #666666; font-family: "Source Sans Pro", "Segoe UI", "Roboto", "Helvetica Neue", "Arial", sans-serif;'>↔</text>
+<text x='204.66' y='142.90' text-anchor='middle' style='font-size: 10.24px;fill: #666666; font-family: "Source Sans Pro", "Segoe UI", "Roboto", "Helvetica Neue", "Arial", sans-serif;'>↔</text>
+<text x='204.66' y='167.78' text-anchor='middle' style='font-size: 10.24px;fill: #666666; font-family: "Source Sans Pro", "Segoe UI", "Roboto", "Helvetica Neue", "Arial", sans-serif;'>↔</text>
+<text x='204.66' y='192.65' text-anchor='middle' style='font-size: 10.24px;fill: #666666; font-family: "Source Sans Pro", "Segoe UI", "Roboto", "Helvetica Neue", "Arial", sans-serif;'>↔</text>
+<text x='204.66' y='228.58' text-anchor='middle' style='font-size: 10.24px;fill: #666666; font-family: "Source Sans Pro", "Segoe UI", "Roboto", "Helvetica Neue", "Arial", sans-serif;'>↔</text>
+<text x='27.78' y='208.24' style='font-size: 7.40px; font-style: italic;fill: #666666; font-family: "Source Sans Pro", "Segoe UI", "Roboto", "Helvetica Neue", "Arial", sans-serif;'>bedtools asume qué extremo se fija; plyranges obliga a decirlo</text>
+<line x1='16.72' y1='247.11' x2='436.82' y2='247.11' style='stroke-width: 0.75; stroke: #B0B0B0; stroke-linecap: butt;' />
+<text x='16.72' y='269.55' style='font-size: 8.82px; font-weight: bold;fill: #D98C00; font-family: "Source Sans Pro", "Segoe UI", "Roboto", "Helvetica Neue", "Arial", sans-serif;'>el objeto GRanges sabe su genoma y su sistema de coordenadas;</text>
+<text x='16.72' y='286.13' style='font-size: 8.82px; font-weight: bold;fill: #D98C00; font-family: "Source Sans Pro", "Segoe UI", "Roboto", "Helvetica Neue", "Arial", sans-serif;'>un archivo BED no sabe nada.</text>
+</g>
+<g clip-path='url(#cpMC4wMHw0NTMuNTR8MC4wMHwzMTEuODE=)'>
+</g>
+</g>
+</svg>

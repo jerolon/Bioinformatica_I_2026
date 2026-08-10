@@ -4,23 +4,74 @@ subtitle: "Unidad 5 · Sesión 11"
 author: "Jero"
 ---
 
-::: {.pendiente}
-Capítulo por escribir.
-:::
-
 ## Idea central
 
-<!-- Una o dos frases: qué se lleva el alumno de aquí. -->
+UCSC y Ensembl viven en un servidor y les muestran datos públicos. **IGV
+vive en su computadora y les muestra sus archivos.**
+
+Esa es toda la diferencia, y es la que importa el día que tengan datos
+propios.
 
 ## Desarrollo
 
-## Práctica
+### Qué es
 
-<!-- Ejercicios de terminal. Ver también practicas/. -->
+El **Integrative Genomics Viewer** es una aplicación de escritorio que
+carga un genoma de referencia y le apila encima los archivos que ustedes
+le den: anotación, variantes, alineamientos, señal.
+
+Su uso canónico es mirar alineamientos de lecturas contra la referencia,
+que es como se detectan a ojo los artefactos que ningún filtro
+automático atrapa. Eso lo van a hacer en cuarto semestre, cuando vean
+mapeo de lecturas.
+
+Hoy lo vemos por otra razón: porque es donde se cobra todo lo del
+capítulo anterior.
+
+### El índice no es opcional
+
+IGV no carga un archivo grande sin su índice. Y esa exigencia es
+pedagógicamente perfecta, porque el índice es exactamente lo que
+acabamos de construir.
+
+Una referencia FASTA necesita su `.fai`, que hacen con `samtools faidx`.
+Un VCF comprimido necesita su `.tbi`, que hacen con `tabix`. Un BAM
+necesita su `.bai`. Un GFF grande, su `.tbi`.
+
+Si IGV se niega a cargar algo, la primera hipótesis es que falta el
+índice o que el archivo se comprimió con `gzip` en lugar de `bgzip`.
+
+### Qué van a cargar hoy
+
+Como todavía no tienen alineamientos propios, vamos a montar la vista con
+lo que sí tienen:
+
+- El **cromosoma 17** como referencia, con su `.fai`.
+- El **GTF** de anotación, para ver la estructura de exones de TP53.
+- Un **VCF de ClinVar** recortado a la región, para ver variantes
+  reportadas encima de esos exones.
+
+Con eso ya se ve la idea completa: coordenadas abajo, anotación en medio,
+datos encima.
+
+### Las versiones
+
+**IGV de escritorio** es la aplicación completa, en Java, y es la que
+usan casi todos.
+
+**IGV-web** corre en el navegador, sin instalar nada, y sirve para una
+mirada rápida o para una clase.
+
+**igv.js** es la biblioteca de JavaScript con la que se embeben vistas de
+IGV en una página web. Si alguna vez han visto un browser incrustado en
+el sitio de un consorcio, probablemente era igv.js.
+
+Para hoy usamos IGV-web, porque instalar treinta copias de una
+aplicación de escritorio en clase no es un buen uso de dos horas.
 
 ## Fuentes {.unnumbered}
 
-::: {.pendiente}
-Sin material fuente asignado todavía.
-:::
-
+- Robinson, J. T. et al. (2011). Integrative Genomics Viewer. *Nature Biotechnology* 29(1): 24-26. [doi:10.1038/nbt.1754](https://doi.org/10.1038/nbt.1754)
+- IGV, documentación y descargas. <https://igv.org/>
+- IGV-web. <https://igv.org/app/>
+- igv.js. <https://github.com/igvteam/igv.js>

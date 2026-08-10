@@ -1,0 +1,9 @@
+clase	pct	repetitiva	fuente	rm_hg38_intercaladas_pct	rm_hg38_total_pct
+LINE	21	TRUE	IHGSC 2001 (Nature 409:860), redondeado	48.49	52.58
+SINE (Alu y otros)	13	TRUE	IHGSC 2001 (Nature 409:860), redondeado	48.49	52.58
+LTR / retrovirus endógenos	8	TRUE	IHGSC 2001 (Nature 409:860), redondeado	48.49	52.58
+Transposones de DNA	3	TRUE	IHGSC 2001 (Nature 409:860), redondeado	48.49	52.58
+Satélites y otras repeticiones	3	TRUE	IHGSC 2001 (Nature 409:860), redondeado	48.49	52.58
+Exones codificantes	1.5	FALSE	IHGSC 2001 (Nature 409:860), redondeado	48.49	52.58
+Intrones	26	FALSE	IHGSC 2001 (Nature 409:860), redondeado	48.49	52.58
+Resto intergénico	24.5	FALSE	IHGSC 2001 (Nature 409:860), redondeado	48.49	52.58

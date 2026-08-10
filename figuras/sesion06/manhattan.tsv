@@ -1,0 +1,27 @@
+tipo	direccion	desde	hasta	movimientos	peso	en_voraz	en_optima
+arista	sur	0,0	1,0		3	no	sí
+arista	sur	0,1	1,1		2	sí	no
+arista	sur	0,2	1,2		4	no	no
+arista	sur	0,3	1,3		1	no	no
+arista	sur	1,0	2,0		7	no	sí
+arista	sur	1,1	2,1		2	sí	no
+arista	sur	1,2	2,2		2	no	no
+arista	sur	1,3	2,3		2	no	no
+arista	sur	2,0	3,0		8	no	sí
+arista	sur	2,1	3,1		2	sí	no
+arista	sur	2,2	3,2		3	no	no
+arista	sur	2,3	3,3		3	no	no
+arista	este	0,0	0,1		6	sí	no
+arista	este	0,1	0,2		1	no	no
+arista	este	0,2	0,3		2	no	no
+arista	este	1,0	1,1		2	no	no
+arista	este	1,1	1,2		1	no	no
+arista	este	1,2	1,3		3	no	no
+arista	este	2,0	2,1		3	no	no
+arista	este	2,1	2,2		1	no	no
+arista	este	2,2	2,3		4	no	no
+arista	este	3,0	3,1		7	no	sí
+arista	este	3,1	3,2		6	sí	sí
+arista	este	3,2	3,3		5	sí	sí
+ruta	voraz	0,0	3,3	ESSSEE	23	sí	no
+ruta	óptima	0,0	3,3	SSSEEE	36	no	sí

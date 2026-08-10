@@ -26,10 +26,10 @@ capítulos tipo "cómo uso esta página web" de los libros viejos.
 
 ## Material fuente del curso
 
-Este material reusa y adapta dos cursos previos, ambos CC BY-NC-SA 4.0:
-
-- **Evelia Coss** — [Introducción a la Bioinformática, LCG 2025](https://eveliacoss.github.io/LCG2025_IntroBioinfo_S1/)
-- **Heladia Salgado** — [Introducción a la Bioinformática](https://lcg-cursos.github.io/material/introbioinfo/)
+- **Evelia Coss** — [Introducción a la Bioinformática, LCG 2025](https://eveliacoss.github.io/LCG2025_IntroBioinfo_S1/).
+  CC BY-NC-SA 4.0 y con permiso de la autora: se adapta con atribución.
+- **Heladia Salgado** — [Introducción a la Bioinformática](https://lcg-cursos.github.io/material/introbioinfo/).
+  Referencia de temario; licencia sin confirmar, se cita y enlaza pero no se adapta.
 
 Ver [Créditos](../creditos.qmd) para el detalle.
 

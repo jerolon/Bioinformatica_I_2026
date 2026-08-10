@@ -1,0 +1,6 @@
+orden	etiqueta	tipo	glosa
+1	datos/lambda.fasta	dato	
+2	grep -v "^>"	comando	quita el header
+3	tr -d '\n'	comando	quita los saltos de línea
+4	wc -c	comando	cuenta caracteres
+5	48502	dato	

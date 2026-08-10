@@ -1,0 +1,6 @@
+origen	destino	comando	sentido	glosa
+Directorio de trabajo	Staging area	git add	avance	
+Staging area	Repositorio (.git)	git commit	avance	
+Staging area	Directorio de trabajo	git reset	regreso	saca del staging
+Repositorio (.git)	Directorio de trabajo	git checkout --	regreso	restaura desde el último commit
+Repositorio (.git)	GitHub (remoto)	git push	avance	

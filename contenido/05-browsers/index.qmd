@@ -1,6 +1,6 @@
 ---
 title: "5 · Genome browsers"
-subtitle: "Sesión 11 (23 oct) · Jero"
+subtitle: "Sesión 11 (30 oct) · Jero"
 ---
 
 El genoma como sistema de coordenadas. Ensamblados, tracks, y los formatos de anotación donde vive todo lo demás.

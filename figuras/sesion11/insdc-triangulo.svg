@@ -1,0 +1,66 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<svg xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink' width='453.54pt' height='311.81pt' viewBox='0 0 453.54 311.81'>
+<g class='svglite'>
+<defs>
+  <style type='text/css'><![CDATA[
+    .svglite line, .svglite polyline, .svglite polygon, .svglite path, .svglite rect, .svglite circle {
+      fill: none;
+      stroke: #000000;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+      stroke-miterlimit: 10.00;
+    }
+    .svglite text {
+      white-space: pre;
+    }
+    .svglite g.glyphgroup path {
+      fill: inherit;
+      stroke: none;
+    }
+  ]]></style>
+</defs>
+<rect width='100%' height='100%' style='stroke: none; fill: none;'/>
+<defs>
+  <clipPath id='cpMC4wMHw0NTMuNTR8MC4wMHwzMTEuODE='>
+    <rect x='0.00' y='0.00' width='453.54' height='311.81' />
+  </clipPath>
+</defs>
+<g clip-path='url(#cpMC4wMHw0NTMuNTR8MC4wMHwzMTEuODE=)'>
+<rect x='0.00' y='0.00' width='453.54' height='311.81' style='stroke-width: 0.00; stroke: none;' />
+<line x1='190.04' y1='69.30' x2='127.44' y2='107.20' style='stroke-width: 1.07; stroke: #1A7A8A; stroke-linecap: butt;' />
+<polygon points='187.04,74.76 190.04,69.30 183.81,69.43 ' style='stroke-width: 1.07; stroke: #1A7A8A; stroke-linecap: butt; fill: #1A7A8A;' />
+<polygon points='130.44,101.73 127.44,107.20 133.67,107.07 ' style='stroke-width: 1.07; stroke: #1A7A8A; stroke-linecap: butt; fill: #1A7A8A;' />
+<line x1='263.50' y1='69.30' x2='326.11' y2='107.20' style='stroke-width: 1.07; stroke: #1A7A8A; stroke-linecap: butt;' />
+<polygon points='269.73,69.43 263.50,69.30 266.50,74.76 ' style='stroke-width: 1.07; stroke: #1A7A8A; stroke-linecap: butt; fill: #1A7A8A;' />
+<polygon points='319.87,107.07 326.11,107.20 323.10,101.73 ' style='stroke-width: 1.07; stroke: #1A7A8A; stroke-linecap: butt; fill: #1A7A8A;' />
+<line x1='150.24' y1='129.43' x2='303.31' y2='129.43' style='stroke-width: 1.07; stroke: #1A7A8A; stroke-linecap: butt;' />
+<polygon points='155.64,126.31 150.24,129.43 155.64,132.55 ' style='stroke-width: 1.07; stroke: #1A7A8A; stroke-linecap: butt; fill: #1A7A8A;' />
+<polygon points='297.91,132.55 303.31,129.43 297.91,126.31 ' style='stroke-width: 1.07; stroke: #1A7A8A; stroke-linecap: butt; fill: #1A7A8A;' />
+<text transform='translate(139.98,80.97) rotate(-35)' text-anchor='middle' style='font-size: 5.41px;fill: #1A7A8A; font-family: "Source Sans Pro", "Segoe UI", "Roboto", "Helvetica Neue", "Arial", sans-serif;'>intercambio diario</text>
+<text transform='translate(313.56,80.97) rotate(35)' text-anchor='middle' style='font-size: 5.41px;fill: #1A7A8A; font-family: "Source Sans Pro", "Segoe UI", "Roboto", "Helvetica Neue", "Arial", sans-serif;'>intercambio diario</text>
+<text x='226.77' y='123.67' text-anchor='middle' style='font-size: 5.41px;fill: #1A7A8A; font-family: "Source Sans Pro", "Segoe UI", "Roboto", "Helvetica Neue", "Arial", sans-serif;'>intercambio diario</text>
+<polygon points='274.39,26.47 275.28,26.54 276.15,26.74 276.98,27.06 277.77,27.50 278.48,28.06 279.11,28.71 279.64,29.45 280.07,30.26 280.38,31.12 280.57,32.03 280.63,32.95 280.63,61.19 280.57,62.11 280.38,63.01 280.07,63.87 279.64,64.68 279.11,65.42 278.48,66.08 277.77,66.63 276.98,67.07 276.15,67.39 275.28,67.59 274.39,67.66 179.15,67.66 178.26,67.59 177.39,67.39 176.56,67.07 175.78,66.63 175.07,66.08 174.44,65.42 173.90,64.68 173.48,63.87 173.17,63.01 172.98,62.11 172.91,61.19 172.91,32.95 172.98,32.03 173.17,31.12 173.48,30.26 173.90,29.45 174.44,28.71 175.07,28.06 175.78,27.50 176.56,27.06 177.39,26.74 178.26,26.54 179.15,26.47 ' style='stroke-width: 0.96; stroke: #1A7A8A; stroke-linecap: butt; fill: #2BB5C6; fill-opacity: 0.16;' />
+<polygon points='138.33,108.84 139.22,108.91 140.09,109.10 140.92,109.42 141.70,109.87 142.41,110.42 143.04,111.07 143.58,111.81 144.00,112.62 144.31,113.49 144.50,114.39 144.57,115.31 144.57,143.55 144.50,144.47 144.31,145.37 144.00,146.24 143.58,147.05 143.04,147.79 142.41,148.44 141.70,148.99 140.92,149.44 140.09,149.76 139.22,149.96 138.33,150.02 43.09,150.02 42.20,149.96 41.33,149.76 40.50,149.44 39.72,148.99 39.00,148.44 38.37,147.79 37.84,147.05 37.41,146.24 37.10,145.37 36.91,144.47 36.85,143.55 36.85,115.31 36.91,114.39 37.10,113.49 37.41,112.62 37.84,111.81 38.37,111.07 39.00,110.42 39.72,109.87 40.50,109.42 41.33,109.10 42.20,108.91 43.09,108.84 ' style='stroke-width: 0.96; stroke: #1A7A8A; stroke-linecap: butt; fill: #2BB5C6; fill-opacity: 0.16;' />
+<polygon points='410.46,108.84 411.34,108.91 412.21,109.10 413.05,109.42 413.83,109.87 414.54,110.42 415.17,111.07 415.70,111.81 416.13,112.62 416.44,113.49 416.63,114.39 416.69,115.31 416.69,143.55 416.63,144.47 416.44,145.37 416.13,146.24 415.70,147.05 415.17,147.79 414.54,148.44 413.83,148.99 413.05,149.44 412.21,149.76 411.34,149.96 410.46,150.02 315.21,150.02 314.33,149.96 313.46,149.76 312.62,149.44 311.84,148.99 311.13,148.44 310.50,147.79 309.97,147.05 309.54,146.24 309.23,145.37 309.04,144.47 308.98,143.55 308.98,115.31 309.04,114.39 309.23,113.49 309.54,112.62 309.97,111.81 310.50,111.07 311.13,110.42 311.84,109.87 312.62,109.42 313.46,109.10 314.33,108.91 315.21,108.84 ' style='stroke-width: 0.96; stroke: #1A7A8A; stroke-linecap: butt; fill: #2BB5C6; fill-opacity: 0.16;' />
+<text x='226.77' y='43.58' text-anchor='middle' style='font-size: 8.54px; font-weight: bold;fill: #1A7A8A; font-family: "Source Sans Pro", "Segoe UI", "Roboto", "Helvetica Neue", "Arial", sans-serif;'>GenBank</text>
+<text x='90.71' y='125.95' text-anchor='middle' style='font-size: 8.54px; font-weight: bold;fill: #1A7A8A; font-family: "Source Sans Pro", "Segoe UI", "Roboto", "Helvetica Neue", "Arial", sans-serif;'>ENA</text>
+<text x='362.83' y='125.95' text-anchor='middle' style='font-size: 8.54px; font-weight: bold;fill: #1A7A8A; font-family: "Source Sans Pro", "Segoe UI", "Roboto", "Helvetica Neue", "Arial", sans-serif;'>DDBJ</text>
+<text x='226.77' y='57.88' text-anchor='middle' style='font-size: 5.69px;fill: #1A1A1A; font-family: "Source Sans Pro", "Segoe UI", "Roboto", "Helvetica Neue", "Arial", sans-serif;'>NCBI · Estados Unidos</text>
+<text x='90.71' y='140.25' text-anchor='middle' style='font-size: 5.69px;fill: #1A1A1A; font-family: "Source Sans Pro", "Segoe UI", "Roboto", "Helvetica Neue", "Arial", sans-serif;'>EMBL-EBI · Europa</text>
+<text x='362.83' y='140.25' text-anchor='middle' style='font-size: 5.69px;fill: #1A1A1A; font-family: "Source Sans Pro", "Segoe UI", "Roboto", "Helvetica Neue", "Arial", sans-serif;'>NIG · Japón</text>
+<line x1='19.84' y1='167.67' x2='433.70' y2='167.67' style='stroke-width: 0.85; stroke: #B0B0B0; stroke-dasharray: 1.14,3.41; stroke-linecap: butt;' />
+<polygon points='426.61,188.26 427.62,188.34 428.61,188.56 429.56,188.93 430.45,189.43 431.25,190.06 431.97,190.80 432.58,191.64 433.06,192.56 433.41,193.55 433.63,194.57 433.70,195.62 433.70,289.75 433.63,290.80 433.41,291.82 433.06,292.80 432.58,293.72 431.97,294.56 431.25,295.31 430.45,295.94 429.56,296.44 428.61,296.81 427.62,297.03 426.61,297.10 26.93,297.10 25.92,297.03 24.93,296.81 23.99,296.44 23.10,295.94 22.29,295.31 21.57,294.56 20.97,293.72 20.48,292.80 20.13,291.82 19.91,290.80 19.84,289.75 19.84,195.62 19.91,194.57 20.13,193.55 20.48,192.56 20.97,191.64 21.57,190.80 22.29,190.06 23.10,189.43 23.99,188.93 24.93,188.56 25.92,188.34 26.93,188.26 ' style='stroke-width: 0.85; stroke: #B0B0B0; stroke-linecap: butt; fill: #E8E8E8;' />
+<text x='31.18' y='204.09' style='font-size: 7.40px; font-weight: bold;fill: #666666; font-family: "Source Sans Pro", "Segoe UI", "Roboto", "Helvetica Neue", "Arial", sans-serif;'>NO se intercambia</text>
+<text x='45.35' y='234.78' style='font-size: 6.83px; font-weight: bold;fill: #666666; font-family: "Source Sans Pro", "Segoe UI", "Roboto", "Helvetica Neue", "Arial", sans-serif;'>RefSeq</text>
+<text x='45.35' y='270.08' style='font-size: 6.83px; font-weight: bold;fill: #666666; font-family: "Source Sans Pro", "Segoe UI", "Roboto", "Helvetica Neue", "Arial", sans-serif;'>UniProt</text>
+<text x='107.72' y='234.38' style='font-size: 5.69px;fill: #666666; font-family: "Source Sans Pro", "Segoe UI", "Roboto", "Helvetica Neue", "Arial", sans-serif;'>sólo NCBI. Un NM_ no existe en el ENA.</text>
+<text x='107.72' y='269.68' style='font-size: 5.69px;fill: #666666; font-family: "Source Sans Pro", "Segoe UI", "Roboto", "Helvetica Neue", "Arial", sans-serif;'>ni siquiera es INSDC: otro consorcio.</text>
+<polygon points='334.49,227.39 293.67,252.10 375.31,252.10 334.49,227.39 ' style='stroke-width: 0.85; stroke: #B0B0B0; stroke-dasharray: 4.55,4.55; stroke-linecap: butt;' />
+<text x='334.49' y='229.38' text-anchor='middle' style='font-size: 5.69px; font-weight: bold;fill: #666666; font-family: "Source Sans Pro", "Segoe UI", "Roboto", "Helvetica Neue", "Arial", sans-serif;'>dbGaP</text>
+<text x='293.67' y='254.09' text-anchor='middle' style='font-size: 5.69px; font-weight: bold;fill: #666666; font-family: "Source Sans Pro", "Segoe UI", "Roboto", "Helvetica Neue", "Arial", sans-serif;'>EGA</text>
+<text x='375.31' y='254.09' text-anchor='middle' style='font-size: 5.69px; font-weight: bold;fill: #666666; font-family: "Source Sans Pro", "Segoe UI", "Roboto", "Helvetica Neue", "Arial", sans-serif;'>JGA</text>
+<text x='334.49' y='280.77' text-anchor='middle' style='font-size: 5.24px;fill: #666666; font-family: "Source Sans Pro", "Segoe UI", "Roboto", "Helvetica Neue", "Arial", sans-serif;'>acceso controlado:</text>
+<text x='334.49' y='287.68' text-anchor='middle' style='font-size: 5.24px;fill: #666666; font-family: "Source Sans Pro", "Segoe UI", "Roboto", "Helvetica Neue", "Arial", sans-serif;'>solicitud y comité</text>
+</g>
+</g>
+</svg>

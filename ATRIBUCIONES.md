@@ -9,16 +9,31 @@ Material escrito por el equipo docente (capítulos, prácticas, presentaciones):
 
 ## Material fuente
 
-Este curso adapta material de dos cursos previos de la LCG, ambos CC BY-NC-SA 4.0:
+Las tres fuentes principales tienen estatus de licencia distinto. **No se adaptan igual.**
 
-- **Evelia Coss, PhD** — *Introducción a la Bioinformática*, LCG 2025.
-  <https://eveliacoss.github.io/LCG2025_IntroBioinfo_S1/>
-  Buenas prácticas, Markdown, ejercicios de anotación (FASTA, GTF, BED, awk).
+### Evelia Coss — se adapta con atribución
 
-- **Heladia Salgado** — *Introducción a la Bioinformática*, Cuernavaca.
-  <https://lcg-cursos.github.io/material/introbioinfo/>
-  Shell, archivos y GenBank, alineamientos, BLAST/variables/scripts, homología y ciclos,
-  análisis de genomas.
+**Evelia Coss, PhD** — *Introducción a la Bioinformática*, LCG 2025.
+<https://eveliacoss.github.io/LCG2025_IntroBioinfo_S1/>
+
+Material **CC BY-NC-SA 4.0** declarado en su sitio, y con **permiso explícito de la autora** para
+adaptarlo. Adaptamos con atribución por capítulo: buenas prácticas, Markdown, ejercicios de
+anotación (FASTA, GTF, BED, awk).
+
+### Heladia Salgado — referencia de temario, no se adapta
+
+**Heladia Salgado** — *Introducción a la Bioinformática*, Cuernavaca.
+<https://lcg-cursos.github.io/material/introbioinfo/>
+
+**Licencia sin confirmar.** Su sitio no declara una licencia localizable y, hasta el momento, no
+hemos obtenido confirmación (se escribió a la autora y no hubo respuesta). Hasta nuevo aviso tratamos
+su material como **todos los derechos reservados**.
+
+Su curso nos sirve como **referencia de qué temas cubrir y en qué orden** —shell, archivos y GenBank,
+alineamientos, BLAST, homología y ciclos, análisis de genomas— y lo citamos con enlace en la sección
+`## Fuentes` de cada capítulo. Pero **no adaptamos ni copiamos** su texto, sus ejercicios, sus
+datasets, sus figuras ni sus pares de secuencias de ejemplo. Si un capítulo parece necesitar algo de
+ahí, se consulta con Jero antes de escribir. Si se confirma la licencia, se actualiza esta sección.
 
 ## Plantilla del sitio
 
@@ -68,3 +83,8 @@ El reset CSS que trae Prologue está basado en el de
 
 Los libros y sitios que se citan como bibliografía (Compeau & Pevzner, Rosalind, EMBL-EBI Training,
 NCI) son de sus respectivos autores y sólo se enlazan; no se redistribuye nada.
+
+De **Compeau & Pevzner** (*Bioinformatics Algorithms*) se pidió licencia académica y no ha habido
+respuesta. Hasta nuevo aviso lo citamos y enlazamos como bibliografía, pero **no adaptamos su marco
+pedagógico** (en particular el Manhattan Tourist Problem). El capítulo de algoritmos usa un encuadre
+propio —la retícula de alineamiento y los números de Delannoy— que no deriva de ese libro.

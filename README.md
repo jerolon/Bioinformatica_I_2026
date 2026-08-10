@@ -1,22 +1,20 @@
 # Bioinformática I — LCG 2026
 
 Material de referencia del curso **Bioinformática I**, 3er semestre, Licenciatura en Ciencias
-Genómicas. Viernes 10:00–15:00, del 14 de agosto al 26 de noviembre de 2026.
+Genómicas. Viernes 10:00–15:00, del 21 de agosto al 3 de diciembre de 2026.
 
 Sitio: <https://jerolon.github.io/Bioinformatica_I_2026/>
 
-Este repositorio es la **fuente única del material escrito**. Las presentaciones de cada quien
-pueden vivir donde cada quien prefiera (revealjs, PDF, lo que sea) y se enlazan desde aquí, pero el
-contenido de referencia — el que los alumnos consultan y el que hereda el próximo semestre — vive
-en `contenido/`.
+Este repositorio es la referencia para el material escrito. Las presentaciones de cada profesor pueden vivir donde cada quien prefiera (revealjs, PDF, lo que sea) y se enlazan desde aquí, pero el
+contenido de referencia para consulta tanto de los alumnos como de los profesores se consolida aquí en `contenido/`.
 
 ## Cómo está organizado
 
-El material está por **tema**, no por sesión. El calendario cambia; el material no.
+El material está por **tema** para mantener flexibilidad en el calendario.
 
 | Carpeta | Qué hay |
 |---------|---------|
-| `contenido/01-fundamentos/` | Qué es la bioinformática, terminal, Markdown, git, buenas prácticas |
+| `contenido/01-fundamentos/` | Qué es la bioinformática, terminal, git, buenas prácticas. Realmente markdown, bash y git son herramientas que atraviesan las prácticas de todo el semestre. |
 | `contenido/02-secuencias/` | Tipos de secuencia, código genético, matrices de sustitución, FASTA |
 | `contenido/03-alineamientos/` | Needleman–Wunsch, Smith–Waterman, BLAST, CLUSTAL, homología |
 | `contenido/04-bases-datos/` | NCBI, INSDC, UniProt, accesiones |
@@ -65,5 +63,7 @@ El workflow de `.github/workflows/publish.yml` renderiza y publica en GitHub Pag
 ## Licencias
 
 Contenido bajo [CC BY-NC-SA 4.0](LICENSE). Plantilla [Prologue](https://html5up.net/prologue) por
-HTML5 UP bajo [CCA 3.0](https://html5up.net/license). Deriva del material de Evelia Coss y Heladia
-Salgado, ambos CC BY-NC-SA 4.0. Detalle completo en [ATRIBUCIONES.md](ATRIBUCIONES.md).
+HTML5 UP bajo [CCA 3.0](https://html5up.net/license). Adapta, con atribución, el material
+CC BY-NC-SA 4.0 de **Evelia Coss** (con permiso de la autora). El curso de **Heladia Salgado** se usa
+sólo como referencia de temario y se cita: su licencia no está confirmada y se trata como todos los
+derechos reservados. Detalle completo en [ATRIBUCIONES.md](ATRIBUCIONES.md).

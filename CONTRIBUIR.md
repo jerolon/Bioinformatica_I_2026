@@ -52,9 +52,18 @@ consulta: la gente llega buscando una cosa.
 pero el capítulo tiene que sostenerse solo. Si el calendario cambia — y va a cambiar — sólo se toca
 el `subtitle`.
 
-**Siempre citar la fuente.** Si algo viene de Evelia o de Heladia, va en `## Fuentes` con enlace.
-Su material es CC BY-NC-SA: la atribución no es cortesía, es la licencia. Lo mismo para figuras de
-papers.
+**Siempre citar la fuente.** Todo lo que viene de otro material va en `## Fuentes` con enlace. La
+atribución no es cortesía. Y ojo: **no todas las fuentes se pueden adaptar igual.** Antes de reusar
+algo, mira de quién es:
+
+| Fuente | Qué se puede hacer |
+|--------|--------------------|
+| **Evelia Coss** | Adaptar con atribución. Su material es CC BY-NC-SA 4.0 y además dio permiso explícito. Cítala en `## Fuentes` y, si adaptaste, dilo. |
+| **Heladia Salgado** | **Sólo citar y enlazar.** Su licencia no está confirmada; hasta nuevo aviso se trata como todos los derechos reservados. **No** adaptes ni copies su texto, ejercicios, datasets, figuras ni sus pares de secuencias de ejemplo. Sirve para saber qué temas van y en qué orden. Si un capítulo parece necesitar algo de ella, **pregúntale a Jero antes de escribir.** |
+| **Compeau & Pevzner** | Citar y enlazar como bibliografía. **No** adaptes su marco pedagógico (el Manhattan Tourist Problem) hasta que respondan la solicitud de licencia. |
+| **Figuras de papers** | Cita la fuente en el pie. Si la figura no es tuya y no tiene licencia compatible, no la copies: rehazla con datos propios. |
+
+Cuando la licencia de una fuente cambie, se actualiza [ATRIBUCIONES.md](ATRIBUCIONES.md) y esta tabla.
 
 **Las imágenes van en `images/`,** con nombres descriptivos (`blast-seed-extend.png`, no
 `imagen1.png`). Si la imagen no es tuya, la fuente va en el pie.

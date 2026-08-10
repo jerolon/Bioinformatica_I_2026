@@ -1,0 +1,366 @@
+---
+title: "Práctica: un gen, nueve paradas"
+subtitle: "Unidad 4 y 5 · Sesión 11"
+author: "Jero"
+---
+
+## De qué se trata
+
+Hoy vimos nueve recursos distintos y es fácil que queden como nueve cosas
+sueltas. La práctica es el hilo que los amarra.
+
+Vamos a tomar **un solo gen**, TP53, y seguirlo por todos: del artículo
+que lo describe a su registro en el NCBI, de ahí al ENA y a DDBJ para
+comprobar que el intercambio diario es real, a su proteína en UniProt, a
+sus coordenadas en tres ensamblados, a su anotación, a un cruce de
+intervalos, y finalmente a verlo dibujado.
+
+Un gen, nueve paradas.
+
+Elegí TP53 porque está en todo, porque su historia clínica lo hace
+memorable, y porque es chico.
+
+## Preparación
+
+```bash
+ssh usuario@ken.lavis.unam.mx
+mkdir -p ~/bioinfo1/sesion11/{datos,resultados}
+cd ~/bioinfo1/sesion11
+cp /datos/cursos/bioinfo1/sesion11/* datos/
+ls -lh datos/
+```
+
+::: callout-box
+**Los datos ya están descargados y esta vez no es solo cortesía.**
+
+El NCBI limita a tres peticiones por segundo **por dirección IP**, y
+`ken` sale con una sola para los treinta. Si media clase corre `efetch` a
+la vez, nos bloquean a todos con un error 429 y la práctica se acaba en
+la parada dos.
+
+Los comandos de descarga están escritos en cada ejercicio para que sepan
+cómo se obtuvieron, pero solo los corre quien yo diga.
+:::
+
+### Parada 1. Del artículo al dato
+
+Toda secuencia en una base de datos llegó ahí porque alguien la publicó.
+Empecemos por el papel.
+
+```bash
+esearch -db pubmed -query "TP53 tumor suppressor" | efetch -format uid | head -5
+```
+
+::: {.callout-note collapse="true"}
+## Solución
+
+Les devuelve identificadores de PubMed, los PMID. Son las direcciones
+permanentes de los artículos, el equivalente del accession para
+literatura.
+
+De ahí se puede saltar al dato con `elink`:
+
+```bash
+esearch -db pubmed -query "TP53[TITLE] AND human[ORGN]" \
+  | elink -target gene \
+  | efetch -format docsum \
+  | xtract -pattern DocumentSummary -element Id Name Description \
+  | head
+```
+
+Ese salto de PubMed a Gene es el grafo de Entrez en acción. No buscaron
+el gen: llegaron a él desde la literatura que lo menciona.
+:::
+
+### Parada 2. El registro en el NCBI
+
+```bash
+head -30 datos/tp53_refseq.gb
+grep "^VERSION" datos/tp53_refseq.gb
+grep -A2 "     CDS " datos/tp53_refseq.gb | head
+```
+
+Identifiquen: qué tipo de registro es, qué versión, y dónde está la
+región codificante.
+
+::: {.callout-note collapse="true"}
+## Solución
+
+Es `NM_000546.6`. El guión bajo lo delata como **RefSeq**, la `M` dice
+que es un mRNA, la `N` que está curado y no predicho. El `.6` significa
+que la secuencia se ha corregido cinco veces desde que se creó el
+registro.
+
+En FEATURES, la línea `CDS` da las coordenadas de la región codificante
+**dentro del mRNA**, no dentro del cromosoma. Es una fuente clásica de
+confusión: un mismo gen tiene coordenadas distintas según contra qué se
+midan.
+
+Bajo `/translation` está la proteína completa, incrustada en el registro
+de nucleótidos. Es redundante y es útil.
+:::
+
+### Parada 3. Los tres archivos
+
+Acá probamos que el intercambio diario del INSDC existe. Empecemos por
+donde falla.
+
+Intenten traer el registro de RefSeq desde el ENA:
+
+```bash
+curl -s "https://www.ebi.ac.uk/ena/browser/api/embl/NM_000546" | head
+```
+
+Qué pasó, y por qué?
+
+::: {.callout-note collapse="true"}
+## Solución
+
+No lo encuentra. Y esa falla es el punto del ejercicio.
+
+**RefSeq no es INSDC.** Es una capa curada que construye el NCBI a partir
+de los datos compartidos, pero que no se intercambia con ENA ni con
+DDBJ. Buscar un `NM_` en el ENA es como buscar un libro de una editorial
+en el catálogo de otra.
+
+Lo que sí se intercambia son los envíos originales. Para TP53, uno de
+ellos es `X02469`:
+
+```bash
+curl -s "https://www.ebi.ac.uk/ena/browser/api/embl/X02469" | head -20
+```
+
+Ese sí está. Y está también en el NCBI (`datos/tp53_insdc.gb`) y en
+DDBJ. Compárenlos:
+
+```bash
+curl -s "https://www.ebi.ac.uk/ena/browser/api/fasta/X02469" > resultados/ena.fa
+efetch -db nucleotide -id X02469 -format fasta > resultados/ncbi.fa   # solo si les toca
+
+grep -v "^>" resultados/ena.fa  | tr -d '\n' | md5sum
+grep -v "^>" resultados/ncbi.fa | tr -d '\n' | md5sum
+```
+
+Los dos checksums coinciden: **es la misma secuencia, bit por bit**, en
+servidores de dos continentes.
+
+Los encabezados y el formato del flat file sí difieren, porque cada socio
+presenta los datos a su manera. EMBL usa líneas `ID`, `AC`, `SQ`; GenBank
+usa `LOCUS`, `ACCESSION`, `ORIGIN`. Mismo contenido, distinta
+presentación.
+:::
+
+### Parada 4. La proteína
+
+```bash
+head -40 datos/p04637.txt
+grep "^PE " datos/p04637.txt
+grep "^DR   EMBL" datos/p04637.txt | head
+```
+
+::: {.callout-note collapse="true"}
+## Solución
+
+`P04637` es la entrada de Swiss-Prot para p53 humano. Está en la sección
+revisada, o sea que un curador leyó literatura y escribió la anotación.
+
+La línea `PE` da el nivel de evidencia de existencia. Para p53 es **PE1**,
+evidencia a nivel de proteína, que es lo máximo. Recuerden que solo el
+21% de Swiss-Prot llega a PE1: p53 está entre las proteínas mejor
+caracterizadas que existen.
+
+Las líneas `DR EMBL` son las referencias cruzadas a los registros de
+nucleótidos de los que se tradujo. Ahí van a encontrar `X02469` y varios
+más. Ese es el puente entre UniProt y el INSDC: la proteína apunta a los
+nucleótidos de donde salió, aunque su accession sea independiente.
+:::
+
+### Parada 5. Tres direcciones para el mismo gen
+
+Comparen dónde vive TP53 según el ensamblado:
+
+| Ensamblado | Coordenadas |
+|---|---|
+| GRCh37 / hg19 | `17:7,571,739-7,590,808` |
+| GRCh38 / hg38 | `17:7,668,421-7,687,490` |
+| T2T-CHM13v2.0 | `17:7,572,544-7,591,594` |
+
+Ahora conviertan un intervalo de hg38 a hg19 y revisen qué se perdió:
+
+```bash
+printf "chr17\t7668420\t7687490\tTP53\n" > resultados/tp53_hg38.bed
+
+liftOver resultados/tp53_hg38.bed datos/hg38ToHg19.over.chain.gz \
+         resultados/tp53_hg19.bed resultados/sin_mapear.bed
+
+cat resultados/tp53_hg19.bed
+cat resultados/sin_mapear.bed
+```
+
+::: {.callout-note collapse="true"}
+## Solución
+
+TP53 es un gen bien portado en una región bien ensamblada, así que
+convierte limpio y `sin_mapear.bed` sale vacío. El resultado debe caer
+cerca de 7,571,739-7,590,808.
+
+Pero fíjense en dos cosas.
+
+La primera es el `7668420` del BED cuando el gen empieza en 7,668,421. Un
+BED es 0-based, así que el inicio va con un menos uno. Si escribieron
+7668421, su intervalo está corrido.
+
+La segunda es que **abrieron el archivo de los que no mapearon**, aunque
+estuviera vacío. Háganlo siempre. Con un gen bien portado sale vacío; con
+un conjunto de mil regiones en zonas repetitivas no, y ahí es donde
+liftOver muerde.
+:::
+
+### Parada 6. La anotación
+
+Saquen los exones de TP53 del GTF.
+
+```bash
+awk -F'\t' '$9 ~ /gene_name "TP53"/ && $3=="exon"' datos/gencode_chr17.gtf \
+  | wc -l
+
+awk -F'\t' 'BEGIN{OFS="\t"} $9 ~ /gene_name "TP53"/ && $3=="exon" {print $1, $4-1, $5}' \
+  datos/gencode_chr17.gtf \
+  | sort -k1,1 -k2,2n \
+  > resultados/tp53_exones.bed
+
+head -3 resultados/tp53_exones.bed
+```
+
+Por qué el `$4-1`?
+
+::: {.callout-note collapse="true"}
+## Solución
+
+Porque el GTF es 1-based cerrado y el BED es 0-based semiabierto. El
+inicio se corre uno hacia atrás; el final se queda igual.
+
+Sin ese `-1`, cada exón queda corrido una base a la derecha. No hay error
+ni advertencia: el archivo se ve bien y todos los cruces posteriores
+salen mal.
+
+Van a obtener más exones de los que tiene el gen, porque el GTF trae
+todos los transcritos alternativos y muchos comparten exones. Para
+quedarse con un solo transcrito hay que filtrar por `transcript_id`, o
+usar `bedtools merge` para fundir los que se traslapan:
+
+```bash
+bedtools merge -i resultados/tp53_exones.bed > resultados/tp53_exones_fundidos.bed
+wc -l resultados/tp53_exones_fundidos.bed
+```
+:::
+
+### Parada 7. Cruzar intervalos
+
+Ahora la pregunta biológica: qué variantes de ClinVar caen dentro de los
+exones de TP53?
+
+```bash
+bedtools intersect \
+  -a resultados/tp53_exones_fundidos.bed \
+  -b datos/clinvar_chr17.vcf.gz \
+  -wa -wb \
+  > resultados/variantes_en_exones.txt
+
+wc -l resultados/variantes_en_exones.txt
+head -3 resultados/variantes_en_exones.txt
+```
+
+::: {.callout-note collapse="true"}
+## Solución
+
+Cada línea trae el exón y la variante que cae dentro de él. TP53 es de
+los genes más estudiados en cáncer, así que van a ver muchísimas.
+
+Si les dio **cero**, no concluyan nada biológico todavía. Revisen la
+nomenclatura de cromosomas:
+
+```bash
+cut -f1 resultados/tp53_exones_fundidos.bed | head -1
+zcat datos/clinvar_chr17.vcf.gz | grep -v "^#" | cut -f1 | head -1
+```
+
+Si uno dice `chr17` y el otro dice `17`, ahí está su cero. La solución:
+
+```bash
+awk 'BEGIN{OFS="\t"}{sub(/^chr/,"",$1); print}' \
+  resultados/tp53_exones_fundidos.bed > resultados/exones_sin_chr.bed
+```
+
+Es el error silencioso más común de la genómica práctica y acabo de
+provocarlo a propósito.
+:::
+
+### Parada 8. Verlo dibujado
+
+Abran UCSC en `genome.ucsc.edu`, elijan hg38 y busquen TP53. Después
+abran Ensembl en `ensembl.org` y hagan lo mismo.
+
+Comparen: qué muestra cada uno por defecto, cómo se llama el cromosoma en
+cada interfaz, y cuál les resultó más fácil de leer.
+
+::: {.callout-note collapse="true"}
+## Solución
+
+En UCSC el gen aparece con muchos tracks encima por defecto:
+conservación, variantes comunes, marcas de regulación. La vista está
+pensada para explorar contexto.
+
+En Ensembl la vista es más limpia y la estructura del gen con sus
+transcritos alternativos está más clara. La navegación está pensada para
+llegar al dato.
+
+Y el detalle de nomenclatura: UCSC dice `chr17`, Ensembl dice `17`. La
+misma diferencia que les rompió el ejercicio anterior, ahora visible en
+la barra de direcciones.
+
+Ninguno es mejor. UCSC para mirar, Ensembl para traer.
+:::
+
+### Parada 9. Sus propios archivos
+
+Última parada. Abran IGV-web en `igv.org/app`, carguen el genoma hg38 y
+súbanle sus resultados: el BED de exones que fabricaron y el VCF de
+ClinVar.
+
+::: {.callout-note collapse="true"}
+## Solución
+
+El VCF no va a cargar si no tiene su índice `.tbi` al lado. Es la misma
+lección de la sesión 5 con `samtools faidx`, y de este capítulo con
+`tabix`: los archivos grandes se consultan por índice, no leyéndolos
+enteros.
+
+Si les falta:
+
+```bash
+tabix -p vcf datos/clinvar_chr17.vcf.gz
+```
+
+Y si el archivo se comprimió con `gzip` en lugar de `bgzip`, `tabix` se
+niega. Hay que recomprimir.
+
+Lo que deben ver: sus exones alineados con los de la anotación oficial (si
+no coinciden, hay un off-by-one en algún lado), y las variantes de
+ClinVar cayendo sobre ellos.
+
+Ahí está el gen completo, desde el artículo de PubMed hasta el pixel.
+:::
+
+## Para entregar
+
+En su repositorio, en `sesion11/`:
+
+- `procedencia.md` con accession, versión, fecha y comando de cada dato
+  que usaron. Es la disciplina del capítulo de accesiones, aplicada.
+- `resultados/tp53_exones_fundidos.bed`
+- `resultados/variantes_en_exones.txt`
+- Un párrafo contestando: cuántas variantes de ClinVar caen en exones de
+  TP53, y qué pasó cuando intentaron traer `NM_000546` del ENA.
+
+No suban el GTF, el VCF ni el cromosoma. Van al `.gitignore`.

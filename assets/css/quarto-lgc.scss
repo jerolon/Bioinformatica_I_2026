@@ -16,6 +16,10 @@ $font-family-monospace: "SFMono-Regular", Menlo, Consolas, "Liberation Mono", mo
 $teal-oscuro: #1a7a8a;
 $teal-claro:  #2bb5c6;
 $sidebar-bg:  #14343d;
+// El sidebar de contenido tiene fondo oscuro ($sidebar-bg), así que sus enlaces
+// NO pueden usar $body-color (#2c3e50): quedaría texto oscuro sobre oscuro,
+// ilegible. Este es el color de los temas inactivos; el activo va en teal.
+$sidebar-fg:  #c2d4d8;
 
 $body-color:       #2c3e50;
 $body-bg:          #ffffff;
@@ -62,20 +66,35 @@ h2 {
   margin-top: 1.8rem;
 }
 
-// Barra lateral de navegación
-.sidebar-navigation .sidebar-item a {
-  color: $body-color;
+// Barra lateral de navegación. Fondo oscuro: los temas van en un color claro
+// para que se lean; el tema actual (activo) se queda en teal, sin tocar.
+.sidebar-navigation .sidebar-item a,
+.sidebar-navigation .sidebar-item .sidebar-item-toggle {
+  color: $sidebar-fg;
 }
 
-.sidebar-navigation .sidebar-item a:hover,
-.sidebar-navigation .sidebar-item a.active {
-  color: $teal-oscuro;
+.sidebar-navigation .sidebar-item a:hover {
+  color: $teal-claro;
 }
 
+// Sección/tema actual. El color del texto se queda en teal (aprobado); lo que
+// cambia es que ahora lo resaltamos más, porque con los inactivos ya legibles
+// el teal solo no basta para ver de un golpe dónde estamos.
+.sidebar-navigation .sidebar-item a.active,
 .sidebar-item-container .active,
 .sidebar-item-container .show > .nav-link {
   color: $teal-oscuro;
   font-weight: 600;
+}
+
+// El tema exacto donde estás: barra teal a la izquierda ("estás aquí"), un
+// fondo tenue que lo levanta, y un poco más de peso. Sin tocar el color.
+.sidebar-navigation .sidebar-item a.active {
+  font-weight: 700;
+  background: rgba(255, 255, 255, 0.08);
+  box-shadow: inset 0.2rem 0 0 0 $teal-claro;
+  padding-left: 0.55rem;
+  border-radius: 0 0.25rem 0.25rem 0;
 }
 
 // Cajas reutilizadas de las presentaciones, para que el material de la clase se

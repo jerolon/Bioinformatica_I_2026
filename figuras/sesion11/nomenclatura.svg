@@ -1,0 +1,54 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<svg xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink' width='396.85pt' height='255.12pt' viewBox='0 0 396.85 255.12'>
+<g class='svglite'>
+<defs>
+  <style type='text/css'><![CDATA[
+    .svglite line, .svglite polyline, .svglite polygon, .svglite path, .svglite rect, .svglite circle {
+      fill: none;
+      stroke: #000000;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+      stroke-miterlimit: 10.00;
+    }
+    .svglite text {
+      white-space: pre;
+    }
+    .svglite g.glyphgroup path {
+      fill: inherit;
+      stroke: none;
+    }
+  ]]></style>
+</defs>
+<rect width='100%' height='100%' style='stroke: none; fill: none;'/>
+<defs>
+  <clipPath id='cpMC4wMHwzOTYuODV8MC4wMHwyNTUuMTI='>
+    <rect x='0.00' y='0.00' width='396.85' height='255.12' />
+  </clipPath>
+</defs>
+<g clip-path='url(#cpMC4wMHwzOTYuODV8MC4wMHwyNTUuMTI=)'>
+<rect x='0.00' y='0.00' width='396.85' height='255.12' style='stroke-width: 0.00; stroke: none;' />
+<rect x='14.17' y='29.66' width='170.08' height='47.46' style='stroke-width: 0.64; stroke: #666666; stroke-opacity: 0.50; stroke-linecap: butt; stroke-linejoin: miter; fill: #2BB5C6; fill-opacity: 0.10;' />
+<rect x='212.60' y='29.66' width='170.08' height='47.46' style='stroke-width: 0.64; stroke: #666666; stroke-opacity: 0.50; stroke-linecap: butt; stroke-linejoin: miter; fill: #2E7D32; fill-opacity: 0.071;' />
+<text x='14.17' y='14.36' style='font-size: 7.11px; font-weight: bold;fill: #1A7A8A; font-family: "Source Sans Pro", "Segoe UI", "Roboto", "Helvetica Neue", "Arial", sans-serif;'>estilo UCSC</text>
+<text x='87.87' y='13.63' style='font-size: 5.55px;fill: #666666; font-family: "Source Code Pro", "Consolas", "DejaVu Sans Mono", "Courier New", monospace;'>archivo.bed</text>
+<text x='212.60' y='14.36' style='font-size: 7.11px; font-weight: bold;fill: #2E7D32; font-family: "Source Sans Pro", "Segoe UI", "Roboto", "Helvetica Neue", "Arial", sans-serif;'>estilo Ensembl / GRC</text>
+<text x='331.65' y='13.63' style='font-size: 5.55px;fill: #666666; font-family: "Source Code Pro", "Consolas", "DejaVu Sans Mono", "Courier New", monospace;'>anotacion.gtf</text>
+<text x='19.84' y='43.35' style='font-size: 5.69px;fill: #1A1A1A; font-family: "Source Code Pro", "Consolas", "DejaVu Sans Mono", "Courier New", monospace;'>chr17  7668420  7687490  TP53  0 - </text>
+<text x='19.84' y='55.21' style='font-size: 5.69px;fill: #1A1A1A; font-family: "Source Code Pro", "Consolas", "DejaVu Sans Mono", "Courier New", monospace;'>chr17  7676520  7676594  exon  0 - </text>
+<text x='218.27' y='43.35' style='font-size: 5.69px;fill: #1A1A1A; font-family: "Source Code Pro", "Consolas", "DejaVu Sans Mono", "Courier New", monospace;'>17  HAVANA  gene  7668421  7687490  . - . TP53  </text>
+<text x='218.27' y='55.21' style='font-size: 5.69px;fill: #1A1A1A; font-family: "Source Code Pro", "Consolas", "DejaVu Sans Mono", "Courier New", monospace;'>17  HAVANA  exon  7676521  7676594  . - . exon  </text>
+<rect x='18.14' y='36.78' width='19.84' height='21.36' style='stroke-width: 0.97; stroke: none; stroke-linecap: butt; stroke-linejoin: miter; fill: #1A7A8A; fill-opacity: 0.16;' />
+<rect x='216.57' y='36.78' width='9.64' height='21.36' style='stroke-width: 0.97; stroke: none; stroke-linecap: butt; stroke-linejoin: miter; fill: #2E7D32; fill-opacity: 0.16;' />
+<line x1='99.21' y1='81.58' x2='198.43' y2='97.89' style='stroke-width: 0.85; stroke: #666666; stroke-linecap: butt;' />
+<line x1='297.64' y1='81.58' x2='198.43' y2='97.89' style='stroke-width: 0.85; stroke: #666666; stroke-linecap: butt;' />
+<text x='198.43' y='108.70' text-anchor='middle' style='font-size: 5.98px;fill: #1A1A1A; font-family: "Source Code Pro", "Consolas", "DejaVu Sans Mono", "Courier New", monospace;'>bedtools intersect -a archivo.bed -b anotacion.gtf</text>
+<line x1='198.43' y1='115.69' x2='198.43' y2='126.08' style='stroke-width: 0.85; stroke: #666666; stroke-linecap: butt;' />
+<polygon points='195.31,120.68 198.43,126.08 201.54,120.68 ' style='stroke-width: 0.85; stroke: #666666; stroke-linecap: butt; fill: #666666;' />
+<polygon points='277.80,130.53 278.60,130.59 279.39,130.77 280.15,131.06 280.86,131.47 281.51,131.97 282.08,132.57 282.56,133.25 282.95,133.99 283.23,134.79 283.41,135.61 283.46,136.46 283.46,166.12 283.41,166.97 283.23,167.79 282.95,168.59 282.56,169.33 282.08,170.01 281.51,170.61 280.86,171.11 280.15,171.52 279.39,171.82 278.60,172.00 277.80,172.06 119.06,172.06 118.25,172.00 117.46,171.82 116.70,171.52 115.99,171.11 115.34,170.61 114.77,170.01 114.29,169.33 113.90,168.59 113.62,167.79 113.44,166.97 113.39,166.12 113.39,136.46 113.44,135.61 113.62,134.79 113.90,133.99 114.29,133.25 114.77,132.57 115.34,131.97 115.99,131.47 116.70,131.06 117.46,130.77 118.25,130.59 119.06,130.53 ' style='stroke-width: 0.85; stroke: #B0B0B0; stroke-dasharray: 4.55,4.55; stroke-linecap: butt;' />
+<text x='198.43' y='186.41' text-anchor='middle' style='font-size: 7.11px; font-weight: bold;fill: #D98C00; font-family: "Source Sans Pro", "Segoe UI", "Roboto", "Helvetica Neue", "Arial", sans-serif;'>0 intersecciones, sin ningún mensaje de error</text>
+<line x1='14.17' y1='197.27' x2='382.68' y2='197.27' style='stroke-width: 0.64; stroke: #666666; stroke-opacity: 0.40; stroke-linecap: butt;' />
+<text x='14.17' y='206.63' style='font-size: 5.55px;fill: #666666; font-family: "Source Sans Pro", "Segoe UI", "Roboto", "Helvetica Neue", "Arial", sans-serif;'>normalizar antes de operar:</text>
+<text x='14.17' y='221.29' style='font-size: 5.55px;fill: #2E7D32; font-family: "Source Code Pro", "Consolas", "DejaVu Sans Mono", "Courier New", monospace;'>awk 'BEGIN{OFS="\t"}{sub(/^chr/,"",$1); print}' archivo.bed</text>
+</g>
+</g>
+</svg>

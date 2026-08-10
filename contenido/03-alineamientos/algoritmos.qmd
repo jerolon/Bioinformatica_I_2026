@@ -2,24 +2,669 @@
 title: "Algoritmos: Needleman–Wunsch y Smith–Waterman"
 subtitle: "Unidad 3 · Sesión 7"
 author: "Jero"
+editor: 
+  markdown: 
+    wrap: 72
 ---
-
-::: {.pendiente}
-Capítulo por escribir.
-:::
 
 ## Idea central
 
-<!-- Una o dos frases: qué se lleva el alumno de aquí. -->
+**La programación dinámica encuentra el alineamiento óptimo bajo los
+parámetros dados. ¿Es el alineamiento "verdadero"?**
 
-## Desarrollo
+El algoritmo garantiza optimalidad matemática: entre todos los
+alineamientos posibles, devuelve uno de score máximo, y eso es
+demostrable. Lo que no garantiza es que ese alineamiento corresponda a
+la historia evolutiva real, porque el score depende enteramente de la
+matriz de sustitución y de las penalizaciones elegidas. Cambia los
+parámetros y podría cambiar el óptimo.
+
+Los dos objetivos de la clase:
+
+- Intuición de cómo la programación dinámica llena una matriz y hace el
+  *traceback* en Needleman–Wunsch.
+- Entender la diferencia entre global y local: son el mismo algoritmo
+  con tres cambios.
+
+Wilbert ya les dio alineamiento como concepto y las matrices de
+sustitución. También vimos cómo encontrar la subsecuencia común más
+larga es como caminar por Manhattan buscando las calles con mayor número
+de atracciones, con una pequeña modificación: si hubiera calles
+diagonales. Esta sesión veremos cómo se calcula, por qué funciona y
+cuánto cuesta.
+
+## 1. Cuántos alineamientos hay
+
+Antes de buscar el mejor alineamiento conviene saber contra cuántos
+compite.
+
+Piensen en una cuadrícula donde una secuencia va en el eje horizontal y
+la otra en el vertical. Construir un alineamiento es recorrerla desde la
+esquina superior izquierda hasta la inferior derecha, y en cada paso hay
+exactamente tres movimientos: diagonal (alinear un residuo con otro),
+horizontal (gap en una secuencia) y vertical (gap en la otra). Cada
+camino distinto es un alineamiento distinto (@fig-reticula).
+
+![Alinear dos secuencias es recorrer una cuadrícula de la esquina
+superior izquierda a la inferior derecha. En cada celda hay exactamente
+tres movimientos (izquierda) y cada camino completo es un alineamiento
+distinto (derecha). Contar alineamientos y optimizarlos ocurren sobre
+esta misma
+estructura.](../../figuras/svg/fig01_reticula.svg){#fig-reticula}
+
+Contar esos caminos es un problema resuelto. Son los **números de
+Delannoy**, que cumplen una relación auto-referente o recursiva:
+
+$$D(i,j) = D(i-1,j-1) + D(i-1,j) + D(i,j-1)$$
+
+Los valores crecen rápido. Para dos secuencias de 3 nt hay **63**
+alineamientos posibles. Para un par de 12 y 15 nt hay **2,653,649,025**
+(Torres, Cabada & Nieto 2003). Los números de Delannoy centrales (el
+caso en que i = j) crecen aproximadamente como $(3+2\sqrt{2})^n$, así
+que para secuencias de 100 nt la cifra deja de tener nombre útil.
+
+::: callout-box
+Enumerar y comparar todos los alineamientos es inviable a partir de unos
+15 nucleótidos, menos de un primer.
+:::
+
+Miren otra vez la recurrencia de Delannoy. Tiene tres términos y son
+exactamente los tres vecinos de la celda: diagonal, arriba, izquierda.
+
+## 2. Programación dinámica
+
+**Richard Bellman** desarrolló la programación dinámica en los años
+cincuenta, en la RAND Corporation, para problemas de control y
+decisiones secuenciales. El principio es que un problema grande se
+resuelve combinando soluciones óptimas de subproblemas más chicos, y que
+esos subproblemas se resuelven una sola vez y se guardan en una tabla.
+Es justo lo que necesitamos: el mejor alineamiento de dos prefijos se
+construye a partir de los mejores alineamientos de prefijos más cortos.
+
+::: debate
+**La anécdota del nombre**
+
+Bellman contó en su autobiografía *Eye of the Hurricane* (1984) que
+eligió el nombre "dynamic programming" para esconder que estaba haciendo
+matemáticas. Su jefe en el Departamento de Defensa, Charles Wilson,
+tenía según él *"a pathological fear and hatred of the word research"*.
+Bellman buscó un término al que ni un congresista pudiera objetar.
+
+La referencia académica es Dreyfus (2002), *Operations Research*
+50(1):48-51.
+:::
+
+Puede ser un caso de un descubrimiento múltiple en campos aparentemente
+no relacionados. Al parecer, **Vintsyuk (1968)** publicó un método
+equivalente para reconocimiento de voz dos años antes que Needleman y
+Wunsch, y **Sankoff (1972)** llegó de forma independiente.
+
+### Cómo encontrar la ***longitud*** del camino más largo en Manhattan con programación dinámica
+
+Todos los caminos en este Manhattan recorren la misma distancia. Aquí
+con longitud nos referimos al número total de "atracciones" que va a
+recorrer un turista. El meollo de la solución no es calcular la longitud
+de todos los caminos posibles utilizando la formulación recursiva,
+porque calcularíamos varias veces (como en muchísimas) el mismo camino.
+En su lugar, vamos a llenar, para cada nodo, la longitud del camino más
+largo para llegar a él, y utilizando ese número, vamos a calcular el
+siguiente. Vamos a hacer una especie de sudoku en donde primero llenamos
+lo más fácil y luego, a partir de ahí, vamos resolviendo lo siguiente.
+
+Para escribirlo hacen falta tres tablas y conviene no confundirlas
+(@fig-manhattan-dp). Dos guardan los datos del problema: el peso de cada
+calle. `Derecha[i,j]` es lo que se ve caminando de $(i,j)$ a $(i,j+1)$ y
+`Abajo[i,j]` es lo que se ve caminando de $(i,j)$ a $(i+1,j)$. La
+tercera, $s[i,j]$, es la que vamos llenando: el máximo número de
+atracciones con que se puede llegar al nodo $(i,j)$.
+
+Las tres tienen dimensiones distintas, y ahí es donde más se equivocan
+al programarlo. Con una cuadrícula de $n \times m$ cuadras hay
+$(n+1)(m+1)$ nodos, así que $s$ mide $(n+1) \times (m+1)$; las calles
+horizontales son $(n+1) \times m$ y las verticales $n \times (m+1)$.
+
+Los bordes se llenan primero porque no hay nada que decidir: a la
+primera fila sólo se llega caminando a la derecha, y a la primera
+columna sólo bajando, así que son sumas acumuladas. Para el resto,
+llegar a $(i,j)$ sólo se puede desde arriba o desde la izquierda:
+
+$$s[i,j] = \max \begin{cases} s[i-1,j] + \text{Abajo}[i-1,j] \\ s[i,j-1] + \text{Derecha}[i,j-1] \end{cases}$$
+
+Cada celda cuesta una comparación, así que llenar la tabla cuesta
+$O(nm)$ en vez de recorrer los $\binom{n+m}{n}$ caminos.
+
+![El turista de Manhattan resuelto con programación dinámica. **A**, la
+cuadrícula: cada arista lleva el número de atracciones que se ven al
+recorrerla. **B** y **C**, las dos tablas de pesos, con sus dimensiones,
+que no coinciden ni entre sí ni con las de $s$. **D**, la tabla $s[i,j]$
+ya llena; en verde, uno de los caminos óptimos. Con estos pesos hay 35
+caminos posibles y el más largo ve 29
+atracciones.](../../figuras/sesion07/manhattan-tourist.svg){#fig-manhattan-dp}
+
+Falta una cosa para que esto sea un alineamiento: en Manhattan sólo hay
+dos movimientos, y en la cuadrícula de la sección 1 hay tres. Agregar
+una tercera matriz de pesos diagonales (n x m) (y una comparación más)
+es todo lo que separa al turista de Needleman–Wunsch.
+
+## 3. Needleman–Wunsch: alineamiento global
+
+Needleman y Wunsch publicaron en 1970 el primer método de alineamiento
+de pares por programación dinámica. Su formulación admite penalizaciones
+de gap arbitrarias: describen el penalty factor como *"a number
+subtracted for every gap made"*, y contemplan que pueda depender del
+tamaño y la dirección del gap.
+
+### La recurrencia
+
+Con gap lineal de penalización $d$ y matriz de sustitución $s$:
+
+$$F(i,j) = \max \begin{cases} F(i-1,j-1) + s(a_i, b_j) \\ F(i-1,j) - d \\ F(i,j-1) - d \end{cases}$$
+
+Los tres términos son los tres vecinos de la sección 1. El primero
+alinea $a_i$ con $b_j$; el segundo mete un gap en una secuencia; el
+tercero, en la otra.
+
+Matriz de sustitución $s$ con gaps añadidos. $\mu = 1$ constante
+significa que un mismatch se penaliza con -1:
+
+$$\begin{array}{r|ccccc}
+           & \mathtt{A} & \mathtt{C} & \mathtt{G} & \mathtt{T} & \mathtt{-} \\
+\hline
+\mathtt{A} & +1      & -\mu    & -\mu    & -\mu    & -d \\
+\mathtt{C} & -\mu    & +1      & -\mu    & -\mu    & -d \\
+\mathtt{G} & -\mu    & -\mu    & +1      & -\mu    & -d \\
+\mathtt{T} & -\mu    & -\mu    & -\mu    & +1      & -d \\
+\mathtt{-} & -d & -d & -d & -d &         \\
+\end{array}$$
+
+### La inicialización
+
+$$F(0,0) = 0, \qquad F(i,0) = -i \cdot d, \qquad F(0,j) = -j \cdot d$$
+
+La primera fila y la primera columna acumulan penalización. Tiene que
+ser así: llegar a esas celdas significa haber insertado gaps y nada más,
+y eso cuesta. Este es el punto donde más se equivocan al hacerlo a mano.
+
+### El traceback
+
+Arranca en $F(m,n)$, la esquina inferior derecha, y termina en el origen
+$F(0,0)$. Se recorre hacia atrás siguiendo de qué vecino vino cada
+máximo. Todo el camino forma parte del alineamiento, de principio a fin,
+que es exactamente lo que significa "global".
+
+Cuando hay empates entre vecinos, hay más de un alineamiento óptimo. No
+es un error del algoritmo ni del que lo ejecuta: son alineamientos
+distintos con el mismo score, y el algoritmo no tiene forma de preferir
+uno. Vale la pena provocarlo en la práctica (@fig-nw-matriz).
+
+![La matriz de Needleman–Wunsch para GCATGCG (columnas) contra GATTACA
+(filas), con match +1, mismatch −1 y gap −1. La fila y la columna de
+inicialización, en ámbar, acumulan la penalización de gap. Las flechas
+grises marcan de qué vecino vino cada máximo; el camino verde es el
+traceback desde la esquina inferior derecha hasta el origen. Este par
+tiene tres alineamientos óptimos: por eso el camino verde se ramifica.
+Los empates se dibujan, no se
+esconden.](../../figuras/svg/fig02_nw_matriz.svg){#fig-nw-matriz}
+
+Este "problema de Manhattan" es incluso más fácil de resolver que los
+anteriores, ¿no? La matriz $Down$ vuelve a ser, como en
+@fig-manhattan-dp, una matriz de n \* m + 1 cuyos valores son todos -1
+(gap penalty). Del mismo modo, la matriz $Right$ vuelve a ser una matriz
+(n +1) x m cuyos valores son todos -1. La matriz $Diagonal$ es una
+matriz de n x m donde el valor es 1 (match) si los caracteres son
+iguales en esa posición y -1 (mismatch) donde son distintos.
+
+Sin embargo, podemos pensar en un esquema en el que cada combinación de
+match y mismatch tenga un valor distinto, por ejemplo, codificando que
+las transiciones (purina por purina o pirimidina por pirimidina) son más
+probables que las transversiones:
+
+$$\begin{array}{r|rrrr}
+           & \mathtt{A} & \mathtt{C} & \mathtt{G} & \mathtt{T} \\
+\hline
+\mathtt{A} &  0.527 & -1.346 & -0.608 & -1.346 \\
+\mathtt{C} & -1.346 &  1.000 & -1.346 & -0.596 \\
+\mathtt{G} & -0.608 & -1.346 &  0.697 & -1.346 \\
+\mathtt{T} & -1.346 & -0.596 & -1.346 &  0.730 \\
+\end{array}$$
+
+¿Cómo cambiaría el alineamiento de la @fig-nw-matriz con este nuevo
+esquema? Si mantenemos un gap penalty de -1, lo único que cambia es la
+matriz $Diagonal$ que ahora sería una matriz de n x m donde, para cada
+comparación, buscamos el valor de la matriz de puntaje de arriba.
+
+![El mismo par de la @fig-nw-matriz con el esquema transición/transversión y
+gap −1. Sobre cada arista diagonal, en teal, su peso: eso es la matriz
+$Diagonal$, la única tabla que cambió. Las aristas horizontales y verticales
+siguen valiendo −1 y no se dibujan. El score baja a −0.262 y, sobre todo, los
+alineamientos óptimos pasan de tres a dos: castigar distinto cada sustitución
+rompe uno de los
+empates.](../../figuras/svg/fig02b_nw_matriz_transiciones.svg){#fig-nw-transiciones}
+
+
+## 4. Smith–Waterman: alineamiento local
+
+Once años después, en un artículo de tres páginas, Smith y Waterman
+resolvieron un problema distinto: encontrar la mejor subsecuencia común,
+no el mejor alineamiento de las secuencias completas. Sirve cuando dos
+proteínas comparten un dominio pero no el resto, que es la situación
+normal.
+
+### Los tres cambios
+
+Aquí está el "ajá" de la clase. La diferencia más citada es el cero en
+la recurrencia:
+
+$$H(i,j) = \max \begin{cases} 0 \\ H(i-1,j-1) + s(a_i, b_j) \\ H(i-1,j) - d \\ H(i,j-1) - d \end{cases}$$
+
+El paper lo justifica en una línea: *"a zero is included to prevent
+calculated negative similarity"*. Un score negativo significaría que
+extender el alineamiento hacia atrás empeora las cosas, así que se corta
+y se empieza de nuevo.
+
+Pero el cero solo no basta. Son **tres cambios acoplados**
+(@fig-nw-vs-sw):
+
+|                          | Needleman–Wunsch      | Smith–Waterman             |
+|------------------------|----------------------|--------------------------|
+| **Recurrencia**          | tres términos         | cuatro, con el 0           |
+| **Inicialización**       | $F(i,0) = -i \cdot d$ | $H(i,0) = 0$               |
+| **Inicio del traceback** | esquina $F(m,n)$      | máximo global de la matriz |
+| **Fin del traceback**    | origen $F(0,0)$       | primera celda con 0        |
+
+::: mito
+**"Smith–Waterman es sólo Needleman–Wunsch con max(0, …)."**
+
+Es la simplificación que circula, y está incompleta. Si agregan el cero
+pero dejan la inicialización con gaps acumulados, o si arrancan el
+traceback en la esquina, no obtienen un alineamiento local. Los tres
+cambios van juntos o no funciona.
+:::
+
+En el ejemplo del artículo original usan match = +1, mismatch = −1/3, y
+peso de deleción $W_k = 1.0 + k/3$.
+
+![Needleman–Wunsch (global) contra Smith–Waterman (local), el mismo par
+y el mismo scoring en los dos paneles. Es un par distinto al de la
+@fig-nw-matriz a propósito: el alineamiento local necesita un bloque
+conservado —aquí GATTA— que el global no necesita, y GCATGCG/GATTACA no
+comparte ninguno. Los tres cambios de NW a SW van acoplados: los bordes
+pasan de negativos a cero, aparecen ceros dentro de la matriz donde el
+alineamiento reinicia, y el traceback ya no va de esquina a esquina sino
+del máximo global (recuadro verde) a la primera celda con
+cero.](../../figuras/svg/fig03_nw_vs_sw.svg){#fig-nw-vs-sw}
+
+## 5. Las variantes
+
+Global y local son los extremos. En medio hay una familia entera, y toda
+es la misma maquinaria con cambios en dos lugares: la inicialización de
+los bordes y dónde se busca el máximo.
+
+- **Semi-global**: no penaliza gaps terminales. Bordes en 0, máximo en
+  la última fila o columna. Es la que quieren cuando una secuencia es
+  subcadena de la otra.
+- **Overlap**: el camino puede empezar en el borde superior o izquierdo
+  y terminar en el inferior o derecho. Para solapes entre reads, como en
+  ensamblado.
+- **Fitting**: ajusta una secuencia corta dentro de una larga sin
+  penalizar los extremos de la larga.
+
+Si entienden que estas variantes se obtienen tocando bordes y máximos,
+entendieron el algoritmo (@fig-variantes). Si les parecen tres
+algoritmos nuevos, todavía no.
+
+![Las cuatro variantes son la misma maquinaria tocando bordes y máximos.
+Cada panel sombrea sólo dónde puede arrancar el traceback (el máximo, en
+verde) y dónde puede terminar (en ámbar): en las esquinas opuestas para
+el global, en los cuatro bordes para el semi-global, y en bordes
+concretos para overlap y fitting. No hay tres algoritmos nuevos; hay un
+algoritmo y cuatro formas de mirar sus
+bordes.](../../figuras/svg/fig06_variantes.svg){#fig-variantes}
+
+## 6. Penalizaciones de gap
+
+Hasta aquí usamos gap lineal: $\gamma(k) = k \cdot d$. Cada residuo del
+gap cuesta lo mismo.
+
+Biológicamente eso es difícil de defender. Un indel de diez residuos
+suele originarse en un evento mutacional, no en diez. El gap lineal
+cobra diez veces por un solo evento.
+
+La alternativa es el **gap afín**:
+
+$$\gamma(k) = \text{apertura} + k \cdot \text{extensión}, \qquad \text{apertura} > \text{extensión}$$
+
+Abrir un gap es caro; extenderlo, barato. Eso favorece un gap largo
+sobre varios cortos, que es lo que la evolución tiende a producir
+(@fig-gap-costos).
+
+![Tres formas de cobrar un gap de longitud $k$. La lineal cobra lo mismo
+por cada residuo; la afín cobra caro abrir y barato extender; la afín de
+dos piezas (la de minimap2, más abajo) suaviza todavía más los gaps
+largos. La lectura que salta: para gaps largos, la lineal cobra de más,
+porque un indel largo suele ser un solo evento mutacional, no $k$
+eventos.](../../figuras/svg/fig04_gap_costos.svg){#fig-gap-costos}
+
+### Gotoh 1982
+
+El problema del gap afín es que rompe la recurrencia de tres términos:
+el costo de la celda depende de si venimos de un gap ya abierto o no, y
+esa información no está en el vecino. Gotoh lo resolvió manteniendo
+**tres matrices** en vez de una, y con eso conservó el tiempo O(mn):
+
+$$M(i,j) = \max\{M(i-1,j-1),\ I_x(i-1,j-1),\ I_y(i-1,j-1)\} + s(a_i,b_j)$$
+$$I_x(i,j) = \max\{M(i-1,j) - \text{apertura},\ I_x(i-1,j) - \text{extensión}\}$$
+$$I_y(i,j) = \max\{M(i,j-1) - \text{apertura},\ I_y(i,j-1) - \text{extensión}\}$$
+
+$M$ lleva los caminos que terminan alineando dos residuos, $I_x$ los que
+terminan en gap en una secuencia, $I_y$ en la otra. Cada matriz consulta
+a las tres (@fig-gotoh).
+
+![Las tres matrices de Gotoh. $M$ lleva los caminos que terminan
+alineando dos residuos; $I_x$ y $I_y$, los que terminan en gap en una u
+otra secuencia. Cada celda lee un vecino distinto —$M$ la diagonal,
+$I_x$ la de arriba, $I_y$ la de la izquierda— y las tres se consultan
+entre sí. Ese acoplamiento es lo que conserva el tiempo O(mn) con gap
+afín.](../../figuras/svg/fig07_gotoh.svg){#fig-gotoh}
+
+::: debate
+El algoritmo de Gotoh, tal como se publicó, tiene un defecto en el
+traceback: **Altschul y Erickson (1986)** mostraron que no siempre logra
+recuperar un alineamiento óptimo, y publicaron la corrección. El
+resultado de score es correcto; la reconstrucción del alineamiento era
+el problema. Cuatro años sin que nadie lo notara.
+:::
+
+### Y una vuelta de tuerca reciente
+
+El gap afín tampoco es el final. Para long reads con indels grandes,
+minimap2 usa un **gap afín de dos piezas**: dos funciones afines y se
+toma la menor de las dos, lo que castiga fuerte los gaps cortos y suave
+los largos. Heng Li lo justifica diciendo que el afín simple
+*"over-penalizes a long INDEL that was often evolutionarily created in
+one event"*. Sin esa corrección, los aligners parten un indel largo en
+varios cortos y reportan mal las variantes estructurales.
+
+El patrón se repite: cada penalización de gap es una hipótesis sobre
+cómo ocurren los indels.
+
+## 7. La matriz de sustitución es un parámetro
+
+Wilbert ya les dio PAM y BLOSUM. Lo que agrega esta sesión es el papel
+que juegan dentro del algoritmo.
+
+Todo score de alineamiento es implícitamente un **log-odds**. La forma
+general, que viene del trabajo de Karlin y Altschul, es:
+
+$$s(a,b) = \frac{1}{\lambda} \log \frac{q_{ab}}{p_a \cdot p_b}$$
+
+donde $q_{ab}$ es la frecuencia del par en alineamientos verdaderos y
+$p_a \cdot p_b$ la esperada por azar. Un score positivo dice que el par
+se explica mejor por parentesco que por azar. Uno negativo dice lo
+contrario. La matriz no es una tabla arbitraria: es una hipótesis
+estadística cuantificada.
+
+Y como es un parámetro, cambiarla cambia el óptimo. El algoritmo es el
+mismo; el resultado, no.
+
+::: consenso
+**El bug de BLOSUM62.**
+
+BLOSUM62 es la matriz por defecto de BLASTP y probablemente la matriz
+más usada de la historia de la bioinformática.
+
+En 2008, Styczynski y colaboradores encontraron que el código original
+que la generó tenía errores en el procedimiento de ponderación de
+clusters. Cerca del **15% de las posiciones** de la matriz están mal
+calculadas respecto a lo que el método pretendía.
+
+Dos detalles que lo vuelven memorable. El primero, en palabras del
+propio artículo: *"these errors have gone unnoticed for 15 years"*. El
+segundo, que está en el título: las matrices con error **funcionan
+mejor** que las corregidas. Por eso hoy se sigue usando la versión con
+bug, y la corregida (RBLOSUM64) se quedó en el cajón.
+
+Styczynski MP, Jensen KL, Rigoutsos I, Stephanopoulos G (2008),
+"BLOSUM62 miscalculations improve search performance", *Nature
+Biotechnology* 26(3):274-275.
+:::
+
+Vale la pena detenerse en lo que ese episodio dice del campo. Un error
+de software sobrevivió quince años en una herramienta que corre millones
+de veces al día, y cuando se corrigió, resultó que el error era mejor
+que la intención. Nadie había revisado el código. Y funcionaba, así que
+nadie preguntó.
+
+## 8. Cuánto cuesta
+
+Tiempo O(mn), espacio O(mn). Para dos secuencias de 1000 residuos son un
+millón de celdas, lo cual es trivial para cualquier computadora.
+
+El espacio se puede bajar. **Hirschberg (1975)** combinó programación
+dinámica con divide y vencerás para obtener el alineamiento óptimo en
+espacio O(min(m,n)) manteniendo tiempo O(mn): calcula la fila media
+hacia adelante y hacia atrás, encuentra el punto de cruce óptimo y
+recursa. Es elegante y sigue en uso.
+
+El problema no es alinear dos secuencias. El problema es alinear una
+contra una base de datos.
+
+::: callout-box
+Supongan una query de 300 residuos contra una base de 200 millones de
+secuencias de 300 residuos en promedio. Son 300 × 300 × 200,000,000
+celdas, es decir, cerca de **1.8 × 10¹³ operaciones** por búsqueda. Con
+una implementación razonable, eso son horas.
+
+Nadie va a esperar horas por un BLAST. Y ese es exactamente el tema de
+la próxima sesión.
+:::
+
+## 9. Lo que cambió desde 1982
+
+Sería fácil presentar este capítulo como historia cerrada. No lo es.
+
+::: consenso
+**WFA (Wavefront Alignment Algorithm).** Marco-Sola, Moure, Moreto y
+Espinosa (2021) publicaron un algoritmo que calcula el alineamiento
+óptimo con gap afín sin llenar la matriz completa. En vez de recorrer
+todas las celdas, calcula alineamientos parciales de score creciente y
+avanza "frentes de onda" por las diagonales, aprovechando las regiones
+donde las secuencias coinciden (@fig-wavefront).
+
+La complejidad pasa de O(n²) a **O(ns)**, donde $s$ es el score óptimo.
+Cuando las secuencias se parecen (s chico), la diferencia es brutal:
+contra las implementaciones de KSW2, los autores reportan aceleraciones
+que van de 2× a tres órdenes de magnitud, según el escenario.
+
+Lo importante: **sigue siendo exacto**. No es una heurística. Es el
+mismo óptimo, calculado de otra forma.
+
+Marco-Sola S et al. (2021), "Fast gap-affine pairwise alignment using
+the wavefront algorithm", *Bioinformatics* 37(4):456-463.
+:::
+
+![Dos formas de calcular el mismo alineamiento óptimo entre secuencias
+parecidas. La matriz clásica (izquierda) llena las N×M celdas. WFA
+(derecha) sólo avanza frentes de score creciente por las diagonales y
+toca una fracción de las celdas: aquí 34 contra 306. La ventaja se
+evapora con secuencias muy distintas, por eso el ejemplo es de
+secuencias parecidas; con secuencias lejanas la figura
+mentiría.](../../figuras/svg/fig05_wavefront.svg){#fig-wavefront}
+
+BiWFA (2023) resolvió el consumo de memoria del WFA original, bajándolo
+a O(s) sin perder el tiempo O(ns), con una versión bidireccional que
+alinea desde ambos extremos hasta que los frentes se cruzan.
+
+En paralelo, la vía del hardware. Farrar publicó en 2007 el
+Smith–Waterman vectorizado por franjas (striped), que es la base de
+aligners como Bowtie2. Hoy KSW2 (dentro de minimap2), Parasail y SWIPE
+son las implementaciones de referencia en CPU, y CUDASW++4.0 (2024)
+lleva la búsqueda de bases de proteínas a GPU con throughput del orden
+de teraCUPS.
+
+**¿Sigue usándose Smith–Waterman exacto?** Sí, donde la sensibilidad
+importa más que la velocidad: búsqueda en bases de proteínas, y como
+paso de verificación después de que una heurística filtró los
+candidatos. La programación dinámica no fue reemplazada. Fue rodeada.
+
+::: debate
+Sobre redes neuronales y alineamiento, conviene ser preciso, porque hay
+mucho ruido. Existe trabajo real: Smith–Waterman diferenciable (Petti et
+al. 2023), que sustituye max por logsumexp para poder entrenarlo dentro
+de una red; y DeepBLAST (Hamamsy et al. 2024), que usa embeddings de
+modelos de lenguaje de proteínas más una capa de DP diferenciable.
+
+Pero en todos esos métodos el motor sigue siendo programación dinámica.
+Lo que se aprende es el **scoring**, no el algoritmo de alineamiento.
+Ningún método neuronal reemplazó a Needleman–Wunsch para encontrar el
+óptimo. Si alguien les dice lo contrario, pidan el benchmark.
+:::
+
+## Mitos y realidades: el resumen
+
+::: mito
+1.  **"Needleman–Wunsch es O(n²)."** La versión con gap lineal sí; la
+    formulación original con gaps arbitrarios es cúbica.
+2.  **"Smith–Waterman es sólo NW con max(0, …)."** Son tres cambios
+    acoplados: recurrencia, inicialización y traceback.
+3.  **"BLAST es una aproximación de Smith–Waterman."** Impreciso. BLAST
+    es una heurística seed-and-extend con su propia teoría estadística.
+    No calcula SW ni lo aproxima; comparte el objetivo, no el método.
+4.  **"BLOSUM62 es la matriz correcta."** Tiene \~15% de posiciones mal
+    calculadas, y la versión corregida funciona peor.
+5.  **"La programación dinámica se inventó en biología."** Bellman en
+    los cincuenta, Vintsyuk en voz en 1968. La biología llegó después.
+6.  **"El alineamiento óptimo es el alineamiento verdadero."** Es óptimo
+    respecto al esquema de scoring que ustedes eligieron. Nada más.
+:::
 
 ## Práctica
 
-<!-- Ejercicios de terminal. Ver también practicas/. -->
+La práctica de la sesión está en [práctica de la sesión
+7](/practicas/clase07-algoritmos.qmd). Tres partes:
+
+1.  **Needleman–Wunsch a mano**, en papel, en parejas, con **GCATGCG /
+    GATTACA** y scoring simple (match +1, mismatch −1, gap −1). Sin
+    computadora. Llenar la matriz, hacer el traceback, y reportar si
+    encontraron más de un alineamiento óptimo.
+2.  **EMBOSS `needle` y `water`** sobre el mismo par, para comparar con
+    lo del papel y ver la diferencia global/local en un caso que ya
+    entienden a mano.
+3.  **Rosalind**: progresión EDIT → EDTA → GLOB → LOCA → GAFF. El
+    primero da sólo la distancia; el segundo pide reconstruir el
+    alineamiento; los siguientes agregan matriz real y gap afín.
+
+El concepto de cómputo del día son las **variables** y el primer script
+de bash con argumentos: el script recibe dos secuencias y llama a
+`needle`.
+
+::: callout-box
+Si buscan este ejemplo en internet van a encontrar también el par
+**GCATGCU**. Ojo con esa U: mezcla timina y uracilo en la misma cadena,
+lo cual no es DNA ni es RNA. Viene de una revisión vieja de Wikipedia y
+se propagó por copia. Nosotros usamos GCATGCG.
+:::
 
 ## Fuentes {.unnumbered}
 
-- [Compeau & Pevzner, cap. 5 — How Do We Compare Biological Sequences?](https://bioinformaticsalgorithms.org)
-- [Rosalind — GLOB, LOCA, EDIT](https://rosalind.info)
+**Fuentes primarias**
 
+- Needleman SB & Wunsch CD (1970) "A general method applicable to the
+  search for similarities in the amino acid sequence of two proteins",
+  *J Mol Biol* 48(3):443-453.
+  [doi:10.1016/0022-2836(70)90057-4](https://doi.org/10.1016/0022-2836(70)90057-4)
+- Smith TF & Waterman MS (1981) "Identification of common molecular
+  subsequences", *J Mol Biol* 147(1):195-197.
+  [doi:10.1016/0022-2836(81)90087-5](https://doi.org/10.1016/0022-2836(81)90087-5)
+- Gotoh O (1982) "An improved algorithm for matching biological
+  sequences", *J Mol Biol* 162(3):705-708.
+  [doi:10.1016/0022-2836(82)90398-9](https://doi.org/10.1016/0022-2836(82)90398-9)
+- Altschul SF & Erickson BW (1986) "Optimal sequence alignment using
+  affine gap costs", *Bull Math Biol* 48:603-616.
+- Hirschberg DS (1975) "A linear space algorithm for computing maximal
+  common subsequences", *Commun ACM* 18(6):341-343.
+- Sellers PH (1974) "On the theory and computation of evolutionary
+  distances", *SIAM J Appl Math* 26:787-793.
+- Sankoff D (1972) *PNAS* 69:4-6.
+- Wagner RA & Fischer MJ (1974) "The string-to-string correction
+  problem", *J ACM* 21(1):168-173.
+- Levenshtein VI (1966), distancia de edición.
+- Vintsyuk TK (1968), alineamiento por DP en reconocimiento de voz.
+
+**Programación dinámica**
+
+- Bellman R (1984) *Eye of the Hurricane: An Autobiography*.
+- Dreyfus S (2002) "Richard Bellman on the Birth of Dynamic
+  Programming", *Operations Research* 50(1):48-51.
+  [doi:10.1287/opre.50.1.48.17791](https://doi.org/10.1287/opre.50.1.48.17791)
+
+**Contar alineamientos**
+
+- Torres Á, Cabada A, Nieto JJ (2003) "An exact formula for the number
+  of alignments between two DNA sequences", *DNA Sequence*
+  14(6):427-430.
+  [doi:10.1080/10425170310001617894](https://doi.org/10.1080/10425170310001617894)
+- Banderier C & Schwer S (2005) "Why Delannoy numbers?", *J Statistical
+  Planning and Inference* 135(1):40-54.
+- OEIS [A008288](https://oeis.org/A008288) (Delannoy) y
+  [A001850](https://oeis.org/A001850) (Delannoy centrales).
+
+**Matrices de sustitución**
+
+- Dayhoff MO, Schwartz RM, Orcutt BC (1978) "A model of evolutionary
+  change in proteins", *Atlas of Protein Sequence and Structure* 5(supl.
+  3):345-352.
+- Henikoff S & Henikoff JG (1992) "Amino acid substitution matrices from
+  protein blocks", *PNAS* 89(22):10915-10919.
+  [doi:10.1073/pnas.89.22.10915](https://doi.org/10.1073/pnas.89.22.10915)
+- Karlin S & Altschul SF (1990) *PNAS* 87:2264-2268.
+- Styczynski MP, Jensen KL, Rigoutsos I, Stephanopoulos G (2008)
+  "BLOSUM62 miscalculations improve search performance", *Nature
+  Biotechnology* 26(3):274-275.
+  [doi:10.1038/nbt0308-274](https://doi.org/10.1038/nbt0308-274)
+- Hess M et al. (2016) "Addressing inaccuracies in BLOSUM computation
+  improves homology search performance", *BMC Bioinformatics* 17:189.
+
+**Algoritmos modernos**
+
+- Marco-Sola S, Moure JC, Moreto M, Espinosa A (2021) "Fast gap-affine
+  pairwise alignment using the wavefront algorithm", *Bioinformatics*
+  37(4):456-463.
+  [doi:10.1093/bioinformatics/btaa777](https://doi.org/10.1093/bioinformatics/btaa777)
+- Marco-Sola S, Eizenga JM et al. (2023) "Optimal gap-affine alignment
+  in O(s) space", *Bioinformatics* 39(2):btad074.
+  [doi:10.1093/bioinformatics/btad074](https://doi.org/10.1093/bioinformatics/btad074)
+- Farrar M (2007) "Striped Smith-Waterman speeds database searches six
+  times over other SIMD implementations", *Bioinformatics*
+  23(2):156-161.
+- Daily J (2016) "Parasail: SIMD C library for global, semi-global, and
+  local pairwise sequence alignments", *BMC Bioinformatics* 17:81.
+- Li H (2018) "Minimap2: pairwise alignment for nucleotide sequences",
+  *Bioinformatics* 34(18):3094-3100.
+  [doi:10.1093/bioinformatics/bty191](https://doi.org/10.1093/bioinformatics/bty191)
+- Li H (2021) "New strategies to improve minimap2 alignment accuracy",
+  *Bioinformatics* 37(23):4572-4574.
+  [doi:10.1093/bioinformatics/btab705](https://doi.org/10.1093/bioinformatics/btab705)
+- Suzuki H & Kasahara M (2018) "Introducing difference recurrence
+  relations for faster semi-global alignment of long sequences", *BMC
+  Bioinformatics* 19(S1):45.
+- Schmidt B, Kallenborn F, Chacon A, Hundt C (2024) "CUDASW++4.0:
+  ultra-fast GPU-based Smith–Waterman protein sequence database search",
+  *BMC Bioinformatics* 25:342.
+  [doi:10.1186/s12859-024-05965-6](https://doi.org/10.1186/s12859-024-05965-6)
+
+**Alineamiento y aprendizaje automático**
+
+- Petti S et al. (2023) "End-to-end learning of multiple sequence
+  alignments with differentiable Smith–Waterman", *Bioinformatics*
+  39(1):btac724.
+  [doi:10.1093/bioinformatics/btac724](https://doi.org/10.1093/bioinformatics/btac724)
+- Hamamsy T et al. (2024) "Protein remote homology detection and
+  structural alignment using deep learning", *Nature Biotechnology*
+  42(6):975-985.
+  [doi:10.1038/s41587-023-01917-2](https://doi.org/10.1038/s41587-023-01917-2)
+
+**Herramientas**
+
+- EMBOSS `needle` y `water`: <https://www.ebi.ac.uk/jdispatcher/psa>
+- Rosalind: <https://rosalind.info>

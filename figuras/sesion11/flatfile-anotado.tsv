@@ -1,0 +1,25 @@
+seccion	elision	linea
+LOCUS	FALSE	LOCUS       NM_000546               2512 bp    mRNA    linear   PRI 21-NOV-2025
+DEFINITION	FALSE	DEFINITION  Homo sapiens tumor protein p53 (TP53), transcript variant 1, mRNA.
+ACCESSION	FALSE	ACCESSION   NM_000546
+VERSION	FALSE	VERSION     NM_000546.6
+KEYWORDS	FALSE	KEYWORDS    RefSeq; MANE Select.
+SOURCE	FALSE	SOURCE      Homo sapiens (human)
+SOURCE	FALSE	  ORGANISM  Homo sapiens
+SOURCE	FALSE	            Eukaryota; Metazoa; Chordata; Craniata; Vertebrata; Euteleostomi;
+REFERENCE	FALSE	REFERENCE   1  (bases 1 to 2512)
+REFERENCE	FALSE	  AUTHORS   Mirgayazova,R., Khadiullina,R., Chasov,V., Mingaleeva,R.,
+REFERENCE	TRUE	      ⋮   (221 líneas más)
+FEATURES	FALSE	FEATURES             Location/Qualifiers
+FEATURES	FALSE	     source          1..2512
+FEATURES	FALSE	                     /organism="Homo sapiens"
+FEATURES	FALSE	     gene            1..2512
+FEATURES	FALSE	                     /gene="TP53"
+CDS	FALSE	     CDS             143..1324
+CDS	FALSE	                     /product="cellular tumor antigen p53 isoform a"
+CDS	FALSE	                     /protein_id="NP_000537.3"
+CDS	FALSE	                     /translation="MEEPQSDPSVEPPLSQETFSDLWKLLPENNVLSPLPSQAMDDLM
+CDS	FALSE	                     LSPDDIEQWFTEDPGPDEAPRMPEAAPPVAPAPAAPTPAAPAPAPSWPLSSSVPSQKT
+CDS	TRUE	      ⋮   (386 líneas más)
+ORIGIN	FALSE	ORIGIN      
+ORIGIN	FALSE	        1 ctcaaaagtc tagagccacc gtccagggag caggtagctg ctgggctccg gggacacttt

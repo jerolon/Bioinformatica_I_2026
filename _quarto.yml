@@ -57,10 +57,10 @@ website:
         href: contenido/01-fundamentos/index.qmd
         contents:
           - contenido/01-fundamentos/que-es-la-bioinformatica.qmd
-          - contenido/01-fundamentos/terminal.qmd
-          - contenido/01-fundamentos/markdown.qmd
-          - contenido/01-fundamentos/git.qmd
-          - contenido/01-fundamentos/buenas-practicas.qmd
+          # La práctica de la sesión 1 vive aparte mientras se decide si se
+          # fusiona de vuelta en que-es-la-bioinformatica.qmd (ver la sección
+          # "## Práctica" de ese archivo, que es la versión vieja).
+          - contenido/01-fundamentos/sesion01-practica.qmd
       - section: "2 · Secuencias y genomas"
         href: contenido/02-secuencias/index.qmd
         contents:
@@ -94,12 +94,16 @@ website:
       - section: "6 · Introducción a R"
         href: contenido/06-introduccion-r/index.qmd
         contents:
-          - contenido/06-introduccion-r/primeros-pasos.qmd
+          - contenido/06-introduccion-r/01-fundamentos.qmd
+          - contenido/06-introduccion-r/02-datos.qmd
+          - contenido/06-introduccion-r/03-rangos-y-graficas.qmd
+          - contenido/06-introduccion-r/04-reporte.qmd
       - text: "---"
       - section: "Prácticas"
         href: practicas/index.qmd
         contents:
-          - practicas/clase09-homologia.qmd
+          - practicas/clase10-homologia.qmd
+          - practicas/clase11-tp53.qmd
       - recursos/index.qmd
       - creditos.qmd
 

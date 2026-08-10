@@ -1,0 +1,206 @@
+<?xml version="1.0" encoding="utf-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"
+  "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg xmlns:xlink="http://www.w3.org/1999/xlink" width="667.44pt" height="350.64pt" viewBox="0 0 667.44 350.64" xmlns="http://www.w3.org/2000/svg" version="1.1">
+ <metadata>
+  <rdf:RDF xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:cc="http://creativecommons.org/ns#" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+   <cc:Work>
+    <dc:type rdf:resource="http://purl.org/dc/dcmitype/StillImage"/>
+    <dc:format>image/svg+xml</dc:format>
+    <dc:creator>
+     <cc:Agent>
+      <dc:title>Matplotlib v3.11.0, https://matplotlib.org/</dc:title>
+     </cc:Agent>
+    </dc:creator>
+   </cc:Work>
+  </rdf:RDF>
+ </metadata>
+ <defs>
+  <style type="text/css">*{stroke-linejoin: round; stroke-linecap: butt}</style>
+ </defs>
+ <g id="figure_1">
+  <g id="patch_1">
+   <path d="M 0 350.64 
+L 667.44 350.64 
+L 667.44 0 
+L 0 0 
+L 0 350.64 
+z
+" style="fill: none"/>
+  </g>
+  <g id="axes_1">
+   <g id="line2d_1">
+    <path d="M 36.289964 96.330286 
+L 36.289964 103.268571 
+L 111.092727 103.268571 
+L 111.092727 96.330286 
+" clip-path="url(#pba821140a5)" style="fill: none; stroke: #666666; stroke-width: 1.1; stroke-linecap: square"/>
+   </g>
+   <g id="line2d_2">
+    <path d="M 111.092727 96.330286 
+L 111.092727 103.268571 
+L 260.698255 103.268571 
+L 260.698255 96.330286 
+" clip-path="url(#pba821140a5)" style="fill: none; stroke: #666666; stroke-width: 1.1; stroke-linecap: square"/>
+   </g>
+   <g id="line2d_3">
+    <path d="M 260.698255 96.330286 
+L 260.698255 103.268571 
+L 310.566764 103.268571 
+L 310.566764 96.330286 
+" clip-path="url(#pba821140a5)" style="fill: none; stroke: #666666; stroke-width: 1.1; stroke-linecap: square"/>
+   </g>
+   <g id="line2d_4">
+    <path d="M 36.289964 237.764571 
+L 36.289964 244.702857 
+L 136.026982 244.702857 
+L 136.026982 237.764571 
+" clip-path="url(#pba821140a5)" style="fill: none; stroke: #666666; stroke-width: 1.1; stroke-linecap: square"/>
+   </g>
+   <g id="line2d_5">
+    <path d="M 136.026982 237.764571 
+L 136.026982 244.702857 
+L 360.435273 244.702857 
+L 360.435273 237.764571 
+" clip-path="url(#pba821140a5)" style="fill: none; stroke: #666666; stroke-width: 1.1; stroke-linecap: square"/>
+   </g>
+   <g id="line2d_6">
+    <path d="M 360.435273 237.764571 
+L 360.435273 244.702857 
+L 435.238036 244.702857 
+L 435.238036 237.764571 
+" clip-path="url(#pba821140a5)" style="fill: none; stroke: #666666; stroke-width: 1.1; stroke-linecap: square"/>
+   </g>
+   <g id="text_1">
+    <text style="font-style: italic; font-size: 10px; font-family: 'Source Sans Pro', 'Segoe UI', 'Roboto', 'Helvetica Neue', 'Arial', sans-serif; text-anchor: start; fill: #1a1a1a" x="42.820364" y="36.554286" transform="rotate(-0 42.820364 36.554286)">un transcrito de RefSeq</text>
+   </g>
+   <g id="text_2">
+    <text style="font-weight: 700; font-size: 17px; font-family: 'SFMono-Regular', 'Menlo', 'Consolas', 'Liberation Mono', monospace; text-anchor: middle; fill: #1a7a8a" x="48.757091" y="80.708345" transform="rotate(-0 48.757091 80.708345)">N</text>
+   </g>
+   <g id="text_3">
+    <text style="font-weight: 700; font-size: 17px; font-family: 'SFMono-Regular', 'Menlo', 'Consolas', 'Liberation Mono', monospace; text-anchor: middle; fill: #1a7a8a" x="73.691345" y="80.708345" transform="rotate(-0 73.691345 80.708345)">M</text>
+   </g>
+   <g id="text_4">
+    <text style="font-weight: 700; font-size: 17px; font-family: 'SFMono-Regular', 'Menlo', 'Consolas', 'Liberation Mono', monospace; text-anchor: middle; fill: #1a7a8a" x="98.6256" y="80.708345" transform="rotate(-0 98.6256 80.708345)">_</text>
+   </g>
+   <g id="text_5">
+    <text style="font-weight: 700; font-size: 17px; font-family: 'SFMono-Regular', 'Menlo', 'Consolas', 'Liberation Mono', monospace; text-anchor: middle; fill: #1a1a1a" x="123.559855" y="80.708345" transform="rotate(-0 123.559855 80.708345)">0</text>
+   </g>
+   <g id="text_6">
+    <text style="font-weight: 700; font-size: 17px; font-family: 'SFMono-Regular', 'Menlo', 'Consolas', 'Liberation Mono', monospace; text-anchor: middle; fill: #1a1a1a" x="148.494109" y="80.708345" transform="rotate(-0 148.494109 80.708345)">0</text>
+   </g>
+   <g id="text_7">
+    <text style="font-weight: 700; font-size: 17px; font-family: 'SFMono-Regular', 'Menlo', 'Consolas', 'Liberation Mono', monospace; text-anchor: middle; fill: #1a1a1a" x="173.428364" y="80.708345" transform="rotate(-0 173.428364 80.708345)">1</text>
+   </g>
+   <g id="text_8">
+    <text style="font-weight: 700; font-size: 17px; font-family: 'SFMono-Regular', 'Menlo', 'Consolas', 'Liberation Mono', monospace; text-anchor: middle; fill: #1a1a1a" x="198.362618" y="80.708345" transform="rotate(-0 198.362618 80.708345)">7</text>
+   </g>
+   <g id="text_9">
+    <text style="font-weight: 700; font-size: 17px; font-family: 'SFMono-Regular', 'Menlo', 'Consolas', 'Liberation Mono', monospace; text-anchor: middle; fill: #1a1a1a" x="223.296873" y="80.708345" transform="rotate(-0 223.296873 80.708345)">4</text>
+   </g>
+   <g id="text_10">
+    <text style="font-weight: 700; font-size: 17px; font-family: 'SFMono-Regular', 'Menlo', 'Consolas', 'Liberation Mono', monospace; text-anchor: middle; fill: #1a1a1a" x="248.231127" y="80.708345" transform="rotate(-0 248.231127 80.708345)">4</text>
+   </g>
+   <g id="text_11">
+    <text style="font-weight: 700; font-size: 17px; font-family: 'SFMono-Regular', 'Menlo', 'Consolas', 'Liberation Mono', monospace; text-anchor: middle; fill: #1a1a1a" x="273.165382" y="80.708345" transform="rotate(-0 273.165382 80.708345)">.</text>
+   </g>
+   <g id="text_12">
+    <text style="font-weight: 700; font-size: 17px; font-family: 'SFMono-Regular', 'Menlo', 'Consolas', 'Liberation Mono', monospace; text-anchor: middle; fill: #1a1a1a" x="298.099636" y="80.708345" transform="rotate(-0 298.099636 80.708345)">6</text>
+   </g>
+   <g id="text_13">
+    <text style="font-size: 8.3px; font-family: 'Source Sans Pro', 'Segoe UI', 'Roboto', 'Helvetica Neue', 'Arial', sans-serif; text-anchor: middle; fill: #1a1a1a" x="73.691345" y="116.973353" transform="rotate(-0 73.691345 116.973353)">prefijo · mRNA curado</text>
+   </g>
+   <g id="text_14">
+    <text style="font-size: 8.3px; font-family: 'Source Sans Pro', 'Segoe UI', 'Roboto', 'Helvetica Neue', 'Arial', sans-serif; text-anchor: middle; fill: #1a1a1a" x="185.895491" y="116.783198" transform="rotate(-0 185.895491 116.783198)">cuerpo</text>
+   </g>
+   <g id="text_15">
+    <text style="font-size: 8.3px; font-family: 'Source Sans Pro', 'Segoe UI', 'Roboto', 'Helvetica Neue', 'Arial', sans-serif; text-anchor: middle; fill: #1a1a1a" x="285.632509" y="117.005775" transform="rotate(-0 285.632509 117.005775)">versión</text>
+   </g>
+   <g id="patch_2">
+    <path d="M 317.856504 42.606467 
+Q 209.236248 53.358436 101.839849 63.98926 
+" style="fill: none; stroke: #d98c00; stroke-width: 1.1; stroke-linecap: round"/>
+    <path d="M 105.516099 65.393962 
+L 101.839849 63.98926 
+L 105.16936 61.891081 
+z
+" style="fill: #d98c00; stroke: #d98c00; stroke-width: 1.1; stroke-linecap: round"/>
+   </g>
+   <g id="text_16">
+    <text style="font-size: 8.8px; font-family: 'Source Sans Pro', 'Segoe UI', 'Roboto', 'Helvetica Neue', 'Arial', sans-serif; text-anchor: start; fill: #d98c00" x="321.846545" y="39.222857" transform="rotate(-0 321.846545 39.222857)">el guion bajo marca RefSeq</text>
+   </g>
+   <g id="text_17">
+    <text style="font-style: italic; font-size: 10px; font-family: 'Source Sans Pro', 'Segoe UI', 'Roboto', 'Helvetica Neue', 'Arial', sans-serif; text-anchor: start; fill: #1a1a1a" x="42.820364" y="177.988571" transform="rotate(-0 42.820364 177.988571)">un ensamblado de genoma</text>
+   </g>
+   <g id="text_18">
+    <text style="font-weight: 700; font-size: 17px; font-family: 'SFMono-Regular', 'Menlo', 'Consolas', 'Liberation Mono', monospace; text-anchor: middle; fill: #1a7a8a" x="48.757091" y="222.142631" transform="rotate(-0 48.757091 222.142631)">G</text>
+   </g>
+   <g id="text_19">
+    <text style="font-weight: 700; font-size: 17px; font-family: 'SFMono-Regular', 'Menlo', 'Consolas', 'Liberation Mono', monospace; text-anchor: middle; fill: #1a7a8a" x="73.691345" y="222.142631" transform="rotate(-0 73.691345 222.142631)">C</text>
+   </g>
+   <g id="text_20">
+    <text style="font-weight: 700; font-size: 17px; font-family: 'SFMono-Regular', 'Menlo', 'Consolas', 'Liberation Mono', monospace; text-anchor: middle; fill: #1a7a8a" x="98.6256" y="222.142631" transform="rotate(-0 98.6256 222.142631)">F</text>
+   </g>
+   <g id="text_21">
+    <text style="font-weight: 700; font-size: 17px; font-family: 'SFMono-Regular', 'Menlo', 'Consolas', 'Liberation Mono', monospace; text-anchor: middle; fill: #1a7a8a" x="123.559855" y="222.142631" transform="rotate(-0 123.559855 222.142631)">_</text>
+   </g>
+   <g id="text_22">
+    <text style="font-weight: 700; font-size: 17px; font-family: 'SFMono-Regular', 'Menlo', 'Consolas', 'Liberation Mono', monospace; text-anchor: middle; fill: #1a1a1a" x="148.494109" y="222.142631" transform="rotate(-0 148.494109 222.142631)">0</text>
+   </g>
+   <g id="text_23">
+    <text style="font-weight: 700; font-size: 17px; font-family: 'SFMono-Regular', 'Menlo', 'Consolas', 'Liberation Mono', monospace; text-anchor: middle; fill: #1a1a1a" x="173.428364" y="222.142631" transform="rotate(-0 173.428364 222.142631)">0</text>
+   </g>
+   <g id="text_24">
+    <text style="font-weight: 700; font-size: 17px; font-family: 'SFMono-Regular', 'Menlo', 'Consolas', 'Liberation Mono', monospace; text-anchor: middle; fill: #1a1a1a" x="198.362618" y="222.142631" transform="rotate(-0 198.362618 222.142631)">0</text>
+   </g>
+   <g id="text_25">
+    <text style="font-weight: 700; font-size: 17px; font-family: 'SFMono-Regular', 'Menlo', 'Consolas', 'Liberation Mono', monospace; text-anchor: middle; fill: #1a1a1a" x="223.296873" y="222.142631" transform="rotate(-0 223.296873 222.142631)">0</text>
+   </g>
+   <g id="text_26">
+    <text style="font-weight: 700; font-size: 17px; font-family: 'SFMono-Regular', 'Menlo', 'Consolas', 'Liberation Mono', monospace; text-anchor: middle; fill: #1a1a1a" x="248.231127" y="222.142631" transform="rotate(-0 248.231127 222.142631)">0</text>
+   </g>
+   <g id="text_27">
+    <text style="font-weight: 700; font-size: 17px; font-family: 'SFMono-Regular', 'Menlo', 'Consolas', 'Liberation Mono', monospace; text-anchor: middle; fill: #1a1a1a" x="273.165382" y="222.142631" transform="rotate(-0 273.165382 222.142631)">1</text>
+   </g>
+   <g id="text_28">
+    <text style="font-weight: 700; font-size: 17px; font-family: 'SFMono-Regular', 'Menlo', 'Consolas', 'Liberation Mono', monospace; text-anchor: middle; fill: #1a1a1a" x="298.099636" y="222.142631" transform="rotate(-0 298.099636 222.142631)">4</text>
+   </g>
+   <g id="text_29">
+    <text style="font-weight: 700; font-size: 17px; font-family: 'SFMono-Regular', 'Menlo', 'Consolas', 'Liberation Mono', monospace; text-anchor: middle; fill: #1a1a1a" x="323.033891" y="222.142631" transform="rotate(-0 323.033891 222.142631)">0</text>
+   </g>
+   <g id="text_30">
+    <text style="font-weight: 700; font-size: 17px; font-family: 'SFMono-Regular', 'Menlo', 'Consolas', 'Liberation Mono', monospace; text-anchor: middle; fill: #1a1a1a" x="347.968145" y="222.142631" transform="rotate(-0 347.968145 222.142631)">5</text>
+   </g>
+   <g id="text_31">
+    <text style="font-weight: 700; font-size: 17px; font-family: 'SFMono-Regular', 'Menlo', 'Consolas', 'Liberation Mono', monospace; text-anchor: middle; fill: #1a1a1a" x="372.9024" y="222.142631" transform="rotate(-0 372.9024 222.142631)">.</text>
+   </g>
+   <g id="text_32">
+    <text style="font-weight: 700; font-size: 17px; font-family: 'SFMono-Regular', 'Menlo', 'Consolas', 'Liberation Mono', monospace; text-anchor: middle; fill: #1a1a1a" x="397.836655" y="222.142631" transform="rotate(-0 397.836655 222.142631)">4</text>
+   </g>
+   <g id="text_33">
+    <text style="font-weight: 700; font-size: 17px; font-family: 'SFMono-Regular', 'Menlo', 'Consolas', 'Liberation Mono', monospace; text-anchor: middle; fill: #1a1a1a" x="422.770909" y="222.142631" transform="rotate(-0 422.770909 222.142631)">0</text>
+   </g>
+   <g id="text_34">
+    <text style="font-size: 8.3px; font-family: 'Source Sans Pro', 'Segoe UI', 'Roboto', 'Helvetica Neue', 'Arial', sans-serif; text-anchor: middle; fill: #1a1a1a" x="86.158473" y="258.407638" transform="rotate(-0 86.158473 258.407638)">prefijo · ensamblado RefSeq</text>
+   </g>
+   <g id="text_35">
+    <text style="font-size: 8.3px; font-family: 'Source Sans Pro', 'Segoe UI', 'Roboto', 'Helvetica Neue', 'Arial', sans-serif; text-anchor: middle; fill: #1a1a1a" x="248.231127" y="258.217484" transform="rotate(-0 248.231127 258.217484)">cuerpo</text>
+   </g>
+   <g id="text_36">
+    <text style="font-size: 8.3px; font-family: 'Source Sans Pro', 'Segoe UI', 'Roboto', 'Helvetica Neue', 'Arial', sans-serif; text-anchor: middle; fill: #1a1a1a" x="397.836655" y="258.44006" transform="rotate(-0 397.836655 258.44006)">versión</text>
+   </g>
+   <g id="text_37">
+    <text style="font-weight: 700; font-size: 13px; font-family: 'SFMono-Regular', 'Menlo', 'Consolas', 'Liberation Mono', monospace; text-anchor: start; fill: #666666" x="48.757091" y="311.903357" transform="rotate(-0 48.757091 311.903357)">GCA_000001405.29</text>
+   </g>
+   <g id="text_38">
+    <text style="font-size: 8.4px; font-family: 'Source Sans Pro', 'Segoe UI', 'Roboto', 'Helvetica Neue', 'Arial', sans-serif; fill: #666666" transform="translate(357.466909 306.164505)">misma secuencia, copia INSDC</text>
+    <text style="font-size: 8.4px; font-family: 'Source Sans Pro', 'Segoe UI', 'Roboto', 'Helvetica Neue', 'Arial', sans-serif; fill: #666666" transform="translate(357.466909 315.540513)">(depósito del autor, sin anotación del NCBI)</text>
+   </g>
+  </g>
+ </g>
+ <defs>
+  <clipPath id="pba821140a5">
+   <rect x="7.2" y="7.2" width="653.04" height="336.24"/>
+  </clipPath>
+ </defs>
+</svg>

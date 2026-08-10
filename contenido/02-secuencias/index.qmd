@@ -1,6 +1,6 @@
 ---
 title: "2 · Secuencias y genomas"
-subtitle: "Sesiones 2–5 (21 ago – 11 sep) · Wilbert"
+subtitle: "Sesiones 2–5 (28 ago – 18 sep) · Wilbert"
 ---
 
 De la molécula al archivo: qué tipos de secuencia existen, cómo se traducen, cómo se puntúa su parecido y en qué formatos viven.

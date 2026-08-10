@@ -1,0 +1,70 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<svg xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink' width='453.54pt' height='283.46pt' viewBox='0 0 453.54 283.46'>
+<g class='svglite'>
+<defs>
+  <style type='text/css'><![CDATA[
+    .svglite line, .svglite polyline, .svglite polygon, .svglite path, .svglite rect, .svglite circle {
+      fill: none;
+      stroke: #000000;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+      stroke-miterlimit: 10.00;
+    }
+    .svglite text {
+      white-space: pre;
+    }
+    .svglite g.glyphgroup path {
+      fill: inherit;
+      stroke: none;
+    }
+  ]]></style>
+</defs>
+<rect width='100%' height='100%' style='stroke: none; fill: none;'/>
+<defs>
+  <clipPath id='cpMC4wMHw0NTMuNTR8MC4wMHwyODMuNDY='>
+    <rect x='0.00' y='0.00' width='453.54' height='283.46' />
+  </clipPath>
+</defs>
+<g clip-path='url(#cpMC4wMHw0NTMuNTR8MC4wMHwyODMuNDY=)'>
+<rect x='0.00' y='0.00' width='453.54' height='283.46' style='stroke-width: 0.00; stroke: none;' />
+<text x='34.02' y='20.05' style='font-size: 7.40px; font-weight: bold;fill: #1A1A1A; font-family: "Source Sans Pro", "Segoe UI", "Roboto", "Helvetica Neue", "Arial", sans-serif;'>plegado</text>
+<text x='272.13' y='20.05' style='font-size: 7.40px; font-weight: bold;fill: #1A1A1A; font-family: "Source Sans Pro", "Segoe UI", "Roboto", "Helvetica Neue", "Arial", sans-serif;'>linealizado</text>
+<text x='17.01' y='42.48' text-anchor='end' style='font-size: 5.41px;fill: #666666; fill-opacity: 0.80; font-family: "Source Code Pro", "Consolas", "DejaVu Sans Mono", "Courier New", monospace;'>1</text>
+<text x='17.01' y='57.61' text-anchor='end' style='font-size: 5.41px;fill: #666666; fill-opacity: 0.80; font-family: "Source Code Pro", "Consolas", "DejaVu Sans Mono", "Courier New", monospace;'>2</text>
+<text x='17.01' y='72.75' text-anchor='end' style='font-size: 5.41px;fill: #666666; fill-opacity: 0.80; font-family: "Source Code Pro", "Consolas", "DejaVu Sans Mono", "Courier New", monospace;'>3</text>
+<text x='17.01' y='87.89' text-anchor='end' style='font-size: 5.41px;fill: #666666; fill-opacity: 0.80; font-family: "Source Code Pro", "Consolas", "DejaVu Sans Mono", "Courier New", monospace;'>4</text>
+<text x='17.01' y='103.03' text-anchor='end' style='font-size: 5.41px;fill: #666666; fill-opacity: 0.80; font-family: "Source Code Pro", "Consolas", "DejaVu Sans Mono", "Courier New", monospace;'>5</text>
+<text x='17.01' y='118.16' text-anchor='end' style='font-size: 5.41px;fill: #666666; fill-opacity: 0.80; font-family: "Source Code Pro", "Consolas", "DejaVu Sans Mono", "Courier New", monospace;'>6</text>
+<text x='17.01' y='133.30' text-anchor='end' style='font-size: 5.41px;fill: #666666; fill-opacity: 0.80; font-family: "Source Code Pro", "Consolas", "DejaVu Sans Mono", "Courier New", monospace;'>7</text>
+<text x='17.01' y='148.44' text-anchor='end' style='font-size: 5.41px;fill: #666666; fill-opacity: 0.80; font-family: "Source Code Pro", "Consolas", "DejaVu Sans Mono", "Courier New", monospace;'>8</text>
+<text x='255.12' y='42.48' text-anchor='end' style='font-size: 5.41px;fill: #666666; fill-opacity: 0.80; font-family: "Source Code Pro", "Consolas", "DejaVu Sans Mono", "Courier New", monospace;'>1</text>
+<text x='255.12' y='57.61' text-anchor='end' style='font-size: 5.41px;fill: #666666; fill-opacity: 0.80; font-family: "Source Code Pro", "Consolas", "DejaVu Sans Mono", "Courier New", monospace;'>2</text>
+<text x='255.12' y='72.75' text-anchor='end' style='font-size: 5.41px;fill: #666666; fill-opacity: 0.80; font-family: "Source Code Pro", "Consolas", "DejaVu Sans Mono", "Courier New", monospace;'>3</text>
+<text x='255.12' y='87.89' text-anchor='end' style='font-size: 5.41px;fill: #666666; fill-opacity: 0.80; font-family: "Source Code Pro", "Consolas", "DejaVu Sans Mono", "Courier New", monospace;'>4</text>
+<text x='34.02' y='43.11' style='font-size: 7.40px;fill: #1A7A8A; font-family: "Source Code Pro", "Consolas", "DejaVu Sans Mono", "Courier New", monospace;'>&gt;seqA</text>
+<text x='34.02' y='58.25' style='font-size: 7.40px;fill: #1A1A1A; font-family: "Source Code Pro", "Consolas", "DejaVu Sans Mono", "Courier New", monospace;'>ATGCCCGGGTTT</text>
+<text x='34.02' y='73.39' style='font-size: 7.40px;fill: #1A1A1A; font-family: "Source Code Pro", "Consolas", "DejaVu Sans Mono", "Courier New", monospace;'>AAACCCATGGGG</text>
+<text x='34.02' y='88.53' style='font-size: 7.40px;fill: #1A1A1A; font-family: "Source Code Pro", "Consolas", "DejaVu Sans Mono", "Courier New", monospace;'>TTTCCCAAA</text>
+<text x='34.02' y='103.66' style='font-size: 7.40px;fill: #1A7A8A; font-family: "Source Code Pro", "Consolas", "DejaVu Sans Mono", "Courier New", monospace;'>&gt;seqB</text>
+<text x='34.02' y='118.80' style='font-size: 7.40px;fill: #1A1A1A; font-family: "Source Code Pro", "Consolas", "DejaVu Sans Mono", "Courier New", monospace;'>GGGCCCTTTAAA</text>
+<text x='34.02' y='133.94' style='font-size: 7.40px;fill: #1A1A1A; font-family: "Source Code Pro", "Consolas", "DejaVu Sans Mono", "Courier New", monospace;'>GGGCCCTTTAAA</text>
+<text x='34.02' y='149.08' style='font-size: 7.40px;fill: #1A1A1A; font-family: "Source Code Pro", "Consolas", "DejaVu Sans Mono", "Courier New", monospace;'>GGGCCC</text>
+<text x='272.13' y='43.11' style='font-size: 7.40px;fill: #1A7A8A; font-family: "Source Code Pro", "Consolas", "DejaVu Sans Mono", "Courier New", monospace;'>&gt;seqA</text>
+<text x='272.13' y='58.25' style='font-size: 7.40px;fill: #1A1A1A; font-family: "Source Code Pro", "Consolas", "DejaVu Sans Mono", "Courier New", monospace;'>ATGCCCGGGTTTAAACCCATGGGGTTTCCCAAA</text>
+<text x='272.13' y='73.39' style='font-size: 7.40px;fill: #1A7A8A; font-family: "Source Code Pro", "Consolas", "DejaVu Sans Mono", "Courier New", monospace;'>&gt;seqB</text>
+<text x='272.13' y='88.53' style='font-size: 7.40px;fill: #1A1A1A; font-family: "Source Code Pro", "Consolas", "DejaVu Sans Mono", "Courier New", monospace;'>GGGCCCTTTAAAGGGCCCTTTAAAGGGCCC</text>
+<text x='34.02' y='178.85' style='font-size: 5.98px;fill: #1A1A1A; font-family: "Source Sans Pro", "Segoe UI", "Roboto", "Helvetica Neue", "Arial", sans-serif;'>8 líneas, 2 secuencias.</text>
+<text x='34.02' y='187.09' style='font-size: 5.98px;fill: #1A1A1A; font-family: "Source Sans Pro", "Segoe UI", "Roboto", "Helvetica Neue", "Arial", sans-serif;'>Las herramientas de UNIX</text>
+<text x='34.02' y='195.34' style='font-size: 5.98px;fill: #1A1A1A; font-family: "Source Sans Pro", "Segoe UI", "Roboto", "Helvetica Neue", "Arial", sans-serif;'>cuentan líneas.</text>
+<text x='272.13' y='178.85' style='font-size: 5.98px;fill: #1A1A1A; font-family: "Source Sans Pro", "Segoe UI", "Roboto", "Helvetica Neue", "Arial", sans-serif;'>4 líneas, 2 secuencias.</text>
+<text x='272.13' y='187.09' style='font-size: 5.98px;fill: #1A1A1A; font-family: "Source Sans Pro", "Segoe UI", "Roboto", "Helvetica Neue", "Arial", sans-serif;'>Una línea de secuencia</text>
+<text x='272.13' y='195.34' style='font-size: 5.98px;fill: #1A1A1A; font-family: "Source Sans Pro", "Segoe UI", "Roboto", "Helvetica Neue", "Arial", sans-serif;'>= una secuencia.</text>
+<line x1='204.09' y1='116.44' x2='260.79' y2='116.44' style='stroke-width: 2.35; stroke: #D98C00; stroke-linecap: butt;' />
+<polygon points='254.40,120.13 260.79,116.44 254.40,112.76 ' style='stroke-width: 2.35; stroke: #D98C00; stroke-linecap: butt; fill: #D98C00;' />
+<text x='232.44' y='100.79' text-anchor='middle' style='font-size: 5.69px;fill: #D98C00; font-family: "Source Code Pro", "Consolas", "DejaVu Sans Mono", "Courier New", monospace;'>awk '/^&gt;/{...}'</text>
+<text x='17.01' y='234.79' style='font-size: 5.98px;fill: #1A1A1A; font-family: "Source Code Pro", "Consolas", "DejaVu Sans Mono", "Courier New", monospace;'>plegado:      grep -c "ATG"   -&gt;  2   (cuenta líneas, no secuencias)</text>
+<text x='17.01' y='255.17' style='font-size: 5.98px;fill: #1A1A1A; font-family: "Source Code Pro", "Consolas", "DejaVu Sans Mono", "Courier New", monospace;'>linealizado:  grep -c "ATG"   -&gt;  1   (cuenta secuencias que contienen ATG)</text>
+<text x='5.67' y='281.74' style='font-size: 7.30px; font-style: italic;fill: #666666; font-family: "Source Sans Pro", "Segoe UI", "Roboto", "Helvetica Neue", "Arial", sans-serif;'>Secuencias de juguete, plegadas a 12 caracteres. El comando completo está en el Ejercicio 6.</text>
+</g>
+</g>
+</svg>

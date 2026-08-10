@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="utf-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"
+  "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg xmlns:xlink="http://www.w3.org/1999/xlink" width="681.84pt" height="249.84pt" viewBox="0 0 681.84 249.84" xmlns="http://www.w3.org/2000/svg" version="1.1">
+ <metadata>
+  <rdf:RDF xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:cc="http://creativecommons.org/ns#" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+   <cc:Work>
+    <dc:type rdf:resource="http://purl.org/dc/dcmitype/StillImage"/>
+    <dc:format>image/svg+xml</dc:format>
+    <dc:creator>
+     <cc:Agent>
+      <dc:title>Matplotlib v3.11.0, https://matplotlib.org/</dc:title>
+     </cc:Agent>
+    </dc:creator>
+   </cc:Work>
+  </rdf:RDF>
+ </metadata>
+ <defs>
+  <style type="text/css">*{stroke-linejoin: round; stroke-linecap: butt}</style>
+ </defs>
+ <g id="figure_1">
+  <g id="patch_1">
+   <path d="M 0 249.84 
+L 681.84 249.84 
+L 681.84 0 
+L 0 0 
+L 0 249.84 
+z
+" style="fill: none"/>
+  </g>
+  <g id="axes_1">
+   <g id="patch_2">
+    <path d="M 92.570233 84.774292 
+Q 92.570233 105.44451 92.570233 126.114728 
+" clip-path="url(#p17de0d5ed4)" style="fill: none; stroke-dasharray: 3,3; stroke-dashoffset: 0; stroke: #d98c00; stroke-linecap: round"/>
+   </g>
+   <g id="patch_3">
+    <path d="M 258.136744 84.774292 
+Q 258.136744 105.44451 258.136744 126.114728 
+" clip-path="url(#p17de0d5ed4)" style="fill: none; stroke-dasharray: 3,3; stroke-dashoffset: 0; stroke: #d98c00; stroke-linecap: round"/>
+   </g>
+   <g id="patch_4">
+    <path d="M 423.703256 84.774292 
+Q 423.703256 105.44451 423.703256 126.114728 
+" clip-path="url(#p17de0d5ed4)" style="fill: none; stroke-dasharray: 3,3; stroke-dashoffset: 0; stroke: #d98c00; stroke-linecap: round"/>
+   </g>
+   <g id="patch_5">
+    <path d="M 38.243721 182.762667 
+L 146.896744 182.762667 
+Q 153.105488 182.762667 153.105488 175.786667 
+L 153.105488 135.093333 
+Q 153.105488 128.117333 146.896744 128.117333 
+L 38.243721 128.117333 
+Q 32.034977 128.117333 32.034977 135.093333 
+L 32.034977 175.786667 
+Q 32.034977 182.762667 38.243721 182.762667 
+z
+" clip-path="url(#p17de0d5ed4)" style="fill: #e0f7fa; stroke: #1a7a8a; stroke-width: 1.8; stroke-linejoin: miter"/>
+   </g>
+   <g id="text_1">
+    <text style="font-size: 9px; font-family: 'Source Sans Pro', 'Segoe UI', 'Roboto', 'Helvetica Neue', 'Arial', sans-serif; text-anchor: middle; fill: #1a1a1a" x="92.570233" y="204.540146" transform="rotate(-0 92.570233 204.540146)">busca en una base</text>
+   </g>
+   <g id="patch_6">
+    <path d="M 203.810233 182.762667 
+L 312.463256 182.762667 
+Q 318.672 182.762667 318.672 175.786667 
+L 318.672 135.093333 
+Q 318.672 128.117333 312.463256 128.117333 
+L 203.810233 128.117333 
+Q 197.601488 128.117333 197.601488 135.093333 
+L 197.601488 175.786667 
+Q 197.601488 182.762667 203.810233 182.762667 
+z
+" clip-path="url(#p17de0d5ed4)" style="fill: #e0f7fa; stroke: #1a7a8a; stroke-width: 1.8; stroke-linejoin: miter"/>
+   </g>
+   <g id="text_2">
+    <text style="font-size: 9px; font-family: 'Source Sans Pro', 'Segoe UI', 'Roboto', 'Helvetica Neue', 'Arial', sans-serif; text-anchor: middle; fill: #1a1a1a" x="258.136744" y="204.540146" transform="rotate(-0 258.136744 204.540146)">sigue enlaces</text>
+   </g>
+   <g id="patch_7">
+    <path d="M 369.376744 182.762667 
+L 478.029767 182.762667 
+Q 484.238512 182.762667 484.238512 175.786667 
+L 484.238512 135.093333 
+Q 484.238512 128.117333 478.029767 128.117333 
+L 369.376744 128.117333 
+Q 363.168 128.117333 363.168 135.093333 
+L 363.168 175.786667 
+Q 363.168 182.762667 369.376744 182.762667 
+z
+" clip-path="url(#p17de0d5ed4)" style="fill: #e0f7fa; stroke: #1a7a8a; stroke-width: 1.8; stroke-linejoin: miter"/>
+   </g>
+   <g id="text_3">
+    <text style="font-size: 9px; font-family: 'Source Sans Pro', 'Segoe UI', 'Roboto', 'Helvetica Neue', 'Arial', sans-serif; text-anchor: middle; fill: #1a1a1a" x="423.703256" y="204.540146" transform="rotate(-0 423.703256 204.540146)">descarga los registros</text>
+   </g>
+   <g id="patch_8">
+    <path d="M 534.943256 182.762667 
+L 643.596279 182.762667 
+Q 649.805023 182.762667 649.805023 175.786667 
+L 649.805023 135.093333 
+Q 649.805023 128.117333 643.596279 128.117333 
+L 534.943256 128.117333 
+Q 528.734512 128.117333 528.734512 135.093333 
+L 528.734512 175.786667 
+Q 528.734512 182.762667 534.943256 182.762667 
+z
+" clip-path="url(#p17de0d5ed4)" style="fill: #e0f7fa; stroke: #1a7a8a; stroke-width: 1.8; stroke-linejoin: miter"/>
+   </g>
+   <g id="text_4">
+    <text style="font-size: 9px; font-family: 'Source Sans Pro', 'Segoe UI', 'Roboto', 'Helvetica Neue', 'Arial', sans-serif; text-anchor: middle; fill: #1a1a1a" x="589.269767" y="204.540146" transform="rotate(-0 589.269767 204.540146)">arma la tabla</text>
+   </g>
+   <g id="patch_9">
+    <path d="M 26.861023 83.936 
+L 489.412465 83.936 
+Q 494.586419 83.936 494.586419 78.122667 
+L 494.586419 46.730667 
+Q 494.586419 40.917333 489.412465 40.917333 
+L 26.861023 40.917333 
+Q 21.68707 40.917333 21.68707 46.730667 
+L 21.68707 78.122667 
+Q 21.68707 83.936 26.861023 83.936 
+L 26.861023 83.936 
+z
+" clip-path="url(#p17de0d5ed4)" style="fill: none; stroke-dasharray: 5.18,2.24; stroke-dashoffset: 0; stroke: #d98c00; stroke-width: 1.4; stroke-linejoin: miter"/>
+   </g>
+   <g id="text_5">
+    <text style="font-weight: 700; font-size: 9.5px; font-family: 'Source Sans Pro', 'Segoe UI', 'Roboto', 'Helvetica Neue', 'Arial', sans-serif; text-anchor: middle; fill: #d98c00" x="258.136744" y="64.827643" transform="rotate(-0 258.136744 64.827643)">History server  (WebEnv + query_key)</text>
+   </g>
+   <g id="text_6">
+    <text style="font-style: italic; font-size: 8.4px; font-family: 'Source Sans Pro', 'Segoe UI', 'Roboto', 'Helvetica Neue', 'Arial', sans-serif; text-anchor: middle; fill: #666666" x="258.136744" y="31.41225" transform="rotate(-0 258.136744 31.41225)">el estado se pasa entre pasos</text>
+   </g>
+   <g id="text_7">
+    <text style="font-weight: 700; font-size: 13px; font-family: 'SFMono-Regular', 'Menlo', 'Consolas', 'Liberation Mono', monospace; text-anchor: middle; fill: #1a7a8a" x="92.570233" y="158.594785" transform="rotate(-0 92.570233 158.594785)">esearch</text>
+   </g>
+   <g id="text_8">
+    <text style="font-weight: 700; font-size: 20px; font-family: 'SFMono-Regular', 'Menlo', 'Consolas', 'Liberation Mono', monospace; text-anchor: middle; fill: #666666" x="175.353488" y="160.865195" transform="rotate(-0 175.353488 160.865195)">|</text>
+   </g>
+   <g id="text_9">
+    <text style="font-weight: 700; font-size: 13px; font-family: 'SFMono-Regular', 'Menlo', 'Consolas', 'Liberation Mono', monospace; text-anchor: middle; fill: #1a7a8a" x="258.136744" y="158.594785" transform="rotate(-0 258.136744 158.594785)">elink</text>
+   </g>
+   <g id="text_10">
+    <text style="font-weight: 700; font-size: 20px; font-family: 'SFMono-Regular', 'Menlo', 'Consolas', 'Liberation Mono', monospace; text-anchor: middle; fill: #666666" x="340.92" y="160.865195" transform="rotate(-0 340.92 160.865195)">|</text>
+   </g>
+   <g id="text_11">
+    <text style="font-weight: 700; font-size: 13px; font-family: 'SFMono-Regular', 'Menlo', 'Consolas', 'Liberation Mono', monospace; text-anchor: middle; fill: #1a7a8a" x="423.703256" y="158.594785" transform="rotate(-0 423.703256 158.594785)">efetch</text>
+   </g>
+   <g id="text_12">
+    <text style="font-weight: 700; font-size: 20px; font-family: 'SFMono-Regular', 'Menlo', 'Consolas', 'Liberation Mono', monospace; text-anchor: middle; fill: #666666" x="506.486512" y="160.865195" transform="rotate(-0 506.486512 160.865195)">|</text>
+   </g>
+   <g id="text_13">
+    <text style="font-weight: 700; font-size: 13px; font-family: 'SFMono-Regular', 'Menlo', 'Consolas', 'Liberation Mono', monospace; text-anchor: middle; fill: #1a7a8a" x="589.269767" y="158.594785" transform="rotate(-0 589.269767 158.594785)">xtract</text>
+   </g>
+  </g>
+ </g>
+ <defs>
+  <clipPath id="p17de0d5ed4">
+   <rect x="7.2" y="7.2" width="667.44" height="235.44"/>
+  </clipPath>
+ </defs>
+</svg>

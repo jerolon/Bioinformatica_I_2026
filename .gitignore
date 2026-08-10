@@ -4,6 +4,10 @@
 #                 decisiones pendientes. Van con nombres de colegas.
 #   research/   — material de investigación en bruto para escribir capítulos,
 #                 con marcas [VERIFICAR] y notas de método.
+#   soluciones/ — material de instructor (clave, tiempos por actividad y orden
+#                 de recorte, para el traspaso de la unidad 6). Su propio
+#                 README dice "no se reparte a los alumnos"; las soluciones
+#                 que ellos sí ven están en los callouts de los capítulos.
 #
 # Ojo: estas carpetas ya estaban excluidas del RENDER en _quarto.yml (no salen
 # en el sitio), pero eso no las excluía del REPO. Esto sí.
@@ -11,6 +15,7 @@
 # hace un repo interno aparte, esto se puede quitar.
 planeacion/
 research/
+soluciones/
 
 # Quarto
 /_site/
@@ -35,6 +40,15 @@ __pycache__/
 # Datos pesados: el dato crudo no vive en git.
 # Si una práctica necesita datos, se baja con un script.
 data/raw/
+# datos/ son las secuencias que bajan los 00_descarga_datos.sh de figuras/ para
+# generar figuras. Se reproducen con el script y el accession; lo que se
+# versiona es el script, y al lado de los datos queda un PROCEDENCIA.tsv con qué
+# se bajó y cuándo.
+#   sesion01/  seis genomas completos, 5.5 MB (4.7 son E. coli)
+#   sesion03/  los CDS de tres genomas para el RSCU de @fig-uso-codones, 9 MB
+# El patrón no lleva "/" al principio a propósito: pega en cualquier carpeta
+# datos/ del repo, no sólo en la de la raíz.
+datos/
 *.fastq
 *.fastq.gz
 *.bam
@@ -55,3 +69,4 @@ desktop.ini
 *.tmp
 
 **/*.quarto_ipynb
+.positai

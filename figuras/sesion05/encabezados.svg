@@ -1,0 +1,75 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<svg xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink' width='510.24pt' height='226.77pt' viewBox='0 0 510.24 226.77'>
+<g class='svglite'>
+<defs>
+  <style type='text/css'><![CDATA[
+    .svglite line, .svglite polyline, .svglite polygon, .svglite path, .svglite rect, .svglite circle {
+      fill: none;
+      stroke: #000000;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+      stroke-miterlimit: 10.00;
+    }
+    .svglite text {
+      white-space: pre;
+    }
+    .svglite g.glyphgroup path {
+      fill: inherit;
+      stroke: none;
+    }
+  ]]></style>
+</defs>
+<rect width='100%' height='100%' style='stroke: none; fill: none;'/>
+<defs>
+  <clipPath id='cpMC4wMHw1MTAuMjR8MC4wMHwyMjYuNzc='>
+    <rect x='0.00' y='0.00' width='510.24' height='226.77' />
+  </clipPath>
+</defs>
+<g clip-path='url(#cpMC4wMHw1MTAuMjR8MC4wMHwyMjYuNzc=)'>
+<rect x='0.00' y='0.00' width='510.24' height='226.77' style='stroke-width: 0.00; stroke: none;' />
+<rect x='134.71' y='23.45' width='47.51' height='9.61' style='stroke-width: 0.97; stroke: none; stroke-linecap: butt; stroke-linejoin: miter; fill: #1A7A8A; fill-opacity: 0.20;' />
+<rect x='186.55' y='23.45' width='177.10' height='9.61' style='stroke-width: 0.97; stroke: none; stroke-linecap: butt; stroke-linejoin: miter; fill: #666666; fill-opacity: 0.20;' />
+<rect x='134.71' y='50.29' width='86.39' height='9.61' style='stroke-width: 0.97; stroke: none; stroke-linecap: butt; stroke-linejoin: miter; fill: #1A7A8A; fill-opacity: 0.20;' />
+<rect x='225.42' y='50.29' width='112.31' height='9.61' style='stroke-width: 0.97; stroke: none; stroke-linecap: butt; stroke-linejoin: miter; fill: #666666; fill-opacity: 0.20;' />
+<rect x='342.05' y='50.29' width='151.18' height='9.61' style='stroke-width: 0.97; stroke: none; stroke-linecap: butt; stroke-linejoin: miter; fill: #2E7D32; fill-opacity: 0.20;' />
+<rect x='134.71' y='77.13' width='38.88' height='9.61' style='stroke-width: 0.97; stroke: none; stroke-linecap: butt; stroke-linejoin: miter; fill: #D98C00; fill-opacity: 0.20;' />
+<rect x='177.91' y='77.13' width='86.39' height='9.61' style='stroke-width: 0.97; stroke: none; stroke-linecap: butt; stroke-linejoin: miter; fill: #1A7A8A; fill-opacity: 0.20;' />
+<rect x='134.71' y='103.97' width='73.43' height='9.61' style='stroke-width: 0.97; stroke: none; stroke-linecap: butt; stroke-linejoin: miter; fill: #1A7A8A; fill-opacity: 0.20;' />
+<rect x='212.46' y='103.97' width='17.28' height='9.61' style='stroke-width: 0.97; stroke: none; stroke-linecap: butt; stroke-linejoin: miter; fill: #666666; fill-opacity: 0.20;' />
+<rect x='234.06' y='103.97' width='241.89' height='9.61' style='stroke-width: 0.97; stroke: none; stroke-linecap: butt; stroke-linejoin: miter; fill: #2E7D32; fill-opacity: 0.20;' />
+<rect x='134.71' y='130.81' width='90.71' height='9.61' style='stroke-width: 0.97; stroke: none; stroke-linecap: butt; stroke-linejoin: miter; fill: #1A7A8A; fill-opacity: 0.20;' />
+<line x1='135.56' y1='81.93' x2='172.74' y2='81.93' style='stroke-width: 1.07; stroke: #D98C00; stroke-linecap: butt;' />
+<text x='130.39' y='30.56' style='font-size: 7.23px;fill: #1A1A1A; font-family: "Source Code Pro", "Consolas", "DejaVu Sans Mono", "Courier New", monospace;'>&gt;NC_001416.1 Escherichia virus Lambda, complete genome</text>
+<text x='130.39' y='57.40' style='font-size: 7.23px;fill: #1A1A1A; font-family: "Source Code Pro", "Consolas", "DejaVu Sans Mono", "Courier New", monospace;'>&gt;sp|P01013|OVAX_CHICK Ovalbumin-related protein X OS=Gallus gallus OX=9031 PE=1 SV=2</text>
+<text x='130.39' y='84.24' style='font-size: 7.23px;fill: #1A1A1A; font-family: "Source Code Pro", "Consolas", "DejaVu Sans Mono", "Courier New", monospace;'>&gt;gi|129295|sp|P01013|OVAX_CHICK</text>
+<text x='130.39' y='111.07' style='font-size: 7.23px;fill: #1A1A1A; font-family: "Source Code Pro", "Consolas", "DejaVu Sans Mono", "Courier New", monospace;'>&gt;ENST00000456328.2 cdna chromosome:GRCh38:1:11869:14409:1 gene:ENSG00000290825.1</text>
+<text x='130.39' y='137.91' style='font-size: 7.23px;fill: #1A1A1A; font-family: "Source Code Pro", "Consolas", "DejaVu Sans Mono", "Courier New", monospace;'>&gt;mi_secuencia_favorita</text>
+<text x='11.34' y='30.14' style='font-size: 5.41px;fill: #666666; font-family: "Source Sans Pro", "Segoe UI", "Roboto", "Helvetica Neue", "Arial", sans-serif;'>NCBI actual</text>
+<text x='11.34' y='56.98' style='font-size: 5.41px;fill: #666666; font-family: "Source Sans Pro", "Segoe UI", "Roboto", "Helvetica Neue", "Arial", sans-serif;'>UniProt</text>
+<text x='11.34' y='80.41' style='font-size: 5.41px;fill: #666666; font-family: "Source Sans Pro", "Segoe UI", "Roboto", "Helvetica Neue", "Arial", sans-serif;'>NCBI histórico</text>
+<text x='11.34' y='87.22' style='font-size: 5.41px;fill: #666666; font-family: "Source Sans Pro", "Segoe UI", "Roboto", "Helvetica Neue", "Arial", sans-serif;'>(GI, retirado en 2016)</text>
+<text x='11.34' y='110.66' style='font-size: 5.41px;fill: #666666; font-family: "Source Sans Pro", "Segoe UI", "Roboto", "Helvetica Neue", "Arial", sans-serif;'>Ensembl</text>
+<text x='11.34' y='137.50' style='font-size: 5.41px;fill: #666666; font-family: "Source Sans Pro", "Segoe UI", "Roboto", "Helvetica Neue", "Arial", sans-serif;'>hecho a mano</text>
+<polyline points='182.23,28.25 221.10,55.09 264.30,81.93 208.14,108.77 225.42,135.61 ' style='stroke-width: 0.85; stroke: #D98C00; stroke-opacity: 0.55; stroke-dasharray: 1.14,3.41; stroke-linecap: butt;' />
+<line x1='182.23' y1='36.45' x2='182.23' y2='20.06' style='stroke-width: 1.07; stroke: #D98C00; stroke-linecap: butt;' />
+<line x1='221.10' y1='63.28' x2='221.10' y2='46.90' style='stroke-width: 1.07; stroke: #D98C00; stroke-linecap: butt;' />
+<line x1='264.30' y1='90.12' x2='264.30' y2='73.74' style='stroke-width: 1.07; stroke: #D98C00; stroke-dasharray: 2.85,2.85; stroke-linecap: butt;' />
+<line x1='208.14' y1='116.96' x2='208.14' y2='100.58' style='stroke-width: 1.07; stroke: #D98C00; stroke-linecap: butt;' />
+<line x1='225.42' y1='143.80' x2='225.42' y2='127.42' style='stroke-width: 1.07; stroke: #D98C00; stroke-dasharray: 2.85,2.85; stroke-linecap: butt;' />
+<text x='269.97' y='83.82' style='font-size: 5.41px;fill: #D98C00; font-family: "Source Sans Pro", "Segoe UI", "Roboto", "Helvetica Neue", "Arial", sans-serif;'>◄ sin espacio</text>
+<text x='231.09' y='137.50' style='font-size: 5.41px;fill: #D98C00; font-family: "Source Sans Pro", "Segoe UI", "Roboto", "Helvetica Neue", "Arial", sans-serif;'>◄ sin espacio</text>
+<text x='130.39' y='167.58' style='font-size: 5.69px;fill: #1A1A1A; font-family: "Source Sans Pro", "Segoe UI", "Roboto", "Helvetica Neue", "Arial", sans-serif;'>por convención, el identificador termina aquí: en el primer espacio</text>
+<text x='130.39' y='175.43' style='font-size: 5.69px;fill: #1A1A1A; font-family: "Source Sans Pro", "Segoe UI", "Roboto", "Helvetica Neue", "Arial", sans-serif;'>sin espacio: el identificador es el encabezado entero</text>
+<rect x='99.69' y='190.70' width='12.76' height='8.48' style='stroke-width: 0.64; stroke: #1A7A8A; stroke-linecap: butt; stroke-linejoin: miter; fill: #1A7A8A; fill-opacity: 0.35;' />
+<rect x='169.10' y='190.70' width='12.76' height='8.48' style='stroke-width: 0.64; stroke: #2E7D32; stroke-linecap: butt; stroke-linejoin: miter; fill: #2E7D32; fill-opacity: 0.35;' />
+<rect x='253.32' y='190.70' width='12.76' height='8.48' style='stroke-width: 0.64; stroke: #666666; stroke-linecap: butt; stroke-linejoin: miter; fill: #666666; fill-opacity: 0.35;' />
+<rect x='334.57' y='190.70' width='12.76' height='8.48' style='stroke-width: 0.64; stroke: #D98C00; stroke-linecap: butt; stroke-linejoin: miter; fill: #D98C00; fill-opacity: 0.35;' />
+<text x='116.42' y='196.83' style='font-size: 5.41px;fill: #1A1A1A; font-family: "Source Sans Pro", "Segoe UI", "Roboto", "Helvetica Neue", "Arial", sans-serif;'>identificador</text>
+<text x='185.83' y='196.83' style='font-size: 5.41px;fill: #1A1A1A; font-family: "Source Sans Pro", "Segoe UI", "Roboto", "Helvetica Neue", "Arial", sans-serif;'>campos clave=valor</text>
+<text x='270.04' y='196.83' style='font-size: 5.41px;fill: #1A1A1A; font-family: "Source Sans Pro", "Segoe UI", "Roboto", "Helvetica Neue", "Arial", sans-serif;'>descripción libre</text>
+<text x='351.30' y='196.83' style='font-size: 5.41px;fill: #1A1A1A; font-family: "Source Sans Pro", "Segoe UI", "Roboto", "Helvetica Neue", "Arial", sans-serif;'>número GI (retirado)</text>
+<text x='5.67' y='217.17' style='font-size: 7.30px; font-style: italic;fill: #666666; font-family: "Source Sans Pro", "Segoe UI", "Roboto", "Helvetica Neue", "Arial", sans-serif;'>Los cinco encabezados son reales. La columna donde termina el identificador está calculada, no dibujada a ojo:</text>
+<text x='5.67' y='225.05' style='font-size: 7.30px; font-style: italic;fill: #666666; font-family: "Source Sans Pro", "Segoe UI", "Roboto", "Helvetica Neue", "Arial", sans-serif;'>por eso la línea sale quebrada.</text>
+</g>
+</g>
+</svg>

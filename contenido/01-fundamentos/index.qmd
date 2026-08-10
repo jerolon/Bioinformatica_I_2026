@@ -1,18 +1,15 @@
 ---
 title: "1 · Fundamentos"
-subtitle: "Sesión 1 (14 ago) · Jero"
+subtitle: "Sesión 1 (21 ago) · Jero"
 ---
 
-Qué problema resuelve la bioinformática, y el ambiente de cómputo con el que se trabaja todo el semestre: terminal, Markdown, git y buenas prácticas de proyecto.
+Qué problema resuelve la bioinformática y qué problema plantea. Git y buenas prácticas de proyecto.
 
 ## Capítulos
 
 | Capítulo | Sesión | Docente |
 |----------|--------|---------|
 | [¿Qué es la bioinformática?](que-es-la-bioinformatica.qmd) | 1 | Jero |
-| [La terminal](terminal.qmd) | 1 | Jero |
-| [Markdown](markdown.qmd) | 1 | Jero |
-| [Git y GitHub](git.qmd) | 1 | Jero |
-| [Buenas prácticas y estructura de proyecto](buenas-practicas.qmd) | 1 | Jero |
+| [Buenas prácticas y git](sesion01-practica.qmd) | 1 | Jero |
 
 : {tbl-colwidths="[60,20,20]"}

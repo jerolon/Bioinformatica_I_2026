@@ -1,0 +1,79 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<svg xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink' width='453.54pt' height='283.46pt' viewBox='0 0 453.54 283.46'>
+<g class='svglite'>
+<defs>
+  <style type='text/css'><![CDATA[
+    .svglite line, .svglite polyline, .svglite polygon, .svglite path, .svglite rect, .svglite circle {
+      fill: none;
+      stroke: #000000;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+      stroke-miterlimit: 10.00;
+    }
+    .svglite text {
+      white-space: pre;
+    }
+    .svglite g.glyphgroup path {
+      fill: inherit;
+      stroke: none;
+    }
+  ]]></style>
+</defs>
+<rect width='100%' height='100%' style='stroke: none; fill: none;'/>
+<defs>
+  <clipPath id='cpMC4wMHw0NTMuNTR8MC4wMHwyODMuNDY='>
+    <rect x='0.00' y='0.00' width='453.54' height='283.46' />
+  </clipPath>
+</defs>
+<g clip-path='url(#cpMC4wMHw0NTMuNTR8MC4wMHwyODMuNDY=)'>
+<rect x='0.00' y='0.00' width='453.54' height='283.46' style='stroke-width: 0.00; stroke: none;' />
+<rect x='14.17' y='42.22' width='425.20' height='21.85' style='stroke-width: 0.97; stroke: none; stroke-linecap: butt; stroke-linejoin: miter; fill: #2BB5C6; fill-opacity: 0.071;' />
+<rect x='14.17' y='90.65' width='425.20' height='21.85' style='stroke-width: 0.97; stroke: none; stroke-linecap: butt; stroke-linejoin: miter; fill: #2BB5C6; fill-opacity: 0.071;' />
+<rect x='14.17' y='139.07' width='425.20' height='21.85' style='stroke-width: 0.97; stroke: none; stroke-linecap: butt; stroke-linejoin: miter; fill: #2BB5C6; fill-opacity: 0.071;' />
+<rect x='14.17' y='187.50' width='425.20' height='21.85' style='stroke-width: 0.97; stroke: none; stroke-linecap: butt; stroke-linejoin: miter; fill: #2BB5C6; fill-opacity: 0.071;' />
+<text x='22.68' y='25.96' style='font-size: 6.69px; font-weight: bold;fill: #666666; font-family: "Source Sans Pro", "Segoe UI", "Roboto", "Helvetica Neue", "Arial", sans-serif;'>identificador</text>
+<text x='124.72' y='25.96' style='font-size: 6.69px; font-weight: bold;fill: #666666; font-family: "Source Sans Pro", "Segoe UI", "Roboto", "Helvetica Neue", "Arial", sans-serif;'>qué es</text>
+<text x='255.12' y='25.96' style='font-size: 6.69px; font-weight: bold;fill: #666666; font-family: "Source Sans Pro", "Segoe UI", "Roboto", "Helvetica Neue", "Arial", sans-serif;'>la pista</text>
+<line x1='14.17' y1='34.25' x2='439.37' y2='34.25' style='stroke-width: 0.75; stroke: #666666; stroke-opacity: 0.45; stroke-linecap: butt;' />
+<text x='22.68' y='55.69' style='font-size: 7.97px; font-weight: bold;fill: #1A7A8A; font-family: "Source Code Pro", "Consolas", "DejaVu Sans Mono", "Courier New", monospace;'>NM_</text>
+<text x='22.68' y='79.90' style='font-size: 7.97px; font-weight: bold;fill: #1A7A8A; font-family: "Source Code Pro", "Consolas", "DejaVu Sans Mono", "Courier New", monospace;'>X</text>
+<text x='22.68' y='104.11' style='font-size: 7.97px; font-weight: bold;fill: #1A7A8A; font-family: "Source Code Pro", "Consolas", "DejaVu Sans Mono", "Courier New", monospace;'>NC_</text>
+<text x='22.68' y='128.33' style='font-size: 7.97px; font-weight: bold;fill: #1A7A8A; font-family: "Source Code Pro", "Consolas", "DejaVu Sans Mono", "Courier New", monospace;'>P</text>
+<text x='22.68' y='152.54' style='font-size: 7.97px; font-weight: bold;fill: #1A7A8A; font-family: "Source Code Pro", "Consolas", "DejaVu Sans Mono", "Courier New", monospace;'>ENSG</text>
+<text x='22.68' y='176.75' style='font-size: 7.97px; font-weight: bold;fill: #1A7A8A; font-family: "Source Code Pro", "Consolas", "DejaVu Sans Mono", "Courier New", monospace;'>SRR</text>
+<text x='22.68' y='200.96' style='font-size: 7.97px; font-weight: bold;fill: #1A7A8A; font-family: "Source Code Pro", "Consolas", "DejaVu Sans Mono", "Courier New", monospace;'>ERR</text>
+<text x='22.68' y='225.18' style='font-size: 7.97px; font-weight: bold;fill: #1A7A8A; font-family: "Source Code Pro", "Consolas", "DejaVu Sans Mono", "Courier New", monospace;'>PRJNA</text>
+<text x='36.96' y='55.69' style='font-size: 7.97px;fill: #666666; font-family: "Source Code Pro", "Consolas", "DejaVu Sans Mono", "Courier New", monospace;'>000546</text>
+<text x='27.44' y='79.90' style='font-size: 7.97px;fill: #666666; font-family: "Source Code Pro", "Consolas", "DejaVu Sans Mono", "Courier New", monospace;'>02469</text>
+<text x='36.96' y='104.11' style='font-size: 7.97px;fill: #666666; font-family: "Source Code Pro", "Consolas", "DejaVu Sans Mono", "Courier New", monospace;'>000017</text>
+<text x='27.44' y='128.33' style='font-size: 7.97px;fill: #666666; font-family: "Source Code Pro", "Consolas", "DejaVu Sans Mono", "Courier New", monospace;'>04637</text>
+<text x='41.73' y='152.54' style='font-size: 7.97px;fill: #666666; font-family: "Source Code Pro", "Consolas", "DejaVu Sans Mono", "Courier New", monospace;'>00000141510</text>
+<text x='36.96' y='176.75' style='font-size: 7.97px;fill: #666666; font-family: "Source Code Pro", "Consolas", "DejaVu Sans Mono", "Courier New", monospace;'>1234567</text>
+<text x='36.96' y='200.96' style='font-size: 7.97px;fill: #666666; font-family: "Source Code Pro", "Consolas", "DejaVu Sans Mono", "Courier New", monospace;'>1234567</text>
+<text x='46.49' y='225.18' style='font-size: 7.97px;fill: #666666; font-family: "Source Code Pro", "Consolas", "DejaVu Sans Mono", "Courier New", monospace;'>12345</text>
+<text x='65.54' y='55.69' style='font-size: 7.97px; font-weight: bold;fill: #D98C00; font-family: "Source Code Pro", "Consolas", "DejaVu Sans Mono", "Courier New", monospace;'>.6</text>
+<text x='65.54' y='104.11' style='font-size: 7.97px; font-weight: bold;fill: #D98C00; font-family: "Source Code Pro", "Consolas", "DejaVu Sans Mono", "Courier New", monospace;'>.11</text>
+<text x='124.72' y='55.44' style='font-size: 6.54px;fill: #1A1A1A; font-family: "Source Sans Pro", "Segoe UI", "Roboto", "Helvetica Neue", "Arial", sans-serif;'>RefSeq · mRNA curado</text>
+<text x='124.72' y='79.65' style='font-size: 6.54px;fill: #1A1A1A; font-family: "Source Sans Pro", "Segoe UI", "Roboto", "Helvetica Neue", "Arial", sans-serif;'>INSDC · envío original</text>
+<text x='124.72' y='103.86' style='font-size: 6.54px;fill: #1A1A1A; font-family: "Source Sans Pro", "Segoe UI", "Roboto", "Helvetica Neue", "Arial", sans-serif;'>RefSeq · cromosoma</text>
+<text x='124.72' y='128.08' style='font-size: 6.54px;fill: #1A1A1A; font-family: "Source Sans Pro", "Segoe UI", "Roboto", "Helvetica Neue", "Arial", sans-serif;'>UniProt · proteína</text>
+<text x='124.72' y='152.29' style='font-size: 6.54px;fill: #1A1A1A; font-family: "Source Sans Pro", "Segoe UI", "Roboto", "Helvetica Neue", "Arial", sans-serif;'>Ensembl · gen</text>
+<text x='124.72' y='176.50' style='font-size: 6.54px;fill: #1A1A1A; font-family: "Source Sans Pro", "Segoe UI", "Roboto", "Helvetica Neue", "Arial", sans-serif;'>SRA · corrida (NCBI)</text>
+<text x='124.72' y='200.71' style='font-size: 6.54px;fill: #1A1A1A; font-family: "Source Sans Pro", "Segoe UI", "Roboto", "Helvetica Neue", "Arial", sans-serif;'>SRA · corrida (ENA)</text>
+<text x='124.72' y='224.93' style='font-size: 6.54px;fill: #1A1A1A; font-family: "Source Sans Pro", "Segoe UI", "Roboto", "Helvetica Neue", "Arial", sans-serif;'>BioProject (NCBI)</text>
+<text x='255.12' y='55.29' style='font-size: 6.12px; font-style: italic;fill: #666666; font-family: "Source Sans Pro", "Segoe UI", "Roboto", "Helvetica Neue", "Arial", sans-serif;'>el guión bajo delata RefSeq</text>
+<text x='255.12' y='79.50' style='font-size: 6.12px; font-style: italic;fill: #666666; font-family: "Source Sans Pro", "Segoe UI", "Roboto", "Helvetica Neue", "Arial", sans-serif;'>nunca lleva guión bajo</text>
+<text x='255.12' y='103.72' style='font-size: 6.12px; font-style: italic;fill: #666666; font-family: "Source Sans Pro", "Segoe UI", "Roboto", "Helvetica Neue", "Arial", sans-serif;'>la 2ª letra es la molécula: C = cromosoma</text>
+<text x='255.12' y='127.93' style='font-size: 6.12px; font-style: italic;fill: #666666; font-family: "Source Sans Pro", "Segoe UI", "Roboto", "Helvetica Neue", "Arial", sans-serif;'>seis o diez alfanuméricos, sin puntos</text>
+<text x='255.12' y='152.14' style='font-size: 6.12px; font-style: italic;fill: #666666; font-family: "Source Sans Pro", "Segoe UI", "Roboto", "Helvetica Neue", "Arial", sans-serif;'>el prefijo ENS</text>
+<text x='255.12' y='176.35' style='font-size: 6.12px; font-style: italic;fill: #666666; font-family: "Source Sans Pro", "Segoe UI", "Roboto", "Helvetica Neue", "Arial", sans-serif;'>la 1ª letra dice el socio: S = NCBI</text>
+<text x='255.12' y='200.57' style='font-size: 6.12px; font-style: italic;fill: #666666; font-family: "Source Sans Pro", "Segoe UI", "Roboto", "Helvetica Neue", "Arial", sans-serif;'>E de EMBL-EBI; D sería DDBJ</text>
+<text x='255.12' y='224.78' style='font-size: 6.12px; font-style: italic;fill: #666666; font-family: "Source Sans Pro", "Segoe UI", "Roboto", "Helvetica Neue", "Arial", sans-serif;'>PRJ + NA / EB / DB</text>
+<line x1='14.17' y1='245.08' x2='439.37' y2='245.08' style='stroke-width: 0.75; stroke: #666666; stroke-opacity: 0.45; stroke-linecap: butt;' />
+<text x='22.68' y='262.13' style='font-size: 6.54px; font-weight: bold;fill: #1A7A8A; font-family: "Source Sans Pro", "Segoe UI", "Roboto", "Helvetica Neue", "Arial", sans-serif;'>prefijo</text>
+<text x='119.06' y='262.13' style='font-size: 6.54px; font-weight: bold;fill: #666666; font-family: "Source Sans Pro", "Segoe UI", "Roboto", "Helvetica Neue", "Arial", sans-serif;'>cuerpo</text>
+<text x='215.43' y='262.13' style='font-size: 6.54px; font-weight: bold;fill: #D98C00; font-family: "Source Sans Pro", "Segoe UI", "Roboto", "Helvetica Neue", "Arial", sans-serif;'>versión</text>
+<text x='306.14' y='261.98' style='font-size: 6.12px; font-style: italic;fill: #666666; font-family: "Source Sans Pro", "Segoe UI", "Roboto", "Helvetica Neue", "Arial", sans-serif;'>dos filas van sin versión: es el contraste, no un olvido</text>
+</g>
+</g>
+</svg>

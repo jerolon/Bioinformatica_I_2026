@@ -1,6 +1,6 @@
 ---
 title: "4 · Bases de datos biológicas"
-subtitle: "Sesión 10 (16 oct) · Jero"
+subtitle: "Sesión 11 (30 oct) · Jero"
 ---
 
 Contra qué corremos BLAST, quién decidió que eso era un gen, y por qué una accesión sin versión rompe la reproducibilidad.
@@ -9,9 +9,9 @@ Contra qué corremos BLAST, quién decidió que eso era un gen, y por qué una a
 
 | Capítulo | Sesión | Docente |
 |----------|--------|---------|
-| [NCBI: el zoológico](ncbi.qmd) | 10 | Jero |
-| [INSDC: NCBI, ENA y DDBJ](insdc.qmd) | 10 | Jero |
-| [UniProt: Swiss-Prot y TrEMBL](uniprot.qmd) | 10 | Jero |
-| [Accesiones, versiones y reproducibilidad](accesiones.qmd) | 10 | Jero |
+| [NCBI: el zoológico](ncbi.qmd) | 11 | Jero |
+| [INSDC: NCBI, ENA y DDBJ](insdc.qmd) | 11 | Jero |
+| [UniProt: Swiss-Prot y TrEMBL](uniprot.qmd) | 11 | Jero |
+| [Accesiones, versiones y reproducibilidad](accesiones.qmd) | 11 | Jero |
 
 : {tbl-colwidths="[60,20,20]"}

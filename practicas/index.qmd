@@ -22,9 +22,9 @@ siempre. La biología del día es el pretexto para el concepto de cómputo del d
 | 1 | Panorama | Terminal, Markdown, git, estructura de proyecto | *(por escribir)* |
 | 7 | Alineamiento | Variables, primer script con argumentos | *(por escribir)* |
 | 8 | BLAST | Scripts, `cut`/`sort`, salida tabular | *(por escribir)* |
-| 9 | Homología | Ciclos (`for`, `while`) | *(por escribir)* |
-| 10 | Bases de datos | `awk`, tuberías, redirección, `md5sum` | *(por escribir)* |
-| 11 | Browsers | Expresiones regulares, `grep`/`sed` | *(por escribir)* |
+| 9 | Alineamiento múltiple | *(por definir)* | *(por escribir)* |
+| 10 | Homología | Ciclos (`for`, `while`) | [Reciprocal best hits](clase10-homologia.qmd) |
+| 11 | Bases de datos y browsers | `awk`, tuberías, `md5sum`, expresiones regulares | [Un gen, nueve paradas](clase11-tp53.qmd) |
 
 : {tbl-colwidths="[10,25,40,25]"}
 
@@ -40,6 +40,6 @@ a la barra lateral en `_quarto.yml`.
 | 1 | Repo del curso con estructura de carpetas y `README.md` en Markdown |
 | 7 | Matriz de Needleman–Wunsch resuelta a mano (foto) + script que corra `needle` |
 | 8 | Script que reciba un FASTA, corra BLAST contra una base local y reporte los top-5 hits |
-| 9 | Script de RBH + tabla de ortólogos + párrafo sobre los casos ambiguos |
-| 10 | Script que baje un proteoma de RefSeq, verifique el checksum y cuente proteínas |
+| 9 | Dos alineamientos de la misma familia (Clustal Omega y MAFFT) + párrafo sobre dónde discrepan |
+| 10 | `procedencia.md`, `resultados/rbh.tsv` y un párrafo sobre la pérdida por reciprocidad |
 | 11 | Reporte en Markdown: tabla de BioMart, análisis de GTF con `awk` y capturas del browser |
