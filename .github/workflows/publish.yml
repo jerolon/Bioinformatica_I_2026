@@ -3,6 +3,11 @@ name: Publicar sitio
 on:
   push:
     branches: [main]
+  # En los pull requests corre solo el build (el deploy se salta, ver el
+  # `if` de abajo): la palomita o la cruz del render aparecen en el PR
+  # antes del merge, así que un cambio que rompe el sitio se ve venir.
+  pull_request:
+    branches: [main]
   workflow_dispatch:
 
 permissions:
@@ -10,8 +15,10 @@ permissions:
   pages: write
   id-token: write
 
+# Un grupo por ref: los deploys de main se serializan entre sí (nunca dos
+# a la vez), y los builds de cada PR no hacen fila detrás de un deploy.
 concurrency:
-  group: pages
+  group: pages-${{ github.ref }}
   cancel-in-progress: false
 
 jobs:
@@ -35,6 +42,8 @@ jobs:
           path: _site
 
   deploy:
+    # Sólo publica desde main; en los PRs este job no corre.
+    if: github.event_name != 'pull_request'
     needs: build
     runs-on: ubuntu-latest
     environment:
