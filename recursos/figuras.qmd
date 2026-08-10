@@ -1,0 +1,76 @@
+---
+title: "El código de las figuras"
+---
+
+Casi ninguna figura de este sitio está dibujada a mano. Cada una se
+**calcula** con un script de Python o de R, y lo que ven en los capítulos
+es el SVG que ese script escribió. Los dos se versionan juntos en el
+repositorio: el script es la fuente de verdad; el SVG, la foto.
+
+Compilar el sitio **no ejecuta ni una línea de ese código**: el render
+corre sin R y sin Python. Es deliberado, y es la misma disciplina que el
+curso les pide en las prácticas: separar el cálculo (reproducible,
+versionado, con procedencia) de la presentación. La consecuencia práctica
+es que pueden leer y correr los scripts sin instalar Quarto, y el sitio
+compila sin instalar R.
+
+## Dónde leerlos
+
+Todo vive en la carpeta
+[`figuras/` del repositorio](https://github.com/jerolon/Bioinformatica_I_2026/tree/main/figuras).
+La regla de correspondencia: **cada SVG se llama como su script**. Si una
+figura del sitio es `blast_mapq.svg` (clic derecho → abrir imagen en una
+pestaña nueva para ver el nombre), su código es `figuras/blast_mapq.R`.
+
+| Carpeta | Figuras de |
+|----|----|
+| [raíz](https://github.com/jerolon/Bioinformatica_I_2026/tree/main/figuras) | Sesiones 7–9 (algoritmos, BLAST, MSA) y el ecosistema NCBI |
+| [`sesion01/`](https://github.com/jerolon/Bioinformatica_I_2026/tree/main/figuras/sesion01) | Sesión 1 — Qué es la bioinformática |
+| [`sesion02/`](https://github.com/jerolon/Bioinformatica_I_2026/tree/main/figuras/sesion02) | Sesiones 2–3 — Tipos de secuencias |
+| [`sesion03/`](https://github.com/jerolon/Bioinformatica_I_2026/tree/main/figuras/sesion03) | Sesión 3 — Código genético |
+| [`sesion04/`](https://github.com/jerolon/Bioinformatica_I_2026/tree/main/figuras/sesion04) | Sesión 4 — Matrices de sustitución |
+| [`sesion05/`](https://github.com/jerolon/Bioinformatica_I_2026/tree/main/figuras/sesion05) | Sesión 5 — Formatos de secuencia: FASTA |
+| [`sesion06/`](https://github.com/jerolon/Bioinformatica_I_2026/tree/main/figuras/sesion06) | Sesión 6 — Alineamiento por pares |
+| [`sesion07/`](https://github.com/jerolon/Bioinformatica_I_2026/tree/main/figuras/sesion07) | Sesión 7 — Algoritmos: NW y SW |
+| [`sesion11/`](https://github.com/jerolon/Bioinformatica_I_2026/tree/main/figuras/sesion11) | Sesión 11 — Bases de datos |
+| [`unidad6/`](https://github.com/jerolon/Bioinformatica_I_2026/tree/main/figuras/unidad6) | Unidad 6 — Introducción a R |
+
+Cada carpeta trae un `FIGURAS.md` que explica qué es cada figura y de
+dónde salen sus números, y el
+[`README` de `figuras/`](https://github.com/jerolon/Bioinformatica_I_2026/tree/main/figuras#readme)
+tiene el mapa completo y las reglas.
+
+## Cómo correrlos
+
+Para regenerar una figura hacen falta el repositorio clonado y el stack
+del script:
+
+- **Python**: `numpy` y `matplotlib`, nada más. Los scripts se corren
+  desde `figuras/`.
+- **R**: `ggplot2`, `svglite`, `systemfonts` y `scales`, de CRAN. Los
+  scripts se corren desde la raíz del repo:
+
+```bash
+Rscript figuras/blast_mapq.R    # escribe figuras/svg/blast_mapq.svg
+```
+
+**Los datos no viven en git.** Las carpetas cuyas figuras usan datos
+reales traen un `00_descarga_datos.sh` que los baja con su accession y
+deja el registro de procedencia al lado; se corre una vez, antes que los
+scripts. Si a un script le faltan sus datos, se detiene y dice qué falta.
+
+## Por qué así
+
+Tres reglas que los scripts se imponen, y que son las mismas del curso:
+
+1. **Números calculados, no tecleados.** Si una figura muestra una
+   matriz, un score o una curva, el script los calcula; si es un esquema
+   conceptual, lo declara en su encabezado.
+2. **Salida determinista.** Regenerar una figura sin cambiar el script da
+   un SVG byte a byte idéntico, y el diff de git queda limpio.
+3. **Nada de datos inventados.** Si el dato real no está disponible, el
+   script se detiene con un error; no se rellena con datos sintéticos.
+
+Si encuentran un error en una figura, el lugar donde arreglarlo es el
+script, no el SVG: por eso el repo tiene un enlace de "Editar esta
+página" en cada capítulo y acepta issues.

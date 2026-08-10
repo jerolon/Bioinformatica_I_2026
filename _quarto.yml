@@ -104,7 +104,10 @@ website:
         contents:
           - practicas/clase10-homologia.qmd
           - practicas/clase11-tp53.qmd
-      - recursos/index.qmd
+      - section: "Recursos"
+        href: recursos/index.qmd
+        contents:
+          - recursos/figuras.qmd
       - creditos.qmd
 
   # Los enlaces del pie van con "/" al inicio: si no, Quarto los resuelve

@@ -33,6 +33,12 @@ capítulos tipo "cómo uso esta página web" de los libros viejos.
 
 Ver [Créditos](../creditos.qmd) para el detalle.
 
+## El código de las figuras
+
+Las figuras del sitio se calculan con scripts de Python y R versionados
+en el repositorio, y se pueden leer y correr sin instalar Quarto:
+[el código de las figuras](figuras.qmd).
+
 ## Una nota sobre *Bioinformatics For Dummies*
 
 La última edición es la **2ª, de 2007** (Claverie & Notredame); no hay 3ª. Los capítulos
