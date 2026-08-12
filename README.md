@@ -1,7 +1,6 @@
 # Bioinformática I — LCG 2026
 
-Material de referencia del curso **Bioinformática I**, 3er semestre, Licenciatura en Ciencias
-Genómicas. Viernes 10:00–15:00, del 21 de agosto al 3 de diciembre de 2026.
+Material de referencia del curso **Bioinformática I**, 3er semestre, Licenciatura en Ciencias Genómicas, UNAM. Viernes 10:00–15:00, del 21 de agosto al 3 de diciembre de 2026.
 
 Sitio: <https://jerolon.github.io/Bioinformatica_I_2026/>
 
