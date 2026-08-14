@@ -1,0 +1,27 @@
+# Normaliza los finales de línea: LF dentro del repositorio para todo el texto.
+# Evita el "churn" CRLF/LF cuando se edita en Windows, macOS y Linux (y el CI).
+# Git detecta texto vs binario automáticamente; las reglas de abajo lo hacen explícito.
+* text=auto eol=lf
+
+# --- Archivos de texto (se guardan y se extraen con LF) ---
+*.qmd   text eol=lf
+*.md    text eol=lf
+*.R     text eol=lf
+*.py    text eol=lf
+*.sh    text eol=lf
+*.js    text eol=lf
+*.css   text eol=lf
+*.scss  text eol=lf
+*.html  text eol=lf
+*.svg   text eol=lf
+*.yml   text eol=lf
+*.yaml  text eol=lf
+*.txt   text eol=lf
+*.tsv   text eol=lf
+
+# --- Archivos binarios (Git nunca toca sus finales de línea) ---
+*.png   binary
+*.woff  binary
+*.woff2 binary
+*.ttf   binary
+*.eot   binary
