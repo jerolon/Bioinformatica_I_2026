@@ -35,15 +35,24 @@ O sea que esto no es un ejercicio desechable. Es la infraestructura de los sigui
 
 ### Primer contacto con ken
 
-`ken` es el cluster del curso. Es una máquina compartida: cuando ustedes están conectados, lo están también sus compañeros y varias personas más. Eso impone una etiqueta que nunca practicaron cuando trabajaban en su laptop.
+`ken` es el cluster del curso. Es una máquina compartida: cuando ustedes están conectados, lo están también sus compañeros y varias personas más, por eso es una etiqueta diferente a trabajar sólo en su laptop.
 
 ```bash
 ssh usuario@ken.lavis.unam.mx
 ```
 
-La primera vez les va a preguntar si confían en la máquina; contesten `yes`. Van a caer en el **login node**, que es la puerta de entrada. Acá se editan archivos, se mueven datos y se mandan trabajos a la cola, pero no se corre nada pesado. Para eso está SLURM, que verán después. Todo lo de hoy es ligero.
+La primera vez les va a preguntar si confían en la máquina; contesten `yes`. Van a caer en el **login node**, que es la puerta de entrada, con un mensaje de bienvenida y links útiles. 
 
-Ubíquense antes de tocar nada:
+Sólamente dice: 
+
+```bash
+[usuario@ken ~]$
+```
+El pelito de la ñ o "virgulilla" indica que estamos en "home". Que es diferente para cada usuario: /home/usuario.
+
+Acá se editan archivos, se mueven datos y se mandan trabajos a la cola, pero no se corre nada pesado. Para eso está SLURM, que verán después. Todo lo de hoy es ligero.
+
+Ubíquémonos en el sistema de archivos antes de tocar nada:
 
 ```bash
 whoami
@@ -52,14 +61,25 @@ pwd
 ```
 
 ::: {.callout-note collapse="true"}
-## Solución
+## ¿Quién soy? ¿Dónde estoy?
 
-`whoami` devuelve su usuario, `hostname` devuelve `ken` (confirma que ya no están en su laptop) y `pwd` les muestra su home. Este trío es el reflejo que hay que tener siempre que aterrizan en una máquina ajena: quién soy, dónde estoy, en qué equipo.
+`whoami` devuelve su usuario, `hostname` devuelve `ken` (confirma que ya no están en su laptop) y `pwd` les muestra su home.
 :::
 
 ::: callout-box
-Tres cosas que no se hacen en una máquina compartida. No corran `rm *` sin haber corrido antes `ls *`. No llenen el disco con archivos que pueden volver a bajar. Y no corran programas pesados en el login node. La primera destruye su trabajo, la segunda el de todos, la tercera hace que la máquina se arrastre para treinta personas.
+Cosas que no se hacen en una máquina compartida. No llenen el disco con archivos que pueden volver a bajar. Y no corran programas pesados en el login node.
 :::
+
+### Ejercicio 0. Módulos
+
+Cada que prendemos nuestra laptop, el sistema carga los programas que hemos instalado como navegador, reproductor de música o editor de texto. Sin embargo, en un sistema compartido, no es útil cargar todos los programas porque no los necesitamos si compartimos el clúster con matemáticos, bioinformáticos, científicos de la tierra o físicos, y sólo queremos utilizar git. Como cuando abrimos una laptop con muchos programas que abren por defecto, gasta memoria RAM y tiempo (recursos), por ello, el manejo del software en el clúster es modular. Hay un "estante" de módulos como en un a biblioteca y podemos bajar los que necesitemos en un momento dado para trabajar. 
+
+```bash
+module load git
+module list
+```
+
+Podemos ver la lista de programas que están en nuestro "escritorio". Con `module avail`, podemos ver todos los que están disponibles en el "estante". 
 
 ### Ejercicio 1. Decirle a git quién eres
 
@@ -80,11 +100,11 @@ git config --list
 ::: {.callout-note collapse="true"}
 ## Solución
 
-`--global` escribe en `~/.gitconfig`, o sea que aplica a todos sus repositorios en esta máquina. Como `ken` es compartida, cada quien tiene su propio archivo en su propio home; no se pisan entre ustedes.
+`--global` escribe en `~/.gitconfig`, o sea que aplica a todos sus repositorios en esta máquina. Como `ken` es compartida, cada quien tiene su propio archivo en su propio home.
 
 Usen el mismo correo con el que abrieron su cuenta de GitHub. Si no coincide, GitHub no va a reconocer sus commits como suyos y su perfil no los va a mostrar.
 
-La tercera línea es higiene: por herencia histórica git llamaba `master` a la rama principal, y hoy la convención es `main`. Sin esa línea van a acabar con repositorios inconsistentes.
+La tercera línea es por herencia histórica. git llamaba `master` a la rama principal, y hoy la convención es `main`. Sin esa línea van a acabar con repositorios inconsistentes.
 :::
 
 ### Ejercicio 2. Crear el repositorio
@@ -111,7 +131,7 @@ Un repositorio de git es entonces una carpeta normal con memoria.
 
 ### Las tres zonas
 
-Acá está el modelo mental que hay que entender antes de teclear más comandos, porque sin él los comandos se vuelven conjuros que uno repite sin saber qué hacen.
+Acá está el modelo mental que hay que tener para trabajar con git.
 
 Git maneja tres zonas. El **directorio de trabajo** son sus archivos como están ahora mismo. El **staging area** es una antesala donde ustedes escogen qué cambios van a entrar en la próxima foto. Y el **repositorio** es la colección de fotos ya tomadas, el historial (@fig-zonas).
 
@@ -135,6 +155,7 @@ Escriban algo mínimo, en Markdown, que ya lo conocen:
 Repositorio de entregables del curso.
 Autor: (su nombre)
 ```
+Ctrl + x para salir, nano pregunta si quieren guardar y en cuál archive, Yes a todo.
 
 Ahora vean qué opina git:
 
@@ -193,7 +214,7 @@ git log --oneline
 
 `git diff` les muestra, línea por línea, la diferencia entre lo que tienen ahora y lo último que commitearon. Las líneas con `-` son las que quitaron, las de `+` las que agregaron. Esta es la razón de fondo por la que un cuaderno de laboratorio computacional se escribe en texto plano y no en Word: git puede decirles exactamente qué cambió en un `.md`, y no puede hacer nada con un `.docx`, que para él es un blob binario indescifrable.
 
-Un detalle que agarra a todos: `git diff` a secas compara el directorio de trabajo contra el último commit, **ignorando lo que ya está en staging**. Si ya hicieron `add`, no van a ver nada. Para eso está `git diff --staged`.
+Un detalle: `git diff` a secas compara el directorio de trabajo contra el área de staging, es decir, sólo muestra lo que todavía no han hecho `add`. Si ya lo hicieron, `add` de un cambio no van a ver nada. Para eso está `git diff --staged` que compara el staging contra el último commit. Si quieren verlo todo, lo stageado y lo no, contra el último commit, es git diff HEAD.
 
 `git log` les da el historial completo con autor, fecha y mensaje. `--oneline` lo comprime a un renglón por commit. Ese código de siete caracteres al inicio es el hash del commit, su identificador único. Con él pueden regresar a ese punto exacto.
 :::
