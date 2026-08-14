@@ -367,9 +367,9 @@ Es también la razón práctica por la que se hace commit seguido y con mensajes
 
 ### Lo que no vimos hoy
 
-Git tiene mucho más, y el capítulo de Buffalo sigue con ramas (`git branch`), fusiones (`git merge`), conflictos, y el flujo de forks y pull requests que usa el software libre. Nada de eso les hace falta todavía, y meterlo hoy solo produciría confusión.
+Git tiene mucho más, y el capítulo de Buffalo sigue con ramas (`git branch`), fusiones (`git merge`), conflictos, y el flujo de forks y pull requests que usa el software libre. Nada de eso les hace falta todavía, y meterlo creo que solo produciría confusión.
 
-Lo van a ver en el curso de Python del siguiente semestre. Por ahora, con `add`, `commit`, `push` y saber recuperar un archivo, tienen lo suficiente para trabajar de forma seria durante todo este curso.
+Creo que loo van a ver en el curso de Python del siguiente semestre. Por ahora, con `add`, `commit`, `push` y saber recuperar un archivo, tienen lo suficiente para trabajar de forma seria durante todo este curso.
 
 ::: callout-box
 Un aviso sobre el libro de Buffalo, que además es una lección sobre materiales técnicos en general. Es de 2015, y en la sección de autenticación describe conectarse a GitHub con usuario y contraseña. Eso **ya no funciona**: GitHub dejó de aceptar contraseñas para operaciones de git el 13 de agosto de 2021. Por eso hoy usamos llaves SSH.
@@ -381,7 +381,7 @@ El libro sigue siendo excelente y el resto del capítulo es válido. Pero cuando
 
 De aquí en adelante, todo entregable del curso es un archivo Markdown en su repositorio `bioinfo1`, subido con push. Sin excepciones, sin PDFs por correo.
 
-Eso tiene una consecuencia que vale la pena decir en voz alta: al final del semestre van a tener un repositorio público con cuatro meses de trabajo documentado, con su nombre en cada commit. Eso es un portafolio, y sirve para solicitar una estancia o un posgrado mucho mejor que una calificación.
+Así, al final del semestre van a tener un repositorio público con cuatro meses de trabajo documentado, con su nombre en cada commit. Eso es un portafolio, y puede servir para solicitar una estancia o un posgrado mucho mejor que una calificación.
 
 ```{=html}
 <!-- NOTA PARA JERO, no renderizar: la numeración de ejercicios reinicia por
