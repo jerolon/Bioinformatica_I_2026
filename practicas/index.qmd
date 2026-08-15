@@ -3,8 +3,8 @@ title: "Prácticas"
 ---
 
 Cada sesión de 5 horas se parte en dos: **teoría** por la mañana y **práctica en terminal** por la
-tarde. Bash, Markdown y buenas prácticas no son sesiones aparte — son el bloque de la tarde,
-siempre. La biología del día es el pretexto para el concepto de cómputo del día.
+tarde (flexible). Bash, Markdown y buenas prácticas no son sesiones aparte sino que intentamos integrarlos con las prácticas de todo el curso,
+siempre. La idea de Jero es que la biología del día es el pretexto para el concepto de cómputo del día. Los profesores invitados, obviamente, gozan de libertad de cátedra.
 
 ## Estructura de la tarde
 
@@ -19,12 +19,12 @@ siempre. La biología del día es el pretexto para el concepto de cómputo del d
 
 | Sesión | Biología | Cómputo | Práctica |
 |--------|----------|---------|----------|
-| 1 | Panorama | Terminal, Markdown, git, estructura de proyecto | *(por escribir)* |
+| 1 | Panorama | Terminal, Markdown, git, estructura de proyecto | [git para científicos](../contenido/01-fundamentos/sesion01-practica.qmd) |
 | 7 | Alineamiento | Variables, primer script con argumentos | *(por escribir)* |
 | 8 | BLAST | Scripts, `cut`/`sort`, salida tabular | *(por escribir)* |
 | 9 | Alineamiento múltiple | *(por definir)* | *(por escribir)* |
-| 10 | Homología | Ciclos (`for`, `while`) | [Reciprocal best hits](clase10-homologia.qmd) |
-| 11 | Bases de datos y browsers | `awk`, tuberías, `md5sum`, expresiones regulares | [Un gen, nueve paradas](clase11-tp53.qmd) |
+| 10 | Homología | Ciclos (`for`, `while`) | [Reciprocal best hits](../contenido/03-alineamientos/sesion10-practica.qmd) |
+| 11 | Bases de datos y browsers | `awk`, tuberías, `md5sum`, expresiones regulares | [Un gen, nueve paradas](../contenido/05-browsers/sesion11-practica.qmd) |
 
 : {tbl-colwidths="[10,25,40,25]"}
 

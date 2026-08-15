@@ -76,6 +76,7 @@ website:
           - contenido/03-alineamientos/blast.qmd
           - contenido/03-alineamientos/alineamiento-multiple.qmd
           - contenido/03-alineamientos/homologia.qmd
+          - contenido/03-alineamientos/sesion10-practica.qmd
       - section: "4 · Bases de datos"
         href: contenido/04-bases-datos/index.qmd
         contents:
@@ -91,6 +92,7 @@ website:
           - contenido/05-browsers/ensembl.qmd
           - contenido/05-browsers/formatos-de-anotacion.qmd
           - contenido/05-browsers/igv.qmd
+          - contenido/05-browsers/sesion11-practica.qmd
       - section: "6 · Introducción a R"
         href: contenido/06-introduccion-r/index.qmd
         contents:
@@ -102,8 +104,12 @@ website:
       - section: "Prácticas"
         href: practicas/index.qmd
         contents:
-          - practicas/clase10-homologia.qmd
-          - practicas/clase11-tp53.qmd
+          # Cada práctica vive en la carpeta de su unidad (junto a su teoría) y se
+          # enlaza aquí también para agruparla con las demás. Los archivos son
+          # únicos; estas son segundas entradas al mismo destino.
+          - contenido/01-fundamentos/sesion01-practica.qmd
+          - contenido/03-alineamientos/sesion10-practica.qmd
+          - contenido/05-browsers/sesion11-practica.qmd
       - section: "Recursos"
         href: recursos/index.qmd
         contents:

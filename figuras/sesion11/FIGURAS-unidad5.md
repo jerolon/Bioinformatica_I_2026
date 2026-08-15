@@ -121,6 +121,6 @@ Las cinco figuras de esta unidad la declaran a nivel de módulo.
 
 - **`@fig-liftover` no dibuja el caso "mapea a varios lugares"**, que la prosa
   sí menciona. Cabe como quinta fila si se quiere cerrar la simetría.
-- La práctica `practicas/clase11-tp53.qmd` **no se corrió de principio a fin**:
+- La práctica `contenido/05-browsers/sesion11-practica.qmd` **no se corrió de principio a fin**:
   necesita `bedtools`, `tabix`, `bgzip` y `liftOver`, que no están en esta
   máquina, y los datos genómicos pesados. Ver el reporte de verificaciones.

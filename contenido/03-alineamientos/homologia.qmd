@@ -393,7 +393,7 @@ correctas en ambos ensamblados. Esto engancha directo con la sesión 11.
 
 La práctica de esta sesión construye un pipeline de **reciprocal best
 hits** entre dos proteomas y está en la [práctica de la sesión
-10](/practicas/clase10-homologia.qmd).
+10](/contenido/03-alineamientos/sesion10-practica.qmd).
 
 El concepto de cómputo del día son los **ciclos** (`for`, `while`). El
 RBH es el pretexto perfecto porque no se puede hacer sin uno: hay que
