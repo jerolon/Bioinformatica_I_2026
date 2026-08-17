@@ -1,0 +1,27 @@
+# Configuración compartida de TODAS las presentaciones del curso.
+#
+# Cualquier .qmd en esta carpeta hereda este formato: basta con poner título y
+# contenido. Al renderse dentro del proyecto, las librerías (reveal.js, plugins,
+# tema compilado) van UNA sola vez a _site/site_libs/ y todas las diapositivas
+# las comparten — no hay carpetas *_files duplicadas por presentación.
+#
+# Ojo: las presentaciones van planas en esta carpeta (sin subcarpetas), porque
+# la ruta al tema es relativa a cada .qmd.
+format:
+  revealjs:
+    theme: [default, ../assets/css/reveal-lgc.scss]
+    slide-number: true
+    footer: "Bioinformática I — LCG 2026"
+    chalkboard: true
+    preview-links: auto
+    link-external-newwindow: true
+    code-line-numbers: true
+    highlight-style: github
+    transition: slide
+    background-transition: fade
+    title-slide-attributes:
+      data-background-gradient: "linear-gradient(135deg, #14343d 0%, #1a7a8a 60%, #2bb5c6 100%)"
+
+# Las presentaciones no llevan el chrome del sitio (navbar/sidebar/búsqueda);
+# Quarto las trata como documentos independientes dentro del sitio.
+search: false

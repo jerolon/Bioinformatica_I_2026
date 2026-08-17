@@ -1,0 +1,72 @@
+---
+title: "Plantilla de presentación"
+subtitle: "Bioinformática I · LCG · 3er semestre"
+author: "Jerónimo R. Miranda Rodríguez"
+date: last-modified
+---
+
+# Cómo usar esta plantilla {.section-divider}
+
+## Empezar una presentación nueva
+
+1. Copiar este archivo: `presentaciones/sesionNN-tema.qmd`
+2. Cambiar `title`, `subtitle` y borrar lo demás
+3. Renderizar el proyecto — las librerías se comparten en `site_libs/`
+
+::: callout-box
+El formato (tema, footer, chalkboard, numeración) viene de
+`presentaciones/_metadata.yml`: no hay que repetirlo en cada archivo.
+:::
+
+## Cajas de ventajas y desventajas
+
+::: ventaja
+**Ventaja:** las cajas `.ventaja` y `.desventaja` vienen del tema compartido
+`assets/css/reveal-lgc.scss`.
+:::
+
+::: desventaja
+**Desventaja:** si cambias el scss, cambia en todas las presentaciones
+(que es justo la idea).
+:::
+
+## Dos columnas
+
+:::: columns-equal
+::: {}
+**Columna izquierda**
+
+- Un punto
+- Otro punto
+:::
+
+::: {}
+**Columna derecha**
+
+- Con la flecha teal
+  - Y sub-bullets con círculo
+:::
+::::
+
+## Código con resaltado
+
+```r
+#| code-line-numbers: "2"
+library(Biostrings)
+seq <- readDNAStringSet("datos/NC_001422.1.fasta")
+reverseComplement(seq)
+```
+
+Texto pequeño con `.small`{.small} y referencias con `.ref`:
+
+[Miranda-Rodríguez et al. 2025, G3]{.ref}
+
+# Sección nueva {.section-divider}
+
+## Notas del presentador
+
+Tecla `S` abre la vista de presentador; `B` el pizarrón (chalkboard).
+
+::: notes
+Esto sólo se ve en la vista de presentador.
+:::

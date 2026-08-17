@@ -8,6 +8,9 @@ project:
     - "contenido/**/*.qmd"
     - "practicas/**/*.qmd"
     - "recursos/**/*.qmd"
+    # Presentaciones revealjs: formato compartido en presentaciones/_metadata.yml,
+    # tema en assets/css/reveal-lgc.scss. Comparten site_libs con todo el sitio.
+    - "presentaciones/*.qmd"
     - "!planeacion/"
     # research/ es material de investigación en bruto, para el autor del capítulo:
     # trae marcas [VERIFICAR], notas de método y pendientes. No es para los alumnos.
