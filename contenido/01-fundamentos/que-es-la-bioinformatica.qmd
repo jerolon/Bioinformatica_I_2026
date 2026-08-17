@@ -63,7 +63,7 @@ Y en los últimos años, AlphaFold2 (DeepMind, 2021) acapara los titulares y pre
 
 El número más citado es el costo de secuenciar un genoma humano. El NHGRI lo lleva registrando desde 2001, cuando costaba alrededor de 95 millones de dólares. En enero de 2008, con la llegada de la NGS, la curva se desploma: cae mucho más rápido que la ley de Moore (el abaratamiento del cómputo, que dobla la capacidad cada dos años). Para 2022 el costo rondaba los 525 dólares por genoma según el NHGRI, y en 2023 la plataforma de Illumina cruzó el umbral de los 200 dólares. La consecuencia es que generar la secuencia es lo barato; analizarla es lo caro (@fig-costos).
 
-![Costo de secuenciar un genoma humano, 2001 a 2022, en escala logarítmica. La caída de 2008 corresponde a la llegada de la NGS. Código: [`costo-secuenciacion.R`](https://github.com/jerolon/Bioinformatica_I_2026/blob/main/figuras/sesion01/costo-secuenciacion.R).](../../figuras/sesion01/costo-secuenciacion.svg){#fig-costos}
+![Costo de secuenciar un genoma humano, 2001 a 2022, en escala logarítmica. La caída de 2008 corresponde a la llegada de la NGS. Código y fuente de los datos: [`costo-secuenciacion.R`](https://github.com/jerolon/Bioinformatica_I_2026/blob/main/figuras/sesion01/costo-secuenciacion.R).](../../figuras/sesion01/costo-secuenciacion.svg){#fig-costos}
 
 El resultado se ve en el tamaño de las bases de datos públicas. Algunos números, con la advertencia de que envejecen rápido (@fig-crecimiento):
 
@@ -91,7 +91,7 @@ Un mito es más reciente: que la IA ya resolvió la biología, que con AlphaFold
 :::
 
 ::: mito
-Mito relacionado: Claude Fable/Mythos y otros modelos de frontera hacen obsoletos a los bioinformáticos. La inteligencia artificial está acelerando la investigación y el aprendizaje biológico. Empíricamente, el 80% de trabajo de plomería mencionado arriba se hace más fácil. Mientras que los pasos críticos: la validación experimental, validación experimental y la calidad de los datos, además de hacer la pregunta biológica y la evaluación crítica de los resultados sigue siendo muy humana.
+Mito relacionado: Claude Fable/Mythos y otros modelos de frontera hacen obsoletos a los bioinformáticos. La inteligencia artificial está acelerando la investigación y el aprendizaje biológico. Empíricamente, el 80% de trabajo de plomería mencionado arriba se hace más fácil. Mientras que los pasos críticos: la validación experimental, y la calidad de los datos, además de hacer la pregunta biológica y la evaluación crítica de los resultados sigue siendo muy humana.
 :::
 
 ::: debate
@@ -99,27 +99,29 @@ Mito relacionado: Claude Fable/Mythos y otros modelos de frontera hacen obsoleto
 
 La revisión de npj Digital Medicine (2026) lo resume bien: la IA es un acelerador potente cuyo valor depende de la guía experta en diseño, curación de datos, interpretación y gobernanza, y como la IA no puede juzgar significado biológico ni verificar validez científica, los bioinformáticos siguen siendo necesarios. Lo que cambia es el trabajo, que se mueve de ejecutar workflows hacia diseñar sistemas de IA, atacar problemas difíciles y hacerse responsable de decisiones institucionales.
 
-Un caso concreto algo cercano a mi corazón:
+Un caso concreto algo cercano a mi ~~corazón~~ interés científico:
 
 En junio de 2026 Anthropic lanzó Claude Fable 5 y Claude Mythos 5. En el anuncio afirmaron que Mythos 5, "en más de una semana de trabajo mayormente autónomo", ensambló datos de single cell de millones de células en 138 especies animales, diseñó y entrenó un modelo propio para identificar tipos celulares equivalentes entre organismos lejanos, y que "con solo input humano de alto nivel" superó a un modelo publicado en Science siendo 100 veces más chico. Prometieron publicar los resultados.
 
 El modelo de Science creo que seguramente es TranscriptFormer (Pearce et al., Science, 7 de mayo de 2026), del Chan Zuckerberg Initiative. Uno de sus coautores también es autor de SAMap (eLife, 2021), de los primeros algoritmos para comparar scRNA-seq entre especies. Esta autor fue contratado por Anthropic desde antes del lanzamiento.
 
-Una inferencia razonable es que alguien con conocimiento profundo del campo definió el problema, eligió contra qué compararse y supo reconocer que el resultado valía la pena, por decir lo menos, y quizás también con el conocimiento suficiente para reconocer bugs, entender el código, etc.
+Una inferencia razonable es que alguien con conocimiento profundo del campo definió el problema, eligió contra qué compararse y supo reconocer que el resultado valía la pena, por decir lo menos, además de también con el conocimiento suficiente para reconocer bugs, entender el código, etc.
 
-Si la IA volviera obsoletos a los bioinformáticos, ¿Por qué estas empresas están comprando bioinformáticos? Anthropic adquirió Coefficient Bio en unos 400 millones de dólares y contrató a John Jumper, el del AlphaFold y Nobel de Química 2024. Cuatro laboratorios de IA acumulan al menos 80 profesores entre su personal actual o reciente. Por un lado, están pagando fortunas exactamente por la gente que el discurso da por prescindible. Por el otro, restringen el uso de sus modelos más poderosos fuera del alcance de quienes trabajamos en los campos de biología, bioinformática o medicina.
+Si la IA volviera obsoletos a los bioinformáticos, ¿Por qué estas empresas están cotratando bioinformáticos? Anthropic adquirió Coefficient Bio en unos 400 millones de dólares y contrató a John Jumper, el del AlphaFold y Nobel de Química 2024. Cuatro laboratorios de IA acumulan al menos 80 profesores entre su personal actual o reciente. Por un lado, están pagando fortunas exactamente por la gente con las habilidades que este punto de vista marcaría como prescindibles. Por el otro, restringen el uso de sus modelos más poderosos fuera del alcance de quienes trabajamos en los campos de biología, bioinformática o medicina.
 
 A mi parecer, en el debate entre si la IA reemplazará a los científicos y la IA acelerará a los científicos, las mismas acciones (en los dos sentidos) de las compañías de IA apuntan a la segunda opción.
 
 Sin embargo: Fable 5 deja otra lección. Anthropic lo lanzó con salvaguardas de bioseguridad que desvían las consultas de biología y química a un modelo anterior; periodistas dispararon el filtro con preguntas tan inocentes como qué es una mitocondria. En ciencias de la vida, lo que un modelo puede hacer por lo decide tanto la política como la capacidad del modelo.
 
-Desde México hay dos lecturas, una lectura optimista dice que estas herramientas bajan la barrera de entrada para quien está bien formado, y que un estudiante en Juriquilla puede hacer hoy lo que hace cinco años requería a varios estudiantes de posgrado. Una lectura pesimista señala que las herramientas de frontera están detrás de controles de exportación, de costos en dólares y de datos de entrenamiento dominados por el inglés. Las dos lecturas son defendibles y cuál se cumpla depende, en parte, de decisiones que a ustedes quizás les toque tomar.
+Desde México hay dos lecturas, una lectura optimista dice que estas herramientas bajan la barrera de entrada para quien está bien formado, y que un estudiante en Juriquilla puede hacer hoy lo que hace cinco años requería a varios estudiantes de posgrado. Una lectura pesimista señala que las herramientas de frontera están detrás de controles de exportación, de costos en dólares y de datos de entrenamiento dominados por el inglés. Cuál se cumpla depende, en parte, de decisiones que a ustedes quizás les toque tomar.
 
-Una nota histórica: una revisión de Briefings in Bioinformatics (2026) observa que cada era tecnológica resolvió un cuello de botella y destapó el siguiente: la automatización de la secuenciación, Galaxy y Bioconductor cambiaron el oficio sin eliminarlo, la línea de comandos cedió ante interfaces web, el cómputo local ante la nube, los workflows manuales ante contenedores y pipelines. Cada paso bajó una barrera y abrió preguntas nuevas de acceso, reproducibilidad y rigor.
+Una revisión de *Briefings in Bioinformatics* (2026) observa que cada era tecnológica resolvió un cuello de botella y destapó el siguiente: la automatización de la secuenciación, Galaxy y Bioconductor, cambiaron el oficio sin eliminarlo, la línea de comandos cedió ante interfaces web, el cómputo local ante la nube, los workflows manuales ante contenedores y pipeline managers. Cada paso bajó una barrera y abrió preguntas nuevas de transparencia, reproducibilidad y rigor:
+
+> This new practice is reshaping who enters the field and how. Trainees increasingly arrive in labs expecting to leverage AI tools as day-to-day research partners, such as using LLMs as on-demand documentation, code translators, and prototyping assistants. This stands in sharp contrast to the 2010s, when learning bioinformatics regularly meant wrestling with dependency conflicts that could stall an analysis for days.
 
 La brecha de anotación: un modelo entrenado sobre UniProtKB hereda que menos del 0.4% de esas proteínas tiene anotación revisada por una persona. La IA no inventa ground truth experimental que nadie ha medido; lo que hace es propagar, muy rápido y con mucha confianza, lo que ya estaba en la base. Por eso el resumen que me parece más honesto es el de una entrevista de Penn State: la IA ayuda a acotar el espacio de búsqueda, pero no elimina la necesidad de diseño experimental cuidadoso, criterio biológico y validación, y el pensamiento crítico va a importar más que nunca.
 
-Para discutir y pensar en clase, en el semestre y más allá: qué evidencia adicional pediríamos antes de creerle al anuncio de Anthropic, sobre todo a la parte de "largely autonomous"? Y de las tareas que harán durante la clase, cuáles delegarían a un modelo y cuáles no, y por qué?
+Para discutir y pensar en clase, en el semestre y más allá: qué evidencia adicional pediríamos antes de creerle al anuncio de Anthropic, sobre todo a la parte de "largely autonomous"? Y de las tareas que harán durante la clase, cuáles delegarían a un modelo y cuáles no, y por qué? ¿Qué barreras y cuellos de botella reduce la IA y cuáles amplifica o revela?
 :::
 
 ### La reproducibilidad actualmente es un problema más de código que de acceso a datos.
@@ -187,6 +189,7 @@ La práctica de esta sesión vive en su propio capítulo: [Práctica: git para c
 - Pearce, J. D. et al. (2026). TranscriptFormer: A generative cell atlas across 1.5 billion years of evolution. *Science* 393(6806). [doi:10.1126/science.aec8514](https://doi.org/10.1126/science.aec8514) Es el modelo con el que se comparó Anthropic.
 - Tarashansky, A. J. et al. (2021). Mapping single-cell atlases throughout Metazoa unravels cell type evolution. *eLife* 10:e66747. <https://elifesciences.org/articles/66747>
 - Rethinking bioinformatics expertise in the era of artificial intelligence (2026). *npj Digital Medicine*. <https://www.nature.com/articles/s41746-026-02777-1> El argumento de que el oficio se transforma, no desaparece.
+- Truong, Van Q., and Marylyn D. Ritchie. "Eras of bioinformatics technologies from command-line interfaces to artificial intelligence (AI) chatbots." *Briefings in Bioinformatics* 27.4 (2026): bbag256. <https://doi.org/10.1093/bib/bbag256>
 - Beel, J., Kan, M.-Y. & Baumgart, M. (2025). An Evaluation of Sakana's AI Scientist for Autonomous Research. [arXiv:2502.14297](https://arxiv.org/abs/2502.14297) Preprint. Qué pasa cuando alguien externo audita un "científico autónomo": 42% de los experimentos falló por errores de código.
 - Gottweis, J. et al. (2026). Accelerating scientific discovery with Co-Scientist. *Nature*. <https://www.nature.com/articles/s41586-026-10644-y> Revisado por pares, con validación en laboratorio. El mejor caso a favor del reemplazo de los científicos.
 - Varadi, M. et al. (2024). AlphaFold Protein Structure Database in 2024. *Nucleic Acids Research* 52(D1):D368. <https://doi.org/10.1093/nar/gkad1011> Léanlo junto con el FAQ de límites: <https://alphafold.ebi.ac.uk/faq>
