@@ -12,17 +12,17 @@ author: "Jerónimo Miranda Rodríguez"
 
 La bioinformática nació como una forma de leer los procesos de información de lo vivo. Hoy es, sobre todo, el oficio de contestar preguntas biológicas con datos que ya no caben en una libreta.
 
-De esta sesión quédense con dos ideas. Una es entender por qué la disciplina tiene la forma que tiene, moldeada por el diluvio de datos. La otra es práctica: una base de reproducibilidad con Git.
+De esta sesión, las ideas centrales son: entender por qué la disciplina tiene la forma que tiene, moldeada por el diluvio de datos. Y cómo esto condiciona la reproducibilidad, por eso nuestra primera práctica viene con el uso de git.
 
 ## Desarrollo
 
 ### De dónde viene la palabra
 
-La palabra bioinformática es más vieja de lo que parece y originalmente quería decir otra cosa. La acuñaron Paulien Hogeweg y Ben Hesper en 1970, en Utrecht, en un artículo en neerlandés titulado "Bio-informatica: een werkconcept". La definieron como el estudio de los procesos informáticos en los sistemas bióticos. Para ellos, hay dos clases de modelos en los sistemas dinámicos, los energéticos, que representan al sistema de acuerdo a como fluye la energía y los informáticos, que representan al sistema como un procesador de información. Básicamente, así como la bioquímica y biofísica estudian el metabolismo, potencial químico, respiración, fotosíntesis; ellos definieron a la bio-informática como la disciplina cuyo objeto de estudio era el procesamiento de información que hace la vida misma (la acumulación de información durante la evolución, la transmisión del DNA a la célula, el procesamiento neuronal), no el uso de computadoras para analizar secuencias. Hogeweg cuenta esta historia de primera mano en un ensayo de 2011 y ahí argumenta que el sentido original está reapareciendo bajo la etiqueta de biología de sistemas.
+La palabra bioinformática es más vieja de lo que parece y originalmente quería decir otra cosa. La acuñaron Paulien Hogeweg y Ben Hesper en 1970, en Utrecht, en un artículo en neerlandés titulado "Bio-informatica: een werkconcept". La definieron como el estudio de los procesos informáticos en los sistemas bióticos. Para ellos, hay dos clases de modelos en los sistemas dinámicos, los energéticos, que representan al sistema de acuerdo a como fluye la energía y los informáticos, que representan al sistema como un procesador de información. Básicamente, así como la bioquímica y biofísica estudian el metabolismo, potencial químico, respiración, fotosíntesis; ellos definieron a la bio-informática como la disciplina cuyo objeto de estudio era el procesamiento de información que hace la vida (la acumulación de información durante la evolución, la transmisión del DNA a la célula, el procesamiento neuronal), no el uso de computadoras para analizar secuencias. Hogeweg cuenta esta historia de primera mano en un ensayo de 2011 y ahí argumenta que el sentido original está reapareciendo bajo la etiqueta de biología de sistemas.
 
-**Bioinformática**, en el sentido que van a usar todo el semestre, es el desarrollo y la aplicación de métodos computacionales para almacenar, organizar y analizar datos biológicos. Ese sentido más estrecho se popularizó a finales de los años ochenta, cuando la secuenciación empezó a producir más datos de los que se podían mirar a mano.
+**Bioinformática**, en el sentido actual y que vamos a usar todo el semestre, es el desarrollo y la aplicación de métodos computacionales para almacenar, organizar y analizar datos biológicos. Ese sentido más estrecho se popularizó a finales de los años ochenta, cuando la secuenciación empezó a producir más datos de los que se podían analizar a mano.
 
-En el año 2000, un comité de los NIH en Estados Unidos (el BISTIC) intentó poner orden y separó dos términos que se usaban de forma intercambiable. Su definición de trabajo: la bioinformática es la investigación, desarrollo o aplicación de herramientas computacionales para adquirir, almacenar, organizar, analizar o visualizar datos biológicos; la **biología computacional** es el desarrollo y la aplicación de métodos analíticos, modelos matemáticos y simulación para estudiar sistemas biológicos. En breve, y con todas las excepciones del caso: bioinformática tiende a las herramientas y los datos, biología computacional tiende a las hipótesis y los modelos.
+En el año 2000, un comité de los NIH en Estados Unidos (el BISTIC) intentó sentar las definiciones y separó dos términos que se usaban de forma intercambiable. Su definición de trabajo: la bioinformática es la investigación, desarrollo o aplicación de herramientas computacionales para adquirir, almacenar, organizar, analizar o visualizar datos biológicos; la **biología computacional** es el desarrollo y la aplicación de métodos analíticos, modelos matemáticos y simulación para estudiar sistemas biológicos. En breve, y con todas las excepciones del caso: bioinformática tiende a las herramientas y los datos, biología computacional tiende a las hipótesis y los modelos.
 
 ### ¿Qué hay en un nombre? 🌹
 
@@ -31,7 +31,7 @@ La frontera entre bioinformática, biología computacional, biología de sistema
 
 En un extremo, Florian Markowetz publicó en 2017 un artículo con el título "All biology is computational biology" (PLoS Biology), donde argumenta que la distinción ya no es útil porque el cómputo se volvió parte del tejido de la biología.
 
-El desacuerdo de fondo además de vocabulario, es sobre el estatus del trabajo. La bioinformática es infraestructura, un servicio que da soporte a la biología "de verdad", o es una forma de investigación con preguntas propias? Eso tiene consecuencias sobre quién recibe recursos y reconocimiento. Para mí, personalmente es importante aprender a construir o a correr herramientas, pero siempre al servicio de una pregunta biológica.
+El desacuerdo de fondo además de vocabulario, es sobre el estatus del trabajo. ¿La bioinformática es infraestructura, un servicio que da soporte a la biología "de verdad", o es una forma de investigación con preguntas propias? Eso tiene consecuencias sobre quién recibe recursos y reconocimiento. Para mí, personalmente es importante aprender a construir o a correr herramientas, pero siempre al servicio de una pregunta biológica.
 :::
 
 ### Una historia corta, con nombres propios
@@ -51,7 +51,7 @@ El resto de los hitos, puestos en la línea del tiempo (varios los van a ver a f
 - 1995: primer genoma de un organismo de vida libre, la bacteria *Haemophilus influenzae* (1,830,137 pb), secuenciado por el equipo de Venter en el TIGR con la estrategia de shotgun.
 - 1996, 1998, 2001: levadura, *C. elegans* y el primer borrador del genoma humano.
 
-![Hitos de la disciplina, 1965 a 2026. Los tres marcados en naranja son los que se discuten en el texto.](../../figuras/sesion01/linea-tiempo.svg){#fig-linea-tiempo}
+![Hitos de la disciplina, 1965 a 2026. Los tres marcados en naranja son los que se discuten en el texto. Código: [`linea-tiempo.R`](https://github.com/jerolon/Bioinformatica_I_2026/blob/main/figuras/sesion01/linea-tiempo.R).](../../figuras/sesion01/linea-tiempo.svg){#fig-linea-tiempo}
 
 El Proyecto Genoma Humano merece un paréntesis: fue una carrera entre un consorcio público internacional y la empresa Celera de Venter, que empujó los métodos y los tiempos. El borrador se anunció en 2001.
 
@@ -63,7 +63,7 @@ Y en los últimos años, AlphaFold2 (DeepMind, 2021) acapara los titulares y pre
 
 El número más citado es el costo de secuenciar un genoma humano. El NHGRI lo lleva registrando desde 2001, cuando costaba alrededor de 95 millones de dólares. En enero de 2008, con la llegada de la NGS, la curva se desploma: cae mucho más rápido que la ley de Moore (el abaratamiento del cómputo, que dobla la capacidad cada dos años). Para 2022 el costo rondaba los 525 dólares por genoma según el NHGRI, y en 2023 la plataforma de Illumina cruzó el umbral de los 200 dólares. La consecuencia es que generar la secuencia es lo barato; analizarla es lo caro (@fig-costos).
 
-![Costo de secuenciar un genoma humano, 2001 a 2022, en escala logarítmica. La caída de 2008 corresponde a la llegada de la NGS.](../../figuras/sesion01/costo-secuenciacion.svg){#fig-costos}
+![Costo de secuenciar un genoma humano, 2001 a 2022, en escala logarítmica. La caída de 2008 corresponde a la llegada de la NGS. Código: [`costo-secuenciacion.R`](https://github.com/jerolon/Bioinformatica_I_2026/blob/main/figuras/sesion01/costo-secuenciacion.R).](../../figuras/sesion01/costo-secuenciacion.svg){#fig-costos}
 
 El resultado se ve en el tamaño de las bases de datos públicas. Algunos números, con la advertencia de que envejecen rápido (@fig-crecimiento):
 
@@ -72,11 +72,11 @@ El resultado se ve en el tamaño de las bases de datos públicas. Algunos númer
 - PubMed: más de 40 millones de citas de literatura biomédica.
 - PDB (estructuras experimentales): más de 230,000 estructuras, con más de 20,000 depositadas solo en 2025.
 
-![Crecimiento de GenBank en número de bases, escala logarítmica.](../../figuras/sesion01/crecimiento-genbank.svg){#fig-crecimiento}
+![Crecimiento de GenBank en número de bases, escala logarítmica. Código: [`crecimiento-genbank.R`](https://github.com/jerolon/Bioinformatica_I_2026/blob/main/figuras/sesion01/crecimiento-genbank.R).](../../figuras/sesion01/crecimiento-genbank.svg){#fig-crecimiento}
 
 Otra comparación interesante es UniProt, la base de proteínas, que consta de dos secciones: Swiss-Prot es la parte revisada y anotada a mano por curadores; TrEMBL es la parte anotada automáticamente, a la espera de revisión. En la versión 2026_02 (10 de junio de 2026), Swiss-Prot tenía 575,503 entradas revisadas. TrEMBL tenía del orden de 149 millones. La proporción es de aproximadamente 260 a 1: menos del 0.4% de las proteínas en UniProtKB tiene anotación revisada por una persona (@fig-brecha).
 
-![La brecha de anotación en UniProtKB. Escala logarítmica.](../../figuras/sesion01/brecha-anotacion.svg){#fig-brecha}
+![La brecha de anotación en UniProtKB. Escala logarítmica. Código: [`brecha-anotacion.R`](https://github.com/jerolon/Bioinformatica_I_2026/blob/main/figuras/sesion01/brecha-anotacion.R).](../../figuras/sesion01/brecha-anotacion.svg){#fig-brecha}
 
 Eso es la **brecha de anotación**: sabemos la secuencia de cientos de millones de proteínas y sabemos con certeza qué hacen apenas unos cientos de miles. La mayor parte de lo que "sabemos" de una proteína cualquiera es una inferencia computacional, no un hecho medido. Cuando en la sesión 8 corran un BLAST y le crean a la anotación del hit, acuérdense de este número.
 
