@@ -4,6 +4,10 @@ subtitle: "Unidad 1 · Sesión 1"
 author: "Jerónimo Miranda Rodríguez"
 ---
 
+::: {.callout-note appearance="simple"}
+📽️ [Diapositivas de esta sesión](../../presentaciones/sesion01-que-es-la-bioinformatica.html) — 21 de agosto de 2026.
+:::
+
 ## Ideas centrales
 
 La bioinformática nació como una forma de leer los procesos de información de lo vivo. Hoy es, sobre todo, el oficio de contestar preguntas biológicas con datos que ya no caben en una libreta.
