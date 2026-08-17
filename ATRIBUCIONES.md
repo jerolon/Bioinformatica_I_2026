@@ -63,6 +63,12 @@ La CCA 3.0 pide señalar los cambios cuando se distribuye una adaptación. Los n
 4. Las páginas de contenido no usan Prologue: las genera Quarto con `assets/css/quarto-lgc.scss`,
    que reusa la misma paleta y tipografía para que el sitio se lea como una sola cosa.
 
+## Imágenes de terceros
+
+| Archivo | Fuente | Licencia |
+|---------|--------|----------|
+| `images/eras-bioinformatica-truong-ritchie-2026.jpg` | Figura 1 de Truong VQ & Ritchie MD (2026), *Eras of bioinformatics technologies from command-line interfaces to artificial intelligence (AI) chatbots*, Briefings in Bioinformatics, [doi:10.1093/bib/bbag256](https://doi.org/10.1093/bib/bbag256). Sin modificar; descargada de la copia en [PMC13353838](https://pmc.ncbi.nlm.nih.gov/articles/PMC13353838/). Se usa en las diapositivas de la sesión 1. | [CC BY-NC 4.0](https://creativecommons.org/licenses/by-nc/4.0/) |
+
 ## Componentes de terceros
 
 | Componente | Autor | Licencia |

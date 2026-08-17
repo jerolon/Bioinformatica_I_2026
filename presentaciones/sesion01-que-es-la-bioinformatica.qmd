@@ -219,6 +219,12 @@ crítica de los resultados.
 
 [npj Digital Medicine 2026: el oficio se transforma — de ejecutar workflows a diseñar, juzgar y responder por los resultados]{.ref}
 
+## Cada era destapa el siguiente cuello de botella
+
+![](../images/eras-bioinformatica-truong-ritchie-2026.jpg){fig-align="center" width="88%"}
+
+[Figura 1 de Truong & Ritchie 2026, *Briefings in Bioinformatics*, [doi:10.1093/bib/bbag256](https://doi.org/10.1093/bib/bbag256) — CC BY-NC 4.0]{.ref}
+
 # Reproducibilidad {.section-divider}
 
 ## Los números del problema {.smaller}
