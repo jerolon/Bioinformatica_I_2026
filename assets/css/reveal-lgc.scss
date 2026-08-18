@@ -45,19 +45,25 @@ html, body, .reveal {
 }
 
 // La portada lleva fondo oscuro (gradiente o imagen vía title-slide-attributes),
-// por eso el texto va en blanco.
-.reveal section.title-slide {
+// por eso el texto va en blanco. Quarto la renderiza como #title-slide (sin la
+// clase .title-slide, que acaba en los separadores de sección), de ahí el doble
+// selector; el nombre del autor va en un div.quarto-title-author-name, no en <p>.
+.reveal section.title-slide,
+.reveal #title-slide {
   text-align: left;
 }
 
-.reveal section.title-slide h1 {
+.reveal section.title-slide h1,
+.reveal #title-slide h1 {
   font-size: 2.2em;
   color: white;
   border-bottom: none;
   text-shadow: 2px 2px 8px rgba(0,0,0,0.3);
 }
 
-.reveal section.title-slide p {
+.reveal section.title-slide p,
+.reveal #title-slide p,
+.reveal #title-slide .quarto-title-author-name {
   color: white;
   font-size: 1.2em;
 }

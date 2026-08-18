@@ -4,138 +4,188 @@ subtitle: "Bioinformática I · LCG · 3er semestre · Sesión 1"
 author: "Jerónimo Miranda Rodríguez · Instituto de Neurobiología, UNAM"
 date: "2026-08-21"
 date-format: "D [de] MMMM [de] YYYY"
+editor: 
+  markdown: 
+    wrap: 72
 ---
 
 # El curso {.section-divider}
 
 ## ¿Quién soy?
 
-- Investigador en el Instituto de Neurobiología, UNAM (lab A-03, Juriquilla)
-- Estudio la **regeneración en la babosa *Deroceras laeve***: genoma, transcriptómica, imagen
-- Genoma a nivel de cromosomas: [Miranda-Rodríguez et al. 2025, *G3*]{.ref}
-- Trabajo diario: mitad poyata, mitad terminal — de eso se trata este curso
+- Investigador en el Instituto de Neurobiología, UNAM (lab A-03,
+  Juriquilla)
+- Estudio la **regeneración en la babosa *Deroceras laeve***: genoma,
+  transcriptómica, imagen de microscopía
+- Genoma a nivel de cromosomas: [Miranda-Rodríguez et al. 2025,
+  *G3*]{.ref}
+- Trabajo diario: mitad teoría, mitad terminal, mitad experimental
 
 ::: notes
-Presentarse con calma: la babosa, el atlas SlugAtlas, y que el análisis de datos
-es el pan de cada día del laboratorio. Preguntar nombres y de dónde vienen.
+Presentarse con calma: la babosa, el atlas SlugAtlas, y que el análisis
+de datos es el pan de cada día del laboratorio. Preguntar nombres y de
+dónde vienen.
 :::
 
-## El semestre en números {.smaller}
+## ¿Quiénes somos? Wilbert Gutiérrez
 
-**Viernes 10:00–15:00 · 21 de agosto – 27 de noviembre · 15 sesiones**
+- Investigador postdoctoral en el Instituto de Neurobiología, UNAM (lab
+  A-03, Juriquilla)
+- Estudio la **regeneración y desarrollo embrionario en la babosa
+  *Deroceras laeve***: genoma, transcriptómica, metagenómica
+- Caracterización metagenómica de las babosas: [Gutiérrez-Sarmiento et
+  al. 2025, *Microb Ecol.*]{.ref}
+- Trabajo diario: mitad experimental, mitad terminal
+
+::: notes
+Presentarse con calma: la babosa, el atlas SlugAtlas, y que el análisis
+de datos es el pan de cada día del laboratorio. Preguntar nombres y de
+dónde vienen.
+:::
+
+## ¿Quiénes somos? Haydée Peruyero
+
+- Matemática. Profesora asociada de tiempo completo ENES Juriquilla
+- Estudio topología, geometría y data science con aplicaciones en
+  bioinformática y ecología microbiana.
+- Análisis topológico de datos captura transferencia horizontal de
+  genes: [Guerrero-Flores et al. 2025, Front Mircobiol.]{.ref} .
+  MicroAgobiome: plataforma para el análisis de microbiomas agrícolas y
+  sus interacciones. Microbioma de mieles: caracterización metagenómica
+  y desarrollo de un dashboard interactivo.
+- Trabajo diario: programación, docencia, investigación
+
+## Organización del semestre {.smaller}
+
+**Viernes 10:00–15:00 · Excepto Bloque C (por confirmar) 21 de agosto –
+27 de noviembre · 15 sesiones**
 
 | Bloque | Sesiones | Docente | Tema |
-|--------|----------|---------|------|
+|------------------|-------------------|------------------|------------------|
 | **A** | 1 (hoy) | Jero | Introducción + arranque de cómputo |
-| **B** | 2–6 | Wilbert | Secuencias, código genético, matrices, FASTA, alineamientos |
-| **C** | 7–11 | Jero | Algoritmos, BLAST, homología, bases de datos, browsers |
-| **D** | 12–15 | (por confirmar) | Introducción a R |
+| **A** | 2–6 | Wilbert | Secuencias, código genético, matrices, FASTA, alineamientos |
+| **B** | 7–11 | Jero | Algoritmos, BLAST, homología, bases de datos, browsers |
+| **C** | 12–15 | Haydée Peruyero | Introducción a R |
 
-- Exámenes institucionales: 7–18 de diciembre
+- Exámenes institucionales: 7–18 de diciembre tengo que confirmar si se
+  recorrieron por lo del examen de ingreso
 
 ## Cómo trabajamos
 
-- Todo el material vive en el **sitio del curso**:
-  [jerolon.github.io/Bioinformatica_I_2026](https://jerolon.github.io/Bioinformatica_I_2026/)
-- Cada sesión: **teoría** (capítulo del sitio) + **práctica** (manos al teclado)
-- Las entregas van en **su repositorio git** — lo montamos hoy mismo
+- S**itio del curso**: [jerolon.github.io/Bioinformatica_I_2026](#0)
+  - Realmente es el repositorio de fuentes y temas, calendario, y
+    agregador para las prácticas y presentaciones de los diferentes
+    instructores.
+  - No es necesario leerlo, pero puede serles útil
+- Cada sesión: **teoría** + **práctica** (laptop y terminal)
+- Las entregas van en **su repositorio git** que crearemos hoy
 - Cuenta en el cluster `ken` para las prácticas de cómputo
 
-## Evaluación (propuesta — la cerramos hoy) {.smaller}
+## Evaluación (propuesta) {.smaller}
 
-| Componente | Peso |
-|------------|------|
-| Participación y asistencia | 10% |
-| Prácticas y tareas (en su repo git) | 50% |
-| Proyecto | 30% |
-| Exámenes | 10% |
+| Componente                          | Peso |
+|-------------------------------------|------|
+| Participación y asistencia          | 10%  |
+| Prácticas y tareas (en su repo git) | 50%  |
+| Proyecto                            | 20%  |
+| Exámenes                            | 20%  |
 
 Por decidir **entre todos, hoy**:
 
-- ¿Exámenes cortos por unidad o un examen final?
-- ¿Proyecto temático por unidad o un proyecto final defendido en diciembre?
+- ¿Exámenes cortos por unidad y/o un examen final?
+- ¿Proyecto temático por unidad o un proyecto final con presentaciones
+  en diciembre?
+- Grupal 1-3 integrantes
 
 # ¿Qué es la bioinformática? {.section-divider}
 
-## Dos ideas para llevarse hoy
+## Las dos ideas de hoy
 
-1. La disciplina tiene la forma que tiene por el **diluvio de datos**:
-   contestar preguntas biológicas con datos que ya no caben en una libreta
-2. La base práctica de todo lo demás es la **reproducibilidad**:
-   hoy empieza con una bitácora y con git
+1.  La disciplina tiene la forma dados cuellos de botella históricos y
+    presentes: un **diluvio de datos**, escasez o abundancia de
+    software, cómputo, almacenamiento, etc.
+2.  La base práctica de todo lo demás es la **reproducibilidad**: hoy
+    empieza con una bitácora y con git
 
 ## 1970: la palabra es más vieja de lo que parece
 
-- **Paulien Hogeweg y Ben Hesper**, Utrecht: *"Bio-informatica: een werkconcept"*
-- Su definición: el estudio de **los procesos informáticos en los sistemas bióticos**
-- Así como la bioquímica estudia el metabolismo, la bio-informática estudiaría
-  el procesamiento de información que hace la vida misma:
+- **Paulien Hogeweg y Ben Hesper**, Utrecht: *"Bio-informatica: een
+  werkconcept"*
+- Su definición: el estudio de **los procesos informáticos en los
+  sistemas biológicos**
+- Así como la bioquímica estudia el metabolismo, la bio-informática
+  estudiaría el procesamiento de información que hace la vida:
   evolución, DNA → célula, procesamiento neuronal
 - No hablaban de usar computadoras para analizar secuencias
 
-[Hogeweg 2011, PLoS Comp Biol — el sentido original reaparece como "biología de sistemas"]{.ref}
+[Hogeweg 2011, PLoS Comp Biol: el sentido original reaparece como
+"biología de sistemas"]{.ref}
 
 ## El sentido moderno
 
-**Bioinformática** (el que usaremos todo el semestre):
-desarrollo y aplicación de métodos computacionales para almacenar, organizar
-y analizar datos biológicos.
+**Bioinformática** en el sentido moderno: desarrollo y aplicación de
+métodos computacionales para almacenar, organizar y analizar datos que
+provienen de los seres vivos.
 
 ::: callout-box
 **BISTIC (NIH, 2000)** separó dos términos que se confundían:
 
 - **Bioinformática** → herramientas y datos
-- **Biología computacional** → hipótesis, modelos matemáticos y simulación
+- **Biología computacional** → hipótesis, modelos matemáticos y
+  simulación
 :::
 
 Se popularizó a finales de los 80, cuando la secuenciación empezó a
-producir más datos de los que se podían mirar a mano.
+producir más datos.
 
 ## ¿Qué hay en un nombre? 🌹 {.smaller}
 
-- La frontera bioinformática / biología computacional / biología de sistemas /
-  ciencia de datos **no está zanjada**
-- Markowetz 2017: *"All biology is computational biology"* — la distinción ya
-  no es útil porque el cómputo se volvió parte del tejido de la biología
-- El desacuerdo de fondo: ¿la bioinformática es **infraestructura** al servicio
-  de la biología "de verdad", o **investigación** con preguntas propias?
-  (y eso decide quién recibe recursos y reconocimiento)
+- La frontera bioinformática / biología computacional / biología de
+  sistemas / ciencia de datos **no está zanjada**
+- Markowetz 2017: *"All biology is computational biology"*. Ni debería
+  zanjarse; el cómputo se volvió parte integral de la biología
+- ¿la bioinformática es **infraestructura** al servicio de la biología
+  "de verdad", o **investigación** con preguntas propias?
 
 ::: callout-box
-Mi postura: aprender a construir y correr herramientas, **siempre al servicio
-de una pregunta biológica**.
+Mi postura: aprender a construir y correr herramientas, **siempre al
+servicio de una pregunta biológica**.
 :::
 
 # Una historia corta, con nombres propios {.section-divider}
 
 ## Margaret Dayhoff, 1965
 
-- *Atlas of Protein Sequence and Structure*: las **65 proteínas** conocidas entonces
-- Primera colección de secuencias computarizada y pública —
-  el modelo de GenBank y todo lo que vino después
-- Con Richard Eck: las matrices **PAM**, el puntaje de qué tan probable es
-  que un aminoácido mute a otro
-- Cuando Wilbert les explique matrices de sustitución, estarán usando
-  la idea de Dayhoff
+- *Atlas of Protein Sequence and Structure*: las **65 proteínas**
+  conocidas entonces
+- Primera colección de secuencias computarizada y pública: el modelo de
+  GenBank y todo lo que vino después
+- Con Richard Eck: las matrices **PAM**, el puntaje de qué tan probable
+  es que un aminoácido mute a otro
+- Cuando Wilbert les explique matrices de sustitución, estarán usando la
+  idea de Dayhoff
 
 ## La línea del tiempo
 
 ![](../figuras/sesion01/linea-tiempo.svg){fig-align="center"}
 
 ::: notes
-Señalar los tres hitos naranjas: Dayhoff 1965, phi-X174 1977, H. influenzae 1995.
-NW 1970, SW 1981, EMBL/GenBank 1982, DDBJ 1987 → INSDC, FASTA/BLAST, levadura 96,
-C. elegans 98, humano 2001.
+Señalar los tres hitos naranjas: Dayhoff 1965, phi-X174 1977, H.
+influenzae 1995. NW 1970, SW 1981, EMBL/GenBank 1982, DDBJ 1987 → INSDC,
+FASTA/BLAST, levadura 96, C. elegans 98, humano 2001.
 :::
 
 ## Del genoma humano a AlphaFold {.smaller}
 
-- **2001**: borrador del genoma humano — carrera consorcio público vs. Celera (Venter)
-- **~2005**: llega la NGS; el parteaguas es que secuenciar se abarató
-  **más rápido que el cómputo**
-- **2021**: AlphaFold2 predice estructura 3D desde secuencia con precisión
-  comparable a la experimental; AlphaFold3 (2024) suma ligandos, iones, ácidos nucleicos
-- **2024**: Nobel de Química — Hassabis y Jumper (AlphaFold), Baker (diseño de proteínas)
+- **2001**: borrador del genoma humano: carrera consorcio público vs.
+  Celera (Venter)
+- **\~2005**: llega la NGS; secuenciar se abarató **más rápido que el
+  cómputo**
+- **2021**: AlphaFold2 predice estructura 3D desde secuencia con
+  precisión comparable a la experimental; AlphaFold3 (2024) suma
+  ligandos, iones, ácidos nucleicos
+- **2024**: Nobel de Química: Hassabis y Jumper (AlphaFold), Baker
+  (diseño de proteínas)
 
 # El diluvio de datos {.section-divider}
 
@@ -143,140 +193,212 @@ C. elegans 98, humano 2001.
 
 ![](../figuras/sesion01/costo-secuenciacion.svg){fig-align="center"}
 
-- 2001: ~95 millones USD por genoma humano → 2023: **menos de 200 USD**
+- 2001: \~95 millones USD por genoma humano → 2023: **menos de 200 USD**
 - La caída de 2008 (NGS) es más rápida que la ley de Moore
-- Consecuencia: **generar la secuencia es lo barato; analizarla es lo caro**
+- **El análisis se volvió el cuello de botella**
 
 ## Las bases de datos explotan {.smaller}
 
 ![](../figuras/sesion01/crecimiento-genbank.svg){fig-align="center"}
 
-- **GenBank** (dic 2025): 49.73 billones de bases; se duplica cada ~18 meses desde 1982
-- **SRA**: >40 petabases de lecturas crudas públicas
-- **PubMed**: >40 millones de citas · **PDB**: >230,000 estructuras
+- **GenBank** (dic 2025): 49.73 billones (e+12) de bases; se duplica
+  cada \~18 meses desde 1982
+- **SRA**: \>40 petabases de lecturas crudas públicas
+- **PubMed**: \>40 millones de citas · **PDB**: \>230,000 estructuras
 
 ## La brecha de anotación {.smaller}
 
 ![](../figuras/sesion01/brecha-anotacion.svg){fig-align="center"}
 
-- UniProtKB: **Swiss-Prot** (curado a mano) ~575 mil entradas vs. **TrEMBL**
-  (automático) ~149 millones → proporción **260 a 1**
-- **Menos del 0.4%** de las proteínas tiene anotación revisada por una persona
+- UniProtKB: **Swiss-Prot** (curado a mano) \~575 mil entradas vs.
+  **TrEMBL** (automático) \~149 millones → proporción **260 a 1**
+- **Menos del 0.4%** de las proteínas tiene anotación revisada por una
+  persona
 - Lo que "sabemos" de una proteína cualquiera suele ser una **inferencia
-  computacional**, no un hecho medido — acuérdense de esto cuando corran BLAST
+  computacional**, no un hecho medido (importante cuando corramos BLAST)
 
 # ¿Qué hace un bioinformático? {.section-divider}
 
 ## El 80% del tiempo
 
 ::: callout-box
-Encuesta a científicos de datos (CrowdFlower/Forbes 2016): ~60% del tiempo
-limpiando y organizando datos, ~19% recolectándolos.
-**~80% es preparar datos antes de poder analizarlos.**
+Encuesta a científicos de datos (CrowdFlower/Forbes 2016): \~60% del
+tiempo limpiando y organizando datos, \~19% recolectándolos. **\~80% es
+preparar datos antes de poder analizarlos. \~76% ve esto como la parte
+más aburrida de su trabajo.**
 :::
 
-- La cifra exacta se discute, pero cualquiera que haya trabajado con
-  datos reales reconoce el patrón
+- Cualquiera que haya trabajado con datos reales se reconoce ahí
+- El cuello de botella de data science en general es la recolección,
+  limpieza, y preparación de los datos
 
 ## Dos mitos sobre la IA {.smaller}
 
 ::: desventaja
-**Mito 1: "AlphaFold ya resolvió la biología".** Predice estructura estática, muy bien.
-No predice función, ni dinámica, ni regiones desordenadas — y a veces alucina
-estructuras plausibles. Predecir la forma ≠ entender qué hace, con quién, cuándo y por qué.
+**Mito 1: "AlphaFold ya resolvió la biología".** Predice estructura
+estática, muy bien. No predice función, ni dinámica, ni regiones
+desordenadas y a veces alucina estructuras plausibles. Predecir la forma
+difiere de entender qué hace, con quién, cuándo y por qué.
 :::
 
 ::: desventaja
-**Mito 2: "Los modelos de frontera vuelven obsoletos a los bioinformáticos".**
-El 80% de plomería sí se facilita. Lo crítico sigue siendo humano: la pregunta
-biológica, la calidad de los datos, la validación experimental y la evaluación
+**Mito 2: "Los modelos LLM de frontera vuelven obsoletos a los
+bioinformáticos".** El 80% de cuello de botella se abre. ¿Cuál es el
+siguiente cuello de botella? La pregunta biológica, la calidad de los
+datos, la reproducibiliad, la validación experimental y la evaluación
 crítica de los resultados.
 :::
 
 ## Un caso para discutir: Mythos 5 {.smaller}
 
-- Junio 2026: Anthropic afirma que Mythos 5, "en más de una semana de trabajo
-  mayormente autónomo", integró single cell de **138 especies** y superó a un
-  modelo de *Science* (TranscriptFormer) siendo 100× más chico
+- Junio 2026: Anthropic afirma que Mythos 5, "en más de una semana de
+  trabajo mayormente autónomo", integró single cell de **138 especies**
+  y superó a un modelo de *Science* (TranscriptFormer) siendo 100× más
+  chico
 - Detalle: un coautor de SAMap (comparación de scRNA-seq entre especies)
   **fue contratado por Anthropic antes del lanzamiento**
-- Inferencia razonable: alguien con conocimiento profundo definió el problema,
-  eligió el punto de comparación y supo reconocer que el resultado valía
+- Inferencia razonable: alguien con conocimiento profundo definió el
+  problema, eligió el punto de comparación y supo reconocer que el
+  resultado era importante
 
 **¿Qué evidencia adicional pedirían antes de creerle al anuncio?**
 
 ## ¿Nos deja sin trabajo la IA? {.smaller}
 
 - Las acciones de las empresas apuntan a **acelerar**, no reemplazar:
-  Anthropic compró Coefficient Bio (~400 MUSD), contrató a John Jumper;
+  Anthropic compró Coefficient Bio (\~400 MUSD), contrató a John Jumper;
   4 laboratorios de IA acumulan ≥80 profesores
-- …y a la vez **restringen** sus modelos más potentes en biología
-  (Fable 5 desvía consultas tan inocentes como "¿qué es una mitocondria?")
-- Desde México, dos lecturas defendibles:
-  - **Optimista**: baja la barrera de entrada para quien está bien formado
-  - **Pesimista**: las herramientas de frontera están tras controles de
-    exportación, costos en dólares y datos dominados por el inglés
 
-[npj Digital Medicine 2026: el oficio se transforma — de ejecutar workflows a diseñar, juzgar y responder por los resultados]{.ref}
+- …y a la vez **restringen** sus modelos más potentes en biología (Fable
+  5 desvía(ba) consultas como "¿qué es una mitocondria?")
+
+- Desde México, dos perspectivas:
+
+  - **Optimista**: baja la barrera de entrada para quien está bien
+    formado
+  - **Pesimista**: las herramientas de frontera están tras controles de
+    exportación, costos en dólares, hardware prohibitivo y datos
+    dominados por el inglés
+
+- Estas se corresponden con lo que se pregunta Cory Doctorow:
+
+  ::: {}
+  how is it that some AI’s users describe their experience as a hellish
+  ordeal, while others delight in the ways that AI is changing their
+  lives for the better?
+  :::
+
+[npj Digital Medicine 2026: el oficio de bioinformático sí se transforma
+de ejecutar workflows a diseñar, juzgar y responder por los
+resultados]{.ref}
+
+## ¿Centauro o centauro inverso? {.smaller}
+
+::::: columns-equal
+::: {}
+![](../images/centauro-spartan-adnanva.jpg){fig-align="center"
+height="330"}
+
+**Centauro**: cabeza humana, cuerpo de máquina (incansable, más fuerte).
+La persona hace la pregunta, decide, dirige y juzga; la herramienta hace
+el trabajo pesado.
+:::
+
+::: {}
+![](../images/centauro-inverso-doctorow.jpg){fig-align="center"
+width="377"}
+
+**Centauro inverso**: cabeza de máquina, cuerpo humano. El sistema
+decide el qué y el cómo; la persona es una marioneta que tiene que
+seguirla hasta el límite de sus fuerzas: repartidores dirigidos por la
+app, revisores que aprueban lo que el algoritmo ya decidió.
+:::
+:::::
+
+[Concepto de Cory Doctorow (*Pluralistic*); "centauro" viene del ajedrez
+por equipos humano + máquina posterior a Deep Blue. Imágenes: *Centaur
+Spartan*, [AdnanVA
+(DeviantArt)](https://www.deviantart.com/adnanva/art/Centaur-Spartan-1075119474)
+· centauro inverso: collage de [Doctorow, "Reverse centaurs are the
+answer to the AI paradox",
+2025](https://pluralistic.net/2025/09/11/vulgar-thatcherism/), CC BY
+4.0]{.ref}
+
+::: notes
+Doctorow: el centauro usa la máquina como herramienta que lo amplifica;
+el centauro inverso es una persona usada como periférico de la máquina
+(repartidores dirigidos por la app, revisores que aprueban lo que el
+algoritmo ya decidió). Pregunta para el grupo: pegar la tarea en el chat
+y entregar lo que salga sin leerlo, ¿cuál de los dos es? La meta del
+curso es formar centauros: entender lo suficiente para dirigir la
+herramienta y responder por el resultado.
+:::
 
 ## Cada era destapa el siguiente cuello de botella
 
-![](../images/eras-bioinformatica-truong-ritchie-2026.jpg){fig-align="center" width="88%"}
+![](../images/eras-bioinformatica-truong-ritchie-2026.jpg){fig-align="center"
+width="88%"}
 
-[Figura 1 de Truong & Ritchie 2026, *Briefings in Bioinformatics*, [doi:10.1093/bib/bbag256](https://doi.org/10.1093/bib/bbag256) — CC BY-NC 4.0]{.ref}
+[Figura 1 de Truong & Ritchie 2026, *Briefings in Bioinformatics*,
+[doi:10.1093/bib/bbag256](https://doi.org/10.1093/bib/bbag256) — CC
+BY-NC 4.0]{.ref}
 
 # Reproducibilidad {.section-divider}
 
 ## Los números del problema {.smaller}
 
-- **Stodden et al. 2018** (*PNAS*): de 204 artículos de *Science*, consiguieron
-  materiales del 44% y reprodujeron el **26%**
-- **Culina et al. 2020** (*PLoS Biol*, ecología): código disponible en el
-  **27%** de 346 artículos (los datos, en el 79%)
+- **Stodden et al. 2018** (*PNAS*): de 204 artículos de *Science*,
+  consiguieron materiales del 44% y reprodujeron el **26%**
+- **Culina et al. 2020** (*PLoS Biol*, ecología): código disponible en
+  el **27%** de 346 artículos (los datos, en el 79%)
 - **Mangul et al. 2019** (herramientas ómicas): 28% de URLs muertas,
   **49% falla una instalación básica**
 
-La reproducibilidad hoy es un problema **más de código que de acceso a datos**.
+La reproducibilidad hoy es un problema **más de código que de acceso a
+datos**.
 
-## La IA amplifica en los dos sentidos {.smaller}
+## Un centauro reverso, rompe. Un centauro, viaja rápido y seguro {.smaller}
 
 ::: desventaja
-*Move fast and break things*: un script de 200 líneas en 30 segundos, que corre,
-da un número y nadie entiende. Genes inventados; ~147 mil citas alucinadas
-estimadas en un año.
+*Move fast and break things*: un script de 200 líneas en 30 segundos,
+que corre, da un número y nadie entiende. Genes inventados; \~147 mil
+citas alucinadas estimadas en un año.
 :::
 
 ::: ventaja
-*Move fast with stable infrastructure*: el mismo modelo escribe el README,
-documenta el script, explica el error críptico, arma el `.gitignore`.
-Trabajo de reproducibilidad que antes se saltaba por flojera.
+*Move fast with stable infrastructure*: el mismo modelo escribe el
+README, documenta el script, explica el error críptico, arma el
+`.gitignore`. Trabajo de reproducibilidad que antes se saltaba por
+flojera.
 :::
 
-**La diferencia entre las dos versiones es preparación** — y eso es la práctica de hoy.
+**La diferencia entre las dos versiones es la preparación académica** (y
+la propiedad de los medios de producción, pero ésa es otra discusión).
 
-## El contexto mexicano, sin inflar {.smaller}
+## El contexto mexicano {.smaller}
 
-- **LCG (2003)**: primera licenciatura de su tipo en América Latina
-  (CCG Cuernavaca + IBt)
-- **LIIGH** (Juriquilla, 2015): paleogenómica, genómica de poblaciones y de
-  cáncer, cluster propio
+- **LCG (2003)**: primera licenciatura de su tipo en América Latina (CCG
+  Cuernavaca + IBt)
+- **LIIGH** (Juriquilla, 2015): paleogenómica, genómica de poblaciones y
+  de cáncer, cluster propio
 - **INMEGEN** (medicina genómica) · **LANGEBIO** (Cinvestav, 2005)
-- No es el centro del mundo de la bioinformática, pero es un lugar serio:
-  datos, cómputo y gente con preguntas propias. **Ese es su ecosistema.**
+- No es el centro del mundo de la bioinformática, pero es un lugar
+  serio: datos, cómputo y gente con preguntas propias. **Ese es su
+  ecosistema.**
 
 # La práctica de hoy {.section-divider}
 
 ## Git para científicos
 
-- La práctica vive en el sitio del curso:
-  **[Práctica: git para científicos](../contenido/01-fundamentos/sesion01-practica.html)**
+- La práctica vive en el sitio del curso: [**Práctica: git para
+  científicos**](../contenido/01-fundamentos/sesion01-practica.html)
 - Hoy:
   - Entran por primera vez a `ken`
   - Montan **el repositorio donde van a entregar todo el semestre**
-  - Bitácora en Markdown: la diferencia entre un análisis que existe
-    y uno que se puede sostener
+  - Bitácora en Markdown: la diferencia entre un análisis que existe y
+    uno que se puede sostener
 
 ::: callout-box
-Capítulo de referencia de esta sesión:
-[¿Qué es la bioinformática?](../contenido/01-fundamentos/que-es-la-bioinformatica.html)
+Capítulo de referencia de esta sesión: [¿Qué es la
+bioinformática?](../contenido/01-fundamentos/que-es-la-bioinformatica.html)
 :::

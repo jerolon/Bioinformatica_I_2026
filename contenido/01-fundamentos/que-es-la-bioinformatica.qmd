@@ -99,7 +99,7 @@ Mito relacionado: Claude Fable/Mythos y otros modelos de frontera hacen obsoleto
 
 La revisión de npj Digital Medicine (2026) lo resume bien: la IA es un acelerador potente cuyo valor depende de la guía experta en diseño, curación de datos, interpretación y gobernanza, y como la IA no puede juzgar significado biológico ni verificar validez científica, los bioinformáticos siguen siendo necesarios. Lo que cambia es el trabajo, que se mueve de ejecutar workflows hacia diseñar sistemas de IA, atacar problemas difíciles y hacerse responsable de decisiones institucionales.
 
-Un caso concreto algo cercano a mi ~~corazón~~ interés científico:
+Un caso concreto algo cercano a mi pasión e intereses científicos:
 
 En junio de 2026 Anthropic lanzó Claude Fable 5 y Claude Mythos 5. En el anuncio afirmaron que Mythos 5, "en más de una semana de trabajo mayormente autónomo", ensambló datos de single cell de millones de células en 138 especies animales, diseñó y entrenó un modelo propio para identificar tipos celulares equivalentes entre organismos lejanos, y que "con solo input humano de alto nivel" superó a un modelo publicado en Science siendo 100 veces más chico. Prometieron publicar los resultados.
 
@@ -115,36 +115,36 @@ Sin embargo: Fable 5 deja otra lección. Anthropic lo lanzó con salvaguardas de
 
 Desde México hay dos lecturas, una lectura optimista dice que estas herramientas bajan la barrera de entrada para quien está bien formado, y que un estudiante en Juriquilla puede hacer hoy lo que hace cinco años requería a varios estudiantes de posgrado. Una lectura pesimista señala que las herramientas de frontera están detrás de controles de exportación, de costos en dólares y de datos de entrenamiento dominados por el inglés. Cuál se cumpla depende, en parte, de decisiones que a ustedes quizás les toque tomar.
 
-Una revisión de *Briefings in Bioinformatics* (2026) observa que cada era tecnológica resolvió un cuello de botella y destapó el siguiente: la automatización de la secuenciación, Galaxy y Bioconductor, cambiaron el oficio sin eliminarlo, la línea de comandos cedió ante interfaces web, el cómputo local ante la nube, los workflows manuales ante contenedores y pipeline managers. Cada paso bajó una barrera y abrió preguntas nuevas de transparencia, reproducibilidad y rigor:
+Una revisión de *Briefings in Bioinformatics* (2026) narra como cada era tecnológica resolvió un cuello de botella y destapó el siguiente: la automatización de la secuenciación, Galaxy y Bioconductor, que quitaron el cuello de botella de la escasez de software. La línea de comandos cedió ante interfaces web, el cómputo local ante HPCs o la nube, los workflows manuales ante contenedores y pipeline managers. Cada paso bajó una barrera y abrió preguntas nuevas de transparencia, reproducibilidad y rigor:
 
 > This new practice is reshaping who enters the field and how. Trainees increasingly arrive in labs expecting to leverage AI tools as day-to-day research partners, such as using LLMs as on-demand documentation, code translators, and prototyping assistants. This stands in sharp contrast to the 2010s, when learning bioinformatics regularly meant wrestling with dependency conflicts that could stall an analysis for days.
 
-La brecha de anotación: un modelo entrenado sobre UniProtKB hereda que menos del 0.4% de esas proteínas tiene anotación revisada por una persona. La IA no inventa ground truth experimental que nadie ha medido; lo que hace es propagar, muy rápido y con mucha confianza, lo que ya estaba en la base. Por eso el resumen que me parece más honesto es el de una entrevista de Penn State: la IA ayuda a acotar el espacio de búsqueda, pero no elimina la necesidad de diseño experimental cuidadoso, criterio biológico y validación, y el pensamiento crítico va a importar más que nunca.
+La brecha de anotación: un modelo entrenado sobre UniProtKB hereda que menos del 0.4% de esas proteínas tiene anotación revisada por una persona. La IA no inventa mediciones experimentales que nadie ha medido; pero puede propagar, muy rápido y con mucha confianza, lo que ya estaba en la base de datos. Por eso, en resumen, la IA ayuda a acotar el espacio de búsqueda, pero no elimina la necesidad de diseño experimental cuidadoso, criterio biológico y validación, y el pensamiento crítico va a importar más que nunca.
 
 Para discutir y pensar en clase, en el semestre y más allá: qué evidencia adicional pediríamos antes de creerle al anuncio de Anthropic, sobre todo a la parte de "largely autonomous"? Y de las tareas que harán durante la clase, cuáles delegarían a un modelo y cuáles no, y por qué? ¿Qué barreras y cuellos de botella reduce la IA y cuáles amplifica o revela?
 :::
 
 ### La reproducibilidad actualmente es un problema más de código que de acceso a datos.
 
-Como la IA, la bioinformática arrastra un problema relacionado con la escasez de cómputo: buena parte de los análisis publicados no se pueden volver a correr.
+Como la IA, la bioinformática arrastra un problema relacionado con la escasez de cómputo, aunque diferente. La IA requiere enormes cantidades de cómputo para inferencia. Por otro lado, en la bioinflrmática, buena parte de los análisis publicados no se pueden reproducir, en el sentido no de que no den los mismos resultados al correrlos, sino de que ni siquiera es posible volver a correrlos.
 
-Stodden, Seiler y Ma (PNAS, 2018) tomaron 204 artículos de la revista *Science* publicados después de que la revista adoptó una política de compartir datos y código. Consiguieron los materiales del 44% de los artículos y lograron reproducir los resultados del 26%. En ecología, Culina y colaboradores (PLoS Biology, 2020) revisaron 346 artículos entre 2015 y 2019: el código estaba disponible en apenas el 27%, aunque los datos estaban en el 79%. Y Mangul y colaboradores (PLoS Biology, 2019), sobre herramientas de ómicas, encontraron que cerca del 28% de los recursos ya no eran accesibles por sus URLs originales y que el 49% de las herramientas probadas fallaba una prueba básica de instalación.
+Stodden, Seiler y Ma (PNAS, 2018) tomaron 204 artículos de la revista *Science* publicados después de que la revista adoptó una política de compartir datos y código. Para 44% de los artículos, consiguieron los datos y código y lograron reproducir los resultados del 26%. En ecología, Culina y colaboradores (PLoS Biology, 2020) revisaron 346 artículos entre 2015 y 2019: el código estaba disponible en apenas el 27%, aunque los datos estaban en el 79%. Y Mangul y colaboradores (PLoS Biology, 2019), sobre herramientas de ómicas, encontraron que cerca del 28% de los recursos ya no estaban accesibles en sus URLs originales y que el 49% de las herramientas probadas fallaba una prueba básica de instalación.
 
 La IA puede empeorar este problema o puede ayudar a resolverlo. Por un lado, un modelo genera en treinta segundos un script de doscientas líneas que corre, da un número y nadie entiende. Acabamos de producir un resultado irreproducible más rápido de lo que era humanamente posible antes. Hay reportes de modelos que inventan identificadores de genes que no existen, y una auditoría de 2026 estimó cerca de 147 mil citas alucinadas solo en el año anterior, concentradas justamente en los campos que más rápido adoptaron estas herramientas. *Move fast and break things.*
 
-Del lado bueno, esa misma herramienta escribe el README que nunca escriben, documenta un script, explica un mensaje de error críptico, o les arma el `.gitignore` correcto. Todo eso es trabajo de reproducibilidad que antes se saltaba por flojera y que ahora cuesta un minuto. [*Move fast with stable infrastructure.*](https://www.businessinsider.com/meta-mark-zuckerberg-new-values-move-fast-and-break-things-2022-2)
+Del lado bueno, esa misma herramienta escribe el README da flojera escribir bien, documenta un script, explica un mensaje de error críptico, o nos arma todo el *boilerplate* como en el `.gitignore`. Todo eso es trabajo de reproducibilidad que antes se saltaba por que simplemente, los incentivos de los científicos no están alineados con la reproducibiliad, sino con la publicación rápida. Sin embargo, ahora que cuesta literalmente un minuto, es posible que esos stándares comiencen a cambiar. [*Move fast with stable infrastructure.*](#0)
 
-La diferencia entre las dos versiones es preparación. Alguien que ya tiene el hábito de versionar y documentar usa la IA como amplificador. Alguien que no lo tiene produce código no verificable, pero mucha y muy rápido. Por eso la práctica de hoy no es de biología: es de la infraestructura que hace que su trabajo, con IA o sin ella, sea defendible. La bitácora en Markdown y el control de versiones con git son la diferencia entre un análisis que existe y uno que se puede sostener.
+La diferencia entre las dos versiones es preparación. Alguien con el hábito de versionar y documentar usará la IA como amplificador y asistente de tareas repetitivas. Alguien que no lo tiene produce código no verificable, pero mucho y muy rápido. Por eso la práctica de hoy no es de biología: es de la infraestructura que hace que su trabajo, con IA o sin ella, sea reproducible. La bitácora en Markdown y el control de versiones con git pueden ayudar a hacer del análisis un bloque donde construir más adelante, o cambiar y revisar fácilmente para un artículo.
 
-### El contexto mexicano, sin inflar
+### Las lecciones particulares en el contexto mexicano
 
-Ustedes están en un lugar con historia en esto. La Licenciatura en Ciencias Genómicas se fundó en 2003, impulsada desde el Centro de Ciencias Genómicas de la UNAM en Cuernavaca (heredero del antiguo Centro de Investigación sobre Fijación de Nitrógeno), en colaboración con el Instituto de Biotecnología. Fue la primera licenciatura de su tipo en América Latina.
+Ustedes están en un lugar con historia. La Licenciatura en Ciencias Genómicas se fundó en 2003, impulsada desde el Centro de Ciencias Genómicas de la UNAM en Cuernavaca (heredero del antiguo Centro de Investigación sobre Fijación de Nitrógeno), en colaboración con el Instituto de Biotecnología. Fue la primera licenciatura de su tipo en América Latina.
 
 Acá en Juriquilla, el Laboratorio Internacional de Investigación sobre el Genoma Humano (LIIGH) de la UNAM se fundó en 2015 y en 2025 cumplió una década; sus líneas van de la paleogenómica a la genómica de poblaciones y del cáncer, y cuenta con su propio cluster de cómputo. En el país también están el INMEGEN (medicina genómica) y el LANGEBIO del Cinvestav (biodiversidad, fundado en 2005). No es el centro del mundo de la bioinformática, pero es un lugar serio, con datos, cómputo y gente que hace preguntas propias. Ese es el ecosistema en el que se están formando.
 
 ## Práctica
 
-La práctica de esta sesión vive en su propio capítulo: [Práctica: git para científicos](sesion01-practica.qmd). Ahí entran por primera vez a `ken` y montan el repositorio donde van a entregar todo el semestre.
+La práctica de esta sesión vive en su propio capítulo: [Práctica: git para científicos](sesion01-practica.qmd). Entraremos por primera vez al servidor `ken` y montaremos el repositorio donde van a entregar todo el semestre.
 
 ## Fuentes {.unnumbered}
 
@@ -170,21 +170,15 @@ La práctica de esta sesión vive en su propio capítulo: [Práctica: git para c
 
 - Stodden, V., Seiler, J. & Ma, Z. (2018). An empirical analysis of journal policy effectiveness for computational reproducibility. *PNAS* 115(11): 2584-2589. [https://doi.org/10.1073/pnas.170829011](https://doi.org/10.1073/pnas.1708290115)
 
-- Culina, A. et al. (2020). Low availability of code in ecology: A call for urgent action. *PLoS Biology* 18(7): e3000763.
-
-  <https://doi.org/10.1371/journal.pbio.3001048>
+- Culina, A. et al. (2020). Low availability of code in ecology: A call for urgent action. *PLoS Biology* 18(7): e3000763. <https://doi.org/10.1371/journal.pbio.3001048>
 
 - Mangul, S. et al. (2019). Challenges and recommendations to improve the installability and archival stability of omics computational tools. *PLoS Biology* 17(6): e3000333. <https://doi.org/10.1371/journal.pbio.3000333>
-
-- Fleischmann, R. D. et al. (1995). Whole-genome random sequencing and assembly of *Haemophilus influenzae* Rd. *Science* 269: 496-512.
-
-- Bacteriófago lambda, NCBI RefSeq [NC_001416.1](https://www.ncbi.nlm.nih.gov/nuccore/NC_001416.1).
 
 - Coss, E. Introducción a la Bioinformática (LCG, UNAM). [eveliacoss.github.io/LCG2025_IntroBioinfo_S1](https://eveliacoss.github.io/LCG2025_IntroBioinfo_S1/). Material adaptado con permiso, bajo licencia CC BY-NC-SA 4.0.
 
 ### Debate IA {.unnumbered}
 
-- Anthropic (2026). Claude Fable 5 and Claude Mythos 5. <https://www.anthropic.com/news/claude-fable-5-mythos-5> Comunicado de la empresa. Léanlo como marketing.
+- Anthropic (2026). Claude Fable 5 and Claude Mythos 5. <https://www.anthropic.com/news/claude-fable-5-mythos-5> Comunicado de la empresa. Leerlo como marketing.
 - Okonkwo, D., Hodgson, M., David, T. I. & Ihejirika, S. A. (2026). Capabilities of Claude Fable 5 on Biomedical Challenge Problems. [arXiv:2607.10849](https://arxiv.org/abs/2607.10849) Preprint, sin revisión por pares. La única evaluación independiente hasta ahora.
 - Pearce, J. D. et al. (2026). TranscriptFormer: A generative cell atlas across 1.5 billion years of evolution. *Science* 393(6806). [doi:10.1126/science.aec8514](https://doi.org/10.1126/science.aec8514) Es el modelo con el que se comparó Anthropic.
 - Tarashansky, A. J. et al. (2021). Mapping single-cell atlases throughout Metazoa unravels cell type evolution. *eLife* 10:e66747. <https://elifesciences.org/articles/66747>
