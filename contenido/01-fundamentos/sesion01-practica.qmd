@@ -6,22 +6,22 @@ author: "Jerónimo Miranda Rodríguez"
 
 ## Práctica: git para científicos
 
-Seguro tienen carpetas que se ven así:
+Ustedes son jóvenes pero en algún momento puede que tengan una carpeta parecida a esto:
 
-```
+```         
 tesis-v1.docx
-tesis-v3_correcciones_AM.docx
-analisis-v6.R
-tesis-final.docx
+tesis-v3_correcciones_JM_corregidoTutor24may.docx
+analisis_bien.R
+analisis_ya_bien.R
 tesis-final-BUENA.docx
-tesis-final-BUENA-esta-sí.docx
+tesis-final-BUENA-ahora-sí.docx
 ```
 
-Vince Buffalo abre con este ejemplo el capítulo 5 de *Bioinformatics Data Skills*, que es el que vamos a seguir hoy, y su observación es que ese sistema sí es control de versiones. Uno malo, pero control de versiones al fin: guardan copias porque quieren poder regresar. El problema es que no escala. En cuanto el proyecto tiene scripts, datos, figuras y tres personas tocándolo, el directorio se vuelve ilegible y nadie sabe cuál archivo produjo cuál figura.
+Vince Buffalo abre con este ejemplo el capítulo 5 de *Bioinformatics Data Skills*, que es el que vamos a seguir hoy, y su observación es que ese sistema de control de versiones *ad hoc* puede funcionar a pequeña escala pero puede complicarse. Una necesidad en un proyecto vivo es guardar copias para poder regresar a ellas. Sin embargo, para un proyecto con scripts, datos, figuras y tres personas tocándolo, el directorio se vuelve ilegible y nadie sabe cuál archivo produjo cuál figura. Lo cual es un problema cuando el tutor o el revisor te pide modificar esa figura para incluir otros datos o hacer modificaciones menores.
 
-Git resuelve eso, y Buffalo da tres razones por las que a un científico le importa más que a un programador. Guarda fotos completas del proyecto, así que pueden regresar a cualquier momento del pasado. Registra qué cambió, cuándo y por qué, así que cuando una figura cambia pueden rastrear qué la cambió. Y mantiene el código organizado y disponible cuando la persona que lo escribió se va del laboratorio, que en un laboratorio académico pasa cada dos o tres años.
+La solición es Git, que Buffalo propone como una solición del campo de la porgramación que tiene incluso más sentido para el trabajo de datos científico. Guarda versiones completas del proyecto, para poder regresar a cualquier momento del pasado. Registra qué cambió, cuándo y por qué, así que cuando una figura cambia pueden rastrear qué la cambió. Y mantiene el código organizado y disponible cuando la persona que lo escribió se va del laboratorio, que en un laboratorio académico pasa cada bien seguido. Es decir, sirve un poco como bitácora de laboratorio y respaldo para poder explorar ideas sin perder el trabajo ya hecho.
 
-Ustedes ya vieron git una vez, con Evelia, para publicar su página web desde RStudio. Hoy es distinto en tres cosas: van a teclear los comandos en lugar de picar botones, van a hacerlo en una máquina remota compartida, y deseamos que lo que versionen sea una práctica que abarque el semestre y más allá.
+Ustedes ya vieron git una vez, con la Dra. Evelia Coss, para publicar su página web desde RStudio. Hoy es distinto en tres cosas: teclearemos los comandos en la terminal, en una máquina remota compartida, y deseamos que lo que versionen sea una práctica que abarque el semestre y más allá. Es decir, que creemos un repositorio donde entreguen sus tareas de todo el semestre, y que así esta forma de trabajar se vuelva un hábito.
 
 ::: callout-box
 Esta práctica sigue el capítulo 5 de Buffalo, *Git for Scientists*, adaptado. El enfoque y varios ejercicios están adaptados también del curso de introducción a la bioinformática de Evelia Coss (LCG, UNAM), usado con su permiso, bajo licencia CC BY-NC-SA 4.0.
@@ -29,32 +29,31 @@ Esta práctica sigue el capítulo 5 de Buffalo, *Git for Scientists*, adaptado. 
 
 ### Lo que vamos a construir
 
-Al final de la sesión van a tener un repositorio llamado `bioinfo1` en su cuenta de `ken`, conectado a un repositorio en GitHub, con su primer commit adentro. Ese repositorio es donde van a entregar todo el semestre. Cada tarea, cada bitácora, cada script va ahí, en Markdown, y se entrega haciendo push.
-
-O sea que esto no es un ejercicio desechable. Es la infraestructura de los siguientes cuatro meses.
+Al final de la sesión van a tener un repositorio llamado `bioinfo1` en su cuenta de `ken`, conectado a un repositorio en GitHub, con su primer commit adentro. Ese repositorio es donde van a entregar todo el semestre. Cada tarea, cada bitácora, cada script va ahí, en Markdown, y se entrega haciendo push. No hace falta usar ESTE repositorio que creemos hoy ni trabajar necesariamente desde la terminal, pero sí trabajar en git e ir subiendo allí sus tareas. Si ya tienen una manera a partir de GUI para usar git pueden usarla. La idea es que no sea un ejercicio desechable, sino la infraestructura del semestre.
 
 ### Primer contacto con ken
 
 `ken` es el cluster del curso. Es una máquina compartida: cuando ustedes están conectados, lo están también sus compañeros y varias personas más, por eso es una etiqueta diferente a trabajar sólo en su laptop.
 
-```bash
+``` bash
 ssh usuario@ken.lavis.unam.mx
 ```
 
-La primera vez les va a preguntar si confían en la máquina; contesten `yes`. Van a caer en el **login node**, que es la puerta de entrada, con un mensaje de bienvenida y links útiles. 
+La primera vez les va a preguntar si confían en la máquina; contesten `yes`. Van a caer en el **login node**, que es la puerta de entrada, con un mensaje de bienvenida y links útiles.
 
-Sólamente dice: 
+Sólamente dice:
 
-```bash
+``` bash
 [usuario@ken ~]$
 ```
+
 El pelito de la ñ o "virgulilla" indica que estamos en "home". Que es diferente para cada usuario: /home/usuario.
 
 Acá se editan archivos, se mueven datos y se mandan trabajos a la cola, pero no se corre nada pesado. Para eso está SLURM, que verán después. Todo lo de hoy es ligero.
 
-Ubíquémonos en el sistema de archivos antes de tocar nada:
+Ubíquémonos en el sistema de archivos antes que nada:
 
-```bash
+``` bash
 whoami
 hostname
 pwd
@@ -72,20 +71,20 @@ Cosas que no se hacen en una máquina compartida. No llenen el disco con archivo
 
 ### Ejercicio 0. Módulos
 
-Cada que prendemos nuestra laptop, el sistema carga los programas que hemos instalado como navegador, reproductor de música o editor de texto. Sin embargo, en un sistema compartido, no es útil cargar todos los programas porque no los necesitamos si compartimos el clúster con matemáticos, bioinformáticos, científicos de la tierra o físicos, y sólo queremos utilizar git. Como cuando abrimos una laptop con muchos programas que abren por defecto, gasta memoria RAM y tiempo (recursos), por ello, el manejo del software en el clúster es modular. Hay un "estante" de módulos como en un a biblioteca y podemos bajar los que necesitemos en un momento dado para trabajar. 
+Cada que prendemos nuestra laptop, el sistema carga los programas que hemos instalado como navegador, reproductor de música o editor de texto. Sin embargo, en un sistema compartido, no es útil cargar todos los programas porque no los necesitamos si compartimos el clúster con matemáticos, bioinformáticos, científicos de la tierra o físicos, y sólo queremos utilizar git. Como cuando abrimos una laptop con muchos programas que abren por defecto, gasta memoria RAM y tiempo (recursos), por ello, el manejo del software en el clúster es modular. Hay un "estante" de módulos como en un a biblioteca y podemos bajar los que necesitemos en un momento dado para trabajar.
 
-```bash
+``` bash
 module load git
 module list
 ```
 
-Podemos ver la lista de programas que están en nuestro "escritorio". Con `module avail`, podemos ver todos los que están disponibles en el "estante". 
+Podemos ver la lista de programas que están en nuestro "escritorio". Con `module avail`, podemos ver todos los que están disponibles en el "estante".
 
 ### Ejercicio 1. Decirle a git quién eres
 
 Buffalo pone esto como el primer paso de todos, y por una razón práctica: cada commit lleva pegado un nombre y un correo, y si no los configuran, git se niega a hacer el commit o lo firma con algo inútil. Es el error número uno de los que empiezan.
 
-```bash
+``` bash
 git config --global user.name "Nombre Apellido"
 git config --global user.email "correo@ejemplo.com"
 git config --global init.defaultBranch main
@@ -93,7 +92,7 @@ git config --global init.defaultBranch main
 
 Verifiquen que quedó:
 
-```bash
+``` bash
 git config --list
 ```
 
@@ -109,7 +108,7 @@ La tercera línea es por herencia histórica. git llamaba `master` a la rama pri
 
 ### Ejercicio 2. Crear el repositorio
 
-```bash
+``` bash
 mkdir -p ~/bioinfo1
 cd ~/bioinfo1
 git init
@@ -120,7 +119,7 @@ git init
 
 `git init` crea un directorio oculto `.git` dentro de la carpeta. Ahí vive todo el historial. Compruébenlo:
 
-```bash
+``` bash
 ls -a
 ```
 
@@ -129,37 +128,36 @@ Deben ver `.git` en la lista. Ese directorio **es** el repositorio; el resto son
 Un repositorio de git es entonces una carpeta normal con memoria.
 :::
 
-### Las tres zonas
+### Un esquema/modelo mental para trabajar con git
 
-Acá está el modelo mental que hay que tener para trabajar con git.
-
-Git maneja tres zonas. El **directorio de trabajo** son sus archivos como están ahora mismo. El **staging area** es una antesala donde ustedes escogen qué cambios van a entrar en la próxima foto. Y el **repositorio** es la colección de fotos ya tomadas, el historial (@fig-zonas).
+Git maneja tres zonas. El **directorio de trabajo** son los archivos locales como están ahora mismo. El **staging area** es una antesala donde ustedes escogen qué cambios van a entrar en la próxima foto. Y el **repositorio** es la colección de versiones ya commiteadas, el historial (@fig-zonas).
 
 ![Las tres zonas de git. Los archivos se mueven de izquierda a derecha con add y commit.](../../figuras/sesion01/git-tres-zonas.svg){#fig-zonas}
 
-Esa zona de en medio es lo que confunde a todo el mundo al principio, y es también lo que hace útil a git. Sin ella, cada commit tendría que incluir todo lo que cambió. Con ella, ustedes pueden trabajar en cinco cosas a la vez y guardar tres commits limpios, uno por tema.
+Esa zona de en medio es lo que confunde puede confundir al principio, y es también lo que hace útil a git. Sin ella, cada commit tendría que incluir todo lo que cambió. Con ella, ustedes pueden trabajar en cinco cosas a la vez y guardar tres commits limpios, uno por tema.
 
 ### Ejercicio 3. Rastrear y preparar archivos
 
 Hagan un `README.md` que diga qué es este repositorio, y guarden ahí también sus notas de la parte teórica.
 
-```bash
+``` bash
 nano README.md
 ```
 
 Escriban algo mínimo, en Markdown, que ya lo conocen:
 
-```markdown
+``` markdown
 # Bioinformática I, 2026-2
 
 Repositorio de entregables del curso.
 Autor: (su nombre)
 ```
+
 Ctrl + x para salir, nano pregunta si quieren guardar y en cuál archive, Yes a todo.
 
 Ahora vean qué opina git:
 
-```bash
+``` bash
 git status
 ```
 
@@ -170,7 +168,7 @@ Git les dice que `README.md` está **untracked**. Nunca lo ha visto, no le está
 
 Buffalo separa este paso en dos partes justamente porque `git add` hace dos trabajos distintos que se ven iguales. La primera vez que le hacen `add` a un archivo, le están diciendo a git "empieza a rastrear esto". De ahí en adelante, `add` significa otra cosa: "mete los cambios actuales de este archivo al staging area".
 
-```bash
+``` bash
 git add README.md
 git status
 ```
@@ -180,7 +178,7 @@ Ahora dice **changes to be committed**. El archivo pasó de la primera zona a la
 
 ### Ejercicio 4. Tomar la foto
 
-```bash
+``` bash
 git commit -m "Primer commit: README del repositorio del curso"
 ```
 
@@ -198,13 +196,13 @@ Hay un dato incómodo sobre esto. Un estudio de Isomöttönen y Cochez encontró
 
 Modifiquen el `README.md`: agréguenle una línea con la fecha de hoy. Antes de hacer nada más:
 
-```bash
+``` bash
 git diff
 ```
 
 Luego revisen la historia:
 
-```bash
+``` bash
 git log
 git log --oneline
 ```
@@ -229,11 +227,11 @@ GitHub además pone límites duros: avisa arriba de 50 MB y **rechaza** cualquie
 
 Creen un `.gitignore`:
 
-```bash
+``` bash
 nano .gitignore
 ```
 
-```gitignore
+``` gitignore
 # Datos de secuencias: nunca se versionan
 *.fasta
 *.fa
@@ -261,7 +259,7 @@ Cada línea es un patrón. Lo que corresponda queda invisible para git: no apare
 
 El `.gitignore` **sí** se commitea, porque es parte de la configuración del proyecto y sus colaboradores lo necesitan igual que ustedes.
 
-```bash
+``` bash
 git add .gitignore
 git commit -m "Agrego .gitignore para datos de secuencias y resultados"
 ```
@@ -272,7 +270,7 @@ Regla de oro: el `.gitignore` se escribe **antes** del primer `git add .`, no de
 ::: callout-box
 Si no se versionan los datos, cómo se garantiza que el análisis sea reproducible? Versionando la **receta** en lugar del ingrediente. En un archivo `datos/README.md` se anota de dónde salió cada archivo: el accession, la fecha de descarga, el comando exacto y su checksum.
 
-```bash
+``` bash
 md5sum archivo.fasta > archivo.fasta.md5
 ```
 
@@ -283,26 +281,28 @@ En Mac los comandos son `md5` y `shasum -a 256` en lugar de `md5sum` y `sha256su
 
 ### Ejercicio 7. Conectarse a GitHub desde ken
 
-Este es el paso que más tiempo se lleva, así que síganlo con calma.
+Este es el paso que más tiempo se lleva, así que vamos con calma.
 
 Ustedes ya generaron una llave SSH el semestre pasado, pero fue en su laptop. En `ken` empiezan de cero, porque una llave vive en la máquina donde se generó.
 
-```bash
+``` bash
 ssh-keygen -t ed25519 -C "correo@ejemplo.com"
 ```
 
 Acepten la ruta por defecto y pongan una passphrase. Después:
 
-```bash
+``` bash
 chmod 700 ~/.ssh
+#Llave privada, sólo visible para cada usuario
 chmod 600 ~/.ssh/id_ed25519
+#Llave pública, visible y ejecutable para todos
 chmod 644 ~/.ssh/id_ed25519.pub
 cat ~/.ssh/id_ed25519.pub
 ```
 
 Copien lo que imprime `cat` y péguenlo en GitHub, en Settings, SSH and GPG keys, New SSH key. Verifiquen:
 
-```bash
+``` bash
 ssh -T git@github.com
 ```
 
@@ -320,11 +320,13 @@ Sobre por qué llaves y no un token. Un personal access token guardado en el dis
 
 Creen en GitHub un repositorio nuevo llamado `bioinfo1`, **vacío**, sin README ni `.gitignore` (si GitHub le mete archivos, van a chocar con los suyos). Luego, desde `ken`:
 
-```bash
+``` bash
 git remote add origin git@github.com:usuario/bioinfo1.git
 git remote -v
 git push -u origin main
 ```
+
+Estos comandos también salen justo después de crear el repo en la página de github. ¡Hay que cambiar usuario por su nombre de usuario en github!
 
 ::: {.callout-note collapse="true"}
 ## Solución
@@ -342,14 +344,14 @@ Acá es donde el control de versiones deja de ser abstracto.
 
 Borren el contenido de su README:
 
-```bash
+``` bash
 echo "" > README.md
 cat README.md
 ```
 
 Está vacío. En una carpeta normal, eso sería definitivo. Acá no:
 
-```bash
+``` bash
 git status
 git checkout -- README.md
 cat README.md
@@ -362,7 +364,7 @@ cat README.md
 
 Fíjense en la condición: funcionó **porque ya lo habían commiteado**. Git no puede recuperar lo que nunca le dieron. Esa es la moraleja operativa de la sesión: un commit frecuente es barato, y es lo único que separa "me equivoqué" de "perdí el trabajo".
 
-Es también la razón práctica por la que se hace commit seguido y con mensajes claros, en lugar de un commit gigante al final del día.
+También es la razón práctica por la que se hace commit seguido y con mensajes claros, en lugar de un commit gigante al final del día.
 :::
 
 ### Lo que no vimos hoy
