@@ -567,6 +567,8 @@ se propagó por copia. Nosotros usamos GCATGCG.
 
 ## Fuentes {.unnumbered}
 
+- Compeau, P. & Pevzner, P. *Bioinformatics Algorithms: An Active Learning Approach*. Active Learning Publishers. <https://bioinformaticsalgorithms.org>
+
 **Fuentes primarias**
 
 - Needleman SB & Wunsch CD (1970) "A general method applicable to the

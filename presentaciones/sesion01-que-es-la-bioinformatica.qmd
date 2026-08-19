@@ -61,7 +61,7 @@ dónde vienen.
 27 de noviembre · 15 sesiones**
 
 | Bloque | Sesiones | Docente | Tema |
-|------------------|-------------------|------------------|------------------|
+|------------------|------------------|------------------|------------------|
 | **A** | 1 (hoy) | Jero | Introducción + arranque de cómputo |
 | **A** | 2–6 | Wilbert | Secuencias, código genético, matrices, FASTA, alineamientos |
 | **B** | 7–11 | Jero | Algoritmos, BLAST, homología, bases de datos, browsers |
@@ -76,10 +76,18 @@ dónde vienen.
   - Realmente es el repositorio de fuentes y temas, calendario, y
     agregador para las prácticas y presentaciones de los diferentes
     instructores.
-  - No es necesario leerlo, pero puede serles útil
+  - No es necesario leerlo, pero puede serles útil. Tiene buen material
+    de lectura extra
 - Cada sesión: **teoría** + **práctica** (laptop y terminal)
 - Las entregas van en **su repositorio git** que crearemos hoy
 - Cuenta en el cluster `ken` para las prácticas de cómputo
+
+## Verificar ¿Todos tienen mobaXterm o terminal en mac?
+
+- Si no, ir descargando para windows
+  <https://mobaxterm.mobatek.net/download.html> para la práctica más
+  adelantes
+- ¿Todos tienen cuenta en github? Si no, hacerla ahora o en el descanso
 
 ## Evaluación (propuesta) {.smaller}
 
@@ -101,9 +109,9 @@ Por decidir **entre todos, hoy**:
 
 ## Las dos ideas de hoy
 
-1.  La disciplina tiene la forma dados cuellos de botella históricos y
-    presentes: un **diluvio de datos**, escasez o abundancia de
-    software, cómputo, almacenamiento, etc.
+1.  La moldeada por cuellos de botella históricos y presentes: un
+    **diluvio de datos**, escasez o abundancia de software, cómputo,
+    almacenamiento, etc.
 2.  La base práctica de todo lo demás es la **reproducibilidad**: hoy
     empieza con una bitácora y con git
 
@@ -386,7 +394,28 @@ la propiedad de los medios de producción, pero ésa es otra discusión).
   serio: datos, cómputo y gente con preguntas propias. **Ese es su
   ecosistema.**
 
-# La práctica de hoy {.section-divider}
+## Libro para el módulo de alineamientos y algoritmos (octubre)
+
+Un libro moderno y súper didáctico:
+
+- Compeau, P. & Pevzner, P. *Bioinformatics Algorithms: An Active
+  Learning Approach*. Active Learning Publishers.
+  <https://bioinformaticsalgorithms.org>
+
+- No está en biblioteca pero tienen acceso en
+  <https://cogniterra.org/course/868/promo> o
+  <https://cogniterra.org/join-class/e8e47fb8a8f8fc06ed29bb0e772223ba52aebdb5>
+  confirmen y avísenme si tienen acceso (hay que hacer cuenta en
+  Cogniterra).
+
+- Hecho sobre todo para alumnos de ciencias de la computación. Sólo
+  veremos el capítulo 5: How do we compare biological sequences?
+
+- Tarea: hojear los capítulos, elegir uno que les llame la atención y
+  describir en un par de párrafos por qué? Tiene que ver con sus
+  proyectos? Se les hizo chistoso?
+
+# La práctica de hoy. Después del break {.section-divider}
 
 ## Git para científicos
 
