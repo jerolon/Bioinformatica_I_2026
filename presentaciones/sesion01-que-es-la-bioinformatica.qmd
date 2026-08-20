@@ -72,14 +72,14 @@ dónde vienen.
 
 ## Cómo trabajamos
 
-- S**itio del curso**: [jerolon.github.io/Bioinformatica_I_2026](#0)
-  - Realmente es el repositorio de fuentes y temas, calendario, y
+- **Sitio del curso**: [jerolon.github.io/Bioinformatica_I_2026](#0)
+  - Realmente es el repositorio de fuentes y **temario**, calendario, y
     agregador para las prácticas y presentaciones de los diferentes
     instructores.
   - No es necesario leerlo, pero puede serles útil. Tiene buen material
     de lectura extra
 - Cada sesión: **teoría** + **práctica** (laptop y terminal)
-- Las entregas van en **su repositorio git** que crearemos hoy
+- Las entregas serán en **su repositorio git** que crearemos hoy
 - Cuenta en el cluster `ken` para las prácticas de cómputo
 
 ## Verificar ¿Todos tienen mobaXterm o terminal en mac?
@@ -109,9 +109,9 @@ Por decidir **entre todos, hoy**:
 
 ## Las dos ideas de hoy
 
-1.  La moldeada por cuellos de botella históricos y presentes: un
-    **diluvio de datos**, escasez o abundancia de software, cómputo,
-    almacenamiento, etc.
+1.  La bioinformática moldeada por cuellos de botella históricos y
+    presentes: un **diluvio de datos**, escasez o abundancia de
+    software, cómputo, almacenamiento, etc.
 2.  La base práctica de todo lo demás es la **reproducibilidad**: hoy
     empieza con una bitácora y con git
 
@@ -145,6 +145,11 @@ provienen de los seres vivos.
 
 Se popularizó a finales de los 80, cuando la secuenciación empezó a
 producir más datos.
+
+::: notes
+BISTIC: NIH Biomedical Information Science and Technology Initiative
+Consortium.
+:::
 
 ## ¿Qué hay en un nombre? 🌹 {.smaller}
 
@@ -290,11 +295,11 @@ crítica de los resultados.
 
 - Estas se corresponden con lo que se pregunta Cory Doctorow:
 
-  ::: {}
-  how is it that some AI’s users describe their experience as a hellish
-  ordeal, while others delight in the ways that AI is changing their
-  lives for the better?
-  :::
+::: {}
+how is it that some AI’s users describe their experience as a hellish
+ordeal, while others delight in the ways that AI is changing their lives
+for the better?
+:::
 
 [npj Digital Medicine 2026: el oficio de bioinformático sí se transforma
 de ejecutar workflows a diseñar, juzgar y responder por los
@@ -394,26 +399,18 @@ la propiedad de los medios de producción, pero ésa es otra discusión).
   serio: datos, cómputo y gente con preguntas propias. **Ese es su
   ecosistema.**
 
-## Libro para el módulo de alineamientos y algoritmos (octubre)
+## Libro para el módulo de alineamientos y algoritmos (octubre) {.smaller}
 
 Un libro moderno y súper didáctico:
 
-- Compeau, P. & Pevzner, P. *Bioinformatics Algorithms: An Active
-  Learning Approach*. Active Learning Publishers.
+- Compeau, P. & Pevzner, P. *Bioinformatics Algorithms: An Active Learning Approach*. Active Learning Publishers.
   <https://bioinformaticsalgorithms.org>
 
-- No está en biblioteca pero tienen acceso en
-  <https://cogniterra.org/course/868/promo> o
-  <https://cogniterra.org/join-class/e8e47fb8a8f8fc06ed29bb0e772223ba52aebdb5>
-  confirmen y avísenme si tienen acceso (hay que hacer cuenta en
-  Cogniterra).
+- No está en biblioteca pero tienen acceso en   <https://cogniterra.org/course/868/promo> o <https://cogniterra.org/join-class/e8e47fb8a8f8fc06ed29bb0e772223ba52aebdb5>  confirmen y avísenme si tienen acceso (hay que hacer cuenta en Cogniterra).
 
-- Hecho sobre todo para alumnos de ciencias de la computación. Sólo
-  veremos el capítulo 5: How do we compare biological sequences?
+- Hecho sobre todo para alumnos de ciencias de la computación. Sólo veremos el capítulo 5: How do we compare biological sequences?
 
-- Tarea: hojear los capítulos, elegir uno que les llame la atención y
-  describir en un par de párrafos por qué? Tiene que ver con sus
-  proyectos? Se les hizo chistoso?
+- Tarea: hojear los capítulos, elegir uno que les llame la atención y describir en un par de párrafos por qué? Tiene que ver con sus proyectos? Se les hizo chistoso?
 
 # La práctica de hoy. Después del break {.section-divider}
 
