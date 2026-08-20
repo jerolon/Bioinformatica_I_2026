@@ -1,52 +1,65 @@
 ---
 title: "Recursos y bibliografía"
+editor: 
+  markdown: 
+    wrap: 72
 ---
 
 ## Base recomendada (gratis y actual)
 
-**[Compeau & Pevzner — *Bioinformatics Algorithms: An Active Learning Approach*](https://bioinformaticsalgorithms.org)**
-Libro completo gratis, con videos y ejercicios ligados a Rosalind. Es el texto principal de la
-unidad 3, en particular el capítulo 5, *How Do We Compare Biological Sequences?*
+[**Compeau & Pevzner — *Bioinformatics Algorithms: An Active Learning
+Approach***](https://bioinformaticsalgorithms.org) Libro completo gratis
+para ustedes está disponible en
+[https://cogniterra.org/course/868/](https://cogniterra.org/course/868/promo),
+con videos y ejercicios ligados a Rosalind. Es el texto principal de la
+unidad 3, en particular el capítulo 5, *How Do We Compare Biological
+Sequences?*
 
-**[Rosalind](https://rosalind.info)**
-Problemas de programación. El Textbook Track está alineado con Compeau & Pevzner. Transversal a
-toda la unidad 3.
+[**Rosalind**](https://rosalind.info) Problemas de programación. El
+Textbook Track está alineado con Compeau & Pevzner. Transversal a toda
+la unidad 3.
 
-**NCI — *Bioinformatics for Beginners* (edición 2025)**
-PDF gratuito, muy práctico, enfocado a línea de comandos. Útil para la unidad 1.
+**NCI — *Bioinformatics for Beginners* (edición 2025)** PDF gratuito,
+muy práctico, enfocado a línea de comandos. Útil para la unidad 1.
 
-**[EMBL-EBI Training](https://www.ebi.ac.uk/training/)**
-Módulos cortos de bases de datos y Ensembl. Unidades 4 y 5. Es el reemplazo moderno de los
-capítulos tipo "cómo uso esta página web" de los libros viejos.
+[**EMBL-EBI Training**](https://www.ebi.ac.uk/training/) Módulos cortos
+de bases de datos y Ensembl. Unidades 4 y 5. Es el reemplazo moderno de
+los capítulos tipo "cómo uso esta página web" de los libros viejos.
 
 ## De pago, como referencia
 
-- **Buffalo — *Bioinformatics Data Skills* (O'Reilly).** También está en la bibliografía de Heladia.
+- **Buffalo — *Bioinformatics Data Skills* (O'Reilly).** En la
+  bilblioteca (1 copia). También está en la bibliografía de Heladia.
 - **Pevsner — *Bioinformatics and Functional Genomics*.**
 
 ## Material fuente del curso
 
-- **Evelia Coss** — [Introducción a la Bioinformática, LCG 2025](https://eveliacoss.github.io/LCG2025_IntroBioinfo_S1/).
-  CC BY-NC-SA 4.0 y con permiso de la autora: se adapta con atribución.
-- **Heladia Salgado** — [Introducción a la Bioinformática](https://lcg-cursos.github.io/material/introbioinfo/).
-  Referencia de temario; licencia sin confirmar, se cita y enlaza pero no se adapta.
+- **Evelia Coss** — [Introducción a la Bioinformática, LCG
+  2025](https://eveliacoss.github.io/LCG2025_IntroBioinfo_S1/). CC
+  BY-NC-SA 4.0 y con permiso de la autora: se adapta con atribución.
+- **Heladia Salgado** — [Introducción a la
+  Bioinformática](https://lcg-cursos.github.io/material/introbioinfo/).
+  Referencia de temario; licencia sin confirmar, se cita y enlaza pero
+  no se adapta.
 
 Ver [Créditos](../creditos.qmd) para el detalle.
 
 ## El código de las figuras
 
 Las figuras del sitio se calculan con scripts de Python y R versionados
-en el repositorio, y se pueden leer y correr sin instalar Quarto:
-[el código de las figuras](figuras.qmd).
+en el repositorio, y se pueden leer y correr sin instalar Quarto: [el
+código de las figuras](figuras.qmd).
 
 ## Una nota sobre *Bioinformatics For Dummies*
 
-La última edición es la **2ª, de 2007** (Claverie & Notredame); no hay 3ª. Los capítulos
-conceptuales aguantan bien, pero los tutoriales paso a paso están muertos: las URLs, las interfaces
-y los nombres cambiaron, y toda la era NGS ocurrió después. **No es texto del curso**, aunque sirve
-como lectura suave de apoyo.
+La última edición que encontré es la **2ª, de 2007** (Claverie &
+Notredame). Los capítulos conceptuales aguantan bien, pero los
+tutoriales paso a paso no tanto: las URLs, las interfaces y los nombres
+cambiaron, y toda la era NGS ocurrió después. **No es texto del curso**,
+aunque sí sirve como una buena lectura de apoyo.
 
-::: {.callout-box}
-Dato para la clase: Cedric Notredame, coautor del *Dummies*, es el autor de T-Coffee. El capítulo
-de alineamiento múltiple lo escribió alguien que sabía exactamente de qué hablaba.
+::: callout-box
+Dato para la clase: Cedric Notredame, coautor del *Dummies*, es el autor
+de T-Coffee. El capítulo de alineamiento múltiple lo escribió alguien
+que sabía exactamente de qué hablaba.
 :::
