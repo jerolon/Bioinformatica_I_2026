@@ -67,9 +67,9 @@
 <circle cx='47.90' cy='158.40' r='2.38' style='stroke-width: 0.71; stroke: #D98C00; fill: #D98C00;' />
 <circle cx='86.15' cy='158.40' r='2.38' style='stroke-width: 0.71; stroke: #D98C00; fill: #D98C00;' />
 <circle cx='139.71' cy='158.40' r='2.38' style='stroke-width: 0.71; stroke: #1A7A8A; fill: #1A7A8A;' />
-<circle cx='170.31' cy='158.40' r='2.38' style='stroke-width: 0.71; stroke: #1A7A8A; fill: #1A7A8A;' />
+<circle cx='170.31' cy='158.40' r='2.38' style='stroke-width: 0.71; stroke: #D98C00; fill: #D98C00;' />
 <circle cx='177.96' cy='158.40' r='2.38' style='stroke-width: 0.71; stroke: #D98C00; fill: #D98C00;' />
-<circle cx='239.17' cy='158.40' r='2.38' style='stroke-width: 0.71; stroke: #1A7A8A; fill: #1A7A8A;' />
+<circle cx='239.17' cy='158.40' r='2.38' style='stroke-width: 0.71; stroke: #D98C00; fill: #D98C00;' />
 <circle cx='277.43' cy='158.40' r='2.38' style='stroke-width: 0.71; stroke: #1A7A8A; fill: #1A7A8A;' />
 <circle cx='323.33' cy='158.40' r='2.38' style='stroke-width: 0.71; stroke: #1A7A8A; fill: #1A7A8A;' />
 <circle cx='353.93' cy='158.40' r='2.38' style='stroke-width: 0.71; stroke: #1A7A8A; fill: #1A7A8A;' />
@@ -86,13 +86,13 @@
 <text x='139.71' y='45.30' text-anchor='middle' style='font-size: 7.54px;fill: #1A7A8A; font-family: "Source Sans Pro", "Segoe UI", "Roboto", "Helvetica Neue", "Arial", sans-serif;'>1977</text>
 <text x='139.71' y='57.51' text-anchor='middle' style='font-size: 7.54px;fill: #1A7A8A; font-family: "Source Sans Pro", "Segoe UI", "Roboto", "Helvetica Neue", "Arial", sans-serif;'>Sanger: método de</text>
 <text x='139.71' y='69.73' text-anchor='middle' style='font-size: 7.54px;fill: #1A7A8A; font-family: "Source Sans Pro", "Segoe UI", "Roboto", "Helvetica Neue", "Arial", sans-serif;'>secuenciación · phi-X174</text>
-<text x='170.31' y='252.35' text-anchor='middle' style='font-size: 7.54px;fill: #1A7A8A; font-family: "Source Sans Pro", "Segoe UI", "Roboto", "Helvetica Neue", "Arial", sans-serif;'>1981</text>
-<text x='170.31' y='264.57' text-anchor='middle' style='font-size: 7.54px;fill: #1A7A8A; font-family: "Source Sans Pro", "Segoe UI", "Roboto", "Helvetica Neue", "Arial", sans-serif;'>Smith-Waterman</text>
-<text x='170.31' y='276.78' text-anchor='middle' style='font-size: 7.54px;fill: #1A7A8A; font-family: "Source Sans Pro", "Segoe UI", "Roboto", "Helvetica Neue", "Arial", sans-serif;'>(alineamiento local)</text>
+<text x='170.31' y='252.35' text-anchor='middle' style='font-size: 7.54px;fill: #D98C00; font-family: "Source Sans Pro", "Segoe UI", "Roboto", "Helvetica Neue", "Arial", sans-serif;'>1981</text>
+<text x='170.31' y='264.57' text-anchor='middle' style='font-size: 7.54px;fill: #D98C00; font-family: "Source Sans Pro", "Segoe UI", "Roboto", "Helvetica Neue", "Arial", sans-serif;'>Smith-Waterman</text>
+<text x='170.31' y='276.78' text-anchor='middle' style='font-size: 7.54px;fill: #D98C00; font-family: "Source Sans Pro", "Segoe UI", "Roboto", "Helvetica Neue", "Arial", sans-serif;'>(alineamiento local)</text>
 <text x='177.96' y='98.25' text-anchor='middle' style='font-size: 7.54px;fill: #D98C00; font-family: "Source Sans Pro", "Segoe UI", "Roboto", "Helvetica Neue", "Arial", sans-serif;'>1982</text>
 <text x='177.96' y='110.47' text-anchor='middle' style='font-size: 7.54px;fill: #D98C00; font-family: "Source Sans Pro", "Segoe UI", "Roboto", "Helvetica Neue", "Arial", sans-serif;'>GenBank y EMBL</text>
-<text x='239.17' y='211.61' text-anchor='middle' style='font-size: 7.54px;fill: #1A7A8A; font-family: "Source Sans Pro", "Segoe UI", "Roboto", "Helvetica Neue", "Arial", sans-serif;'>1990</text>
-<text x='239.17' y='223.82' text-anchor='middle' style='font-size: 7.54px;fill: #1A7A8A; font-family: "Source Sans Pro", "Segoe UI", "Roboto", "Helvetica Neue", "Arial", sans-serif;'>BLAST</text>
+<text x='239.17' y='211.61' text-anchor='middle' style='font-size: 7.54px;fill: #D98C00; font-family: "Source Sans Pro", "Segoe UI", "Roboto", "Helvetica Neue", "Arial", sans-serif;'>1990</text>
+<text x='239.17' y='223.82' text-anchor='middle' style='font-size: 7.54px;fill: #D98C00; font-family: "Source Sans Pro", "Segoe UI", "Roboto", "Helvetica Neue", "Arial", sans-serif;'>BLAST</text>
 <text x='277.43' y='45.30' text-anchor='middle' style='font-size: 7.54px;fill: #1A7A8A; font-family: "Source Sans Pro", "Segoe UI", "Roboto", "Helvetica Neue", "Arial", sans-serif;'>1995</text>
 <text x='277.43' y='57.51' text-anchor='middle' style='font-size: 7.54px;fill: #1A7A8A; font-family: "Source Sans Pro", "Segoe UI", "Roboto", "Helvetica Neue", "Arial", sans-serif;'>H. influenzae (primer</text>
 <text x='277.43' y='69.73' text-anchor='middle' style='font-size: 7.54px;fill: #1A7A8A; font-family: "Source Sans Pro", "Segoe UI", "Roboto", "Helvetica Neue", "Arial", sans-serif;'>organismo de vida libre)</text>

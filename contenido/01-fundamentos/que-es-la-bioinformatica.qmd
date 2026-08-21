@@ -51,7 +51,7 @@ El resto de los hitos, puestos en la línea del tiempo (varios los van a ver a f
 - 1995: primer genoma de un organismo de vida libre, la bacteria *Haemophilus influenzae* (1,830,137 pb), secuenciado por el equipo de Venter en el TIGR con la estrategia de shotgun.
 - 1996, 1998, 2001: levadura, *C. elegans* y el primer borrador del genoma humano.
 
-![Hitos de la disciplina, 1965 a 2026. Los tres marcados en naranja son los que se discuten en el texto. Código: [`linea-tiempo.R`](https://github.com/jerolon/Bioinformatica_I_2026/blob/main/figuras/sesion01/linea-tiempo.R).](../../figuras/sesion01/linea-tiempo.svg){#fig-linea-tiempo}
+![Hitos de la disciplina, 1965 a 2026. Los marcados en naranja los veremos durante el curso. Código: [`linea-tiempo.R`](https://github.com/jerolon/Bioinformatica_I_2026/blob/main/figuras/sesion01/linea-tiempo.R).](../../figuras/sesion01/linea-tiempo.svg){#fig-linea-tiempo}
 
 El Proyecto Genoma Humano merece un paréntesis: fue una carrera entre un consorcio público internacional y la empresa Celera de Venter, que empujó los métodos y los tiempos. El borrador se anunció en 2001.
 

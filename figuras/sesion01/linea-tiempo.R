@@ -50,9 +50,9 @@ HITOS <- data.frame(
   stringsAsFactors = FALSE
 )
 
-# Los tres fundacionales van en ámbar: son los que discute el cuerpo del texto
+# Los destacados van en ámbar: son los que se retoman durante el curso,
 # y a los que apunta el caption.
-FUNDACIONALES <- c(1965, 1970, 1982)
+DESTACADOS <- c(1965, 1970, 1981, 1982, 1990)
 
 # Niveles de etiqueta, ciclados por índice: arriba cerca, abajo cerca,
 # arriba lejos, abajo lejos. Así dos hitos vecinos nunca comparten nivel.
@@ -69,7 +69,7 @@ construir <- function() {
   d <- HITOS
   d$y      <- nivel_de(seq_len(nrow(d)))
   d$arriba <- d$y > 0
-  d$color  <- ifelse(d$anio %in% FUNDACIONALES, AMBAR, TEAL)
+  d$color  <- ifelse(d$anio %in% DESTACADOS, AMBAR, TEAL)
   # Año en la primera línea y la descripción partida abajo, como en la versión
   # de matplotlib (textwrap.wrap con el mismo ancho).
   d$etiqueta <- paste0(d$anio, "\n",
