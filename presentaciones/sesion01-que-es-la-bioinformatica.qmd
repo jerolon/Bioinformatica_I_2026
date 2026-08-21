@@ -361,6 +361,44 @@ width="88%"}
 [doi:10.1093/bib/bbag256](https://doi.org/10.1093/bib/bbag256) — CC
 BY-NC 4.0]{.ref}
 
+## Research parasite awards {.smaller}
+
+::::: columns-equal
+::: {}
+- 2016: un editorial del *NEJM* llama **"research parasites"** a quienes
+  analizan datos generados por otros
+- La comunidad se apropió del insulto: los [**Research Parasite
+  Awards**](https://researchparasite.com/) premian desde 2017 el
+  **reanálisis riguroso de datos públicos**, cada año en el congreso PSB
+- Dos categorías, bautizadas como etapas de *Plasmodium*:
+  **esporozoíto** (junior, un artículo) y **merozoíto** (parasitismo
+  sostenido, ≥5 años)
+- Una conclusión que sobrevive al reanálisis independiente **gana
+  credibilidad**
+:::
+
+::: {}
+![](../images/research-parasite-header.jpg){fig-align="center"
+width="100%"}
+:::
+:::::
+
+[Longo & Drazen 2016, *NEJM*,
+[doi:10.1056/NEJMe1516564](https://doi.org/10.1056/NEJMe1516564) ·
+imagen de researchparasite.com: avispa parasitoide de áfidos
+(Braconidae), foto de [Bernard Dupont, CC BY-SA
+2.0](https://commons.wikimedia.org/wiki/File:Braconid_Wasp_(Aphidiinae)_parasite_of_aphids_..._(17209504216).jpg)]{.ref}
+
+::: notes
+El editorial de Longo y Drazen temía que los "parásitos" usaran datos
+ajenos para responder sus propias preguntas o para refutar al original.
+La comunidad respondió abrazando el término: reutilizar datos públicos
+es más ciencia por el mismo dinero, y el reanálisis independiente es
+control de calidad. Puente a la sección que sigue: para que alguien
+pueda "parasitar" tus datos, tus datos y tu código tienen que ser
+reproducibles.
+:::
+
 # Reproducibilidad {.section-divider}
 
 ## Los números del problema {.smaller}
