@@ -168,16 +168,17 @@ servicio de una pregunta biológica**.
 
 # Una historia corta, con nombres propios {.section-divider}
 
-## Margaret Dayhoff, 1965
+## Margaret Dayhoff, 1965. Coleccionar, (buscar), y comparar con computadoras
 
 - *Atlas of Protein Sequence and Structure*: las **65 proteínas**
   conocidas entonces
-- Primera colección de secuencias computarizada y pública: el modelo de
-  GenBank y todo lo que vino después
+- Primera colección de secuencias computarizada y pública: precursor de
+  GenBank y las bases de datos que veremos en otra sesión.
+- El concepto de *atlas* ahora se recicla con single cell y ST
 - Con Richard Eck: las matrices **PAM**, el puntaje de qué tan probable
-  es que un aminoácido mute a otro
-- Cuando Wilbert les explique matrices de sustitución, estarán usando la
-  idea de Dayhoff
+  es que un aminoácido mute a otro (clases con Wilbert).
+- Más "historia natural" de colección de museo que ciencia experimental
+  pero ahora central para la biología molecular y bioquímica.
 
 [Strasser 2010, Journal of the History of Biology: collecting, comparing
 and computing sequences as a way of knowing]{.ref}
