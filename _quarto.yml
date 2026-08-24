@@ -76,6 +76,7 @@ website:
         contents:
           - contenido/03-alineamientos/alineamiento-por-pares.qmd
           - contenido/03-alineamientos/algoritmos.qmd
+          - contenido/03-alineamientos/clase07-algoritmos.qmd
           - contenido/03-alineamientos/blast.qmd
           - contenido/03-alineamientos/alineamiento-multiple.qmd
           - contenido/03-alineamientos/homologia.qmd
@@ -111,6 +112,7 @@ website:
           # enlaza aquí también para agruparla con las demás. Los archivos son
           # únicos; estas son segundas entradas al mismo destino.
           - contenido/01-fundamentos/sesion01-practica.qmd
+          - contenido/03-alineamientos/clase07-algoritmos.qmd
           - contenido/03-alineamientos/sesion10-practica.qmd
           - contenido/05-browsers/sesion11-practica.qmd
       - section: "Recursos"

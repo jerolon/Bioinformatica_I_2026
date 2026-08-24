@@ -61,7 +61,7 @@ dónde vienen.
 27 de noviembre · 15 sesiones**
 
 | Bloque | Sesiones | Docente | Tema |
-|------------------|------------------|------------------|------------------|
+|----|----|----|----|
 | **A** | 1 (hoy) | Jero | Introducción + arranque de cómputo |
 | **A** | 2–6 | Wilbert | Secuencias, código genético, matrices, FASTA, alineamientos |
 | **B** | 7–11 | Jero | Algoritmos, BLAST, homología, bases de datos, browsers |

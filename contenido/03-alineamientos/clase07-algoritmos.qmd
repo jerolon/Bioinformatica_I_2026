@@ -1,0 +1,392 @@
+---
+title: "Práctica: needle y water"
+subtitle: "Unidad 3 · Sesión 7"
+author: "Jero"
+---
+
+## De qué se trata
+
+En la mañana abrimos la caja negra: Needleman–Wunsch y Smith–Waterman
+son la misma maquinaria de programación dinámica con tres cambios
+acoplados. Esta práctica tiene tres partes:
+
+1. **Needleman–Wunsch a mano**, en papel, en parejas, con GCATGCG /
+   GATTACA y scoring simple (match +1, mismatch −1, gap −1).
+2. **EMBOSS `needle` y `water`** sobre *el mismo par*, para comparar
+   con lo del papel y ver la diferencia global/local en un caso que ya
+   entienden a mano.
+3. **Rosalind**: la progresión EDIT → EDTA → GLOB → LOCA → GAFF.
+
+El concepto de cómputo del día son las **variables** y su primer
+script de bash con argumentos.
+
+La gracia de usar el mismo par en la parte 2 es exactamente esa:
+correr la herramienta sobre un caso que ya resolvieron a mano, para
+que cuando la salida no coincida con su papel —y adelanto que no va a
+coincidir— puedan explicar por qué, en vez de encogerse de hombros y
+copiar el resultado.
+
+::: pendiente
+Las partes 1 y 3 de esta página están por escribir. Hoy está
+desarrollada la parte 2, que se sostiene sola: basta con saber que en
+la parte 1 llenaron la matriz de GCATGCG / GATTACA con match +1,
+mismatch −1 y gap −1 (la misma de la figura del
+[capítulo](algoritmos.qmd)).
+:::
+
+## Preparación
+
+EMBOSS está instalado en `ken` como módulo. `module` es el sistema con
+el que los clústers académicos cargan software sin que cada quien
+edite su `PATH` a mano; lo van a encontrar en todos lados.
+
+```bash
+ssh usuario@ken.lavis.unam.mx
+mkdir -p ~/bioinfo1/sesion07
+cd ~/bioinfo1/sesion07
+
+module use /mnt/data/bioinfo1/jmiranda/modulefiles
+module load emboss
+needle -version
+```
+
+Si `needle -version` responde con algo como `EMBOSS:6.6.0.0`, están
+listos. EMBOSS es una navaja suiza de unos doscientos programas
+pequeños; `needle` y `water` son las implementaciones de referencia de
+los dos algoritmos de la mañana, y llevan esos nombres en honor a
+Needleman y a Waterman.
+
+::: pendiente
+Instructor: verificar antes de la clase que el módulo `emboss/6.6.0`
+carga en `ken` tal cual (la receta está en el README de planeación de
+esta práctica).
+:::
+
+## Parte 1 · La matriz a mano
+
+::: pendiente
+Por escribir (matriz en papel, en parejas, traceback, empates). El par
+y el scoring quedan fijados desde ya: **GCATGCG** contra **GATTACA**,
+match +1, mismatch −1, gap −1. Guarden su matriz terminada: la parte 2
+la usa como referencia, y la foto es parte del entregable.
+:::
+
+## Parte 2 · EMBOSS: needle y water
+
+### Ejercicio 1. Variables, `asis::` y el primer needle
+
+Antes de tocar `needle`, el concepto de cómputo del día. Una variable
+de bash se define sin espacios alrededor del `=` y se lee con `$`:
+
+```bash
+seq1=GCATGCG
+seq2=GATTACA
+echo "voy a alinear $seq1 contra $seq2"
+```
+
+`needle` normalmente lee archivos FASTA, pero EMBOSS acepta secuencias
+escritas directo en la línea de comandos con el prefijo `asis::`. Para
+un par de 7 nt es perfecto: hoy no necesitamos archivos.
+
+```bash
+needle -asequence asis::$seq1 -bsequence asis::$seq2 \
+       -gapopen 10.0 -gapextend 0.5 \
+       -outfile papel.needle
+cat papel.needle
+```
+
+Miren la salida con calma. El encabezado reporta la matriz de
+sustitución usada, las penalizaciones de gap, y luego cuatro líneas
+que van a leer miles de veces en su carrera: `Length`, `Identity`,
+`Similarity`, `Gaps`, `Score`.
+
+En el papel, el score óptimo de este par les dio otro número, y el
+alineamiento tenía otra forma. ¿Qué está haciendo `needle` distinto?
+
+::: {.callout-note collapse="true"}
+## Solución
+
+La salida debería reportar un alineamiento de longitud 11, con algo
+muy parecido a esto:
+
+```
+----GCATGCG
+    .||
+GATTACA----
+```
+
+es decir, las dos secuencias casi sin traslape, unas pocas columnas
+alineadas al centro (`C` con `C`, `A` con `A`) y gaps terminales por
+todos lados: `Identity 2/11 (18.2%)`, `Gaps 8/11 (72.7%)`,
+`Score 6.0`.
+
+Dos cosas cambiaron respecto de su papel, y las dos están *declaradas*
+en el encabezado del archivo:
+
+**El esquema de puntaje es otro.** `needle` usó la matriz EDNAFULL
+(match +5, mismatch −4) con gap de apertura 10.0 y extensión 0.5 — no
+el +1/−1/−1 del pizarrón. La matriz de sustitución es un parámetro del
+algoritmo, no parte del algoritmo; es exactamente el punto de la
+sección 7 del capítulo.
+
+**`needle` por defecto no cobra los gaps terminales.** Eso lo
+convierte en la variante *semi-global* de la sección 5 del capítulo,
+no en el Needleman–Wunsch estricto del pizarrón. Y con extremos
+gratis, la mejor jugada para dos secuencias que casi no se parecen es
+descarada: deslizar una junto a la otra, cobrar dos matches (+10), un
+mismatch (−4), y pagar cero por los ocho gaps de las orillas. Score
+6.0.
+
+Para proteínas, `Identity` y `Similarity` difieren: similarity cuenta
+también las sustituciones con puntaje positivo en la matriz
+(reemplazos "conservadores"). En DNA suelen coincidir.
+
+La moraleja no es que `needle` esté roto. Es que un alineamiento
+óptimo solo es óptimo *respecto a un esquema*, y el esquema está
+impreso en el encabezado. Por eso se entrega el archivo de salida
+completo, no nada más el dibujito.
+:::
+
+### Ejercicio 2. Cobrar los extremos: `-endweight`
+
+Obliguen a `needle` a comportarse como el algoritmo del pizarrón, que
+sí cobra los gaps terminales:
+
+```bash
+needle -asequence asis::$seq1 -bsequence asis::$seq2 \
+       -gapopen 10.0 -gapextend 0.5 \
+       -endweight Y -endopen 10.0 -endextend 0.5 \
+       -outfile papel_endweight.needle
+cat papel_endweight.needle
+```
+
+Comparen con el ejercicio 1 y con su matriz de la parte 1: ¿cambió el
+alineamiento?, ¿aparecieron los gaps que ustedes encontraron a mano?
+
+::: {.callout-note collapse="true"}
+## Solución
+
+Ahora sí es global de verdad, y el resultado es la diagonal pura:
+
+```
+GCATGCG
+|..|.|.
+GATTACA
+```
+
+`Length 7`, `Identity 3/7 (42.9%)`, `Gaps 0/7`, `Score -1.0`.
+
+Pero en el papel su score óptimo fue 0, con **tres** alineamientos
+óptimos empatados — y los tres tenían gaps. ¿Por qué `needle` no mete
+ninguno?
+
+Por el precio. Con el esquema del pizarrón, un gap cuesta −1, lo mismo
+que un mismatch: meter gaps sale barato y el óptimo los usa. Con los
+parámetros por defecto de EMBOSS, abrir un gap cuesta 10.5 mientras
+que un mismatch cuesta 4: para que un gap pague, tendría que comprar
+más de diez puntos de mejora, y en 7 nt no hay de dónde sacarlos. Así
+que el óptimo con este esquema es no meter gaps, aunque el óptimo con
+el esquema de ustedes sí los tenga.
+
+Mismo algoritmo, mismas secuencias, otro esquema → otro alineamiento
+óptimo y otro score. Ninguno de los dos es "el verdadero" (mito 6 del
+capítulo). El alineamiento que reporten siempre viene con su esquema
+pegado.
+:::
+
+### Ejercicio 3. water sobre el mismo par
+
+Ahora el local, sin cambiar nada más:
+
+```bash
+water -asequence asis::$seq1 -bsequence asis::$seq2 \
+      -gapopen 10.0 -gapextend 0.5 \
+      -outfile papel.water
+cat papel.water
+```
+
+Antes de mirar la solución: ¿qué *esperan*? En la mañana vimos que el
+alineamiento local necesita un bloque conservado, y este par se
+eligió a propósito porque **no** comparte ninguno.
+
+::: {.callout-note collapse="true"}
+## Solución
+
+`water` devuelve una isla diminuta: un alineamiento de **longitud 2**,
+`Identity 2/2 (100.0%)`, `Score 10.0`. Hay dos islas empatadas en este
+par (`CA` con `CA`, y `AT` con `AT`); `water` reporta una sola —
+anoten cuál les tocó. Los empates existen, pero las herramientas no
+los enseñan: los esconden. Acuérdense de eso cada vez que un programa
+les dé "el" alineamiento.
+
+Y aquí está la lección más importante de la tarde: **Smith–Waterman
+nunca devuelve "no hay nada"**. El cero de la recurrencia garantiza
+que el mejor alineamiento local siempre existe, aunque sea una isla de
+dos nucleótidos con 100% de identidad. Un reporte que diga "encontré
+un alineamiento con identidad perfecta" puede estar describiendo dos
+letras.
+
+¿Cómo distinguir una isla trivial de una señal biológica real? Esa es
+la pregunta de la **significancia estadística** — scores, E-values — y
+es exactamente donde arranca la sesión que viene, con BLAST. Guarden
+la incomodidad.
+:::
+
+### Ejercicio 4. Que needle piense como el pizarrón
+
+Falta cerrar el círculo: hacer que `needle` reproduzca *exactamente*
+su resultado del papel. Para eso hay que cambiarle el esquema
+completo: la matriz (a match +1, mismatch −1) y los gaps (a −1 por
+residuo, también en los extremos).
+
+La matriz se pasa como archivo. Escríbanla con un *heredoc*:
+
+```bash
+cat > matriz_pizarron.mat <<'EOF'
+# El esquema del pizarrón: match +1, mismatch -1
+    A   C   G   T
+A   1  -1  -1  -1
+C  -1   1  -1  -1
+G  -1  -1   1  -1
+T  -1  -1  -1   1
+EOF
+
+needle -asequence asis::$seq1 -bsequence asis::$seq2 \
+       -datafile ./matriz_pizarron.mat \
+       -gapopen 0.0 -gapextend 1.0 \
+       -endweight Y -endopen 0.0 -endextend 1.0 \
+       -outfile pizarron.needle
+cat pizarron.needle
+```
+
+La meta: `Score 0.0` y uno de los tres alineamientos óptimos de su
+papel. Si el score no da 0, no borren nada — es un dato. Prueben
+`-gapopen 1.0 -gapextend 1.0 -endopen 1.0 -endextend 1.0` y comparen.
+
+::: {.callout-note collapse="true"}
+## Solución
+
+Con el esquema bien reproducido, `needle` reporta `Score 0.0` y **uno**
+de estos tres alineamientos (los tres empatan, la herramienta escoge
+uno):
+
+```
+GCATG-CG      GCAT-GCG      GCA-TGCG
+| ||. |.      | || .|.      | | |.|.
+G-ATTACA      G-ATTACA      G-ATTACA
+```
+
+Lo del `-gapopen`: la pregunta de fondo es qué cobra EMBOSS por un gap
+de longitud $L$. Si cobra $\text{apertura} + L \cdot \text{extensión}$
+(la extensión se cobra desde el primer residuo), entonces apertura 0 y
+extensión 1 dan el gap lineal de −1 por residuo del pizarrón. Si en
+cambio cobra $\text{apertura} + (L-1) \cdot \text{extensión}$ (el
+primer residuo solo paga apertura), lo que reproduce el pizarrón es
+apertura 1 y extensión 1. La documentación de las herramientas es
+notoriamente vaga con estos convenios, y la forma honesta de
+averiguarlo es esta: un caso chiquito cuyo resultado ya conocen a
+mano. Acaban de usar su matriz de papel como *control positivo* de una
+herramienta de producción. Eso es exactamente lo que hace la gente que
+sabe lo que corre.
+:::
+
+::: pendiente
+Instructor: correr este ejercicio en `ken` antes de la clase y dejar
+aquí fijado cuál de las dos combinaciones de `-gapopen`/`-gapextend`
+reproduce el score 0 en EMBOSS 6.6.0, para decirlo con certeza en la
+solución.
+:::
+
+### Ejercicio 5. El primer script con argumentos
+
+Todo lo anterior fueron comandos sueltos. El entregable de hoy es
+empaquetarlos en un script que reciba las dos secuencias como
+argumentos. En bash, `$1` y `$2` son el primer y el segundo argumento
+con que se invoca el script.
+
+Creen el archivo `alinear_par.sh` con su editor (`nano
+alinear_par.sh`):
+
+```bash
+#!/usr/bin/env bash
+# uso: ./alinear_par.sh SEQ1 SEQ2
+# Alinea un par de secuencias en global (needle) y en local (water)
+# y resume los scores.
+
+if [ $# -ne 2 ]; then
+  echo "uso: $0 SEQ1 SEQ2"
+  exit 1
+fi
+
+needle -asequence asis::$1 -bsequence asis::$2 \
+       -gapopen 10.0 -gapextend 0.5 -outfile par.needle
+water  -asequence asis::$1 -bsequence asis::$2 \
+       -gapopen 10.0 -gapextend 0.5 -outfile par.water
+
+grep "Score" par.needle par.water
+```
+
+Denle permiso de ejecución y córranlo, primero sin argumentos y luego
+con el par de la práctica:
+
+```bash
+chmod +x alinear_par.sh
+./alinear_par.sh
+./alinear_par.sh GCATGCG GATTACA
+```
+
+Y ya que el script recibe cualquier par, pruébenlo con secuencias
+reales: estos son los dos primers de PCR con los que en el laboratorio
+amplificamos la sonda de *rspo2* de la babosa *Deroceras laeve* (los
+van a volver a ver en este curso):
+
+```bash
+./alinear_par.sh TACGTGTTTCGCTCGGTCAA CAATGCACCACCAAAGCACA
+```
+
+::: {.callout-note collapse="true"}
+## Solución
+
+El bloque `if [ $# -ne 2 ]` es la diferencia entre un script y un
+accidente esperando usuario: `$#` es el número de argumentos
+recibidos, y si no son exactamente dos, el script explica cómo usarse
+y termina con `exit 1` (estado distinto de cero = error, la convención
+de Unix). Correrlo sin argumentos debe producir el mensaje de uso, no
+un needle confundido.
+
+Con el par del pizarrón deben salir los mismos scores de los
+ejercicios 1 y 3: global 6.0, local 10.0.
+
+Con los dos primers: son oligos que apuntan a regiones distintas del
+mismo gen, así que *no* se parecen entre sí — y sin embargo `water`
+les va a reportar alguna isla corta con identidad alta y un score que,
+sin contexto, suena bien. Dos secuencias cualesquiera de 20 nt siempre
+comparten algo. ¿Qué tan grande tiene que ser un score local para
+significar algo? Otra vez la pregunta de la significancia; otra vez la
+respuesta es la próxima sesión.
+:::
+
+## Parte 3 · Rosalind
+
+::: pendiente
+Por escribir: la progresión
+[EDIT](https://rosalind.info/problems/edit/) →
+[EDTA](https://rosalind.info/problems/edta/) →
+[GLOB](https://rosalind.info/problems/glob/) →
+[LOCA](https://rosalind.info/problems/loca/) →
+[GAFF](https://rosalind.info/problems/gaff/). El primero da solo la
+distancia; el segundo pide reconstruir el alineamiento; los siguientes
+agregan matriz real y gap afín.
+:::
+
+## Para entregar
+
+En su repositorio, dentro de `sesion07/`:
+
+- La **foto de su matriz** de la parte 1, resuelta a mano, con el
+  traceback marcado.
+- El script `alinear_par.sh`.
+- Los archivos de salida `papel.needle`, `papel_endweight.needle`,
+  `papel.water` y `pizarron.needle`.
+- Un párrafo respondiendo: ¿en qué difirió el primer `needle` de su
+  resultado en papel, y cuáles fueron las *dos* razones?

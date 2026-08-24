@@ -20,7 +20,7 @@ siempre. La idea de Jero es que la biología del día es el pretexto para el con
 | Sesión | Biología | Cómputo | Práctica |
 |--------|----------|---------|----------|
 | 1 | Panorama | Terminal, Markdown, git, estructura de proyecto | [git para científicos](../contenido/01-fundamentos/sesion01-practica.qmd) |
-| 7 | Alineamiento | Variables, primer script con argumentos | *(por escribir)* |
+| 7 | Alineamiento | Variables, primer script con argumentos | [needle y water](../contenido/03-alineamientos/clase07-algoritmos.qmd) |
 | 8 | BLAST | Scripts, `cut`/`sort`, salida tabular | *(por escribir)* |
 | 9 | Alineamiento múltiple | *(por definir)* | *(por escribir)* |
 | 10 | Homología | Ciclos (`for`, `while`) | [Reciprocal best hits](../contenido/03-alineamientos/sesion10-practica.qmd) |

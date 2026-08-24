@@ -541,7 +541,7 @@ Ningún método neuronal reemplazó a Needleman–Wunsch para encontrar el
 ## Práctica
 
 La práctica de la sesión está en [práctica de la sesión
-7](/practicas/clase07-algoritmos.qmd). Tres partes:
+7](clase07-algoritmos.qmd). Tres partes:
 
 1.  **Needleman–Wunsch a mano**, en papel, en parejas, con **GCATGCG /
     GATTACA** y scoring simple (match +1, mismatch −1, gap −1). Sin
