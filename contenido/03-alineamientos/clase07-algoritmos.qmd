@@ -10,29 +10,56 @@ En la mañana abrimos la caja negra: Needleman–Wunsch y Smith–Waterman
 son la misma maquinaria de programación dinámica con tres cambios
 acoplados. Esta práctica tiene tres partes:
 
-1. **Needleman–Wunsch a mano**, en papel, en parejas, con GCATGCG /
-   GATTACA y scoring simple (match +1, mismatch −1, gap −1).
-2. **EMBOSS `needle` y `water`** sobre *el mismo par*, para comparar
-   con lo del papel y ver la diferencia global/local en un caso que ya
-   entienden a mano.
+1. **Needleman–Wunsch a mano**, en papel, en parejas, con un par corto
+   de secuencias reales del proyecto.
+2. **EMBOSS `needle` y `water`** sobre los datos del laboratorio: la
+   parte de hoy.
 3. **Rosalind**: la progresión EDIT → EDTA → GLOB → LOCA → GAFF.
 
-El concepto de cómputo del día son las **variables** y su primer
-script de bash con argumentos.
+El concepto de cómputo del día son las **variables** de bash y su
+primer script con argumentos.
 
-La gracia de usar el mismo par en la parte 2 es exactamente esa:
-correr la herramienta sobre un caso que ya resolvieron a mano, para
-que cuando la salida no coincida con su papel —y adelanto que no va a
-coincidir— puedan explicar por qué, en vez de encogerse de hombros y
-copiar el resultado.
+Ninguna secuencia de hoy es de juguete. Todas salen del proyecto
+R-spondina/LGR de *Deroceras laeve* — la babosa del laboratorio — y
+cada ejercicio es una pregunta que el proyecto tuvo que responder de
+verdad con estos mismos archivos. La respuesta de un alineamiento
+decidió, entre otras cosas, si un anticuerpo de varios cientos de
+dólares servía para algo.
 
-::: pendiente
-Las partes 1 y 3 de esta página están por escribir. Hoy está
-desarrollada la parte 2, que se sostiene sola: basta con saber que en
-la parte 1 llenaron la matriz de GCATGCG / GATTACA con match +1,
-mismatch −1 y gap −1 (la misma de la figura del
-[capítulo](algoritmos.qmd)).
-:::
+## El material de hoy
+
+Dos líneas de contexto para que los alineamientos signifiquen algo.
+
+**Los receptores LGR.** LGR5 (*leucine-rich repeat-containing
+G-protein-coupled receptor 5*) es el marcador clásico de células
+troncales adultas: el receptor de las R-spondinas, los amplificadores
+de la vía Wnt. Su arquitectura es la clave de esta práctica: un
+**ectodominio de repeticiones ricas en leucina (LRR)** que reconoce al
+ligando, seguido de un **dominio de siete hélices transmembranales
+(7TM)** que mete la señal a la célula. El laboratorio quiere saber
+dónde está esa maquinaria en la babosa.
+
+**El genoma de la babosa** tiene dos receptores LGR completos — en los
+cromosomas 6 y 10, **ohnólogos**: parálogos nacidos de la duplicación
+genómica completa de los gasterópodos — y, aparte, un arreglo en
+tándem en el cromosoma 13 de genes que solo tienen la parte LRR. Para
+ver dónde se expresan estos genes, el laboratorio usa sondas de
+hibridación *in situ* (HCR e ISH); para ver la proteína, se evaluó un
+anticuerpo comercial "anti-LGR5" hecho contra la proteína humana.
+
+Los archivos, ya en el servidor:
+
+| archivo | contenido |
+|---|---|
+| `01_lgr_paralogos_4seq.faa` | 4 proteínas LGR: hLGR5 y hLGR4 (humanas), Dla_chr6 y Dla_chr10 (babosa) |
+| `02_contraste_locus_LGRcompleto_vs_LRRonly.faa` | Dla019 (receptor completo) y Dla027/Dla028 (solo-LRR, tándem de chr13) |
+| `03_sondas_HCR_rspo2.fasta` | las 20 ventanas de 52 nt del set de sondas HCR DLA-rspo2-B2 |
+| `04_amplicones_ISH_rspo2_lgr5.fa` | amplicones de PCR para sondas ISH de *rspo2* y *lgr5*; sus primers van en el encabezado |
+| `05_inmunogeno_PA5-23000.faa` | el péptido de 50 aa contra el que se produjo el anticuerpo comercial |
+| `06_epitopo_nucleo_22aa.faa` | el núcleo de 22 aa de ese inmunógeno |
+| `clave_respuesta_mafft_4paralogos.aln.fasta` | el alineamiento múltiple real del pipeline del laboratorio |
+
+: {tbl-colwidths="[40,60]"}
 
 ## Preparación
 
@@ -42,7 +69,7 @@ edite su `PATH` a mano; lo van a encontrar en todos lados.
 
 ```bash
 ssh usuario@ken.lavis.unam.mx
-mkdir -p ~/bioinfo1/sesion07
+mkdir -p ~/bioinfo1/sesion07/datos
 cd ~/bioinfo1/sesion07
 
 module use /mnt/data/bioinfo1/jmiranda/modulefiles
@@ -51,319 +78,412 @@ needle -version
 ```
 
 Si `needle -version` responde con algo como `EMBOSS:6.6.0.0`, están
-listos. EMBOSS es una navaja suiza de unos doscientos programas
-pequeños; `needle` y `water` son las implementaciones de referencia de
-los dos algoritmos de la mañana, y llevan esos nombres en honor a
-Needleman y a Waterman.
+listos. `needle` y `water` son las implementaciones de referencia de
+los dos algoritmos de la mañana, bautizadas en honor a Needleman y a
+Waterman.
+
+Copien los datos usando la primera variable del día:
+
+```bash
+origen=/mnt/data/bioinfo1/jmiranda/sesion07
+cp $origen/* datos/
+ls -l datos/
+```
+
+Una variable de bash se define **sin espacios** alrededor del `=` y se
+lee anteponiendo `$`. Desde ahora, cuando un comando use `$origen`,
+bash lo sustituye por la ruta completa antes de ejecutar. Los nombres
+de archivo de hoy son largos a propósito: escriban las primeras letras
+y completen con la tecla TAB.
 
 ::: pendiente
-Instructor: verificar antes de la clase que el módulo `emboss/6.6.0`
-carga en `ken` tal cual (la receta está en el README de planeación de
-esta práctica).
+Instructor, antes de la clase: (1) verificar que el módulo
+`emboss/6.6.0` carga tal cual (la receta está en el README de
+planeación de esta práctica); (2) copiar los archivos de
+`planeacion/practica_alineamiento_pareado/` a la ruta `$origen` que se
+fije y corregirla aquí; (3) correr los comandos de la práctica una vez:
+los números de las soluciones son valores de referencia recalculados
+con una reimplementación de needle/water y pueden variar en decimales
+respecto de la salida exacta de EMBOSS.
 :::
 
 ## Parte 1 · La matriz a mano
 
 ::: pendiente
-Por escribir (matriz en papel, en parejas, traceback, empates). El par
-y el scoring quedan fijados desde ya: **GCATGCG** contra **GATTACA**,
-match +1, mismatch −1, gap −1. Guarden su matriz terminada: la parte 2
-la usa como referencia, y la foto es parte del entregable.
+Por escribir (en otra sesión de trabajo). Candidatos del material
+real, por definir: los primers de 20 nt que vienen en los encabezados
+de `04_amplicones_ISH_rspo2_lgr5.fa` (matriz de DP en papel, por
+parejas) o el núcleo del epítopo de 22 aa de
+`06_epitopo_nucleo_22aa.faa`.
 :::
 
 ## Parte 2 · EMBOSS: needle y water
 
-### Ejercicio 1. Variables, `asis::` y el primer needle
+### Ejercicio 1. Los dos ohnólogos de la babosa
 
-Antes de tocar `needle`, el concepto de cómputo del día. Una variable
-de bash se define sin espacios alrededor del `=` y se lee con `$`:
+La primera pregunta: ¿qué tanto se parecen entre sí los dos receptores
+LGR de la babosa, separados por la duplicación genómica de los
+gasterópodos?
 
-```bash
-seq1=GCATGCG
-seq2=GATTACA
-echo "voy a alinear $seq1 contra $seq2"
-```
-
-`needle` normalmente lee archivos FASTA, pero EMBOSS acepta secuencias
-escritas directo en la línea de comandos con el prefijo `asis::`. Para
-un par de 7 nt es perfecto: hoy no necesitamos archivos.
+EMBOSS puede tomar una secuencia específica de un archivo multi-FASTA
+con la sintaxis `archivo:identificador`:
 
 ```bash
-needle -asequence asis::$seq1 -bsequence asis::$seq2 \
+needle -asequence datos/01_lgr_paralogos_4seq.faa:Dla_chr6_LGR \
+       -bsequence datos/01_lgr_paralogos_4seq.faa:Dla_chr10_LGR \
        -gapopen 10.0 -gapextend 0.5 \
-       -outfile papel.needle
-cat papel.needle
+       -outfile chr6_vs_chr10.needle
+less chr6_vs_chr10.needle
 ```
 
-Miren la salida con calma. El encabezado reporta la matriz de
-sustitución usada, las penalizaciones de gap, y luego cuatro líneas
-que van a leer miles de veces en su carrera: `Length`, `Identity`,
-`Similarity`, `Gaps`, `Score`.
+Miren la salida con calma (salgan de `less` con `q`). El encabezado
+declara con qué se corrió el alineamiento — matriz de sustitución,
+penalizaciones de gap — y luego vienen cuatro líneas que van a leer
+miles de veces en su carrera: `Length`, `Identity`, `Similarity`,
+`Gaps`, `Score`.
 
-En el papel, el score óptimo de este par les dio otro número, y el
-alineamiento tenía otra forma. ¿Qué está haciendo `needle` distinto?
+¿Qué matriz usó `needle` sin que ustedes se la pidieran? ¿Y qué
+diferencia hay entre *identity* y *similarity*?
 
 ::: {.callout-note collapse="true"}
 ## Solución
 
-La salida debería reportar un alineamiento de longitud 11, con algo
-muy parecido a esto:
+El encabezado reporta `Matrix: EBLOSUM62`, `Gap_penalty: 10.0`,
+`Extend_penalty: 0.5`. Es la BLOSUM62 de la sesión de matrices de
+Wilbert — y aquí está la conexión: la matriz de sustitución no es
+parte del algoritmo, es un **parámetro** del algoritmo. `needle` la
+eligió por ustedes; publicar un alineamiento sin decir con qué matriz
+y qué gaps se corrió es publicar la mitad del resultado.
+
+Los valores de referencia, aproximadamente:
 
 ```
-----GCATGCG
-    .||
-GATTACA----
+Length: 1089   Identity: ~657/1089 (~60%)
+Similarity: ~767/1089 (~70%)   Gaps: ~165/1089 (~15%)
+Score: ~3400
 ```
 
-es decir, las dos secuencias casi sin traslape, unas pocas columnas
-alineadas al centro (`C` con `C`, `A` con `A`) y gaps terminales por
-todos lados: `Identity 2/11 (18.2%)`, `Gaps 8/11 (72.7%)`,
-`Score 6.0`.
+`Identity` cuenta las columnas con el mismo aminoácido. `Similarity`
+suma además las sustituciones con puntaje **positivo** en BLOSUM62 —
+los reemplazos "baratos" evolutivamente, como isoleucina por leucina.
+Por eso en proteínas la similitud siempre es mayor que la identidad, y
+por eso en DNA (donde la matriz solo premia lo idéntico) las dos
+coinciden.
 
-Dos cosas cambiaron respecto de su papel, y las dos están *declaradas*
-en el encabezado del archivo:
-
-**El esquema de puntaje es otro.** `needle` usó la matriz EDNAFULL
-(match +5, mismatch −4) con gap de apertura 10.0 y extensión 0.5 — no
-el +1/−1/−1 del pizarrón. La matriz de sustitución es un parámetro del
-algoritmo, no parte del algoritmo; es exactamente el punto de la
-sección 7 del capítulo.
-
-**`needle` por defecto no cobra los gaps terminales.** Eso lo
-convierte en la variante *semi-global* de la sección 5 del capítulo,
-no en el Needleman–Wunsch estricto del pizarrón. Y con extremos
-gratis, la mejor jugada para dos secuencias que casi no se parecen es
-descarada: deslizar una junto a la otra, cobrar dos matches (+10), un
-mismatch (−4), y pagar cero por los ocho gaps de las orillas. Score
-6.0.
-
-Para proteínas, `Identity` y `Similarity` difieren: similarity cuenta
-también las sustituciones con puntaje positivo en la matriz
-(reemplazos "conservadores"). En DNA suelen coincidir.
-
-La moraleja no es que `needle` esté roto. Es que un alineamiento
-óptimo solo es óptimo *respecto a un esquema*, y el esquema está
-impreso en el encabezado. Por eso se entrega el archivo de salida
-completo, no nada más el dibujito.
+Un 60% de identidad tras la duplicación genómica de los gasterópodos:
+guarden ese número, es el primer peldaño de una escalera.
 :::
 
-### Ejercicio 2. Cobrar los extremos: `-endweight`
+### Ejercicio 2. La escalera de la evolución (y su primer script)
 
-Obliguen a `needle` a comportarse como el algoritmo del pizarrón, que
-sí cobra los gaps terminales:
+El archivo 01 trae cuatro proteínas: los dos LGR de la babosa y los
+dos parálogos humanos hLGR5 y hLGR4. Eso da seis pares posibles, y ya
+alinearon uno. Escribir cinco veces ese comando de cuatro renglones es
+exactamente el tipo de sufrimiento que un script existe para evitar.
 
-```bash
-needle -asequence asis::$seq1 -bsequence asis::$seq2 \
-       -gapopen 10.0 -gapextend 0.5 \
-       -endweight Y -endopen 10.0 -endextend 0.5 \
-       -outfile papel_endweight.needle
-cat papel_endweight.needle
-```
-
-Comparen con el ejercicio 1 y con su matriz de la parte 1: ¿cambió el
-alineamiento?, ¿aparecieron los gaps que ustedes encontraron a mano?
-
-::: {.callout-note collapse="true"}
-## Solución
-
-Ahora sí es global de verdad, y el resultado es la diagonal pura:
-
-```
-GCATGCG
-|..|.|.
-GATTACA
-```
-
-`Length 7`, `Identity 3/7 (42.9%)`, `Gaps 0/7`, `Score -1.0`.
-
-Pero en el papel su score óptimo fue 0, con **tres** alineamientos
-óptimos empatados — y los tres tenían gaps. ¿Por qué `needle` no mete
-ninguno?
-
-Por el precio. Con el esquema del pizarrón, un gap cuesta −1, lo mismo
-que un mismatch: meter gaps sale barato y el óptimo los usa. Con los
-parámetros por defecto de EMBOSS, abrir un gap cuesta 10.5 mientras
-que un mismatch cuesta 4: para que un gap pague, tendría que comprar
-más de diez puntos de mejora, y en 7 nt no hay de dónde sacarlos. Así
-que el óptimo con este esquema es no meter gaps, aunque el óptimo con
-el esquema de ustedes sí los tenga.
-
-Mismo algoritmo, mismas secuencias, otro esquema → otro alineamiento
-óptimo y otro score. Ninguno de los dos es "el verdadero" (mito 6 del
-capítulo). El alineamiento que reporten siempre viene con su esquema
-pegado.
-:::
-
-### Ejercicio 3. water sobre el mismo par
-
-Ahora el local, sin cambiar nada más:
-
-```bash
-water -asequence asis::$seq1 -bsequence asis::$seq2 \
-      -gapopen 10.0 -gapextend 0.5 \
-      -outfile papel.water
-cat papel.water
-```
-
-Antes de mirar la solución: ¿qué *esperan*? En la mañana vimos que el
-alineamiento local necesita un bloque conservado, y este par se
-eligió a propósito porque **no** comparte ninguno.
-
-::: {.callout-note collapse="true"}
-## Solución
-
-`water` devuelve una isla diminuta: un alineamiento de **longitud 2**,
-`Identity 2/2 (100.0%)`, `Score 10.0`. Hay dos islas empatadas en este
-par (`CA` con `CA`, y `AT` con `AT`); `water` reporta una sola —
-anoten cuál les tocó. Los empates existen, pero las herramientas no
-los enseñan: los esconden. Acuérdense de eso cada vez que un programa
-les dé "el" alineamiento.
-
-Y aquí está la lección más importante de la tarde: **Smith–Waterman
-nunca devuelve "no hay nada"**. El cero de la recurrencia garantiza
-que el mejor alineamiento local siempre existe, aunque sea una isla de
-dos nucleótidos con 100% de identidad. Un reporte que diga "encontré
-un alineamiento con identidad perfecta" puede estar describiendo dos
-letras.
-
-¿Cómo distinguir una isla trivial de una señal biológica real? Esa es
-la pregunta de la **significancia estadística** — scores, E-values — y
-es exactamente donde arranca la sesión que viene, con BLAST. Guarden
-la incomodidad.
-:::
-
-### Ejercicio 4. Que needle piense como el pizarrón
-
-Falta cerrar el círculo: hacer que `needle` reproduzca *exactamente*
-su resultado del papel. Para eso hay que cambiarle el esquema
-completo: la matriz (a match +1, mismatch −1) y los gaps (a −1 por
-residuo, también en los extremos).
-
-La matriz se pasa como archivo. Escríbanla con un *heredoc*:
-
-```bash
-cat > matriz_pizarron.mat <<'EOF'
-# El esquema del pizarrón: match +1, mismatch -1
-    A   C   G   T
-A   1  -1  -1  -1
-C  -1   1  -1  -1
-G  -1  -1   1  -1
-T  -1  -1  -1   1
-EOF
-
-needle -asequence asis::$seq1 -bsequence asis::$seq2 \
-       -datafile ./matriz_pizarron.mat \
-       -gapopen 0.0 -gapextend 1.0 \
-       -endweight Y -endopen 0.0 -endextend 1.0 \
-       -outfile pizarron.needle
-cat pizarron.needle
-```
-
-La meta: `Score 0.0` y uno de los tres alineamientos óptimos de su
-papel. Si el score no da 0, no borren nada — es un dato. Prueben
-`-gapopen 1.0 -gapextend 1.0 -endopen 1.0 -endextend 1.0` y comparen.
-
-::: {.callout-note collapse="true"}
-## Solución
-
-Con el esquema bien reproducido, `needle` reporta `Score 0.0` y **uno**
-de estos tres alineamientos (los tres empatan, la herramienta escoge
-uno):
-
-```
-GCATG-CG      GCAT-GCG      GCA-TGCG
-| ||. |.      | || .|.      | | |.|.
-G-ATTACA      G-ATTACA      G-ATTACA
-```
-
-Lo del `-gapopen`: la pregunta de fondo es qué cobra EMBOSS por un gap
-de longitud $L$. Si cobra $\text{apertura} + L \cdot \text{extensión}$
-(la extensión se cobra desde el primer residuo), entonces apertura 0 y
-extensión 1 dan el gap lineal de −1 por residuo del pizarrón. Si en
-cambio cobra $\text{apertura} + (L-1) \cdot \text{extensión}$ (el
-primer residuo solo paga apertura), lo que reproduce el pizarrón es
-apertura 1 y extensión 1. La documentación de las herramientas es
-notoriamente vaga con estos convenios, y la forma honesta de
-averiguarlo es esta: un caso chiquito cuyo resultado ya conocen a
-mano. Acaban de usar su matriz de papel como *control positivo* de una
-herramienta de producción. Eso es exactamente lo que hace la gente que
-sabe lo que corre.
-:::
-
-::: pendiente
-Instructor: correr este ejercicio en `ken` antes de la clase y dejar
-aquí fijado cuál de las dos combinaciones de `-gapopen`/`-gapextend`
-reproduce el score 0 en EMBOSS 6.6.0, para decirlo con certeza en la
-solución.
-:::
-
-### Ejercicio 5. El primer script con argumentos
-
-Todo lo anterior fueron comandos sueltos. El entregable de hoy es
-empaquetarlos en un script que reciba las dos secuencias como
-argumentos. En bash, `$1` y `$2` son el primer y el segundo argumento
-con que se invoca el script.
-
-Creen el archivo `alinear_par.sh` con su editor (`nano
+En un script de bash, `$1` y `$2` son el primer y el segundo argumento
+con que se invoca. Creen `alinear_par.sh` con su editor (`nano
 alinear_par.sh`):
 
 ```bash
 #!/usr/bin/env bash
-# uso: ./alinear_par.sh SEQ1 SEQ2
-# Alinea un par de secuencias en global (needle) y en local (water)
-# y resume los scores.
+# uso: ./alinear_par.sh ID1 ID2
+# Alineamiento global de dos secuencias del archivo de parálogos LGR.
 
 if [ $# -ne 2 ]; then
-  echo "uso: $0 SEQ1 SEQ2"
+  echo "uso: $0 ID1 ID2"
   exit 1
 fi
 
-needle -asequence asis::$1 -bsequence asis::$2 \
-       -gapopen 10.0 -gapextend 0.5 -outfile par.needle
-water  -asequence asis::$1 -bsequence asis::$2 \
-       -gapopen 10.0 -gapextend 0.5 -outfile par.water
+archivo=datos/01_lgr_paralogos_4seq.faa
 
-grep "Score" par.needle par.water
+needle -asequence $archivo:$1 -bsequence $archivo:$2 \
+       -gapopen 10.0 -gapextend 0.5 \
+       -outfile ${1}_vs_${2}.needle
+
+grep -E "Identity|Similarity|Gaps|Score" ${1}_vs_${2}.needle
 ```
 
-Denle permiso de ejecución y córranlo, primero sin argumentos y luego
-con el par de la práctica:
+Denle permiso de ejecución y complétense la escalera:
 
 ```bash
 chmod +x alinear_par.sh
 ./alinear_par.sh
-./alinear_par.sh GCATGCG GATTACA
+./alinear_par.sh hLGR5_O75473 hLGR4_Q9BXB1
+./alinear_par.sh hLGR5_O75473 Dla_chr6_LGR
+./alinear_par.sh hLGR5_O75473 Dla_chr10_LGR
+./alinear_par.sh hLGR4_Q9BXB1 Dla_chr6_LGR
+./alinear_par.sh hLGR4_Q9BXB1 Dla_chr10_LGR
 ```
 
-Y ya que el script recibe cualquier par, pruébenlo con secuencias
-reales: estos son los dos primers de PCR con los que en el laboratorio
-amplificamos la sonda de *rspo2* de la babosa *Deroceras laeve* (los
-van a volver a ver en este curso):
+(Cinco invocaciones casi idénticas… guarden esa molestia: en la
+sesión 10 la resuelven los ciclos.)
 
-```bash
-./alinear_par.sh TACGTGTTTCGCTCGGTCAA CAATGCACCACCAAAGCACA
-```
+Con sus resultados llenen esta tabla en su libreta o su README:
+
+| par | evento que los separó | identidad |
+|---|---|---|
+| Dla_chr6 vs Dla_chr10 | duplicación genómica completa (ohnólogos) | |
+| hLGR5 vs hLGR4 | duplicación génica (parálogos humanos) | |
+| humano vs babosa (los 4 pares) | especiación, ~600 millones de años | |
 
 ::: {.callout-note collapse="true"}
 ## Solución
 
-El bloque `if [ $# -ne 2 ]` es la diferencia entre un script y un
-accidente esperando usuario: `$#` es el número de argumentos
-recibidos, y si no son exactamente dos, el script explica cómo usarse
-y termina con `exit 1` (estado distinto de cero = error, la convención
-de Unix). Correrlo sin argumentos debe producir el mensaje de uso, no
-un needle confundido.
+Sobre el script: `$#` es el número de argumentos recibidos; si no son
+exactamente dos, el script imprime cómo usarse y termina con `exit 1`
+(estado distinto de cero = error, la convención de Unix). Esa guarda
+es la diferencia entre un script y un accidente esperando usuario:
+correrlo sin argumentos debe dar el mensaje de uso, no un `needle`
+confundido. Las llaves de `${1}_vs_${2}` le dicen a bash dónde termina
+el nombre de la variable; sin ellas, `$1_vs_` se leería como una
+variable inexistente llamada `1_vs_`.
 
-Con el par del pizarrón deben salir los mismos scores de los
-ejercicios 1 y 3: global 6.0, local 10.0.
+Valores de referencia de la escalera (identidad de needle,
+aproximada):
 
-Con los dos primers: son oligos que apuntan a regiones distintas del
-mismo gen, así que *no* se parecen entre sí — y sin embargo `water`
-les va a reportar alguna isla corta con identidad alta y un score que,
-sin contexto, suena bien. Dos secuencias cualesquiera de 20 nt siempre
-comparten algo. ¿Qué tan grande tiene que ser un score local para
-significar algo? Otra vez la pregunta de la significancia; otra vez la
-respuesta es la próxima sesión.
+| par | identidad | similitud |
+|---|---|---|
+| Dla_chr6 vs Dla_chr10 | ~60% | ~70% |
+| hLGR5 vs hLGR4 | ~45% | ~59% |
+| humano vs babosa (4 pares) | ~24–29% | ~37–42% |
+
+El patrón importa más que los decimales: **mismo algoritmo, mismos
+parámetros, tres profundidades de tiempo evolutivo** — y la identidad
+baja monotónicamente con la antigüedad del evento que separó al par.
+Están midiendo tiempo con un alineamiento.
+
+Un detalle que vale un examen: la tabla del material del curso reporta
+estos mismos pares como 71.1%, 50.0% y ~34% — más alto que lo que les
+dio needle. Nadie está mal. Esos números se calcularon sobre el
+alineamiento múltiple del pipeline (`clave_respuesta_mafft…`, está en
+sus datos), contando identidades solo sobre columnas alineadas sin
+gaps; needle divide entre la longitud total del alineamiento, gaps
+incluidos. **"Porcentaje de identidad" no es una cantidad única: es un
+cociente, y hay que preguntar siempre qué hay en el denominador.**
+:::
+
+### Ejercicio 3. Global contra local: el gen que ancla la sonda "lgr5"
+
+Este es el ejercicio central de la práctica, y es la pregunta del
+proyecto tal cual: la sonda "lgr5" del laboratorio no ancla en ninguno
+de los dos receptores completos, sino en `Dla027`, un gen del arreglo
+en tándem del cromosoma 13. ¿Ese gen es un receptor de verdad, o le
+falta algo?
+
+Alineen el receptor completo `Dla019` (933 aa) contra `Dla027`
+(468 aa) de las dos maneras — global y local — sin cambiar nada más:
+
+```bash
+locus=datos/02_contraste_locus_LGRcompleto_vs_LRRonly.faa
+
+needle -asequence $locus:Dla019_chr10_23.68 \
+       -bsequence $locus:Dla027_chr13_39.98 \
+       -gapopen 10.0 -gapextend 0.5 -outfile locus_global.needle
+
+water  -asequence $locus:Dla019_chr10_23.68 \
+       -bsequence $locus:Dla027_chr13_39.98 \
+       -gapopen 10.0 -gapextend 0.5 -outfile locus_local.water
+```
+
+Comparen las dos salidas: `Length`, `Gaps`, y sobre todo **qué región
+de Dla019 aparece en cada una** (las coordenadas van en los márgenes
+del alineamiento).
+
+::: {.callout-note collapse="true"}
+## Solución
+
+Valores de referencia:
+
+```
+needle:  Length ~984   Identity ~14%   Gaps ~58%   Score ~270
+water:   Length ~503   Identity ~25%   Gaps ~21%   Score ~284
+         bloque: Dla019[≈39–505] contra Dla027[≈25–459]
+```
+
+El global está obligado a rendir cuentas por cada residuo de las dos
+proteínas: como Dla019 mide el doble que Dla027, más de la mitad de
+las columnas son gaps y la identidad se diluye a ~14%.
+
+El local hace la pregunta contraria — ¿cuál es la *mejor región* en
+común? — y la respuesta es elocuente: el alineamiento cubre
+aproximadamente los residuos 39–505 de Dla019 y casi todo Dla027… y
+ahí se detiene. Los residuos ~506–933 de Dla019 — su dominio 7TM, las
+siete hélices que transducen la señal — **no tienen con qué
+aparearse**: Dla027 termina donde termina el ectodominio LRR.
+
+Esa es la respuesta del módulo: el gen que ancla la sonda "lgr5" no
+es un receptor completo. Es un gen solo-LRR, sin 7TM — la sonda está
+reportando la expresión de otra cosa que un LGR5 canónico. Un
+alineamiento global y uno local, juntos, contestaron una pregunta de
+biología celular.
+
+**Bonus — el peldaño que faltaba:** alineen a los dos vecinos del
+tándem, `Dla027` contra `Dla028`:
+
+```bash
+needle -asequence $locus:Dla027_chr13_39.98 \
+       -bsequence $locus:Dla028_chr13_40.04 \
+       -gapopen 10.0 -gapextend 0.5 -outfile tandem.needle
+grep -E "Identity|Gaps|Score" tandem.needle
+```
+
+Referencia: ~74% de identidad, casi sin gaps — duplicados en tándem,
+el evento más reciente de toda la práctica, y el peldaño que le
+faltaba a la escalera del ejercicio 2: tándem (~74%) > ohnólogos
+(~60%) > parálogos humanos (~45%) > entre filos (~25%).
+:::
+
+### Ejercicio 4. La sonda, el amplicón y la hebra
+
+Ahora DNA. El set DLA-rspo2-B2 son 20 ventanas de 52 nt repartidas a
+lo largo del transcrito de *rspo2*; el archivo 04 trae los amplicones
+de PCR de los que el laboratorio transcribe sus sondas ISH. Pregunta
+de control de calidad real: ¿las sondas HCR caen dentro del amplicón?
+
+`water` acepta un archivo multi-FASTA completo como `-bsequence`: va a
+alinear la sonda contra *cada* amplicón del archivo, uno tras otro, en
+la misma salida.
+
+```bash
+water -asequence datos/03_sondas_HCR_rspo2.fasta:DLA-rspo2-B2_3 \
+      -bsequence datos/04_amplicones_ISH_rspo2_lgr5.fa \
+      -gapopen 10.0 -gapextend 0.5 -outfile sonda3.water
+
+grep -E "2:|Identity|Score" sonda3.water
+```
+
+Repitan con la sonda `DLA-rspo2-B2_1`. ¿Qué cambió?
+
+::: {.callout-note collapse="true"}
+## Solución
+
+La salida de `B2_3` trae **cuatro** alineamientos (uno por amplicón), y
+no se parecen entre sí:
+
+- Contra el amplicón de **RSPO2**: 52/52, identidad 100%, score 260 —
+  la sonda está contenida *exacta*, alrededor de la posición 125.
+- Contra los tres amplicones de **LGR5**: islas chatarra de ~40% de
+  identidad y score ~65. (Los tres alineamientos LGR5 son idénticos
+  entre sí — y eso también es un dato: las tres entradas son el mismo
+  amplicón anotado sobre tres isoformas del transcriptoma.)
+
+La sonda distingue a su gen: eso es la **especificidad**, medida con
+un alineamiento.
+
+Con `B2_1` no hay ningún 100%: su mejor isla contra RSPO2 anda por
+~55% de identidad y score ~54, es decir, ruido. `B2_1` es una sonda
+real del set, pero su ventana cae en una parte del transcrito que el
+amplicón de 799 pb **no cubre** (el amplicón abarca las ventanas de
+las sondas 2–4 y 13–16). Lección de diseño experimental: la sonda ISH
+y el set HCR no ven exactamente lo mismo del gen.
+:::
+
+Ahora la hebra. En el encabezado del amplicón de RSPO2 vienen sus dos
+primers de PCR. Métanlos en variables y busquen cada uno en el
+amplicón con `water`:
+
+```bash
+p1=TACGTGTTTCGCTCGGTCAA
+p2=CAATGCACCACCAAAGCACA
+
+water -asequence asis::$p1 -bsequence datos/04_amplicones_ISH_rspo2_lgr5.fa \
+      -gapopen 10.0 -gapextend 0.5 -outfile p1.water
+water -asequence asis::$p2 -bsequence datos/04_amplicones_ISH_rspo2_lgr5.fa \
+      -gapopen 10.0 -gapextend 0.5 -outfile p2.water
+grep -E "Identity|Score" p1.water p2.water
+```
+
+(El prefijo `asis::` le dice a EMBOSS que la secuencia va escrita ahí
+mismo, sin archivo.) El primer 1 aparece perfecto; el primer 2 **no
+aparece**. Pero ese primer funcionó en el laboratorio: el amplicón
+existe. ¿Dónde está?
+
+::: {.callout-note collapse="true"}
+## Solución
+
+`p1` da 20/20 al inicio del amplicón. Lo mejor que `water` encuentra
+para `p2` es una isla de ~12/17 (score ~40): ruido.
+
+La respuesta está en la química de la PCR: el primer reverso se
+aparea con **la otra hebra**, así que en la hebra que está escrita en
+el archivo lo que aparece es su **complemento reverso**, al final del
+amplicón. Compruébenlo con otra herramienta de EMBOSS:
+
+```bash
+revseq -sequence asis::$p2 -outseq p2_rc.fasta
+water -asequence p2_rc.fasta -bsequence datos/04_amplicones_ISH_rspo2_lgr5.fa \
+      -gapopen 10.0 -gapextend 0.5 -outfile p2_rc.water
+grep -E "Identity|Score" p2_rc.water
+```
+
+Ahora sí: 20/20, score 100, en las posiciones 780–799 — las últimas
+veinte bases del amplicón de 799 pb. De paso lo pueden *ver* en el
+archivo: abran `datos/04_amplicones_ISH_rspo2_lgr5.fa` con `less` — los
+tramos en MAYÚSCULAS al inicio y al final de cada amplicón son
+exactamente las huellas de los dos primers.
+
+Moraleja para toda su vida con secuencias: **el DNA tiene dos hebras y
+los archivos solo escriben una**. Cuando un alineamiento "no aparece",
+la primera sospecha es la orientación. `revseq` cuesta un segundo;
+descubrirlo tres horas tarde cuesta tres horas.
+:::
+
+### Ejercicio 5. El anticuerpo sin blanco
+
+Último acto, y decisión de compra real. El anticuerpo comercial
+PA5-23000 ("anti-LGR5") se produjo contra un péptido sintético de
+50 aa de la proteína humana; su núcleo reconocible son los 22 aa del
+archivo 06. ¿Ese anticuerpo detectaría algo en la babosa?
+
+Primero el control positivo — el epítopo contra la proteína de la que
+salió — y luego la pregunta de verdad:
+
+```bash
+water -asequence datos/06_epitopo_nucleo_22aa.faa \
+      -bsequence datos/01_lgr_paralogos_4seq.faa:hLGR5_O75473 \
+      -gapopen 10.0 -gapextend 0.5 -outfile epitopo_humano.water
+
+water -asequence datos/06_epitopo_nucleo_22aa.faa \
+      -bsequence datos/01_lgr_paralogos_4seq.faa:Dla_chr6_LGR \
+      -gapopen 10.0 -gapextend 0.5 -outfile epitopo_babosa.water
+
+grep -E "Identity|Similarity|Score" epitopo_humano.water epitopo_babosa.water
+```
+
+Antes de ver la solución: los dos comandos van a reportar *un*
+alineamiento cada uno, con su score y su identidad. ¿Puede `water`
+devolver "no encontré nada"?
+
+::: {.callout-note collapse="true"}
+## Solución
+
+Contra hLGR5, el control positivo sale impecable: 22/22, identidad
+100%, score 110, en los residuos 661–682 — exactamente la región
+650–700 de la que el fabricante recortó su inmunógeno. El método
+funciona y el archivo dice la verdad.
+
+Contra el LGR de la babosa: una isla de 14 residuos con 5 identidades
+(~36%), score ~24. Y aquí está la lección más importante de la tarde:
+**Smith–Waterman nunca devuelve "no hay nada"**. El cero de la
+recurrencia garantiza que siempre exista un mejor alineamiento local,
+aunque sea una isla trivial. `water` no les dijo "el anticuerpo no
+tiene blanco"; les dijo "esto es lo mejor que hay", y distinguir "lo
+mejor que hay" de "algo real" es responsabilidad de ustedes.
+
+El proyecto lo midió también con el inmunógeno completo: 12 identidades
+en 50 posiciones contra el LGR de la babosa (pueden reproducirlo:
+`needle` con `datos/05_inmunogeno_PA5-23000.faa` contra
+`Dla_chr6_LGR`). Conclusión del laboratorio: el anticuerpo no tiene
+blanco en *D. laeve* — y esa immunotinción que no se compró habría
+producido bandas de algo, porque los anticuerpos, como water, siempre
+pegan en *algo*.
+
+¿Cómo se decide formalmente si un score local es señal o ruido? Esa es
+la pregunta de la **significancia estadística** — puntajes, E-values —
+y es exactamente donde arranca la próxima sesión, con BLAST. Guarden
+la incomodidad. Y guarden también el péptido de 22 aa: es candidato
+para la matriz a mano de la parte 1.
 :::
 
 ## Parte 3 · Rosalind
@@ -386,7 +506,14 @@ En su repositorio, dentro de `sesion07/`:
 - La **foto de su matriz** de la parte 1, resuelta a mano, con el
   traceback marcado.
 - El script `alinear_par.sh`.
-- Los archivos de salida `papel.needle`, `papel_endweight.needle`,
-  `papel.water` y `pizarron.needle`.
-- Un párrafo respondiendo: ¿en qué difirió el primer `needle` de su
-  resultado en papel, y cuáles fueron las *dos* razones?
+- La **tabla de la escalera** (ejercicio 2 + el bonus del 3) en
+  Markdown, con los cuatro peldaños y sus identidades.
+- Los archivos de salida de los ejercicios 3 y 5 (`locus_global.needle`,
+  `locus_local.water`, `epitopo_humano.water`, `epitopo_babosa.water`).
+- Un párrafo respondiendo las dos preguntas del laboratorio, con sus
+  alineamientos como evidencia: ¿el gen que ancla la sonda "lgr5" es
+  un receptor completo?, y ¿el anticuerpo PA5-23000 sirve en la
+  babosa?
+
+No suban los archivos de `datos/`: en su `README.md` documenten de
+dónde se copiaron, que es lo que hace reproducible el análisis.

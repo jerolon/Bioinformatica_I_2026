@@ -543,19 +543,23 @@ Ningún método neuronal reemplazó a Needleman–Wunsch para encontrar el
 La práctica de la sesión está en [práctica de la sesión
 7](clase07-algoritmos.qmd). Tres partes:
 
-1.  **Needleman–Wunsch a mano**, en papel, en parejas, con **GCATGCG /
-    GATTACA** y scoring simple (match +1, mismatch −1, gap −1). Sin
-    computadora. Llenar la matriz, hacer el traceback, y reportar si
-    encontraron más de un alineamiento óptimo.
-2.  **EMBOSS `needle` y `water`** sobre el mismo par, para comparar con
-    lo del papel y ver la diferencia global/local en un caso que ya
-    entienden a mano.
+1.  **Needleman–Wunsch a mano**, en papel, en parejas, con un par
+    corto de secuencias reales del proyecto de la babosa (por definir:
+    los primers de 20 nt de los amplicones ISH o el núcleo del epítopo
+    de 22 aa del anticuerpo) y scoring simple. Sin computadora. Llenar
+    la matriz, hacer el traceback, y reportar si encontraron más de un
+    alineamiento óptimo.
+2.  **EMBOSS `needle` y `water`** con las secuencias del proyecto
+    R-spondina/LGR de *Deroceras laeve*: la escalera de identidad de
+    los parálogos LGR, global contra local en el gen que ancla la
+    sonda "lgr5", sondas y primers contra amplicones, y el anticuerpo
+    sin blanco.
 3.  **Rosalind**: progresión EDIT → EDTA → GLOB → LOCA → GAFF. El
     primero da sólo la distancia; el segundo pide reconstruir el
     alineamiento; los siguientes agregan matriz real y gap afín.
 
 El concepto de cómputo del día son las **variables** y el primer script
-de bash con argumentos: el script recibe dos secuencias y llama a
+de bash con argumentos: el script recibe dos identificadores y llama a
 `needle`.
 
 ::: callout-box
