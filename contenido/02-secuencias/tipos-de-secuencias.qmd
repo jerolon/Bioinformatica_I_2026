@@ -7,7 +7,7 @@ author: "Wilbert Gutiérrez S"
 ::: {.callout-note appearance="simple"}
 📽️ **Diapositivas de esta sesión 2:**
 
-<iframe src="../../presentaciones/tu-archivo-aqui.pdf" width="100%" height="600px" style="border: none; margin-top: 10px;">
+<iframe src="../../presentaciones/Sesión_2_280826.pdf" width="100%" height="600px" style="border: none; margin-top: 10px;">
     <p>Tu navegador no soporta la visualización de PDFs. 
     Puedes <a href="../../presentaciones/Sesión_2_280826.pdf">descargar el archivo aquí</a>.</p>
 </iframe>
