@@ -131,6 +131,17 @@ Estas secuencias no tienen un alfabeto propio ni nada que las distinga al mirarl
 
 Eso vale para casi todo este capítulo. La mayoría de los tipos de secuencia no son propiedades de la cadena de letras. Son afirmaciones sobre esa cadena, guardadas en otro lado.
 
+
+::: {.callout-note appearance="simple"}
+📽️ **Diapositivas de esta sesión 2:**
+
+<iframe src="../../presentaciones/Sesión_3_040926.pdf" width="100%" height="600px" style="border: none; margin-top: 10px;">
+    <p>Tu navegador no soporta la visualización de PDFs. 
+    Puedes <a href="../../presentaciones/Sesión_3_040926.pdf">descargar el archivo aquí</a>.</p>
+</iframe>
+:::
+
+
 ### De reads a cromosomas
 
 Un ensamblaje se construye por niveles y cada nivel es un tipo de secuencia con su nombre.
