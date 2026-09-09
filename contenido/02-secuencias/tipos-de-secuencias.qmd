@@ -133,7 +133,7 @@ Eso vale para casi todo este capítulo. La mayoría de los tipos de secuencia no
 
 
 ::: {.callout-note appearance="simple"}
-📽️ **Diapositivas de esta sesión 2:**
+📽️ **Diapositivas de esta sesión 3:**
 
 <iframe src="../../presentaciones/Sesión_3_040926.pdf" width="100%" height="600px" style="border: none; margin-top: 10px;">
     <p>Tu navegador no soporta la visualización de PDFs. 
