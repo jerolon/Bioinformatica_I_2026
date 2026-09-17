@@ -793,4 +793,12 @@ En su repositorio, dentro de `sesion08/`:
   posición y símbolo de cada candidato.
 - Un párrafo respondiendo, con sus tablas como evidencia: ¿cuántos
   receptores LGR completos tiene la babosa y en qué cromosomas?, y ¿por
-  qué el gen `dlae
+  qué el gen `dlaeveM00000909458` no es uno de ellos a pesar de tener
+  E-values de 10⁻¹⁴ contra LGR5?
+- En su `README.md`: la versión de `blastp` y de `mafft` que usaron y de
+  dónde se copiaron los datos.
+
+No suban `datos/`, los archivos `proteoma_dlaeve.p*` de la base ni
+`hits.tsv` (son grandes y se regeneran con un comando: eso es lo que
+documenta el README). Sí suban `mejores.tsv` y `familia_lgr.aln.faa`,
+que son chicos.
