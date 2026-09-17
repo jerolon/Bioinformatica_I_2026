@@ -78,6 +78,7 @@ website:
           - contenido/03-alineamientos/algoritmos.qmd
           - contenido/03-alineamientos/clase07-algoritmos.qmd
           - contenido/03-alineamientos/blast.qmd
+          - contenido/03-alineamientos/sesion08-practica.qmd
           - contenido/03-alineamientos/alineamiento-multiple.qmd
           - contenido/03-alineamientos/homologia.qmd
           - contenido/03-alineamientos/sesion10-practica.qmd
@@ -113,6 +114,7 @@ website:
           # únicos; estas son segundas entradas al mismo destino.
           - contenido/01-fundamentos/sesion01-practica.qmd
           - contenido/03-alineamientos/clase07-algoritmos.qmd
+          - contenido/03-alineamientos/sesion08-practica.qmd
           - contenido/03-alineamientos/sesion10-practica.qmd
           - contenido/05-browsers/sesion11-practica.qmd
       - section: "Recursos"

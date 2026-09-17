@@ -68,6 +68,7 @@ La CCA 3.0 pide señalar los cambios cuando se distribuye una adaptación. Los n
 | Archivo | Fuente | Licencia |
 |---------|--------|----------|
 | `images/eras-bioinformatica-truong-ritchie-2026.jpg` | Figura 1 de Truong VQ & Ritchie MD (2026), *Eras of bioinformatics technologies from command-line interfaces to artificial intelligence (AI) chatbots*, Briefings in Bioinformatics, [doi:10.1093/bib/bbag256](https://doi.org/10.1093/bib/bbag256). Sin modificar; descargada de la copia en [PMC13353838](https://pmc.ncbi.nlm.nih.gov/articles/PMC13353838/). Se usa en las diapositivas de la sesión 1. | [CC BY-NC 4.0](https://creativecommons.org/licenses/by-nc/4.0/) |
+| `images/manos-pies-primates-aakash.png` | Ilustración "Primate Feet / Primate Hand" (pies y manos de chimpancé, gorila, orangután, humano, siamang y babuino) de Aakash Educational Services Ltd. ([aakash.ac.in](https://www.aakash.ac.in)), descargada de su CDN el 8 de septiembre de 2026 ([enlace directo](https://dcx0p3on5z8dw.cloudfront.net/Aakash/s3fs-public/inline-images/A1.png)); no se localizó la página que la aloja. Sin modificar. Se usa en el capítulo de homología (sesión 10). | **Sin licencia declarada; pendiente de confirmar.** Mientras tanto se trata como todos los derechos reservados: se reproduce con atribución y fines docentes. Si no se confirma, se redibuja con el mismo esquema (seis pies, seis manos). |
 
 ## Componentes de terceros
 

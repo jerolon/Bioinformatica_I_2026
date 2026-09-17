@@ -58,6 +58,100 @@ posiciones relativas, distinta función). El ala de ave y el ala de
 insecto son análogas: misma función, sin ancestro común alado.
 :::
 
+### Lo mismo, en otro animal y en otro lugar
+
+![Seis pies y seis manos de primates. Cada pie de la izquierda tiene su
+pareja a la derecha: el mismo animal, el mismo plan de extremidad, en el
+otro extremo del cuerpo. Ilustración de Aakash Educational Services
+([aakash.ac.in](https://www.aakash.ac.in)), sin licencia declarada; se
+reproduce con fines docentes y con
+atribución.](../../images/manos-pies-primates-aakash.png){#fig-manos-pies
+fig-alt="Ilustración de los pies (izquierda) y las manos (derecha) de chimpancé, gorila, orangután, humano, siamang y babuino."}
+
+La @fig-manos-pies es la definición de Owen puesta en una lámina, y
+admite dos lecturas. Conviene hacerlas por separado, porque son las
+mismas dos que Fitch va a separar con nombres propios en la sección
+siguiente.
+
+**Primera lectura: dentro del panel de la derecha.** Comparen la mano
+del chimpancé con la del humano, o con la del orangután. Es *el mismo
+órgano en distintos animales*: los mismos huesos (carpo, cinco
+metacarpianos, catorce falanges), en las mismas posiciones relativas, y
+salidos del mismo esbozo embrionario. Los tres criterios de Owen
+(posición, desarrollo, composición) se cumplen. Lo que cambia es la
+forma y la función: el orangután lleva dedos larguísimos y un pulgar
+corto para colgarse; el gorila, una palma ancha para caminar sobre los
+nudillos; el humano, un pulgar largo y dedos cortos para la pinza de
+precisión. Nada de eso toca la homología. Owen lo dijo con todas sus
+letras: *under every variety of form and function*.
+
+**Segunda lectura: de un panel al otro.** Comparen ahora la mano del
+humano con el pie del humano. Mismo animal, otro extremo del cuerpo. Otra
+vez los mismos huesos (tarso por carpo, metatarsianos por metacarpianos,
+las mismas catorce falanges), cinco dedos, y el mismo programa de
+desarrollo disparado dos veces, en dos niveles del eje del cuerpo. Owen
+también tenía nombre para esto. En 1848 distinguió la *homología
+especial* (la de la primera lectura: un órgano y su correspondiente en
+otro animal) de la **homología serial**, "la repetición o relación
+representativa entre los segmentos de un mismo esqueleto", y a las
+partes que se repiten las llamó *homotipos*: el brazo es el homotipo de
+la pierna, la mano lo es del pie. Van Valen (1982) la llamó *homología
+repetitiva*, por oposición a la histórica. Es la misma estructura, pero
+en otro lugar.
+
+Y aquí está la analogía que vale la pena llevarse de esta sección,
+porque el vocabulario de Fitch es exactamente este, trasladado a genes:
+
+| Comparación | Qué separó a las dos copias | Análogo molecular |
+|----|----|----|
+| Mano de chimpancé vs mano de humano | Una **especiación**, hace ~6–7 Ma. Hasta entonces eran literalmente una sola mano en un solo linaje | **Ortólogos** |
+| Mano vs pie del mismo humano | Una **"duplicación"** del programa de extremidad, en un ancestro vertebrado con dos pares de apéndices. Desde entonces cada par evoluciona *en paralelo* (*para*) en todos los linajes | **Parálogos** |
+| Pie de chimpancé vs mano de humano | Esa misma duplicación, y después la especiación | **Parálogos**, aunque estén en distintas especies |
+
+La tercera fila es la que importa. El pie del chimpancé y la mano del
+humano están en especies distintas y no por eso son "ortólogos": lo que
+define la relación es el evento que separó las copias, y ese evento fue
+la duplicación, cientos de millones de años antes de que hubiera
+primates. Guarden esa fila. Es el mito número uno de este capítulo, y lo
+van a volver a ver en la sección 2 con la α-hemoglobina de ratón y la
+β-hemoglobina de humano.
+
+Noten también qué se parece más a qué. La mano humana se parece más a la
+del chimpancé que al pie humano: la copia separada por especiación
+conservó la función, la copia separada por duplicación se fue a hacer
+otra cosa. Es la conjetura de los ortólogos de la sección 5, en versión
+anatómica, y con la misma letra chica: es una tendencia, no una ley. El
+pie del chimpancé, con su dedo gordo oponible, sigue siendo una mano
+para agarrar ramas; el nuestro es la copia que más divergió, cuando dejó
+de agarrar y se volvió una palanca para caminar en dos pies: dedo gordo
+alineado con los demás, dedos cortos, arco.
+
+::: callout-box
+**La analogía se cierra sola.** Qué esbozo de extremidad se vuelve brazo
+y cuál pierna lo deciden dos factores de transcripción: *Tbx5* en el
+esbozo anterior y *Tbx4* en el posterior, con *Pitx1* río arriba de
+*Tbx4* dándole identidad de pierna. *Tbx4* y *Tbx5* son **parálogos**:
+descienden de la duplicación de un único gen *Tbx4/5* ancestral, que el
+anfioxo, sin extremidades pareadas, conserva como un solo gen. Esa
+duplicación es anterior a la aparición de las aletas pareadas
+(Minguillon et al. 2009). La homología serial de la mano y el pie está
+escrita en el genoma como paralogía.
+
+Mindell & Meyer (2001) propusieron incluso una palabra única para la
+relación por duplicación en los dos niveles, órganos y genes:
+*paramorfismo*. La palabra no cuajó, pero la idea sí: **parálogo es a
+ortólogo lo que homología serial es a homología especial.**
+:::
+
+**Hasta dónde llega la analogía.** Un pie no es una copia de una mano
+como un gen duplicado es una copia de un segmento de ADN. Lo que se
+"duplicó" fue el despliegue de un mismo programa regulatorio en otra
+posición del eje, y por eso en evo-devo se prefiere hablar de
+*co-opción* o *redespliegue*. Y el criterio de posición de Owen, que
+funciona tan bien entre animales, se vuelve resbaloso entre homotipos:
+por definición están en lugares distintos. Úsenla como lo que es, una
+analogía, y no como una demostración.
+
 ## 2. Fitch 1970: ortólogo y parálogo
 
 Las definiciones que usamos todos los días vienen de un solo párrafo.
@@ -422,6 +516,28 @@ tablas.
 - Koonin EV (2005) "Orthologs, paralogs, and evolutionary genomics",
   *Annu Rev Genet* 39:309–338.
   [doi:10.1146/annurev.genet.39.073003.114725](https://doi.org/10.1146/annurev.genet.39.073003.114725)
+
+**Homología serial y la analogía con la paralogía**
+
+- Owen R (1848) *On the Archetype and Homologies of the Vertebrate
+  Skeleton*. Londres: van Voorst. Homología especial, general y serial;
+  "homotipo" (pp. 7–8).
+  [archive.org](https://archive.org/details/onarchetypeandh00owengoog)
+- Van Valen L (1982) "Homology and causes", *J Morphol* 173:305–312.
+  Homología histórica vs repetitiva.
+  [doi:10.1002/jmor.1051730307](https://doi.org/10.1002/jmor.1051730307)
+- Mindell DP & Meyer A (2001) "Homology evolving", *Trends Ecol Evol*
+  16(8):434–440. "Paramorfismo".
+  [doi:10.1016/S0169-5347(01)02206-6](https://doi.org/10.1016/S0169-5347(01)02206-6)
+- Minguillon C, Gibson-Brown JJ, Logan MP (2009) "Tbx4/5 gene
+  duplication and the origin of vertebrate paired appendages", *PNAS*
+  106(51):21726–21730.
+  [doi:10.1073/pnas.0910153106](https://doi.org/10.1073/pnas.0910153106)
+- Logan M & Tabin CJ (1999) "Role of Pitx1 upstream of Tbx4 in
+  specification of hindlimb identity", *Science* 283:1736–1739.
+  [doi:10.1126/science.283.5408.1736](https://doi.org/10.1126/science.283.5408.1736)
+- Takeuchi JK et al. (1999) "Tbx5 and Tbx4 genes determine the wing/leg
+  identity of limb buds", *Nature* 398:810–814.
 
 **El error terminológico**
 

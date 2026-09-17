@@ -1,0 +1,796 @@
+---
+title: "Práctica: BLAST+ local"
+subtitle: "Unidad 3 · Sesión 8"
+author: "Jero"
+---
+
+## De qué se trata
+
+En la mañana vimos que BLAST no es Smith–Waterman acelerado sino otra
+pregunta: "¿me sorprendería este parecido por azar?", con un número
+como respuesta. Esta tarde van a correr esa pregunta en serio, contra
+un proteoma completo, y a leer la respuesta sin la interfaz web de por
+medio. Cuatro partes:
+
+1. **Montar la base** con `makeblastdb`.
+2. **Buscar** con `blastp` y salida tabular.
+3. **Parsear la tabla**: la parte de hoy.
+4. **Alinear la familia** que encontraron, el puente a la sesión 9.
+
+El concepto de cómputo del día es **la salida tabular**: `cut`, `sort`
+y `awk` sobre una tabla de tab-separated values sin encabezado. Es el
+formato en que van a recibir resultados el resto de su carrera, y la
+mitad de los errores con BLAST son de lectura, no de búsqueda.
+
+Otra vez, ningún dato es de juguete. Van a **rehacer el primer paso
+real** del proyecto R-spondina/LGR de *Deroceras laeve*: el
+laboratorio diseñó sondas de hibridación *in situ* para "lgr5" y
+"rspo2" en la babosa, y la primera pregunta del pipeline fue *¿qué
+genes del módulo WNT–RSPO–LGR tiene de verdad este genoma?* La
+respuesta salió de un BLAST local y de saber leer su tabla. Exactamente
+lo que van a hacer hoy.
+
+## El material de hoy
+
+Dos líneas de contexto. La **vía WNT** es una de las rutas de
+señalización más conservadas de los animales: los ligandos WNT, sus
+receptores Frizzled (FZD), la β-catenina (CTNNB1) y los factores TCF
+están en todo el reino. Las **R-spondinas** (RSPO) amplifican la señal
+al unirse a los receptores **LGR4/5/6**, que la sesión pasada
+conocieron por su arquitectura: un ectodominio de repeticiones ricas
+en leucina (LRR) seguido de siete hélices transmembranales (7TM). Esa
+arquitectura repetitiva va a ser la protagonista silenciosa de varios
+ejercicios.
+
+Los archivos, ya en el servidor:
+
+| archivo | contenido |
+|---|---|
+| `proteoma_dlaeve_v1.2.faa` | **43,905 proteínas** de la anotación v1.2 de *D. laeve*, una por gen codificante (la isoforma más larga). Será la **base de datos**. |
+| `consultas_wnt.faa` | **72 proteínas de referencia**: 18 genes de la vía WNT × 4 especies (humano y tres moluscos: el ostión *Magallana gigas*, el caracol manzana *Pomacea canaliculata* y el caracol terrestre *Bradybaena similaris*, pariente cercano de la babosa). Serán las **consultas**. |
+| `mapa_mrna.tsv` | tabla `mrna → cromosoma → posición → gen → símbolo` de toda la anotación. Con ella van a ubicar los hits en el genoma. |
+
+: {tbl-colwidths="[30,70]"}
+
+Fíjense en los encabezados de las consultas:
+
+```
+>LGR5|mollusc|Bradybaena_similaris|BFZ05148.1
+```
+
+El identificador trae el gen, el grupo y la especie separados por `|`.
+Es un formato **pensado para ser parseado**, y eso también es diseño
+de pipeline: quien armó estas consultas ya sabía que después iba a
+querer cortar por `|`.
+
+## Preparación
+
+Como en la sesión 7, el software se carga con `module`. Hoy hacen
+falta tres: BLAST+, MAFFT y seqkit.
+
+```bash
+ssh usuario@ken.lavis.unam.mx
+mkdir -p ~/bioinfo1/sesion08/datos
+cd ~/bioinfo1/sesion08
+
+module use /mnt/data/bioinfo1/jmiranda/modulefiles
+module load blast+ mafft seqkit
+blastp -version
+```
+
+Anoten la versión que responde `blastp -version` en su README. BLAST
+es determinista a versión y parámetros fijos: dos personas con la misma
+versión y los mismos parámetros obtienen **exactamente** la misma
+tabla, y eso es lo que hace comparables sus resultados con los de sus
+compañeros y con la clave.
+
+Copien los datos con la variable del día (son unos 20 MB):
+
+```bash
+origen=/mnt/data/bioinfo1/jmiranda/sesion08
+cp $origen/datos/* datos/
+ls -lh datos/
+```
+
+::: callout-box
+`ken` es un nodo compartido. Las búsquedas de hoy corren en menos de un
+minuto con un solo hilo; usen `-num_threads 1` y no más. La lección de
+la sesión 10 sobre treinta personas pidiendo ocho hilos cada una aplica
+desde hoy.
+:::
+
+::: pendiente
+Instructor, antes de la clase: (1) verificar que en `ken` cargan
+`blast+`, `mafft` y `seqkit` como módulos con los nombres que aparecen
+arriba (o crear los modulefiles como se hizo con EMBOSS, receta en el
+README de planeación de la sesión 7) y corregir aquí los nombres
+exactos; (2) copiar `planeacion/practica_blast/datos/` y
+`planeacion/practica_blast/clave/` a la ruta `$origen` que se fije;
+(3) correr la práctica una vez con la versión instalada: los números
+de las soluciones salen de `blast+/2.13.0` y `mafft/7.299` (corrida del
+2026-08-18; `makeblastdb` 2 s, `blastp` 39 s con 50 MB de RAM, MAFFT
+4 s en un CPU). Otra versión de BLAST+ puede mover decimales y, en
+casos marginales, alguna línea de la tabla.
+:::
+
+## Parte 1 · Montar la base
+
+BLAST no busca contra un FASTA: busca contra un **índice** construido a
+partir del FASTA. Ese índice lo fabrica `makeblastdb`.
+
+```bash
+makeblastdb -in datos/proteoma_dlaeve_v1.2.faa -dbtype prot -parse_seqids \
+            -out proteoma_dlaeve -title "Proteoma D. laeve v1.2"
+ls proteoma_dlaeve.*
+```
+
+Tres decisiones van en ese comando:
+
+- `-dbtype prot`: proteínas. Para un genoma o un transcriptoma sería
+  `nucl`.
+- `-parse_seqids`: indexa los identificadores. Es lo que después permite
+  **recuperar secuencias por nombre** con `blastdbcmd` (parte 4). Sin
+  esta bandera la base sirve para buscar, pero no para extraer.
+- `-out` y `-title`: el prefijo de los archivos y una etiqueta legible.
+  Nada obliga a que el prefijo se parezca al FASTA de origen; por eso
+  conviene que sí se parezca.
+
+¿Cuántas secuencias reporta haber agregado? Verifíquenlo por dos vías
+más:
+
+```bash
+grep -c '^>' datos/proteoma_dlaeve_v1.2.faa
+blastdbcmd -db proteoma_dlaeve -info
+```
+
+::: {.callout-note collapse="true"}
+## Solución
+
+Las tres vías coinciden: **43,905** secuencias. `makeblastdb` imprime
+`added 43905 sequences`, `grep -c '^>'` cuenta los encabezados del
+FASTA y `blastdbcmd -info` lee el número desde la base ya montada.
+Cuando las tres no coinciden, algo se rompió al montar (un FASTA con
+identificadores duplicados es la causa clásica).
+
+`ls` muestra unos diez archivos `proteoma_dlaeve.p*` y no tres. Desde
+BLAST+ 2.10 el formato por defecto es la **versión 5** de la base, que
+añade índices para búsquedas por identificador y por taxonomía. Son
+archivos binarios: no se leen ni se editan a mano, y no se suben al
+repositorio.
+:::
+
+## Parte 2 · Buscar
+
+```bash
+blastp -query datos/consultas_wnt.faa -db proteoma_dlaeve \
+       -evalue 1e-5 -outfmt "6 std qcovs" -num_threads 1 -out hits.tsv
+```
+
+Unos 40 segundos. Mientras corre, lean el comando:
+
+- **Local, siempre.** En el servidor, con la base montada, controlan la
+  versión de BLAST, la versión de la base, los parámetros y los hilos.
+  `blastp -remote` existe y sirve como demostración (anexo B), no como
+  paso de un pipeline: la cola pública del NCBI tarda lo que quiere y
+  la base `nr` cambia cada día.
+- `-evalue 1e-5` es el **umbral de reporte**, no un umbral de "es
+  homólogo". Solo dice cuánta basura están dispuestos a mirar.
+- `-outfmt 6` es **el formato tabular**: doce columnas separadas por
+  tab, **sin encabezado**. `std` son esas doce columnas estándar; le
+  añadimos `qcovs`, la cobertura de la consulta en porcentaje, como
+  columna 13.
+
+Apréndanse este orden. Lo van a leer el resto de su vida:
+
+| # | columna | qué es |
+|---|---|---|
+| 1 | `qseqid` | identificador de la consulta |
+| 2 | `sseqid` | identificador del hit (*subject*) |
+| 3 | `pident` | % de identidad del alineamiento |
+| 4 | `length` | longitud del alineamiento |
+| 5 | `mismatch` | no coincidencias |
+| 6 | `gapopen` | aperturas de gap |
+| 7–8 | `qstart`, `qend` | coordenadas en la consulta |
+| 9–10 | `sstart`, `send` | coordenadas en el subject |
+| 11 | `evalue` | hits esperados por azar en una base de este tamaño |
+| 12 | `bitscore` | puntaje normalizado, comparable entre búsquedas |
+| 13 | `qcovs` | % de la consulta cubierto por los alineamientos (extra) |
+
+: {tbl-colwidths="[8,22,70]"}
+
+¿Cuántas líneas tiene `hits.tsv`? ¿Cuántas proteínas distintas de la
+babosa aparecen como hit?
+
+```bash
+wc -l hits.tsv
+cut -f2 hits.tsv | sort -u | wc -l
+```
+
+::: {.callout-note collapse="true"}
+## Solución
+
+```
+7935 líneas
+ 632 proteínas distintas de la babosa
+```
+
+Y una advertencia que vale toda la práctica: **una línea de
+`-outfmt 6` no es un hit, es un HSP**, un bloque alineado. Un mismo par
+consulta–subject puede ocupar varias líneas si la consulta alinea en
+dos o más bloques separados. Por eso 7,935 líneas no son 7,935 hits, y
+por eso contar hits de verdad requiere de-duplicar el par de
+identificadores. Lo van a ver con nombre y apellido en el ejercicio 7.
+
+`sort -u` ordena y elimina duplicados en un paso; es el idioma para
+"cuántos distintos".
+:::
+
+## Parte 3 · Parsear: el concepto del día
+
+La tabla se mira primero:
+
+```bash
+head -5 hits.tsv | column -t
+```
+
+`column -t` alinea las columnas para el ojo humano. Solo para **mirar**:
+nunca dentro de un pipeline, porque convierte los tabs en espacios y
+rompe todo lo que venga después.
+
+### Ejercicio 1. `cut`: elegir columnas
+
+`cut -f` corta por tabs; `cut -d'|'` corta por cualquier otro
+delimitador. Encadenados, parsean nuestros identificadores compuestos:
+
+```bash
+cut -f1 hits.tsv | head -3                    # la consulta completa
+cut -f1 hits.tsv | cut -d'|' -f1 | head -3    # solo el gen
+```
+
+Obtengan la lista, sin repetir, de los 18 genes consulta a partir de
+`hits.tsv`.
+
+::: {.callout-note collapse="true"}
+## Solución
+
+```bash
+cut -f1 hits.tsv | cut -d'|' -f1 | sort -u
+```
+
+CELSR1, CTNNB1, DVL2, FSHR, FZD5, FZD7, LGR5, LGR6, PIWI, PRICKLE1,
+PRICKLE2, RSPO2, RXFP1, TCF7L2, VANGL1, WNT10A, WNT11, WNT6. Dieciocho:
+todos los genes consulta tuvieron al menos un hit, y eso ya es un
+resultado biológico (aunque el ejercicio 4 lo va a afinar).
+:::
+
+### Ejercicio 2. `sort | uniq -c`: contar
+
+`uniq -c` cuenta líneas repetidas **adyacentes**; por eso siempre va
+después de un `sort`. El segundo `sort` ordena el conteo:
+
+```bash
+cut -f1 hits.tsv | cut -d'|' -f1 | sort | uniq -c | sort -k1,1nr
+```
+
+`-k1,1` significa "de la columna 1 a la 1"; `n` numérico, `r`
+descendente.
+
+¿Qué gen produce más hits y cuántos? ¿Cuál menos? CELSR1, LGR5, LGR6 y
+RXFP1 acumulan más de 1,400 hits cada uno; RSPO2 tiene 4. ¿Por qué un
+gen "produce más hits" que otro? ¿"Más hits" significa "gen más
+importante"?
+
+::: {.callout-note collapse="true"}
+## Solución
+
+```
+   2513 CELSR1        152 PRICKLE1       76 WNT6
+   1481 LGR6          147 PRICKLE2       70 FZD5
+   1475 LGR5           81 DVL2           36 TCF7L2
+   1401 RXFP1          78 FZD7           27 CTNNB1
+    218 FSHR           76 WNT10A         16 PIWI
+                       76 WNT11           8 VANGL1
+                                          4 RSPO2
+```
+
+Máximo CELSR1 con 2,513; mínimo RSPO2 con 4.
+
+Los cuatro grandes son receptores con ectodominio **LRR** (o, en
+CELSR1, otras repeticiones en tándem). Cada repetición alinea contra
+las repeticiones de los cientos de proteínas LRR que tiene cualquier
+proteoma: el número de hits mide **promiscuidad de dominio**, no
+importancia biológica. RSPO2, con dominios furina y TSP1 sin
+repeticiones, le pega solo a su ortólogo.
+
+Guarden esta idea: un dominio repetitivo infla los hits, los E-values
+se ven espectaculares y nada de eso dice que hayan encontrado el gen
+que buscaban. Por eso existe la columna 13.
+
+Extra, por especie: *Bradybaena* 2,026, *Magallana* 2,009, *Pomacea*
+1,989, humano 1,911. Las consultas de molusco encuentran más que la
+humana; en el ejercicio 6 van a ver por qué eso importa. Ojo al
+contarlo: los identificadores humanos tienen tres campos y los de
+molusco cuatro, así que `cut -d'|' -f3` no sirve para los dos. Un
+`awk -F'|' '{print ($2=="human") ? "human" : $3}'` sí, y de paso es
+su primer condicional en `awk`.
+:::
+
+### Ejercicio 3. `sort` numérico: rankear
+
+```bash
+sort -t$'\t' -k12,12nr hits.tsv | head -5 | column -t
+```
+
+`-t$'\t'` fija el tab como separador (sin esto, `sort` corta también
+por espacios y las columnas se corren).
+
+Antes de la pregunta, una **trampa clásica**. Los E-values vienen en
+notación científica, y `sort -n` no la entiende:
+
+```bash
+printf '5e-100\n1e-10\n' | sort -n    # MAL: pone 1e-10 primero (lee "1" y "5")
+printf '5e-100\n1e-10\n' | sort -g    # BIEN: -g, general numeric
+```
+
+Para ordenar por la columna 11 siempre `-k11,11g`.
+
+¿Cuál es el mejor hit de toda la tabla por bit score? ¿Qué gen, qué
+especie de consulta, qué porcentaje de identidad?
+
+::: {.callout-note collapse="true"}
+## Solución
+
+```
+CELSR1|mollusc|Bradybaena_similaris|BFZ08600.1  dlaeveM00000596688  78.197 ... 4728  99
+```
+
+CELSR1 de *Bradybaena* contra `dlaeveM00000596688`: 78.2 % de
+identidad, bit score 4,728, cobertura 99 %. Es el mejor de la tabla no
+solo porque el parecido es alto, sino porque CELSR1 es una proteína
+gigante (~3,000 aa): el bit score **escala con la longitud alineada**.
+Un alineamiento perfecto de una proteína chica nunca va a ganar este
+ranking. El bit score es comparable entre búsquedas, sí, pero compara
+alineamientos, no genes.
+:::
+
+### Ejercicio 4. `awk`: filtrar por condición
+
+`awk` ve cada línea partida en campos `$1` … `$NF`. Con `-F'\t'`
+respeta los tabs:
+
+```bash
+awk -F'\t' '$3>=50 && $13>=80' hits.tsv | wc -l
+```
+
+¿Cuántos hits tienen identidad ≥ 50 % **y** cobertura de consulta
+≥ 80 %? ¿Qué fracción de la tabla sobrevive?
+
+::: {.callout-note collapse="true"}
+## Solución
+
+**90** de 7,935: alrededor del 1 %. Un umbral de reporte de `1e-5`
+deja pasar miles de líneas; un par de condiciones biológicamente
+sensatas (que se parezca y que cubra) las reduce dos órdenes de
+magnitud. El filtro no está en `blastp`; está en `awk`, después, donde
+lo pueden cambiar sin volver a buscar.
+
+Fíjense en que la condición de `awk` va sin `{print}`: cuando solo hay
+condición, la acción por defecto es imprimir la línea entera.
+:::
+
+### Ejercicio 5. El ídolo del día: mejor hit por consulta
+
+Ordenen por consulta y, dentro de cada consulta, por bit score
+descendente; `awk` se queda con la **primera** línea de cada consulta
+que ve:
+
+```bash
+sort -t$'\t' -k1,1 -k12,12nr hits.tsv | awk -F'\t' '!v[$1]++' > mejores.tsv
+wc -l mejores.tsv
+```
+
+`!v[$1]++` es el idioma que hay que memorizar. `v` es un arreglo
+asociativo indexado por la columna 1; `v[$1]++` devuelve el valor actual
+y luego lo incrementa. La primera vez que aparece una consulta vale 0,
+falso, y el `!` lo vuelve verdadero: la línea se imprime. Las siguientes
+veces vale 1 o más, verdadero, negado es falso: la línea se calla.
+
+¿Cuántas líneas tiene `mejores.tsv`? ¿Alguna consulta se quedó sin hit?
+
+::: {.callout-note collapse="true"}
+## Solución
+
+**72 líneas**: las 72 consultas tienen al menos un hit, ninguna se quedó
+fuera.
+
+Esta es, además, la forma correcta de obtener "el mejor hit". La
+tentación es `-max_target_seqs 1`, y en el capítulo vieron por qué no:
+esa opción poda **durante** la búsqueda, no después, y devuelve el
+primero que supera el umbral, que no tiene por qué ser el de mayor
+puntaje. Pedir todo y quedarse con el mejor con `sort` y `awk` cuesta
+un segundo y es honesto.
+:::
+
+### Ejercicio 6. Dos escaleras evolutivas
+
+**RSPO2.** Extraigan de `mejores.tsv` las cuatro líneas de RSPO2 y
+miren `sseqid` y `pident`:
+
+```bash
+awk -F'\t' '$1 ~ /^RSPO2\|/' mejores.tsv | cut -f1,2,3,11,13
+```
+
+El operador `~` de `awk` compara contra una expresión regular; `^` ancla
+al inicio de la línea y `\|` es una barra literal.
+
+**LGR5.** Hagan lo mismo con LGR5. ¿Apuntan las cuatro consultas al
+mismo gen de la babosa? ¿Qué consulta da más poder para anotar un genoma
+de babosa, y qué implica eso cuando "bajan una familia de UniProt" para
+anotar una especie nueva?
+
+::: {.callout-note collapse="true"}
+## Solución
+
+Las cuatro consultas RSPO2 apuntan al **mismo gen**,
+`dlaeveM00000555743`, con identidades que suben conforme la especie
+consulta se acerca a *Deroceras*:
+
+| consulta | pident | evalue |
+|---|---|---|
+| RSPO2, humano | 41.0 % | 1.9e-44 |
+| RSPO2, *Magallana* (ostión) | 48.6 % | 4.2e-70 |
+| RSPO2, *Pomacea* (caracol manzana) | 56.6 % | 2.1e-84 |
+| RSPO2, *Bradybaena* (caracol terrestre) | 75.2 % | 9.6e-95 |
+
+Es la distancia evolutiva leída directamente de una columna de BLAST:
+la misma escalera de la sesión 7, ahora con cuatro peldaños y un
+E-value en cada uno. La babosa tiene **una sola R-spondina**, y este es
+el gen contra el que el laboratorio diseñó su sonda "rspo2" (a
+diferencia de lo que pasó con "lgr5", como van a ver en el ejercicio
+8).
+
+Con LGR5 la escalera **se rompe**:
+
+| consulta | mejor hit | pident | bitscore | qcovs |
+|---|---|---|---|---|
+| LGR5, humano | dlaeveM00000441839 (chr6) | 33.9 % | 466 | 89 |
+| LGR5, *Magallana* | dlaeveM00000727719 (chr10) | 50.2 % | 856 | 81 |
+| LGR5, *Pomacea* | dlaeveM00000727719 (chr10) | 58.8 % | 1065 | 79 |
+| LGR5, *Bradybaena* | dlaeveM00000727719 (chr10) | 83.2 % | 1621 | 67 |
+
+No apuntan todas al mismo gen. Los receptores de chr6 y chr10 son los
+**ohnólogos** que alinearon la sesión pasada (~60 % de identidad entre
+sí, ~71 % sobre el MSA): son tan parecidos que consultas distintas
+prefieren copias distintas, y el mejor hit deja de ser una respuesta
+única.
+
+La segunda lección está en la columna de identidad: la referencia de
+molusco encuentra al receptor con 83 %, la humana con 34 %. Para anotar
+un genoma de molusco, "bajar la familia humana de UniProt" es solo el
+primer paso; la consulta correcta es la del pariente más cercano que
+tenga una anotación decente. El poder de una búsqueda BLAST está tanto
+en la base como en la consulta.
+:::
+
+### Ejercicio 7. Censo de familia: ¿cuántos receptores LGR tiene la babosa?
+
+¿Cuántos genes **distintos** de la babosa se parecen a cada familia?
+`awk` proyecta el par (gen consulta, gen subject), `sort -u`
+de-duplica y `uniq -c` cuenta:
+
+```bash
+awk -F'\t' '{split($1,q,"|"); print q[1] "\t" $2}' hits.tsv | sort -u \
+  | cut -f1 | uniq -c | sort -k1,1nr
+```
+
+`split($1,q,"|")` parte el identificador en el arreglo `q`; `q[1]` es
+el gen. Es el `cut -d'|'` de antes, pero dentro de `awk`.
+
+El censo dice que ~239 genes "se parecen a LGR5". Obviamente la babosa
+no tiene 239 receptores LGR. Filtren en serio, en dos pasos:
+
+```bash
+# solo E-value: ¿cuántos genes quedan?
+awk -F'\t' '$1 ~ /^LGR5\|/ && $11<1e-30 {print $2}' hits.tsv | sort -u | wc -l
+
+# E-value + cobertura: ¿y ahora?
+awk -F'\t' '$1 ~ /^LGR5\|/ && $11<1e-30 && $13>=60 {print $2}' hits.tsv \
+  | sort -u > lgr_candidatos_ids.txt
+wc -l lgr_candidatos_ids.txt
+```
+
+¿Por qué la cobertura tira más candidatos que el E-value?
+
+::: {.callout-note collapse="true"}
+## Solución
+
+Censo crudo: 239 genes. Con `$11<1e-30`: **12**. Con E-value y
+cobertura ≥ 60 %: **6** (`dlaeveM00000132191`, `134217`, `308285`,
+`351276`, `441839`, `727719`).
+
+Piensen qué es un gen que alinea un dominio LRR perfecto pero solo
+cubre el 40 % de un receptor de 900 aa: el E-value es excelente, porque
+ese bloque no es azar, y sin embargo no es un receptor LGR. **El
+E-value mide "no es azar"; la cobertura mide "tiene la misma
+arquitectura".** Un E-value sin cobertura es engañoso, y en la práctica
+se leen siempre los dos juntos. Esto es lo que el capítulo llamó los
+errores de lectura.
+:::
+
+### Ejercicio 8. `awk` con dos archivos: ¿en qué cromosoma cayeron?
+
+El idioma `NR==FNR` carga el primer archivo en memoria y luego recorre
+el segundo. `NR` es el número de línea global y `FNR` el número de línea
+dentro del archivo actual: solo coinciden mientras se lee el primero.
+
+```bash
+awk -F'\t' 'NR==FNR {chr[$1]=$2; mb[$1]=sprintf("%.1f",$3/1e6); sym[$1]=$5; next}
+            {print $1, chr[$1], mb[$1]" Mb", sym[$1]}' OFS='\t' \
+    datos/mapa_mrna.tsv lgr_candidatos_ids.txt
+```
+
+Durante el primer archivo guarda cromosoma, posición y símbolo de cada
+mRNA y salta con `next`; durante el segundo, imprime cada candidato con
+lo que guardó. `OFS='\t'` fija el separador de salida.
+
+¿Qué cromosomas aparecen entre sus candidatos? Dos de los genes vienen
+anotados con el símbolo **LGR4**. Ahora busquen al acusado: el gen
+`dlaeveM00000909458`, en chr13, es el que de verdad anclan las sondas
+"lgr5" del laboratorio. Lo conocen de la sesión 7 como `Dla027`, el
+gen solo-LRR sin 7TM.
+
+```bash
+awk -F'\t' '$2=="dlaeveM00000909458"' hits.tsv | cut -f1,3,11,13
+```
+
+¿Con qué identidad, E-value y cobertura le pega a LGR5? ¿Sobrevivió a
+los filtros del ejercicio 7? ¿Cuántas líneas tiene el par LGR5-humano
+contra este gen, y por qué más de una?
+
+::: {.callout-note collapse="true"}
+## Solución
+
+```
+dlaeveM00000132191  chr2   15.7 Mb  GPRGPH
+dlaeveM00000134217  chr2   17.7 Mb  GPRGPH
+dlaeveM00000308285  chr4   45.9 Mb  TSHR
+dlaeveM00000351276  chr5   18.7 Mb  GPRGPH
+dlaeveM00000441839  chr6   30.9 Mb  LGR4   ← LGR verdadero
+dlaeveM00000727719  chr10  23.7 Mb  LGR4   ← LGR verdadero
+```
+
+Los dos "LGR4" son los dos receptores LGR completos del proyecto, en
+chr6 y chr10. La anotación automática les puso "LGR4" porque LGR4, LGR5
+y LGR6 de vertebrados forman un solo clado y el anotador eligió uno:
+**los nombres de genes son hipótesis, no verdades**, y en un genoma
+nuevo la hipótesis la escribió un programa.
+
+El acusado, `dlaeveM00000909458` (chr13, 39.98 Mb, sin símbolo), ocupa
+11 líneas en `hits.tsv` (5 de LGR5, 5 de LGR6, 1 de RXFP1) con **25–31 %
+de identidad, E-values entre 1e-8 y 1e-15 y cobertura de 18 a 43 %**. No
+sobrevive ni al filtro de E-value ni al de cobertura. El par
+LGR5-humano contra este gen ocupa **dos líneas**: dos HSPs, porque el
+bloque LRR alinea en dos pedazos separados. Es un homólogo marginal,
+solo LRR, y por eso la sonda "lgr5" diseñada sobre él dio *in situs*
+nulos para el receptor real.
+
+Moraleja del proyecto, y de la práctica: **un E-value de 10⁻¹⁴ no te
+convierte en LGR5.**
+:::
+
+### Ejercicio 9. El script: de un FASTA a sus top-5 hits
+
+Todo lo anterior son comandos sueltos. El entregable de hoy los empaca
+en un script que reciba **cualquier** FASTA de consultas, corra BLAST
+contra la base local y reporte los cinco mejores hits de cada consulta
+en una tabla. Es la continuación directa de `alinear_par.sh` de la
+sesión 7: `$1` y `$2` como argumentos, la guarda de uso al principio.
+
+Creen `top5.sh` con `nano top5.sh`:
+
+```bash
+#!/usr/bin/env bash
+# uso: ./top5.sh consultas.faa base_blast
+# Corre blastp contra una base local y reporta los 5 mejores hits
+# (por bitscore) de cada consulta, como tabla separada por tabs.
+
+if [ $# -ne 2 ]; then
+  echo "uso: $0 consultas.faa base_blast"
+  exit 1
+fi
+
+consultas=$1
+base=$2
+salida=$(basename ${consultas%.*})_vs_${base}.tsv
+
+blastp -query $consultas -db $base -evalue 1e-5 \
+       -outfmt "6 qseqid sseqid pident length evalue bitscore qcovs" \
+       -num_threads 1 -out $salida
+
+printf 'qseqid\tsseqid\tpident\tlength\tevalue\tbitscore\tqcovs\n'
+sort -t$'\t' -k1,1 -k6,6nr $salida | awk -F'\t' '++n[$1] <= 5'
+```
+
+Pruébenlo con las cuatro referencias de LGR5, que `seqkit` extrae por
+expresión regular sobre el encabezado:
+
+```bash
+chmod +x top5.sh
+./top5.sh
+seqkit grep -nrp '^LGR5\|' datos/consultas_wnt.faa > referencias_lgr5.faa
+./top5.sh referencias_lgr5.faa proteoma_dlaeve | column -t
+```
+
+¿Por qué `++n[$1] <= 5` y no `!v[$1]++`? ¿Por qué el `sort` usa la
+columna 6 y no la 12? ¿Y qué hace `${consultas%.*}`?
+
+::: {.callout-note collapse="true"}
+## Solución
+
+Tres detalles del script, cada uno con su razón:
+
+- `++n[$1] <= 5` es el primo de `!v[$1]++`: en vez de dejar pasar solo
+  la primera línea de cada consulta, deja pasar las primeras cinco. El
+  `++` va antes para que el contador valga 1 (y no 0) en la primera
+  aparición. Cambiar el 5 por un argumento `$3` es el siguiente paso
+  obvio.
+- El `sort` va por la columna 6 porque **este** `-outfmt` pide siete
+  columnas en un orden propio, y `bitscore` cayó en la sexta. La
+  posición de una columna no es una propiedad de BLAST sino de lo que
+  ustedes pidieron: cada vez que cambien `-outfmt`, revisen cada `-k`
+  y cada `$n` que dependa de él. Es la fuente de errores silenciosos
+  número uno con salida tabular.
+- `${consultas%.*}` le quita al nombre la extensión (todo desde el
+  último punto); `basename` le quita la ruta. De
+  `datos/referencias_lgr5.faa` sale `referencias_lgr5`, y el archivo
+  de salida se llama solo a partir de sus entradas. Un script que
+  siempre escribe `hits.tsv` sobreescribe al anterior sin avisar.
+
+Para LGR5, cada consulta abre con las líneas ya conocidas: la humana
+con chr6 (33.9 %, 466 bits) y la de *Bradybaena* con chr10 (83.2 %,
+1,621 bits). En la posición 2 aparece siempre el otro receptor LGR
+(chr10 o chr6), y de la 3 a la 5 el receptor de TSH de chr4, los
+GPRGPH de chr2 y chr5 y, en la consulta humana, un gen anotado como
+LRIG3: una proteína solo-LRR, que con 46 % de cobertura ya no
+engaña a nadie que haya hecho el ejercicio 7.
+
+`printf` con `\t` imprime la línea de encabezado que `-outfmt 6` no
+trae. Va antes del `sort`, a la salida estándar, y no dentro del
+archivo: así el archivo sigue siendo una tabla limpia que otro
+programa puede leer sin saltarse la primera línea.
+:::
+
+## Parte 4 · Alinear la familia
+
+Recuperen las secuencias de sus seis candidatos **desde la base** (esto
+es lo que `-parse_seqids` compró en la parte 1) y alinéenlas junto con
+las cuatro referencias de LGR5:
+
+```bash
+blastdbcmd -db proteoma_dlaeve -entry_batch lgr_candidatos_ids.txt > candidatos_lgr.faa
+cat candidatos_lgr.faa referencias_lgr5.faa > familia_lgr.faa
+mafft --auto familia_lgr.faa > familia_lgr.aln.faa
+seqkit stats familia_lgr.faa familia_lgr.aln.faa
+less -S familia_lgr.aln.faa
+```
+
+¿Cuántas secuencias y cuántas columnas tiene el alineamiento? ¿Por qué
+todas las secuencias miden ahora lo mismo? Al recorrerlo con `less -S`
+(salen con `q`; las flechas se mueven a lo ancho), ¿dónde se concentran
+los gaps?
+
+::: {.callout-note collapse="true"}
+## Solución
+
+**10 secuencias × 2,103 columnas**: seis candidatos y cuatro
+referencias. Todas miden lo mismo porque un alineamiento múltiple
+inserta gaps hasta igualar las longitudes; `seqkit stats` sobre el
+archivo sin alinear muestra las longitudes originales, entre ~800 y
+~1,400 aa.
+
+Los gaps se concentran en los extremos N y C y en las inserciones
+específicas de linaje: la referencia de *Bradybaena* mide 1,384 aa
+contra ~900 del resto, y ese exceso aparece como columnas donde solo
+ella tiene residuo.
+
+Este MSA es el punto de partida de la sesión 9: cómo se construye un
+alineamiento de N secuencias, por qué el orden en que se van sumando
+importa y qué le pasa a un error temprano. Y después, de las
+filogenias: un árbol de estas diez secuencias contestaría cuál de los
+seis candidatos es de verdad hermano de LGR5.
+:::
+
+## Parte 5 · Bonus: mejor hit recíproco
+
+El criterio clásico de ortología, que en la sesión 10 van a implementar
+en forma: A→B es creíble si B→A también. La base de vuelta son las 72
+consultas:
+
+```bash
+makeblastdb -in datos/consultas_wnt.faa -dbtype prot -out consultas
+blastp -query candidatos_lgr.faa -db consultas -evalue 1e-5 \
+       -outfmt "6 std qcovs" -num_threads 1 -out vuelta.tsv
+sort -t$'\t' -k1,1 -k12,12nr vuelta.tsv | awk -F'\t' '!v[$1]++' | cut -f1,2,3,13
+```
+
+Esta base se monta **sin** `-parse_seqids`, y no es descuido: un
+identificador de las consultas mide 52 caracteres y `-parse_seqids`
+rechaza los de más de 50 (`the local id is too long`). Como de esta base
+no vamos a extraer secuencias, no lo necesitamos. Límite real,
+documentado, y ejemplo de por qué conviene leer el mensaje de error
+antes de pelearse con él.
+
+De sus candidatos "parecidos a LGR5", ¿cuáles regresan a LGR5 como mejor
+hit y cuáles prefieren RXFP1 o FSHR?
+
+::: {.callout-note collapse="true"}
+## Solución
+
+```
+dlaeveM00000132191  RXFP1|Bradybaena  53.3 %   ✗
+dlaeveM00000134217  RXFP1|Bradybaena  73.2 %   ✗
+dlaeveM00000308285  FSHR|Bradybaena   67.8 %   ✗
+dlaeveM00000351276  RXFP1|Bradybaena  70.8 %   ✗
+dlaeveM00000441839  LGR5|Bradybaena   56.8 %   ✓ recíproco
+dlaeveM00000727719  LGR5|Bradybaena   83.2 %   ✓ recíproco
+```
+
+Solo chr6 y chr10 regresan a LGR5. Los otros cuatro son receptores LGR
+de otros subtipos, parientes de los receptores de relaxina (RXFP) y de
+las hormonas FSH/TSH: se parecen a LGR5 lo suficiente para pasar los
+filtros de ida, pero cuando se les pregunta a ellos qué prefieren,
+prefieren otra cosa.
+
+Conclusión: *D. laeve* tiene **exactamente dos receptores LGR
+tipo-B**, en chr6 y chr10. Es la conclusión del proyecto, que allí se
+obtuvo con OrthoFinder, un árbol filogenético y un filtro de
+arquitectura LRR+7TM con HMMER. Ustedes la acaban de reproducir con
+`blastp`, `sort` y `awk` en una tarde. La versión del proyecto es más
+robusta; la de hoy es suficiente para saber qué preguntar.
+:::
+
+## Anexos
+
+### A. ¿De dónde salieron las consultas?
+
+Del propio pipeline del laboratorio, que guarda cada accession en un
+manifiesto con su procedencia. Para armar un set así desde cero, la
+fuente clásica es UniProt/Swiss-Prot (licencia CC BY 4.0) vía su API
+REST, que funciona desde la terminal:
+
+```bash
+curl -s "https://rest.uniprot.org/uniprotkb/P23945.fasta"        # FSHR humano
+curl -s "https://rest.uniprot.org/uniprotkb/search?query=gene:LGR5+AND+reviewed:true&format=fasta"
+```
+
+Para RefSeq y GenBank, `efetch` de Entrez Direct, que van a usar en la
+sesión de bases de datos. Regla del laboratorio, y desde hoy de
+ustedes: cada accession queda registrado en una tabla. **Un FASTA sin
+procedencia no es reproducible.**
+
+### B. `-remote`, solo como demostración
+
+```bash
+blastp -query referencias_lgr5.faa -db nr -remote -outfmt "6 std qcovs" -max_target_seqs 5
+```
+
+Contra el `nr` completo del NCBI, en su cola pública: puede tardar
+minutos u horas, la versión de la base cambia cada día y no hay
+`-num_threads`. Útil para una consulta suelta; inaceptable como paso de
+un pipeline. Y fíjense en el `-max_target_seqs 5`: aquí lo usamos
+porque la salida remota es cara, sabiendo que poda durante la búsqueda.
+En local no hay excusa: pidan todo y filtren con `awk`.
+
+## Para entregar
+
+En su repositorio, dentro de `sesion08/`:
+
+- El script `top5.sh`.
+- La tabla de salida de `./top5.sh referencias_lgr5.faa proteoma_dlaeve`
+  en Markdown (`column -t` la deja casi lista; solo falta la línea de
+  guiones bajo el encabezado).
+- `lgr_candidatos_ids.txt` y la tabla del ejercicio 8 con cromosoma,
+  posición y símbolo de cada candidato.
+- Un párrafo respondiendo, con sus tablas como evidencia: ¿cuántos
+  receptores LGR completos tiene la babosa y en qué cromosomas?, y ¿por
+  qué el gen `dlae

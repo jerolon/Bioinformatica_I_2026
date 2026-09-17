@@ -658,27 +658,31 @@ ortología por estructura, no todavía.
 
 ## Práctica
 
-La práctica arma un pipeline completo sobre una familia de genes, en el
-servidor, con BLAST+ local. El concepto de cómputo del día es **parsear
-salida tabular** con `cut`, `sort` y `awk`.
+La práctica de la sesión está en [práctica de la sesión
+8](sesion08-practica.qmd). Arma un pipeline completo con BLAST+ local
+sobre la vía WNT de *Deroceras laeve*, en el servidor. El concepto de
+cómputo del día es **parsear salida tabular** con `cut`, `sort` y
+`awk`.
 
-1.  **Montar la base.** Bajar una familia de proteínas de UniProt/Swiss-Prot
-    (licencia CC BY 4.0; las globinas son el ejemplo clásico) y construir
-    la base con `makeblastdb -in globinas.fasta -dbtype prot
-    -parse_seqids -out globinas`. Desde BLAST+ 2.10 el default es la base
-    versión 5.
-2.  **Buscar en local.** `blastp -query query.fasta -db globinas -outfmt 6
-    -out hits.tsv`. En el servidor, con las bases montadas, siempre local:
-    control de versión, `-num_threads`, sin límites de servidor.
-    `-remote` sólo como demostración.
+1.  **Montar la base.** El proteoma anotado de la babosa (43,905
+    proteínas, una por gen) con `makeblastdb -dbtype prot
+    -parse_seqids`. Desde BLAST+ 2.10 el default es la base versión 5.
+2.  **Buscar en local.** 72 proteínas de referencia de 18 genes de la
+    vía WNT (humano y tres moluscos) con `blastp -outfmt "6 std qcovs"`.
+    En el servidor, con las bases montadas, siempre local: control de
+    versión, `-num_threads`, sin límites de servidor. `-remote` sólo
+    como demostración.
 3.  **Parsear.** El formato `-outfmt 6` son doce columnas separadas por
     tab, sin encabezado: `qseqid sseqid pident length mismatch gapopen
     qstart qend sstart send evalue bitscore`. De ahí salen los ejercicios
-    de `cut`/`sort`/`awk`. Conviene pedir columnas extra de cobertura:
-    `-outfmt "6 qseqid sseqid pident qcovs evalue bitscore"`.
-4.  **Alinear la familia.** Los hits recuperados se alinean con Clustal
-    Omega o MAFFT, que es el puente al [capítulo de alineamiento
-    múltiple](alineamiento-multiple.qmd).
+    de `cut`/`sort`/`awk`: mejor hit por consulta, censo de la familia
+    LGR con E-value **y** cobertura, ubicación de los candidatos en el
+    genoma, y el script del entregable, que reporta los top-5 hits de
+    cualquier FASTA.
+4.  **Alinear la familia.** Los candidatos recuperados de la base con
+    `blastdbcmd` se alinean con MAFFT, que es el puente al [capítulo de
+    alineamiento múltiple](alineamiento-multiple.qmd). Un bonus de mejor
+    hit recíproco anticipa la sesión 10.
 
 ::: mito
 **La trampa de `-max_target_seqs`.**
