@@ -8,9 +8,11 @@ editor:
   markdown:
     wrap: 72
 # ESQUELETO de la sesión 10 (23 de octubre). Sigue el orden del capítulo
-# contenido/03-alineamientos/homologia.qmd; la práctica es
-# contenido/03-alineamientos/sesion10-practica.qmd (RBH entre dos
-# levaduras). Los "TODO" en las notas del presentador marcan lo que
+# contenido/03-alineamientos/homologia.qmd; la práctica (RBH entre la
+# babosa y el caracol Bradybaena, sobre el vecindario WNT) está planeada
+# en planeacion/practica_rbh/ y escrita en
+# contenido/03-alineamientos/sesion10-practica.qmd. Los "TODO" en las
+# notas del presentador marcan lo que
 # falta decidir. Única figura: images/manos-pies-primates-aakash.png
 # (todavía sin versionar en git).
 ---
@@ -43,7 +45,7 @@ embarazada".
 |-------------|---------------------------------------------------------------|
 | 10:00–11:45 | Teoría: Owen, Fitch, árboles, inferencia de ortología, la conjetura |
 | 11:45–12:15 | Descanso                                                      |
-| 12:15–14:30 | Práctica: reciprocal best hits entre dos levaduras            |
+| 12:15–14:30 | Práctica: reciprocal best hits entre la babosa y un caracol   |
 | 14:30–15:00 | Cierre, dudas, entregable                                     |
 
 # De dónde viene la palabra {.section-divider}
@@ -300,8 +302,16 @@ suficiente para ortología. Ni necesaria.
 
 ::: notes
 En la práctica de la tarde van a medir en sus propios datos qué
-fracción de mejores hits sobrevive a la reciprocidad (ejercicio 5) y a
-encontrar un caso de uno a muchos (ejercicio 6).
+fracción de mejores hits sobrevive a la reciprocidad (ejercicio 5: el
+47 %) y a encontrar casos de uno a muchos con cromosoma (ejercicios 6 a
+8). Casi todos los modos de falla de esta lámina tienen ejemplo ahí:
+duplicaciones de linaje (el arreglo en tándem de chr14, 24 genes contra
+una proteína del caracol), tasas y longitudes dispares (los ohnólogos
+de chr6 y chr10: el par de chr15 del caracol es 70 % idéntico a chr10 y
+elige a chr6 por bit score), arquitecturas de dominios (LRR y
+cadherinas pierden más de la mitad) y, quizá, modelos génicos (la
+proteína de chr6 mide 1,682 aa en la anotación automática, contra los
+1,080 de la versión de la sesión 7).
 :::
 
 ## Grafos, árboles y OrthoFinder {.smaller}
@@ -443,32 +453,49 @@ en hg19 y hg38. No las mezclen. Engancha directo con la sesión 11.
 
 # La práctica de hoy. Después del break {.section-divider}
 
-## Reciprocal best hits entre dos levaduras {.smaller}
+## Reciprocal best hits entre la babosa y un caracol {.smaller}
 
 - La práctica vive en el sitio: [**Práctica: reciprocal best
   hits**](../contenido/03-alineamientos/sesion10-practica.html)
-- *Saccharomyces cerevisiae* contra *Schizosaccharomyces pombe*: ~500
-  Ma de separación, proteomas recortados a ~500 proteínas
+- *Deroceras laeve* contra *Bradybaena similaris*, dos estilomatóforos:
+  el **vecindario WNT** de la sesión 8 en cada especie (632 y 713
+  proteínas)
 - Cómputo del día: **ciclos** (`for`, `while`). RBH no se puede hacer
   sin uno: dos bases, dos búsquedas, dos tablas que cruzar
-- Seis ejercicios: construir las bases con un ciclo → buscar en las dos
-  direcciones → mejor hit por consulta → cruzar y encontrar los
-  recíprocos → **cuánto perdimos** → un caso de uno a muchos
+- **El pipeline**: bases con un ciclo → buscar en las dos direcciones →
+  mejor hit por consulta → cruzar y encontrar los recíprocos
+- **Cuánto perdimos**, global y por familia
+- **Tres casos con cromosoma**: un arreglo en tándem, los dos LGR del
+  proyecto, el gen de la sonda "lgr5" (con `while read`)
+- **Segunda opinión**: los ortogrupos de OrthoFinder del proyecto
 
 ::: callout-box
-En `ken`: `-num_threads 2` y no más. Treinta personas pidiendo ocho
-hilos son doscientos cuarenta hilos en una máquina que no los tiene.
+En `ken`: `-num_threads 1` y no más; cada búsqueda tarda unos dos
+minutos. Treinta personas pidiendo ocho hilos son doscientos cuarenta
+hilos en una máquina que no los tiene.
+:::
+
+::: notes
+Pendientes de instructor (están en la caja "Pendiente" de la práctica):
+verificar el módulo `blast+` en ken, copiar
+planeacion/practica_rbh/datos/ a la ruta $origen y correr la práctica
+una vez. Los números de las soluciones son de blast+ 2.13.0. Si las
+búsquedas de todo el grupo a la vez resultan lentas, las tablas ya
+hechas están en planeacion/practica_rbh/clave/resultados/.
 :::
 
 ## Para entregar {.smaller}
 
 En su repositorio, dentro de `sesion10/`:
 
-- `procedencia.md` con la fecha, los proteomas usados y los comandos
-- `resultados/rbh.tsv` (es chico; este sí se versiona)
+- `procedencia.md` con la fecha, la versión de `blastp`, los proteomas
+  usados y los comandos
+- `resultados/rbh.tsv` (es chico; este sí se versiona, y vuelve en la
+  unidad de R)
+- La tabla de supervivencia por familia
 - Un párrafo: **qué fracción de mejores hits sobrevivió a la
-  reciprocidad**, y un caso concreto de uno a muchos que hayan
-  encontrado
+  reciprocidad**, dónde se concentra la pérdida, y un caso concreto de
+  uno a muchos, con cromosomas
 
 No suban los `.fasta` ni los índices de las bases.
 

@@ -1,0 +1,7 @@
+fecha: 2026-09-18
+secuencias: 50
+columnas Clustal Omega: 3205
+columnas MAFFT: 2902
+columnas con acuerdo < 0.5: 1129 de 2321 con dato (884 NA)
+referencia: LGR5_human, 907 posiciones
+por dominio: LRR: acuerdo 0.61, LC 7.16; bisagra: acuerdo 0.78, LC 7.46; 7TM: acuerdo 0.96, LC 8.95; cola C: acuerdo 0.40, LC 4.66

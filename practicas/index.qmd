@@ -22,7 +22,7 @@ siempre. La idea de Jero es que la biología del día es el pretexto para el con
 | 1 | Panorama | Terminal, Markdown, git, estructura de proyecto | [git para científicos](../contenido/01-fundamentos/sesion01-practica.qmd) |
 | 7 | Alineamiento | Variables, primer script con argumentos | [needle y water](../contenido/03-alineamientos/clase07-algoritmos.qmd) |
 | 8 | BLAST | Scripts, `cut`/`sort`, salida tabular | [BLAST+ local](../contenido/03-alineamientos/sesion08-practica.qmd) |
-| 9 | Alineamiento múltiple | *(por definir)* | *(por escribir)* |
+| 9 | Alineamiento múltiple | Una variable como parámetro del pipeline, `time`, *stdout* y *stderr* (`>`, `2>`) | [Clustal Omega contra MAFFT](../contenido/03-alineamientos/sesion09-practica.qmd) |
 | 10 | Homología | Ciclos (`for`, `while`) | [Reciprocal best hits](../contenido/03-alineamientos/sesion10-practica.qmd) |
 | 11 | Bases de datos y browsers | `awk`, tuberías, `md5sum`, expresiones regulares | [Un gen, nueve paradas](../contenido/05-browsers/sesion11-practica.qmd) |
 
@@ -40,6 +40,6 @@ a la barra lateral en `_quarto.yml`.
 | 1 | Repo del curso con estructura de carpetas y `README.md` en Markdown |
 | 7 | Matriz de Needleman–Wunsch resuelta a mano (foto) + script que corra `needle` |
 | 8 | Script que reciba un FASTA, corra BLAST contra una base local y reporte los top-5 hits |
-| 9 | Dos alineamientos de la misma familia (Clustal Omega y MAFFT) + párrafo sobre dónde discrepan |
-| 10 | `procedencia.md`, `resultados/rbh.tsv` y un párrafo sobre la pérdida por reciprocidad |
+| 9 | Un párrafo por familia (R-spondinas y LGR) sobre dónde discrepan Clustal Omega y MAFFT, con la tabla por dominio de acuerdo, confianza de MUSCLE5 y recorte de trimAl |
+| 10 | `procedencia.md`, `resultados/rbh.tsv`, la tabla de supervivencia por familia y un párrafo sobre la pérdida por reciprocidad, con un caso de uno a muchos ubicado en el genoma |
 | 11 | Reporte en Markdown: tabla de BioMart, análisis de GTF con `awk` y capturas del browser |

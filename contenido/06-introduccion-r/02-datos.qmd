@@ -321,7 +321,7 @@ Cuántas filas tiene cada una? Hay valores faltantes?
 
 ```r
 rbh <- read_tsv("resultados/rbh.tsv",
-                col_names = c("cerevisiae", "pombe")) %>%
+                col_names = c("dlaeve", "bradybaena")) %>%
   clean_names()
 
 skim_without_charts(rbh)

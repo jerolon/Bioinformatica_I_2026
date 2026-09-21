@@ -9,10 +9,11 @@ editor:
     wrap: 72
 # ESQUELETO de la sesión 9 (16 de octubre). Sigue el orden del capítulo
 # contenido/03-alineamientos/alineamiento-multiple.qmd. La práctica
-# vive en la sección "## Práctica" de ese capítulo (todavía no tiene
-# .qmd propio). Los "TODO" en las notas del presentador marcan lo que
-# falta decidir. Figuras: figuras/svg/msa_*.svg; la de desacuerdo
-# (fig_msa_desacuerdo.R) aún no está generada.
+# (Clustal Omega contra MAFFT sobre los LGR y las R-spondinas de la
+# babosa) está planeada en planeacion/practica_alineamiento_multiple/
+# y escrita en contenido/03-alineamientos/sesion09-practica.qmd. Los
+# "TODO" en las notas del presentador marcan lo que falta decidir.
+# Figuras: figuras/svg/msa_*.svg.
 ---
 
 # De dos secuencias a N {.section-divider}
@@ -46,7 +47,7 @@ con error, y ese error se propaga a todo lo que hagan después.**
 |-------------|-------------------------------------------------------------------|
 | 10:00–11:45 | Teoría: por qué no escala, suma de pares, progresivo, herramientas, incertidumbre |
 | 11:45–12:15 | Descanso                                                          |
-| 12:15–14:30 | Práctica: Clustal Omega contra MAFFT sobre la familia de la sesión 8 |
+| 12:15–14:30 | Práctica: Clustal Omega contra MAFFT sobre los LGR de la sesión 8 y sus R-spondinas |
 | 14:30–15:00 | Cierre, dudas, entregable                                         |
 
 # Por qué la programación dinámica no escala {.section-divider}
@@ -232,18 +233,23 @@ mal **más del 30% de las columnas**. No MUSCLE en particular: todos.
 
 ## Con sus propios datos {.smaller}
 
-- En la práctica van a alinear la misma familia con Clustal Omega y con
-  MAFFT
-- Las columnas donde no se ponen de acuerdo se concentran en unas
-  cuantas regiones, ricas en gaps
-- Son las mismas que los métodos de confianza marcan como poco fiables
+![](../figuras/svg/msa_desacuerdo.svg){fig-align="center"}
+
+- 50 receptores LGR, alineados con Clustal Omega y con MAFFT, vistos a
+  lo largo de LGR5 humano
+- El desacuerdo **entre** programas y la desconfianza **dentro** de
+  MUSCLE5 caen en los mismos lugares: el ectodominio LRR y la cola
+- El 7TM sale igual lo alinee quien lo alinee
 
 ::: notes
-TODO: aquí va la figura de acuerdo por columna
-(figuras/fig_msa_desacuerdo.R → figuras/svg/msa_desacuerdo.svg). El
-capítulo la referencia (crossref fig-desacuerdo) pero el SVG todavía no está
-generado: el script se detiene si faltan los alineamientos de la
-práctica. Generarla y colocarla en esta diapositiva.
+Es la figura que ellos mismos van a reconstruir en la tarde, con `awk`,
+en los ejercicios 5 y 8 de la práctica. Números por dominio (acuerdo
+medio / LC medio de MUSCLE5): LRR 0.61 / 7.2, bisagra 0.78 / 7.5, 7TM
+0.96 / 9.0, cola 0.40 / 4.7. No adelantar por qué el LRR es difícil
+aunque esté conservado (14 repeticiones en tándem: problema de
+registro, no de conservación): es la pregunta del ejercicio 5. Se
+regenera con figuras/fig_msa_desacuerdo.R a partir de los alineamientos
+de la clave.
 :::
 
 ## Una hipótesis con barra de error {.smaller}
@@ -307,36 +313,37 @@ o MAFFT `L-INS-i`.
 
 ## Alinear, comparar y poner en duda {.smaller}
 
-Continúa el pipeline de la sesión 8: la familia que recuperaron con
-BLAST ahora se alinea con dos métodos.
-
-1.  **Alinear dos veces**: `clustalo` (guardando el árbol guía) y
-    `mafft --localpair --maxiterate 1000` (eso es `L-INS-i`)
-2.  **Primero números**: `seqkit stats`, `esl-alistat`. ¿Cuántas
-    columnas tiene cada uno? Casi siempre difieren
-3.  **Comparación objetiva**: `t_coffee -other_pg aln_compare`. Mide
-    desacuerdo entre programas, **no** exactitud de ninguno
-4.  **Mirar el árbol guía** (`.dnd`, Newick): el objeto que gobierna el
-    pecado original
-5.  **Confianza por columna**: ensemble de MUSCLE5 (`-stratified`,
-    `-letterconf`)
-6.  **Ver el alineamiento** en Jalview, con la confianza sobrepuesta
+- La práctica vive en el sitio: [**Práctica: Clustal Omega contra
+  MAFFT**](../contenido/03-alineamientos/sesion09-practica.html)
+- Continúa la sesión 8: sus candidatos LGR crecen a **50 receptores de
+  11 especies**, más una familia chica, las **17 R-spondinas**
+- **Alinear dos veces**: `clustalo` (guardando el árbol guía) y `mafft
+  --localpair --maxiterate 1000` (eso es `L-INS-i`)
+- **Primero números**, después `t_coffee -other_pg aln_compare`: mide
+  desacuerdo entre programas, **no** exactitud de ninguno
+- **Ubicar el desacuerdo** por dominio de la proteína, con `awk`: la
+  parte de hoy
+- **El árbol guía** (`.dnd`) contra el árbol ML real de las R-spondinas
+- **Barra de error**: ensemble de MUSCLE5 (`-stratified`,
+  `-letterconf`); después Jalview y `trimal`
+- Concepto de cómputo: **una variable como parámetro** (`F=rspo`, luego
+  `F=lgr`), `time`, y los dos canales de salida (`>`, `2>`)
 
 ::: notes
-TODO: la práctica vive en la sección "## Práctica" del capítulo, sin
-.qmd propio; practicas/index.qmd la marca "por escribir". El capítulo
-habla de "las globinas de UniProt" de la sesión 8, pero la práctica
-planeada de BLAST usa las proteínas WNT de la babosa: decidir cuál
-familia se alinea y alinear los dos textos. Ambiente conda "msa" en
-ken (clustalo, mafft, muscle, t-coffee, seqkit, hmmer).
+Pendientes de instructor (están en la caja "Pendiente" de la práctica):
+crear el módulo `msa` en ken (clustalo, mafft, muscle 5.1, t-coffee,
+hmmer, seqkit, trimal), copiar datos/, scripts/ y clave/ a la ruta
+$origen y correr la práctica una vez. El ensemble de MUSCLE5 para los
+LGR tarda 1 h 45 min en un CPU: se entrega calculado.
 :::
 
 ## El entregable no es "el alineamiento" {.smaller}
 
 ::: callout-box
-Un párrafo sobre **dónde los dos métodos no se pusieron de acuerdo y
-por qué**: dos regiones concretas, con posiciones, y si coinciden con
-las columnas de baja confianza de MUSCLE5.
+Un párrafo por familia sobre **dónde los dos métodos no se pusieron de
+acuerdo y por qué**: dos regiones concretas, con posiciones en la
+secuencia de referencia, y si coinciden con las letras de baja
+confianza de MUSCLE5 y con lo que recortó `trimal`.
 :::
 
 - Ésa es la parte que se califica en serio, porque es la que enseña a

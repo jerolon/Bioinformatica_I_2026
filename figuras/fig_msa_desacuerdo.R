@@ -1,22 +1,30 @@
 ## Fig. @fig-desacuerdo (Sesión 9, § El alineamiento es una estimación,
-## no un dato): tira de acuerdo por columna entre los alineamientos de
-## Clustal Omega y MAFFT de la familia de globinas de la práctica.
+## no un dato): acuerdo entre Clustal Omega y MAFFT L-INS-i, y confianza
+## por letra de MUSCLE5, a lo largo de LGR5 humano, para los 50
+## receptores LGR de la práctica de la sesión 9.
 ##
-## Script escrito: 2026-08-09 · R 4.6.0 (2026-04-24 ucrt) ·
-## ggplot2 4.0.3 · svglite 2.2.2 · clustalo/mafft: pendiente (ver abajo;
-## al generar los alineamientos, sus versiones quedan en
-## figuras/log/msa_desacuerdo.txt y hay que copiarlas a este encabezado).
+## Generada: 2026-09-18 · R 4.6.0 (2026-04-24 ucrt) · ggplot2 4.0.3 ·
+## svglite 2.2.2. Alineamientos: clustalo 1.2.4, mafft 7.526 (L-INS-i),
+## muscle 5.1 (-stratified, 16 réplicas), corrida del 2026-09-17.
 ##
 ## ---------------------------------------------------------------------------
 ## ESTA FIGURA VA EN UN LIBRO Y SUS NÚMEROS TIENEN QUE SER REALES.
 ##
-## Entrada primaria: figuras/datos/familia.fasta (globinas de UniProt,
-## CC BY 4.0, el mismo archivo de la práctica de la sesión 8). Si ya
-## existen figuras/datos/familia_clustalo.aln y familia_mafft.fasta se
-## usan tal cual; si solo está el FASTA y clustalo y mafft están en el
-## PATH, se generan con exactamente los comandos del capítulo. Si no hay
-## ni alineamientos ni forma de generarlos, el script SE DETIENE con un
-## error que dice qué falta. Prohibido inventar datos sintéticos.
+## Entradas, en figuras/datos/ (carpeta fuera de git, como todos los datos):
+##   lgr_clustalo.aln     Clustal Omega de familia_lgr.faa  (práctica, ej. 1)
+##   lgr_mafft.fasta      MAFFT L-INS-i de familia_lgr.faa  (práctica, ej. 1)
+##   lgr_confianza.afa    letter confidence de MUSCLE5      (práctica, ej. 8)
+## Son exactamente los productos de
+## contenido/03-alineamientos/sesion09-practica.qmd; el instructor los tiene
+## ya calculados en la clave de la práctica (familia_clustalo.aln,
+## familia_mafft.fasta y confianza.afa de la familia lgr). Si falta alguno,
+## el script SE DETIENE con un error que dice cuál. Prohibido inventar datos
+## sintéticos.
+##
+## El cálculo del acuerdo es el mismo de practicas/scripts/acuerdo_por_columna.py
+## (fracción de pares de residuos de cada columna de Clustal Omega que sigue
+## junta en MAFFT); aquí se reporta por posición de la referencia, que es
+## como lo analizan los alumnos.
 ##
 ## NOTA SOBRE EL TEMA: igual que en fig_msa_escalamiento.R, se usa
 ## figuras/estilo.R (no existe figuras/_tema.R en este repo) y los alias
@@ -38,57 +46,33 @@
 }
 source(file.path(dirname(.ubicar()), "estilo.R"))
 
-AZUL    <- TEAL     # acuerdo alto
-NARANJA <- AMBAR    # acuerdo bajo
+AZUL    <- TEAL     # acuerdo / confianza altos
+NARANJA <- AMBAR    # acuerdo / confianza bajos
 
 DIR_DATOS <- file.path(DIR_FIGURAS, "datos")
 DIR_LOG   <- file.path(DIR_FIGURAS, "log")
 
-ruta_fasta   <- file.path(DIR_DATOS, "familia.fasta")
-ruta_clustal <- file.path(DIR_DATOS, "familia_clustalo.aln")
-ruta_mafft   <- file.path(DIR_DATOS, "familia_mafft.fasta")
+REF <- "LGR5_human"
+# Anatomía de LGR5 humano (907 aa), la misma tabla de la práctica.
+DOMINIOS <- data.frame(
+  dominio = c("LRR", "bisagra", "7TM", "cola C"),
+  inicio  = c(1, 455, 574, 821),
+  fin     = c(454, 573, 820, 907)
+)
 
-# --- Conseguir los alineamientos -------------------------------------------
-version_clustalo <- NA_character_
-version_mafft    <- NA_character_
+ruta_clustal <- file.path(DIR_DATOS, "lgr_clustalo.aln")
+ruta_mafft   <- file.path(DIR_DATOS, "lgr_mafft.fasta")
+ruta_lc      <- file.path(DIR_DATOS, "lgr_confianza.afa")
 
-if (!file.exists(ruta_clustal) || !file.exists(ruta_mafft)) {
-  if (!file.exists(ruta_fasta)) {
-    stop("DETENIDO: falta figuras/datos/familia.fasta (las globinas de la ",
-         "práctica de la sesión 8) y tampoco están los alineamientos ",
-         "familia_clustalo.aln / familia_mafft.fasta. Sin datos reales no ",
-         "se genera esta figura: va en el libro y está prohibido inventar ",
-         "datos sintéticos. Colocar el FASTA (o los alineamientos ya ",
-         "hechos) en figuras/datos/ y volver a correr.", call. = FALSE)
-  }
-  clustalo <- Sys.which("clustalo")
-  mafft    <- Sys.which("mafft")
-  if (clustalo == "" || mafft == "") {
-    stop("DETENIDO: figuras/datos/familia.fasta existe pero faltan los ",
-         "binarios en el PATH (clustalo: ",
-         if (clustalo == "") "NO" else clustalo, "; mafft: ",
-         if (mafft == "") "NO" else mafft, "). Generar los alineamientos ",
-         "con los comandos del capítulo (sección Práctica, paso 1) y ",
-         "dejarlos en figuras/datos/, o correr este script donde los ",
-         "binarios existan (el ambiente conda `msa` de ken).",
-         call. = FALSE)
-  }
-  # Exactamente los comandos del capítulo (sin el guidetree, que la
-  # figura no usa).
-  version_clustalo <- system2(clustalo, "--version", stdout = TRUE)[1]
-  version_mafft    <- paste(
-    system2(mafft, "--version", stdout = TRUE, stderr = TRUE),
-    collapse = " ")
-  message("  generando familia_clustalo.aln con clustalo ", version_clustalo)
-  status <- system2(clustalo, c("-i", shQuote(ruta_fasta),
-                                "-o", shQuote(ruta_clustal),
-                                "--outfmt=clu", "--force"))
-  stopifnot(status == 0)
-  message("  generando familia_mafft.fasta con ", version_mafft)
-  status <- system2(mafft, c("--localpair", "--maxiterate", "1000",
-                             shQuote(ruta_fasta)),
-                    stdout = ruta_mafft)
-  stopifnot(status == 0)
+faltan <- c(ruta_clustal, ruta_mafft, ruta_lc)
+faltan <- faltan[!file.exists(faltan)]
+if (length(faltan)) {
+  stop("DETENIDO: faltan en figuras/datos/: ",
+       paste(basename(faltan), collapse = ", "),
+       ". Son los productos de la práctica de la sesión 9 para la familia ",
+       "lgr (ejercicios 1 y 8), o los archivos de su clave. Sin datos ",
+       "reales no se genera esta figura: va en el libro y está prohibido ",
+       "inventar datos sintéticos.", call. = FALSE)
 }
 
 # --- Parsear (base R: sin dependencias nuevas) ------------------------------
@@ -124,12 +108,14 @@ leer_fasta <- function(ruta) {
 
 clu <- leer_clustal(ruta_clustal)
 maf <- leer_fasta(ruta_mafft)
+lc  <- leer_fasta(ruta_lc)
 
 # Mismo conjunto de secuencias, cada alineamiento rectangular, y la
 # secuencia sin gaps idéntica en los dos. Si algo de eso falla, los
 # archivos no son alineamientos del mismo FASTA y no hay figura.
 stopifnot(length(clu) >= 2, setequal(names(clu), names(maf)))
 stopifnot(length(unique(nchar(clu))) == 1, length(unique(nchar(maf))) == 1)
+stopifnot(REF %in% names(clu), REF %in% names(lc))
 maf <- maf[names(clu)]
 for (nom in names(clu)) {
   a <- toupper(gsub("-", "", clu[[nom]]))
@@ -166,40 +152,71 @@ acuerdo <- vapply(seq_len(ncol_clu), function(c) {
   sum(choose(table(v), 2)) / choose(n, 2)  # pares co-alineados / pares totales
 }, numeric(1))
 
+# --- De columnas a posiciones de la referencia ------------------------------
+cols_ref <- which(strsplit(clu[[REF]], "")[[1]] != "-")   # columna de cada residuo
+L_ref    <- length(cols_ref)
+lc_ref   <- strsplit(gsub("-", "", lc[[REF]]), "")[[1]]
+stopifnot(L_ref == max(DOMINIOS$fin), length(lc_ref) == L_ref,
+          all(grepl("^[0-9]$", lc_ref)))
+
+pos <- data.frame(pos     = seq_len(L_ref),
+                  acuerdo = acuerdo[cols_ref],
+                  lc      = as.integer(lc_ref))
+pos$dominio <- cut(pos$pos, breaks = c(DOMINIOS$inicio, L_ref + 1),
+                   labels = DOMINIOS$dominio, right = FALSE)
+
 # --- Log para el pie de figura ----------------------------------------------
 dir.create(DIR_LOG, showWarnings = FALSE)
 con_acuerdo <- acuerdo[!is.na(acuerdo)]
+por_dom <- vapply(split(pos, pos$dominio), function(d) {
+  sprintf("%s: acuerdo %.2f, LC %.2f", d$dominio[1],
+          mean(d$acuerdo, na.rm = TRUE), mean(d$lc))
+}, character(1))
 log_lineas <- c(
   sprintf("fecha: %s", format(Sys.Date())),
   sprintf("secuencias: %d", nseq),
   sprintf("columnas Clustal Omega: %d", ncol_clu),
   sprintf("columnas MAFFT: %d", ncol_maf),
-  sprintf("acuerdo promedio: %.3f", mean(con_acuerdo)),
-  sprintf("columnas con acuerdo < 0.5: %.1f%% (%d de %d con dato; %d NA)",
-          100 * mean(con_acuerdo < 0.5), sum(con_acuerdo < 0.5),
-          length(con_acuerdo), sum(is.na(acuerdo))),
-  sprintf("clustalo: %s", version_clustalo),
-  sprintf("mafft: %s", version_mafft)
+  sprintf("columnas con acuerdo < 0.5: %d de %d con dato (%d NA)",
+          sum(con_acuerdo < 0.5), length(con_acuerdo), sum(is.na(acuerdo))),
+  sprintf("referencia: %s, %d posiciones", REF, L_ref),
+  paste0("por dominio: ", paste(por_dom, collapse = "; "))
 )
 writeLines(log_lineas, file.path(DIR_LOG, "msa_desacuerdo.txt"))
 message(paste0("  ", log_lineas, collapse = "\n"))
 
 # --- La figura --------------------------------------------------------------
-df <- data.frame(columna = seq_len(ncol_clu), acuerdo = acuerdo)
+# Dos tiras sobre la misma escala 0-1: el acuerdo entre los dos programas y
+# el LC de MUSCLE5 (0-9) dividido entre 9. Arriba, la anatomía de LGR5.
+tiras <- rbind(
+  data.frame(pos = pos$pos, y = 2, valor = pos$acuerdo),
+  data.frame(pos = pos$pos, y = 1, valor = pos$lc / 9)
+)
 
-p <- ggplot(df, aes(x = columna, y = 1, fill = acuerdo)) +
-  geom_tile() +
+p <- ggplot(tiras, aes(x = pos, y = y, fill = valor)) +
+  geom_tile(height = 0.84) +
+  annotate("segment", x = DOMINIOS$inicio, xend = DOMINIOS$fin,
+           y = 2.72, yend = 2.72, colour = GRIS, linewidth = 0.6) +
+  annotate("segment", x = c(DOMINIOS$inicio, DOMINIOS$fin),
+           xend = c(DOMINIOS$inicio, DOMINIOS$fin),
+           y = 2.64, yend = 2.80, colour = GRIS, linewidth = 0.6) +
+  annotate("text", x = (DOMINIOS$inicio + DOMINIOS$fin) / 2, y = 2.98,
+           label = DOMINIOS$dominio, colour = TEXTO, size = 3.1,
+           family = familia_base()) +
   scale_fill_gradient(low = NARANJA, high = AZUL, limits = c(0, 1),
-                      na.value = "grey85", name = "acuerdo") +
-  scale_x_continuous(expand = c(0, 0)) +
-  scale_y_continuous(expand = c(0, 0)) +
-  labs(x = "columna (Clustal Omega)", y = NULL) +
+                      breaks = c(0, 0.5, 1), na.value = "grey85") +
+  scale_x_continuous(expand = c(0, 0), breaks = c(1, seq(100, 900, 100))) +
+  scale_y_continuous(breaks = c(1, 2), limits = c(0.55, 3.15),
+                     expand = c(0, 0),
+                     labels = c("confianza\nMUSCLE5",
+                                "acuerdo Clustal\nOmega vs MAFFT")) +
+  labs(x = "posición en LGR5 humano (aa)", y = NULL) +
   tema_lgc() +
-  theme(axis.text.y  = element_blank(),
-        axis.ticks.y = element_blank(),
+  theme(axis.ticks.y = element_blank(),
         axis.line.y  = element_blank(),
-        panel.grid   = element_blank(),
+        panel.grid.major = element_blank(),   # tema_lgc() la define: hay que apagarla por nombre
+        legend.key.height = unit(9, "pt"),
         panel.background = element_rect(fill = "transparent", colour = NA),
         plot.background  = element_rect(fill = "transparent", colour = NA))
 
-guardar(p, "msa_desacuerdo", subdir = "svg", ancho = 7, alto = 1.8)
+guardar(p, "msa_desacuerdo", subdir = "svg", ancho = 7, alto = 2.3)

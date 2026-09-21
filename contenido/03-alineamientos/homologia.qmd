@@ -494,6 +494,34 @@ RBH es el pretexto perfecto porque no se puede hacer sin uno: hay que
 correr la búsqueda en las dos direcciones y después cruzar las dos
 tablas.
 
+Los dos proteomas son de especies cercanas: la babosa *Deroceras laeve*
+y el caracol terrestre *Bradybaena similaris*, recortados al vecindario
+de la vía WNT que recuperaste con BLAST en la sesión 8 (632 y 713
+proteínas). Con especies así de cercanas uno esperaría que RBH fuera
+trivial, y no lo es:
+
+1.  **El pipeline.** Dos bases con un ciclo `for`, dos búsquedas, el
+    mejor hit por consulta con `sort` y `awk`, y el cruce de las dos
+    tablas con `NR==FNR`. Salen 300 pares recíprocos.
+2.  **Cuánto se pierde.** Solo el 47 % de las proteínas con hit tiene
+    par recíproco, y la pérdida no es pareja: las familias de dominios
+    repetitivos y arreglos en tándem (LRR, cadherinas) pierden más de la
+    mitad; las de una sola copia (la R-spondina, la β-catenina)
+    sobreviven casi enteras. Es el mito 2 de arriba, medido por ti.
+3.  **Tres casos con cromosoma.** Un arreglo en tándem de 24 genes que
+    apunta entero a **una** proteína del caracol; los dos receptores LGR
+    ohnólogos del proyecto, una relación 2:2 que RBH reduce a un solo
+    par por 12 bits de diferencia; y el arreglo del gen de la sonda
+    "lgr5", que se recorre con un ciclo `while read`.
+4.  **Una segunda opinión.** El 97 % de los pares recíprocos cae en el
+    mismo ortogrupo de OrthoFinder: RBH es preciso. Lo que pierde vive
+    en los ortogrupos grandes: RBH es incompleto.
+
+El repositorio conserva además un
+[script](https://github.com/jerolon/Bioinformatica_I_2026/blob/main/practicas/datos/preparar-sesion10.sh)
+que prepara la misma práctica con datos públicos de UniProt, dos
+levaduras, para quien quiera repetirla fuera del servidor del curso.
+
 ## Fuentes {.unnumbered}
 
 **Definiciones fundacionales**

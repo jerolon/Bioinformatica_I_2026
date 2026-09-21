@@ -1,0 +1,963 @@
+---
+title: "Práctica: Clustal Omega contra MAFFT"
+subtitle: "Unidad 3 · Sesión 9"
+author: "Jero"
+---
+
+## De qué se trata
+
+En la mañana vimos que alinear N secuencias es NP-completo, que todos
+los programas son atajos, y que por eso un alineamiento múltiple no es
+un dato sino una estimación con error. Esta tarde van a **medir ese
+error** en datos del laboratorio. Seis partes:
+
+1. **Alinear** la misma familia con dos programas, y con el mismo
+   programa en dos estrategias.
+2. **Primero números**: columnas, residuos, identidad.
+3. **Medir el desacuerdo** y, sobre todo, **ubicarlo** en la proteína:
+   la parte de hoy.
+4. **El árbol guía** contra una filogenia de verdad.
+5. **La barra de error**: el ensemble de MUSCLE5.
+6. **Ver y recortar** el alineamiento.
+
+El concepto de cómputo del día es **una variable como parámetro del
+pipeline**, con sus dos acompañantes: `time` y los **dos canales de
+salida** de un programa (`>` y `2>`). Toda la práctica se escribe una
+vez, con `$F` donde iría el nombre de la familia, y se corre dos veces
+cambiando una sola línea. Es el paso previo a los ciclos de la sesión
+10, y es la razón por la que casi ningún comando de hoy lleva escrito
+el nombre de una familia.
+
+Otra vez, ningún dato es de juguete. La sesión pasada recuperaron con
+`blastp` a los candidatos LGR de la babosa y terminaron con un
+alineamiento de 10 secuencias hecho con `mafft --auto`, que nadie miró
+con sospecha. Hoy la familia crece a **50 receptores LGR de 11
+especies**, se alinea con dos programas, se mide el desacuerdo y se le
+pone barra de error. Es el control de calidad que necesita cualquier
+árbol de esta familia antes de construirse.
+
+## El material de hoy
+
+Dos familias, las dos mitades del mismo módulo de señalización. Las
+**R-spondinas** (RSPO) son el ligando: proteínas secretadas, chicas,
+con dos dominios ricos en cisteína. Los **LGR** son el receptor que ya
+conocen: ectodominio de repeticiones ricas en leucina (LRR) y siete
+hélices transmembranales (7TM). Una familia chica y ordenada, una
+grande y difícil. Esa diferencia es la mitad de la lección.
+
+Los archivos, ya en el servidor:
+
+| archivo | contenido |
+|---|---|
+| `familia_rspo.faa` | **17 R-spondinas** (234–316 aa): las 4 humanas, ratón, *Xenopus*, anfioxo, erizo y 9 de moluscos, incluida la única R-spondina de *D. laeve* y la de su congénere *D. lasithionense*. Es exactamente el set del árbol del proyecto. **La familia chica**: todo corre en segundos. |
+| `familia_lgr.faa` | **50 receptores LGR** (280–1,682 aa): 8 de *D. laeve* (sus 6 candidatos de la sesión 8 y 2 más que el proyecto clasificó como LGR completos), 11 referencias de subtipo conocido (tipo A: FSHR, LHR, TSHR; tipo B: LGR4/5/6, LGRB de ostión, DLGR2 de mosca; tipo C: RXFP1/2, GRL101 de *Lymnaea*) y 31 LGR de 7 moluscos. **La familia grande.** |
+| `familia_rspo_metadata.tsv`, `familia_lgr_metadata.tsv` | nombre → especie, grupo, accession o locus, longitud y nota. |
+| `rspo_arbol_ML_iqtree.nwk` | el **árbol de máxima verosimilitud real** del proyecto para esas mismas 17 R-spondinas (IQ-TREE, con apoyos). Lo van a comparar con el árbol guía de Clustal Omega. |
+| `scripts/acuerdo_por_columna.py` | calcula el acuerdo por columna entre dos alineamientos (parte 3). También está en el [repositorio del curso](https://github.com/jerolon/Bioinformatica_I_2026/blob/main/practicas/scripts/acuerdo_por_columna.py). |
+
+: {tbl-colwidths="[32,68]"}
+
+Dos advertencias sobre `familia_lgr.faa`, las dos deliberadas:
+
+- Cuatro de los LGR de moluscos son **fragmentos** de menos de 600 aa
+  (modelos génicos parciales). Están marcados en la columna `nota` de
+  la metadata y son parte del ejercicio.
+- `Dlaeve_chr6_LGR` mide aquí **1,682 aa**, no los 1,080 de la versión
+  que alinearon en la sesión 7. Es el mismo gen, tal como sale del
+  proteoma v1.2: la isoforma más larga de la anotación automática.
+  Guarden el dato para el ejercicio 3.
+
+Para leer los resultados van a necesitar la anatomía de una proteína de
+referencia por familia. Las posiciones son de la secuencia humana:
+
+| referencia | dominio | posiciones |
+|---|---|---|
+| **RSPO2_human** (243 aa) | péptido señal | 1–21 |
+| | dominios furina FU1+FU2, ricos en cisteína | 40–141 |
+| | dominio TSP1 | 145–203 |
+| | cola C-terminal básica | 204–243 |
+| **LGR5_human** (907 aa) | ectodominio LRR: 14 repeticiones de ~24 aa | 1–454 |
+| | bisagra | 455–573 |
+| | 7TM | 574–820 |
+| | cola C-terminal | 821–907 |
+
+: {tbl-colwidths="[30,45,25]"}
+
+## Preparación
+
+```bash
+ssh usuario@ken.lavis.unam.mx
+mkdir -p ~/bioinfo1/sesion09
+cd ~/bioinfo1/sesion09
+
+module use /mnt/data/bioinfo1/jmiranda/modulefiles
+module load msa
+clustalo --version
+mafft --version
+muscle -version
+trimal --version
+```
+
+Anoten las cuatro versiones en su README. Hoy importa más que nunca:
+el resultado de la práctica *es* la diferencia entre programas, y otra
+versión de cualquiera de ellos puede mover los decimales.
+
+Copien los datos y el script:
+
+```bash
+origen=/mnt/data/bioinfo1/jmiranda/sesion09
+cp -r $origen/datos $origen/scripts .
+ls -lh datos/ scripts/
+```
+
+T-Coffee escribe su caché y sus temporales en su `$HOME` sin
+preguntar. Mándenlo a la carpeta de trabajo:
+
+```bash
+export DIR_4_TCOFFEE=$PWD/.tcoffee TMP_4_TCOFFEE=$PWD/.tcoffee/tmp \
+       CACHE_4_TCOFFEE=$PWD/.tcoffee/cache LOCKDIR_4_TCOFFEE=$PWD/.tcoffee/lock
+mkdir -p $TMP_4_TCOFFEE $CACHE_4_TCOFFEE $LOCKDIR_4_TCOFFEE
+```
+
+`export` hace que una variable la hereden los programas que lancen
+desde esta terminal. Sin `export`, la variable existe para bash pero
+`t_coffee` nunca se entera. Es la diferencia entre una nota para
+ustedes y una instrucción para el programa.
+
+Y ahora las dos variables del día:
+
+```bash
+F=rspo; ref=RSPO2_human        # después: F=lgr; ref=LGR5_human
+```
+
+Empiecen con la familia chica, para que cada paso responda en
+segundos. Cuando terminen una parte, cambien esa línea, suban con la
+flecha por el historial y repitan los mismos comandos con `lgr`. Las
+preguntas están escritas para **las dos familias**.
+
+::: callout-box
+`ken` es un nodo compartido. Clustal Omega y MUSCLE toman **todos** los
+núcleos de la máquina si nadie les dice otra cosa: por eso los comandos
+de hoy llevan `--threads=1` y `-threads 1`. No los quiten.
+:::
+
+::: pendiente
+Instructor, antes de la clase: (1) crear el módulo `msa` con la receta
+de EMBOSS (README de planeación de la sesión 7) sobre un ambiente conda
+con `clustalo mafft muscle=5.1 t-coffee hmmer seqkit trimal` (`hmmer`
+trae `esl-alistat` y `esl-reformat`), y corregir aquí el nombre exacto.
+MUSCLE tiene que ser **5.1**: la 5.3 muere en `-letterconf` con `-html`
+o `-jalview` (*Bad conf=^*). Hace falta `python3`, sin paquetes.
+(2) Copiar `datos/`, `scripts/` y `clave/` de
+`planeacion/practica_alineamiento_multiple/` a la ruta `$origen` que se
+fije; de `clave/` los alumnos solo leen `lgr/ensamble.efa`. (3) Correr
+la práctica una vez: los números de las soluciones salen de clustalo
+1.2.4, mafft 7.526, t_coffee 13.46, muscle 5.1, trimal 1.2 y Easel 0.49
+(corrida del 2026-09-17, 1 CPU). El trimal de bioconda será 1.4 o
+posterior: `-automated1` puede recortar algunas columnas distintas.
+(4) `t_coffee aln_compare` usa unos 600 MB de RAM por persona: treinta
+a la vez son 18 GB. (5) Si el ensemble de `rspo` (46 s con 1 CPU)
+resulta pesado con el grupo completo, también está en `clave/rspo/`.
+:::
+
+## Parte 1 · Alinear con dos métodos
+
+### Ejercicio 1. Dos programas, las mismas secuencias
+
+```bash
+time clustalo -i datos/familia_$F.faa -o ${F}_clustalo.aln --outfmt=clu \
+              --guidetree-out=${F}_arbol.dnd --threads=1
+
+time mafft --localpair --maxiterate 1000 datos/familia_$F.faa > ${F}_mafft.fasta
+```
+
+Lean los dos comandos antes de compararlos:
+
+- Clustal Omega escribe en formato CLUSTAL (`--outfmt=clu`) y además
+  guarda su **árbol guía** con `--guidetree-out`. Lo van a necesitar en
+  la parte 4. Si repiten el comando, se niega a sobreescribir: para eso
+  existe `--force`.
+- `mafft --localpair --maxiterate 1000` es, literalmente, **L-INS-i**:
+  alineamientos locales de todos los pares y hasta 1,000 rondas de
+  refinamiento iterativo. MAFFT no tiene opción de archivo de salida:
+  escribe el alineamiento en la salida estándar y ustedes lo guardan
+  con `>`.
+- `time` va delante de cualquier comando y reporta tres tiempos al
+  terminar. `real` es el reloj de pared, el que les importa hoy.
+
+Fíjense en lo que pasó con MAFFT: el alineamiento se fue al archivo y,
+aun así, la pantalla se llenó de mensajes de progreso. No es un error
+del `>`. Es el primer encuentro con los dos canales de salida, y el
+ejercicio 2 lo resuelve.
+
+Repitan con `F=lgr`. ¿Cuánto tardó cada programa con cada familia?
+L-INS-i compara todos los pares y después refina; Clustal Omega es
+progresivo, con perfiles HMM. ¿Cuál de los dos escalaría a 10,000
+secuencias?
+
+::: {.callout-note collapse="true"}
+## Solución
+
+Tiempos de referencia, con 1 CPU:
+
+| | rspo (17 × 274 aa) | lgr (50 × 977 aa) |
+|---|---|---|
+| `clustalo` | 0.4 s | 14 s |
+| `mafft` L-INS-i | 0.7 s | 91 s |
+
+Pasar de 17 a 50 secuencias (×3) y de 274 a 977 aa (×3.6) multiplica a
+Clustal Omega por ~36 y a L-INS-i por ~140. L-INS-i calcula un
+alineamiento local para **cada par**: N² pares, cada uno cuadrático en
+la longitud, y luego refina. Clustal Omega arma su árbol guía con
+*mBed* (una incrustación por k-meros, del orden de N log N) y alinea
+perfiles HMM en una sola pasada progresiva.
+
+Con 10,000 secuencias L-INS-i necesitaría unos 5 × 10⁷ alineamientos
+pareados: inviable. Clustal Omega sí escala, y también MAFFT en su modo
+rápido (ejercicio 2). Lo que L-INS-i compra con ese tiempo es
+información de todos los pares desde el principio; es la misma apuesta
+de consistencia que T-Coffee, y desaparece cuando se cambia a un modo
+rápido.
+
+Sobre la variable: escribieron el comando una vez y lo corrieron sobre
+dos familias cambiando `F`. Las llaves de `${F}_clustalo.aln` son
+obligatorias: sin ellas bash buscaría una variable llamada
+`F_clustalo`, que no existe, y el archivo se llamaría `.aln`. En
+`familia_$F.faa` no hacen falta porque el punto no puede ser parte de
+un nombre de variable.
+:::
+
+### Ejercicio 2. `--auto`, y los dos canales de salida
+
+Todo programa de terminal tiene **dos** salidas: la estándar (*stdout*,
+canal 1), para el resultado, y la de errores (*stderr*, canal 2), para
+mensajes, avisos y progreso. `>` redirige solo la primera. La segunda
+se redirige con `2>`:
+
+```bash
+mafft --auto datos/familia_$F.faa > ${F}_mafft_auto.fasta 2> ${F}_mafft_auto.log
+grep -A2 Strategy ${F}_mafft_auto.log
+```
+
+Ahora la pantalla queda limpia, y el registro de lo que MAFFT decidió
+quedó en un archivo que pueden citar. ¿Qué estrategia eligió `--auto`
+en cada familia, y por qué? (Pista: las dos tienen menos de 200
+secuencias.)
+
+Fuercen ahora el modo progresivo puro, **FFT-NS-2**, que es lo que
+`--auto` escogería con miles de secuencias:
+
+```bash
+time mafft --retree 2 --maxiterate 0 datos/familia_$F.faa > ${F}_mafft_fftns2.fasta 2> /dev/null
+```
+
+::: {.callout-note collapse="true"}
+## Solución
+
+En las dos familias el log dice:
+
+```
+Strategy:
+ L-INS-i (Probably most accurate, very slow)
+ Iterative refinement method (<16) with LOCAL pairwise alignment information
+```
+
+La regla interna de `--auto` es de tamaño: con menos de 200 secuencias
+y ninguna demasiado larga, elige L-INS-i. Por eso `--auto` da aquí el
+mismo alineamiento que el comando del ejercicio 1 (lo pueden comprobar
+en la parte 3: acuerdo de 100 %), y por eso la comparación interesante
+no es `--auto` contra L-INS-i sino L-INS-i contra FFT-NS-2. Moraleja
+para el alineamiento de la sesión 8: cuando escribieron `mafft --auto`
+no eligieron "el default", eligieron L-INS-i sin saberlo. El log lo
+decía; nadie lo leyó porque se fue por el canal 2.
+
+FFT-NS-2 tarda 2 s con `lgr`, contra 91 s de L-INS-i. Qué se pierde a
+cambio es la pregunta del ejercicio 4.
+
+`/dev/null` es el archivo que descarta todo lo que recibe. `2>
+/dev/null` significa "no quiero ver los mensajes"; úsenlo cuando ya
+saben lo que dicen, nunca la primera vez que corren algo. Y fíjense en
+que `time` también reporta por *stderr*: sus tres renglones no
+ensuciaron ningún archivo de resultados. Esa es la razón de que existan
+dos canales.
+:::
+
+## Parte 2 · Primero números
+
+### Ejercicio 3. Antes de mirar letras, medir
+
+`esl-reformat` convierte el CLUSTAL a FASTA alineado, para que `seqkit`
+pueda leer los tres alineamientos de la misma manera:
+
+```bash
+esl-reformat afa ${F}_clustalo.aln > ${F}_clustalo.fasta
+seqkit stats -a ${F}_clustalo.fasta ${F}_mafft.fasta ${F}_mafft_fftns2.fasta
+esl-alistat ${F}_clustalo.aln
+esl-alistat ${F}_mafft.fasta
+```
+
+En un FASTA alineado todas las secuencias miden lo mismo, así que
+`min_len`, `avg_len` y `max_len` de `seqkit stats` son el número de
+columnas. `sum_len` cuenta residuos y gaps; `sum_gap`, solo gaps.
+
+¿Cuántas columnas tiene cada uno de los tres alineamientos? ¿Tienen
+los tres los mismos residuos? ¿Qué mide la identidad promedio de
+`esl-alistat`, y por qué es tan baja en familias que BLAST recuperó sin
+ningún problema? Y una pregunta para `lgr`: la proteína más larga mide
+1,682 aa y el alineamiento tiene unas 3,000 columnas. ¿De dónde salen?
+
+::: {.callout-note collapse="true"}
+## Solución
+
+| | rspo | lgr |
+|---|---|---|
+| columnas: Clustal Omega / L-INS-i / FFT-NS-2 | 409 / 391 / 418 | 3,205 / 2,902 / 3,019 |
+| residuos (`sum_len − sum_gap`) | 4,656 en los tres | 48,847 en los tres |
+| identidad promedio: Clustal Omega / L-INS-i | 37 % / 38 % | 28 % / 29 % |
+
+Los residuos son idénticos; solo cambia cuántas columnas hay y dónde
+se abrieron los gaps. Tres alineamientos de las mismas secuencias con
+tres anchos distintos: esa es la primera evidencia, sin haber mirado
+una sola letra, de que esto es una estimación. Si fuera un dato, no
+dependería de a quién se le pregunta.
+
+La identidad promedio de `esl-alistat` es el promedio, sobre todos los
+pares de secuencias, de la fracción de posiciones alineadas (sin gap en
+ninguna de las dos) que son idénticas. Es baja porque promedia humano
+contra molusco y tipo A contra tipo B contra tipo C a lo largo de
+*toda* la proteína. BLAST encontró a estas familias porque puntúa
+segmentos locales (los motivos LRR, las hélices del 7TM) con una matriz
+de sustitución y un E-value, no la identidad global. `lgr` queda por
+debajo de 30 %: la zona crepuscular, donde el alineamiento deja de ser
+obvio.
+
+Las 3,000 columnas salen de las inserciones. Cuenten cuántas columnas
+de L-INS-i tienen residuo en **una sola** de las 50 secuencias:
+
+```bash
+seqkit seq -s -w 0 lgr_mafft.fasta \
+  | awk '{n = split($0, ch, ""); for (i=1; i<=n; i++) if (ch[i] != "-") occ[i]++}
+         END {for (i=1; i<=n; i++) if (occ[i]==1) u++; print u " de " n " columnas"}'
+```
+
+`seqkit seq -s -w 0` imprime cada secuencia en un solo renglón, sin
+encabezado; `split($0, ch, "")` la parte en caracteres. Resultado:
+**731 de 2,902**, una de cada cuatro columnas. De esas, 394 son de
+`Dlaeve_chr11_0.60` (1,553 aa) y 141 de `Dlaeve_chr6_LGR` (los 1,682 aa
+de la advertencia): dos modelos génicos largos de la anotación
+automática aportan por sí solos el 18 % del ancho del alineamiento.
+Solo 469 columnas tienen residuo en 45 o más de las 50 secuencias. Es
+el mito 3 de la mañana con números: más secuencias no es mejor
+alineamiento, y cada inserción propia de una secuencia, sea real o sea
+un error de anotación, se paga en columnas para todas.
+:::
+
+## Parte 3 · Medir el desacuerdo
+
+### Ejercicio 4. `aln_compare`: tres maneras de contar
+
+T-Coffee trae un modo que compara dos alineamientos de las mismas
+secuencias:
+
+```bash
+t_coffee -other_pg aln_compare -al1 ${F}_clustalo.aln -al2 ${F}_mafft.fasta
+t_coffee -other_pg aln_compare -al1 ${F}_clustalo.aln -al2 ${F}_mafft.fasta -compare_mode column
+t_coffee -other_pg aln_compare -al1 ${F}_clustalo.aln -al2 ${F}_mafft.fasta -compare_mode tc
+t_coffee -other_pg aln_compare -al1 ${F}_mafft_fftns2.fasta -al2 ${F}_mafft.fasta
+```
+
+El número que buscan está bajo `[ALL]`: el porcentaje de lo que hay en
+el primer alineamiento que se conserva en el segundo. El modo por
+defecto cuenta **pares de residuos** alineados (suma de pares, SP).
+`column` cuenta los pares que viven en columnas reproducidas íntegras.
+`tc` (*total column*) cuenta columnas: la fracción que existe idéntica,
+con todas sus secuencias, en el otro alineamiento.
+
+::: callout-box
+**No hay verdad de referencia.** Estos porcentajes miden desacuerdo
+entre dos programas, no exactitud de ninguno. Los dos pueden estar mal
+en el mismo lugar, y ahí coincidirían al 100 %.
+:::
+
+Anoten los tres porcentajes de Clustal Omega contra L-INS-i para cada
+familia. ¿Por qué el acuerdo por columna es mucho menor que el de suma
+de pares? ¿Por qué se desploma en `lgr`? (Piensen qué tan fácil es que
+*una sola* secuencia de 50 mueva un residuo.) ¿Y cuánto se parece MAFFT
+a sí mismo cuando cambia de estrategia?
+
+::: {.callout-note collapse="true"}
+## Solución
+
+Clustal Omega contra L-INS-i:
+
+| modo | rspo | lgr |
+|---|---|---|
+| SP (pares de residuos) | 80.6 % | 72.4 % |
+| `column` | 64.5 % | 27.2 % |
+| `tc` (columna entera) | 44.4 % | 12.1 % |
+
+SP cuenta pares: el par (i, j) se conserva aunque el resto de su
+columna se haya movido. Los modos de columna exigen que la columna
+entera se reproduzca. Con 17 secuencias basta que una cambie de columna
+para romperla; con 50, la probabilidad de que *ninguna* se mueva es
+mucho menor. Por eso `tc` cae de 44 % a 12 % mientras SP baja solo ocho
+puntos. Es un efecto del tamaño del alineamiento, no de que `lgr` esté
+"peor alineado" residuo por residuo. En `rspo`, casi la mitad de las
+columnas de Clustal Omega sobreviven íntegras en MAFFT; en `lgr`, una
+de cada ocho.
+
+Lección para leer artículos: "los dos alineamientos coinciden en 72 %"
+y "coinciden en 12 %" pueden ser la misma comparación. Pregunten
+siempre qué se contó. Es la historia del denominador de la sesión 7,
+con otro disfraz.
+
+FFT-NS-2 contra L-INS-i:
+
+| | rspo | lgr |
+|---|---|---|
+| columnas | 418 contra 391 | 3,019 contra 2,902 |
+| SP | 77.4 % | 68.5 % |
+
+Mismo programa, misma matriz, otra estrategia, y se mueve entre un
+cuarto y un tercio de los pares. L-INS-i coincide **menos** con
+FFT-NS-2, su propio modo rápido, que con Clustal Omega. La precisión de
+un alineamiento múltiple es una
+propiedad de la estrategia, no de la marca del programa: "lo alineé con
+MAFFT" no describe un método.
+:::
+
+### Ejercicio 5. El desacuerdo tiene dirección
+
+Un porcentaje global no dice *dónde*. El script
+`scripts/acuerdo_por_columna.py` calcula, para cada columna de Clustal
+Omega, qué fracción de sus pares de residuos sigue junta en MAFFT (la
+medida de la figura de la mañana), y anota a qué posición de la
+secuencia de referencia corresponde cada columna:
+
+```bash
+python3 scripts/acuerdo_por_columna.py ${F}_clustalo.aln ${F}_mafft.fasta --ref $ref \
+        > ${F}_acuerdo.tsv 2> ${F}_acuerdo_regiones.txt
+awk -F'\t' 'NR==1 || $2!=""' ${F}_acuerdo.tsv | head -5 | column -t
+head -5 ${F}_acuerdo_regiones.txt
+```
+
+El script usa los dos canales como se debe: la tabla por *stdout*, el
+resumen de regiones por *stderr*. Por eso un solo comando produce dos
+archivos sin que se mezclen.
+
+La tabla tiene una fila por **columna** del alineamiento de Clustal
+Omega, y el campo 2 viene vacío donde la referencia tiene gap. Por eso
+el `awk` de arriba salta esas filas antes de `column -t`, que con
+campos vacíos recorre todo lo que sigue. La pregunta biológica se hace
+por **posición** de la proteína, así que quédense con las filas donde
+la referencia tiene residuo:
+
+```bash
+awk -F'\t' 'NR>1 && $2!="" {print $2 "\t" $6}' ${F}_acuerdo.tsv > ${F}_pos.tsv
+awk -F'\t' '$2!="NA" && $2<0.5 {print $1}' ${F}_pos.tsv | tr '\n' ' '; echo
+```
+
+Esa lista son las posiciones de la referencia donde menos de la mitad
+de los pares sobrevivió al cambio de programa. Ahora promedien por
+dominio, con la anatomía de arriba. Para `rspo`:
+
+```bash
+awk -F'\t' '$2!="NA" {
+       d = ($1<=21) ? "1_senal" : ($1<=39) ? "2_enlaceN" : ($1<=141) ? "3_FU1+FU2" : \
+           ($1<=144) ? "4_enlace" : ($1<=203) ? "5_TSP1" : "6_Cterm"
+       s[d]+=$2; n[d]++; if ($2<0.5) b[d]++ }
+     END {for (d in s) printf "%s\t%d\t%.2f\t%.2f\n", d, n[d], s[d]/n[d], b[d]/n[d]}' \
+    rspo_pos.tsv | sort
+```
+
+Y para `lgr`:
+
+```bash
+awk -F'\t' '$2!="NA" {
+       d = ($1<=454) ? "1_LRR" : ($1<=573) ? "2_bisagra" : ($1<=820) ? "3_7TM" : "4_Cterm"
+       s[d]+=$2; n[d]++; if ($2<0.5) b[d]++ }
+     END {for (d in s) printf "%s\t%d\t%.2f\t%.2f\n", d, n[d], s[d]/n[d], b[d]/n[d]}' \
+    lgr_pos.tsv | sort
+```
+
+El condicional `?:` de la sesión 8, encadenado: se lee como una
+escalera de "si no, entonces". Los arreglos `s`, `n` y `b` acumulan por
+dominio la suma, el conteo y cuántas posiciones quedaron bajo 0.5. El
+número delante de cada nombre solo sirve para que `sort` los deje en
+orden de N a C.
+
+¿En qué dominios se concentra el desacuerdo y en cuáles los dos
+programas coinciden casi por completo? En `lgr`, una de las cuatro
+regiones tiene una razón **estructural** para ser difícil de alinear
+aunque esté bien conservada. ¿Cuál, y por qué?
+
+::: {.callout-note collapse="true"}
+## Solución
+
+Columnas de Clustal Omega con acuerdo menor a 0.5: **158 de 409** en
+`rspo`, **1,129 de 3,205** en `lgr`.
+
+**rspo**, sobre RSPO2_human:
+
+| dominio | posiciones | acuerdo medio | fracción < 0.5 |
+|---|---|---|---|
+| péptido señal | 1–21 | 0.49 | 0.52 |
+| enlace N | 22–39 | 0.50 | 0.39 |
+| **FU1+FU2** | 40–141 | **0.99** | 0.00 |
+| **TSP1** | 145–203 | **0.99** | 0.00 |
+| cola C-terminal | 204–243 | 0.35 | 0.82 |
+
+Dos regiones de desacuerdo: **1–7**, el arranque del péptido señal
+(hidrofóbico, y sin homología real entre especies: cualquier péptido
+señal se parece a cualquier otro), y **211–243**, la cola básica, de
+composición sesgada y longitud variable. Los dos dominios estructurados
+coinciden casi al residuo: los andamios de cisteínas de los furina y
+del TSP1 anclan el alineamiento, y ahí no hay nada que decidir.
+
+**lgr**, sobre LGR5_human:
+
+| dominio | posiciones | acuerdo medio | fracción < 0.5 |
+|---|---|---|---|
+| **LRR** | 1–454 | **0.61** | 0.45 |
+| bisagra | 455–573 | 0.78 | 0.25 |
+| **7TM** | 574–820 | **0.96** | 0.06 |
+| cola C-terminal | 821–907 | 0.40 | 0.74 |
+
+A grandes rasgos, las posiciones de LGR5 con acuerdo bajo forman
+corridas en 1–87, 93–168 y 193–234 (ectodominio), 490–533 (bisagra),
+717–729 (un bucle del 7TM) y 841–907 (cola). El 7TM es donde los dos
+programas coinciden.
+
+**La región con razón estructural es el LRR.** Son 14 repeticiones en
+tándem de ~24 aa con el mismo consenso (LxxLxLxxNxL). Correr una
+secuencia una repetición completa produce un alineamiento casi igual de
+bueno: es un problema de **registro**, no de conservación. Dos
+programas eligen registros distintos en secuencias distintas aunque
+cada repetición esté bien conservada. Además el número de repeticiones
+varía entre subtipos, y los cuatro fragmentos casi no tienen
+ectodominio. Es la misma arquitectura repetitiva que en la sesión 8
+inflaba los hits de BLAST: allá producía hits de más, aquí produce
+alineamientos equivalentes de más.
+
+La cola C-terminal es desacuerdo del otro tipo, el trivial: baja
+complejidad, longitud variable, nada que anclar.
+:::
+
+## Parte 4 · El árbol guía no es una filogenia
+
+```bash
+tr -d '\n' < ${F}_arbol.dnd; echo
+cat datos/rspo_arbol_ML_iqtree.nwk
+```
+
+Son árboles en formato Newick: paréntesis anidados, con la longitud de
+cada rama después de los dos puntos. Para verlos como árboles, peguen
+el texto en un visor web, por ejemplo
+[iTOL](https://itol.embl.de/upload.cgi) o
+[IcyTree](https://icytree.org). El `.dnd` es el orden en que Clustal
+Omega fue fusionando las secuencias: el objeto que gobierna el pecado
+original de la mañana.
+
+### Ejercicio 6. rspo: el árbol guía contra el árbol de verdad
+
+Los dos árboles tienen las mismas 17 puntas. El segundo es el árbol de
+máxima verosimilitud del proyecto: L-INS-i, recorte, IQ-TREE con
+selección de modelo, y dos medidas de apoyo por nodo (los pares de
+números como `96.2/87`). En la metadata, la columna `grupo` dice
+quién es vertebrado, quién es otro deuteróstomo (`basal_deut`: anfioxo
+y erizo) y quién es molusco.
+
+Encuentren **dos diferencias** de topología entre los dos árboles. Una
+de ellas coloca a un deuteróstomo *dentro* de los moluscos: ¿cuál? El
+árbol guía se construyó con distancias entre k-meros, sin modelo
+evolutivo, solo para ordenar las fusiones. ¿Por qué eso basta para
+alinear y no para inferir parentesco?
+
+::: {.callout-note collapse="true"}
+## Solución
+
+Hay al menos tres diferencias:
+
+1. **Un deuteróstomo entre moluscos.** En el árbol guía,
+   `RSPO_amphioxus` es hermano de (`RSPO_Magallana`, `RSPO_Octopus`), y
+   `RSPO_urchin` queda por fuera de todo el bloque de moluscos más
+   anfioxo. En el árbol ML, anfioxo y erizo forman un par (con apoyo
+   bajo, 21.8/51) que es hermano de un clado de moluscos bien apoyado
+   (96.2/87).
+2. **Los parálogos humanos.** Árbol guía: RSPO4 por fuera de ((RSPO2 de
+   humano, ratón y *Xenopus*), (RSPO1, RSPO3)). Árbol ML: RSPO4 hermano
+   del clado RSPO2, con apoyo 0.5/53, y RSPO1 y RSPO3 en ramas
+   separadas. Aquí *ninguno* de los dos resuelve; la diferencia es que
+   el ML lo confiesa con sus apoyos y el árbol guía no tiene con qué.
+3. **Dentro de los gasterópodos.** El árbol guía pone a las dos
+   babosas, (Dla, Dlas), como hermanas de (Aplysia, (Bulinus,
+   Biomphalaria)); el ML las pone con Aplysia (79.4/47).
+
+Por qué basta para alinear y no para parentesco: el árbol guía se
+calcula con distancias entre perfiles de k-meros, sin modelo de
+sustitución ni corrección por saturación, y se agrupa por UPGMA, que
+supone reloj molecular. Se nota en el archivo: todas las puntas quedan
+a la misma distancia de la raíz (`RSPO2_human:0.0205761,
+RSPO2_mouse:0.0205761`). Su único trabajo es decidir *qué se fusiona
+primero*, y para alinear basta que lo más parecido se junte antes que
+lo lejano. Esa parte la acierta: los vertebrados, los pares de especies
+hermanas. Todo lo demás (dónde cae una punta lejana, la profundidad de
+los nodos, si un grupo es monofilético) no está estimado y no trae
+apoyo. Un árbol de parentesco necesita un alineamiento *primero*, un
+modelo evolutivo y una medida de apoyo. Además, el ML de IQ-TREE no
+tiene raíz: que aparezca "enraizado" en RSPO1 es un accidente de cómo
+se escribe el archivo.
+:::
+
+### Ejercicio 7. lgr: ohnólogos, fragmentos y ramas imposibles
+
+Con `F=lgr`. Primero, la lista de los fragmentos:
+
+```bash
+awk -F'\t' '$6 ~ /fragmento/ {print $1, $5}' datos/familia_lgr_metadata.tsv
+```
+
+En el árbol guía busquen `Dlaeve_chr6_LGR` y `Dlaeve_chr10_LGR`. ¿Caen
+con las referencias de tipo B (LGR4/5/6, DLGR2, LGRB)? ¿Son hermanos
+entre sí? Son los ohnólogos con 71 % de identidad de la sesión 7.
+¿Dónde quedaron los cuatro fragmentos, y qué dice eso de usar el `.dnd`
+como filogenia? Por último, busquen en el Newick ramas de longitud `0`
+y una rama **negativa**. ¿Qué significan?
+
+::: {.callout-note collapse="true"}
+## Solución
+
+- `Dlaeve_chr6_LGR` y `Dlaeve_chr10_LGR` caen en el bloque de **tipo
+  B**, con LGR4/5/6, DLGR2, LGRB_Cgigas y Mgig_c01 a c03, separados de
+  los tipo A (FSHR, LHR, TSHR) y C (RXFP1/2, GRL101). **No son
+  hermanos**: `chr10` empareja con `Dlas_c02`, su ortólogo en *D.
+  lasithionense* (distancia 0.011), dentro de un clado de LGR de
+  caracoles y babosas, y `chr6` es hermano de *todo* ese clado. Es lo
+  que se espera de una duplicación antigua: cada copia tiene sus
+  propios ortólogos en las otras especies, así que la duplicación
+  precede a la radiación. El 71 % de la sesión 7 es *alto* para eso:
+  refleja lo conservado del receptor, no una duplicación reciente.
+- Los cuatro fragmentos se agrupan **por ser fragmentos**, no por
+  parentesco. `Avul_c02` y `Mbil_c04` (424 aa los dos) forman un par al
+  fondo de una rama larga (0.296); `Avul_c03` (490 aa) queda solo en la
+  base de ese bloque; `Dlas_c03` (280 aa) cuelga de una rama de 0.417
+  sin pertenecer a ningún subtipo. Una secuencia corta comparte pocos
+  k-meros con todas las demás, así que "está lejos de todo" y UPGMA la
+  pega al final, o con otro fragmento.
+- Las ramas de longitud cero delatan **secuencias idénticas**:
+  `Pcan_c05:0,Pcan_c06:0` (dos modelos génicos de *Pomacea* con la
+  misma proteína) y `LGRB_Cgigas:0,Mgig_c01:0` (el LGR de ostión entró
+  dos veces: como referencia y como comparador). `seqkit rmdup -s
+  datos/familia_lgr.faa -D duplicadas.txt > /dev/null` las encuentra;
+  antes de una filogenia de verdad hay que quitarlas. Y la rama
+  negativa, `-0.00163251`, es imposible en un árbol evolutivo: es
+  aritmética de UPGMA sobre distancias aproximadas.
+- Los dos candidatos dudosos de la sesión 8 quedan "cerca pero afuera":
+  `Dlaeve_chr4_45.86` como hermano de los tipo A (rama 0.337) y
+  `Dlaeve_chr2_15.74` en la base del bloque tipo C. Es sugerente, y por
+  todo lo anterior no es evidencia.
+
+Respuesta para el compañero que pone el `.dnd` en su tesis: eso es un
+orden de fusión. Tiene reloj molecular forzado, ramas negativas,
+secuencias duplicadas sin quitar y ningún apoyo; pone a un anfioxo
+entre los moluscos y agrupa fragmentos por ser fragmentos. La filogenia
+es otro análisis: alinear, recortar, elegir modelo, inferir con apoyos.
+:::
+
+## Parte 5 · La barra de error: el ensemble de MUSCLE5
+
+### Ejercicio 8. Confianza letra por letra
+
+MUSCLE5 no produce un alineamiento sino un **ensemble**. Para `rspo`
+tarda cerca de un minuto:
+
+```bash
+muscle -align datos/familia_rspo.faa -output rspo_ensamble.efa -stratified -threads 1
+grep '^<' rspo_ensamble.efa
+```
+
+`-stratified` genera 16 réplicas: 4 permutaciones del árbol guía
+(`none`, `abc`, `acb`, `bca`) por 4 perturbaciones de los parámetros
+del HMM (`.0` a `.3`). Eso es lo que lista el `grep`. `-diversified`
+genera 100 y es la opción seria.
+
+Para `lgr`, 16 réplicas de 50 secuencias de ~1,000 aa tardan **1 h
+45 min** en un CPU. No se corre en clase ni en un nodo compartido: ya
+está calculado.
+
+```bash
+cp $origen/clave/lgr/ensamble.efa lgr_ensamble.efa
+```
+
+Lo que sigue sí es rápido, para las dos familias:
+
+```bash
+muscle -maxcc ${F}_ensamble.efa -output ${F}_mejor.afa
+muscle -letterconf ${F}_ensamble.efa -ref ${F}_mejor.afa -output ${F}_confianza.afa \
+       -html ${F}_confianza.html -jalview ${F}_confianza.features
+head -4 ${F}_confianza.afa
+```
+
+`-maxcc` elige la réplica con mayor confianza de columna. `-letterconf`
+le pone a cada letra de esa réplica su **LC** (*letter confidence*): la
+fracción del ensemble que sostiene esa letra en esa columna, del 0 al
+9. `${F}_confianza.afa` es el mismo alineamiento con cada letra
+sustituida por su dígito.
+
+Saquen el LC de la referencia, posición por posición, y péguenlo a la
+tabla del ejercicio 5 con el `NR==FNR` de la sesión 8:
+
+```bash
+awk -v id=">$ref" '/^>/ {ok = ($1 == id); next} ok {gsub(/-/, ""); printf "%s", $0}' \
+    ${F}_confianza.afa | fold -w1 | awk '{print NR "\t" $1}' > ${F}_lc.tsv
+
+awk -F'\t' 'NR==FNR {lc[$1]=$2; next} {print $1, $2, lc[$1]}' OFS='\t' \
+    ${F}_lc.tsv ${F}_pos.tsv > ${F}_pos_lc.tsv
+head -3 ${F}_pos_lc.tsv
+```
+
+El primer `awk` enciende la bandera `ok` solo en el registro de la
+referencia, le quita los gaps y pega sus renglones. `-v id=">$ref"` es
+la manera de pasarle una variable de bash a `awk`. `fold -w1` deja un
+carácter por renglón, y el segundo `awk` los numera. Como quitaron los
+gaps, el renglón *n* es la posición *n* de la proteína.
+
+Ahora la pregunta: ¿las posiciones donde los dos programas discrepan
+son las mismas de las que MUSCLE5 desconfía?
+
+```bash
+awk -F'\t' '$2!="NA" {g = ($2<0.5) ? "acuerdo<0.5 " : "acuerdo>=0.5"
+                      s[g]+=$3; n[g]++; if ($3<=6) b[g]++}
+     END {for (g in s) printf "%s\tn=%d\tLC medio %.2f\tLC<=6: %.2f\n", g, n[g], s[g]/n[g], b[g]/n[g]}' \
+    ${F}_pos_lc.tsv | sort
+```
+
+Promedien también el LC por dominio: es el `awk` del ejercicio 5 sobre
+`${F}_pos_lc.tsv`, con `$3` en todos los lugares donde decía `$2` y el
+umbral en `$3<=6`. En `rspo`, ¿qué dominios tienen LC de 9 y en cuál aparecen letras con
+LC de 2 a 6?
+
+::: {.callout-note collapse="true"}
+## Solución
+
+| | acuerdo < 0.5 | acuerdo ≥ 0.5 |
+|---|---|---|
+| rspo: LC medio (fracción con LC ≤ 6) | 7.92 (0.14), n = 51 | 8.93 (0.01), n = 192 |
+| lgr: LC medio (fracción con LC ≤ 6) | 6.25 (0.47), n = 311 | 8.07 (0.20), n = 595 |
+
+Sí coinciden. Por dominio:
+
+| rspo (RSPO2) | LC medio | LC ≤ 6 | | lgr (LGR5) | LC medio | LC ≤ 6 |
+|---|---|---|---|---|---|---|
+| péptido señal | 8.2 | 10 % | | LRR | 7.2 | 40 % |
+| FU1+FU2 | **9.0** | 0 % | | bisagra | 7.5 | 23 % |
+| TSP1 | **9.0** | 0 % | | 7TM | **9.0** | 1 % |
+| cola C-terminal | 7.9 | 17 % | | cola C-terminal | **4.7** | 61 % |
+
+En `rspo` los dos dominios de cisteínas quedan en 9 parejo. Las letras
+de LC bajo son pocas y están donde se esperaba: 18–19 en el péptido
+señal y **227–233** en la cola, con valores de 2 a 6. En `lgr`, las
+corridas de baja confianza de LGR5 (a grandes rasgos 5–28, 164–306,
+360–374, 495–529 y 848–897) caen en las mismas tres regiones del
+ejercicio 5: LRR, bisagra y cola.
+
+La diferencia conceptual es lo que hace valioso el resultado. El
+ejercicio 5 mide desacuerdo **entre dos programas**. El LC mide
+inestabilidad **dentro de uno solo**, al perturbar su árbol guía y sus
+parámetros. Son dos experimentos independientes y señalan los mismos
+residuos. Eso es lo que justifica hablar de la barra de error de un
+alineamiento: no es una opinión sobre MAFFT o sobre Clustal, es una
+propiedad de las secuencias.
+
+Detalle de `-maxcc`: imprime la confianza de columna (CC) mínima,
+media y máxima del ensemble. Va de 242 a 303 en `rspo` (gana la réplica
+`abc.1`) y de 1,280 a 1,810 en `lgr` (gana `bca.0`). Dieciséis corridas
+del mismo programa sobre las mismas secuencias, y la mejor saca 25 % o
+40 % más que la peor.
+:::
+
+## Parte 6 · Ver y recortar
+
+### Ejercicio 9. Jalview y trimAl
+
+Primero, mirar. **Desde su laptop**, no desde `ken`:
+
+```bash
+scp "usuario@ken.lavis.unam.mx:~/bioinfo1/sesion09/*_confianza.html" .
+scp "usuario@ken.lavis.unam.mx:~/bioinfo1/sesion09/*_mafft.fasta" .
+scp "usuario@ken.lavis.unam.mx:~/bioinfo1/sesion09/*_confianza.features" .
+```
+
+Las comillas evitan que su laptop intente expandir el `*` contra sus
+propios archivos: el patrón se resuelve contra los de `ken`. Abran
+`rspo_confianza.html` en el navegador: es el alineamiento de MUSCLE5
+con cada letra coloreada por su LC. Después abran `rspo_mafft.fasta` en
+[Jalview](https://www.jalview.org), coloreen por conservación, importen
+`rspo_confianza.features` (*File → Load Features / Annotations*) para
+sobreponer la confianza de MUSCLE5, y recorran el alineamiento buscando
+las regiones de los ejercicios 5 y 8.
+Si Java se pone difícil, el MSA Viewer del NCBI en el navegador es el
+plan B.
+
+Ahora, lo que hace un pipeline filogenético antes de construir el
+árbol:
+
+```bash
+trimal -in ${F}_mafft.fasta -out ${F}_mafft_trimal.fasta -automated1 -htmlout ${F}_trimal.html
+seqkit stats ${F}_mafft.fasta ${F}_mafft_trimal.fasta
+```
+
+¿Qué fracción de las columnas eliminó `trimal`? Para saber *cuáles*,
+`-colnumbering` imprime las columnas que conservó, numeradas desde
+cero. Con eso se completa la tabla por posición:
+
+```bash
+trimal -in ${F}_mafft.fasta -automated1 -colnumbering -out /dev/null \
+  | sed 's/#ColumnsMap//' | tr -d ' \t' | tr ',' '\n' | grep -E '^[0-9]+$' > ${F}_trimal_cols.txt
+
+awk -v id=">$ref" 'NR==FNR {kept[$1]=1; next}
+     /^>/ {ok = ($1 == id); next}
+     ok {n = split($0, ch, "")
+         for (i=1; i<=n; i++) {if (ch[i] != "-") print ++pos "\t" ((col in kept) ? 1 : 0); col++}}' \
+    ${F}_trimal_cols.txt ${F}_mafft.fasta > ${F}_trimal_pos.tsv
+
+awk -F'\t' 'NR==FNR {k[$1]=$2; next} {print $0, k[$1]}' OFS='\t' \
+    ${F}_trimal_pos.tsv ${F}_pos_lc.tsv > ${F}_tabla.tsv
+head -3 ${F}_tabla.tsv
+```
+
+El `awk` de en medio recorre el renglón de la referencia en el
+alineamiento de MAFFT llevando dos contadores: `col`, la columna (desde
+cero, como `trimal`), y `pos`, la posición en la proteína, que solo
+avanza cuando hay residuo. `${F}_tabla.tsv` es el resultado de la
+tarde: una fila por residuo de la referencia, con su **acuerdo**, su
+**LC** y si `trimal` lo **conservó** (1) o no (0).
+
+¿Las posiciones que `trimal` eliminó son las que señalaban los
+ejercicios 5 y 8? Compárenlas con las conservadas, y cuenten las
+eliminadas por dominio. El proyecto recortó su alineamiento de
+R-spondinas de 407 a 197 columnas antes de IQ-TREE. ¿Qué se gana y qué
+se pierde al recortar?
+
+::: {.callout-note collapse="true"}
+## Solución
+
+```bash
+awk -F'\t' '{g = ($4==0) ? "recortada " : "conservada"; n[g]++; s[g]+=$3
+             if ($2!="NA" && $2<0.5) b[g]++}
+     END {for (g in n) printf "%s\tn=%d\tacuerdo<0.5: %.2f\tLC medio %.2f\n", g, n[g], b[g]/n[g], s[g]/n[g]}' \
+    ${F}_tabla.tsv | sort
+```
+
+| | rspo | lgr |
+|---|---|---|
+| columnas L-INS-i → trimal | 391 → 231 (**59 %** conservadas) | 2,902 → 381 (**13 %** conservadas) |
+| residuos de la referencia eliminados | 37 de 243 (15 %) | 558 de 907 (62 %) |
+| por dominio | señal 10, enlace N 6, FU 3, TSP1 0, cola 17 | LRR 357 de 454, bisagra 87 de 119, 7TM 32 de 247, cola 82 de 87 |
+| acuerdo < 0.5: eliminadas contra conservadas | 49 % contra 16 % | 55 % contra 1 % |
+| LC medio: eliminadas contra conservadas | 7.5 contra 8.9 | 6.7 contra 8.7 |
+
+Sí son las mismas. En `rspo`, trimAl quita el 41 % de las columnas pero
+solo el 15 % de RSPO2: casi todo lo eliminado son columnas de gaps
+abiertas por las inserciones de los moluscos, más el péptido señal y la
+cola. Exactamente lo que marcaban los ejercicios 5 y 8. El proyecto
+hizo lo mismo (407 → 197, con parámetros un poco distintos) y su árbol
+se construyó sobre los dominios de cisteínas.
+
+En `lgr` recorta **el 79 % del LRR** y la cola entera, y conserva el
+7TM casi completo: lo que queda para el árbol es, en esencia, el 7TM.
+
+**Se gana**: en las posiciones conservadas el acuerdo es de 0.5 o más
+en el 99 % y el LC medio es 8.7. El árbol no se construye sobre
+columnas que son artefacto del programa, ruido que infla ramas y engaña
+al modelo.
+
+**Se pierde**: el ectodominio LRR es justo lo que distingue a los
+subtipos A, B y C, porque es lo que reconoce al ligando. Un árbol de
+puro 7TM puede resolver la familia, pero ya no usa la evidencia que la
+define. Y para los cuatro fragmentos casi no queda señal.
+
+La salida sensata es recortar con criterio (un umbral de gaps como
+`-gt 0.8`, o a mano por dominio) y **reportar** cuántas columnas
+quedaron y cuáles. Recortar no es limpiar: es otra decisión de modelado
+que alguien toma por ustedes si no la toman ustedes.
+:::
+
+## Anexos
+
+### A. ¿De dónde salieron las familias?
+
+Del pipeline del proyecto, que guarda cada secuencia con su
+procedencia; por eso existen los dos archivos de metadata. Las
+proteínas de *D. laeve* son la isoforma más larga de cada gen en la
+anotación v1.2, las mismas de la base que montaron en la sesión 8. Las
+11 referencias LGR vienen de un manifiesto curado de UniProt, con su
+subtipo. Los 31 LGR de moluscos se recuperaron de dos maneras: con
+`blastp` en los tres proteomas anotados (*Bradybaena*, *Magallana*,
+*Pomacea*) y con `miniprot`, que alinea una proteína contra un genoma y
+predice el gen, en cuatro genomas de babosas y caracoles (*D.
+lasithionense*, *Arion*, *Meghimatium*, *Achatina*). De ahí los
+fragmentos: son modelos parciales de `miniprot`.
+
+El árbol ML de R-spondinas es el del proyecto: MAFFT L-INS-i, trimAl,
+IQ-TREE con selección automática de modelo, 1,000 réplicas de
+*ultrafast bootstrap* y 1,000 de SH-aLRT. Son los dos números de cada
+nodo.
+
+### B. Tiempos de referencia, y por qué existen las colas
+
+Con 1 CPU:
+
+| paso | rspo (17 × 274 aa) | lgr (50 × 977 aa) |
+|---|---|---|
+| `clustalo` | 0.4 s / 14 MB | 14 s / 229 MB |
+| `mafft` L-INS-i | 0.7 s / 17 MB | 91 s / 150 MB |
+| `mafft` FFT-NS-2 | 0.7 s / 24 MB | 2 s / 65 MB |
+| `t_coffee aln_compare` | 1.4 s / **517 MB** | 4.5 s / **599 MB** |
+| `muscle -stratified` (16 réplicas) | 46 s / 25 MB | **6,322 s (1 h 45 min)** / 498 MB |
+| `muscle -maxcc`, `-letterconf` | < 0.1 s | 0.6 s |
+| `acuerdo_por_columna.py` | 0.1 s | 0.3 s |
+| `trimal -automated1` | < 0.1 s | 0.1 s |
+
+: {tbl-colwidths="[40,30,30]"}
+
+Todo es interactivo salvo una celda. Un ensemble son 16 alineamientos
+completos (100 con `-diversified`), y ese es el precio de la barra de
+error. Un trabajo de dos horas no se corre en una terminal abierta ni
+en un nodo compartido: se manda a una **cola**. En un clúster con
+SLURM, el ensemble de `lgr` se pide así:
+
+```bash
+#!/usr/bin/env bash
+#SBATCH --job-name=muscle_lgr
+#SBATCH --cpus-per-task=8 --mem=4G --time=01:00:00
+#SBATCH --output=muscle_lgr.%j.out
+
+muscle -align datos/familia_lgr.faa -output lgr_ensamble.efa -stratified -threads 8
+```
+
+Se envía con `sbatch muscle_lgr.slurm` y se vigila con `squeue -u
+$USER`. Pedir siempre `--time`: un trabajo sin límite de tiempo es el
+último que la cola quiere correr.
+
+## Para entregar
+
+En su repositorio, dentro de `sesion09/`:
+
+- **Un párrafo por familia** sobre dónde los dos métodos no se pusieron
+  de acuerdo y por qué: dos regiones concretas, con posiciones en la
+  secuencia de referencia (RSPO2_human, LGR5_human), diciendo si
+  coinciden con las letras de baja confianza de MUSCLE5 y con lo que
+  recortó `trimal`. Es la parte que se califica en serio.
+- La **tabla por dominio** de cada familia en Markdown: acuerdo medio,
+  LC medio y residuos eliminados por `trimal`.
+- `rspo_tabla.tsv` y `lgr_tabla.tsv` (son chicas, estas sí se
+  versionan).
+- **Una frase** para el compañero que pone el `.dnd` en su tesis como
+  "la filogenia de la familia", con un ejemplo tomado de sus árboles.
+- En su `README.md`: las versiones de `clustalo`, `mafft`, `muscle` y
+  `trimal`, de dónde se copiaron los datos, y que el ensemble de `lgr`
+  no lo calcularon ustedes.
+
+No suban `datos/`, los alineamientos, los `.efa` ni los `.html`: son
+grandes y se regeneran con los comandos que documenta su README.

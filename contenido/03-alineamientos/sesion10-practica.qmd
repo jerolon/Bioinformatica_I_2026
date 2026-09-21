@@ -6,49 +6,132 @@ author: "Jero"
 
 ## De qué se trata
 
-En el capítulo vimos que RBH es la heurística que todo el mundo usa para
-inferir ortología y que falla más de lo que se admite. Hoy la
-implementan ustedes, y de paso miden en sus propios datos qué tanto
-falla.
+En la mañana vimos que RBH es la heurística que todo el mundo usa para
+inferir ortología y que falla más de lo que se admite. Esta tarde la
+implementan ustedes, y miden en datos del laboratorio cuánto falla,
+dónde y por qué. Cuatro partes:
 
-El concepto de cómputo del día son los ciclos. No es decorativo: RBH
-requiere correr la búsqueda en las dos direcciones, y hacerlo dos veces
-a mano es exactamente el tipo de trabajo repetitivo que un ciclo existe
-para evitar.
+1. **El pipeline**: dos bases, dos búsquedas, el mejor hit de cada
+   consulta y el cruce de las dos tablas.
+2. **Cuánto se pierde**, y en qué familias.
+3. **Tres casos con cromosoma**: un arreglo en tándem, los dos
+   receptores LGR del proyecto y el gen de la sonda "lgr5".
+4. **Una segunda opinión**: OrthoFinder.
 
-Trabajamos con dos levaduras: *Saccharomyces cerevisiae* y
-*Schizosaccharomyces pombe*. Se separaron hace unos 500 millones de años,
-que es distancia suficiente para que el ejercicio no sea trivial.
+El concepto de cómputo del día son los **ciclos**, `for` y `while`. No
+es decorativo: RBH exige hacer todo dos veces, una por dirección, y
+hacer algo dos veces a mano es el tipo de trabajo que un ciclo existe
+para evitar. Es también la deuda de las sesiones 7 y 9: allá repitieron
+comandos casi idénticos cambiando un identificador o una variable. Hoy
+eso lo hace bash.
+
+Otra vez, ningún dato es de juguete. Las dos especies son la babosa,
+*Deroceras laeve*, y el caracol terrestre *Bradybaena similaris*: dos
+estilomatóforos, y el pariente anotado más cercano que usa el proyecto.
+Es el caracol cuyas proteínas daban 83 % de identidad contra la babosa
+en la sesión 8. Con especies así de cercanas uno esperaría que el RBH
+fuera trivial. No lo es, y la razón es la arquitectura de las familias
+que llevan cuatro sesiones estudiando.
+
+## El material de hoy
+
+Los proteomas completos tienen 43,905 y 29,227 proteínas: demasiado
+para correr RBH en clase, treinta personas a la vez, en un nodo
+compartido. Hoy trabajan con el **vecindario WNT** de cada
+especie: toda proteína que recibe al menos un hit, con E-value de 10⁻⁵ o
+menor, de las 72 consultas de la sesión 8. El criterio es el mismo en
+las dos especies. Para la babosa ya lo conocen: son exactamente las
+**632 proteínas distintas** que aparecieron en su `hits.tsv`.
+
+Es un subconjunto chico, pero con la estructura real de una familia de
+receptores: arreglos en tándem, ohnólogos y dominios repetitivos. Justo
+lo que hace fallar al RBH.
+
+Los archivos, ya en el servidor:
+
+| archivo | contenido |
+|---|---|
+| `proteoma_dlaeve.faa` | **632 proteínas** de *D. laeve* (anotación v1.2, una por gen, 60–9,463 aa). Identificadores `dlaeveM…`, los mismos de la sesión 8. |
+| `proteoma_bradybaena.faa` | **713 proteínas** de *B. similaris* (ensamblado GCA_050415755.1, una por gen, 82–4,802 aa). Identificadores `BsWGS_…`: el *locus tag* de GenBank, **no** la accesión (anexo A). |
+| `mapa_dlaeve.tsv` | proteína → cromosoma, inicio, gen, símbolo de la anotación y **`familia_wnt`**: la consulta de la sesión 8 que mejor le pega (CELSR1, LGR5, WNT11…), con su identidad y cobertura. |
+| `mapa_bradybaena.tsv` | lo mismo para el caracol, más la accesión de GenBank de cada proteína. |
+| `orthogrupos_orthofinder.tsv` | proteína → **ortogrupo** de la corrida real de OrthoFinder del proyecto, hecha con los proteomas completos de cuatro moluscos. Es la segunda opinión de la parte 4. |
+| `consultas_wnt.faa` | las 72 consultas que definieron el vecindario. Solo documentación: hoy no se usan. |
+
+: {tbl-colwidths="[32,68]"}
+
+Los dos mapas tienen encabezado, y no tienen las mismas columnas:
+
+```
+mapa_dlaeve.tsv       proteina  chr  inicio  gen  simbolo  familia_wnt  pident_consulta  qcovs_consulta
+mapa_bradybaena.tsv   proteina  accesion_genbank  chr  inicio  producto  familia_wnt  pident_consulta  qcovs_consulta
+```
+
+En el de la babosa el cromosoma es la columna 2; en el del caracol, la
+3. Antes de escribir un `$2` en `awk`, miren el encabezado. Es la
+lección de la sesión 8 sobre `-outfmt`, con otro archivo.
 
 ## Preparación
 
-Los proteomas ya están en el servidor, recortados a unas 500 proteínas
-cada uno para que las búsquedas corran en segundos.
+Solo hace falta BLAST+, el mismo módulo de la sesión 8.
 
 ```bash
 ssh usuario@ken.lavis.unam.mx
 mkdir -p ~/bioinfo1/sesion10/{datos,resultados}
 cd ~/bioinfo1/sesion10
-cp /datos/cursos/bioinfo1/sesion10/*.fasta datos/
-ls -lh datos/
+
+module use /mnt/data/bioinfo1/jmiranda/modulefiles
+module load blast+
+blastp -version
 ```
 
+Las llaves de `{datos,resultados}` son una expansión de bash: el
+comando crea las dos carpetas. Es un ciclo en miniatura, sin la
+palabra `for`.
+
+```bash
+origen=/mnt/data/bioinfo1/jmiranda/sesion10
+cp $origen/datos/* datos/
+ls -lh datos/
+grep -c '^>' datos/*.faa
+```
+
+Anoten en su `procedencia.md`, desde ahora, la fecha, la versión de
+`blastp` y de dónde copiaron los datos. BLAST es determinista a versión
+y parámetros fijos: con la misma versión, todo el grupo debe obtener
+**exactamente** los mismos números, y son los de las soluciones.
+
 ::: callout-box
-`ken` es un nodo compartido. Las búsquedas de hoy son chicas, pero
-úsenlas con `-num_threads 2` y no más. Treinta personas pidiendo ocho
-hilos cada una son doscientos cuarenta hilos en una máquina que no los
-tiene.
+`ken` es un nodo compartido. Cada búsqueda de hoy tarda unos dos
+minutos con un hilo: usen `-num_threads 1` y no más. Treinta personas
+pidiendo ocho hilos cada una son doscientos cuarenta hilos en una
+máquina que no los tiene.
 :::
+
+::: pendiente
+Instructor, antes de la clase: (1) verificar que en `ken` carga el
+módulo `blast+` de la sesión 8; (2) copiar
+`planeacion/practica_rbh/datos/` a la ruta `$origen` que se fije y
+corregirla aquí; (3) correr la práctica una vez: los números de las
+soluciones salen de `blast+/2.13.0` con un hilo (corrida del
+2026-09-18: `makeblastdb` 2 s por base, cada `blastp` 118 s y 30 MB de
+RAM, todo lo demás menos de un segundo). Otra versión de BLAST+ puede
+mover algún par; (4) si las dos búsquedas simultáneas de todo el grupo
+resultan lentas, las tablas ya hechas están en
+`planeacion/practica_rbh/clave/resultados/` y se pueden copiar a
+`$origen` como respaldo.
+:::
+
+## Parte 1 · El pipeline
 
 ### Ejercicio 1. Construir las dos bases con un ciclo
 
-Necesitan una base BLAST por proteoma. Son dos comandos casi idénticos,
-así que es el primer pretexto para un ciclo.
+Necesitan una base BLAST por proteoma. Son dos comandos casi idénticos:
+el primer pretexto para un ciclo.
 
 ```bash
-cd ~/bioinfo1/sesion10
-for especie in cerevisiae pombe; do
-  makeblastdb -in datos/${especie}.fasta \
+for especie in dlaeve bradybaena; do
+  makeblastdb -in datos/proteoma_${especie}.faa \
               -dbtype prot \
               -parse_seqids \
               -out datos/${especie}
@@ -56,56 +139,90 @@ done
 ls datos/
 ```
 
+¿Cuántas secuencias reporta haber agregado cada vuelta? ¿Cuántos
+archivos nuevos hay por especie?
+
 ::: {.callout-note collapse="true"}
 ## Solución
 
-El ciclo `for` recorre una lista de palabras y ejecuta el cuerpo una vez
-por cada una, sustituyendo `${especie}` por el valor en turno. Corrió
-`makeblastdb` dos veces sin que ustedes escribieran el comando dos
-veces.
+El ciclo `for` recorre una lista de palabras y ejecuta el cuerpo, lo
+que va entre `do` y `done`, una vez por cada una, poniendo en
+`${especie}` el valor en turno. Corrió `makeblastdb` dos veces sin que
+escribieran el comando dos veces. Es la variable `F` de la sesión 9,
+solo que ahora la cambia bash y no ustedes.
 
-`ls datos/` debe mostrar, por cada especie, varios archivos con el mismo
-prefijo y extensiones como `.phr`, `.pin`, `.psq`. Son los índices de la
-base; no se editan ni se leen a mano.
+`makeblastdb` reporta `added 632 sequences` y `added 713 sequences`.
+Por cada especie aparecen unos diez archivos con el mismo prefijo
+(`.pdb .phr .pin .pjs .pog .pos .pot .psq .ptf .pto`): la base versión
+5 de la sesión 8. No se leen ni se editan a mano.
 
-`-parse_seqids` conserva los identificadores originales. Sin esa
-bandera, BLAST los reemplaza por identificadores internos y después no
-van a poder cruzar las tablas, que es justo lo que necesitamos hoy.
+`-parse_seqids` indexa los identificadores: es lo que en la sesión 8
+les permitió extraer secuencias de la base con `blastdbcmd`. Hoy todo
+depende de que el identificador de una proteína sea **el mismo texto**
+cuando aparece como consulta en una tabla y como subject en la otra,
+porque con ese texto se cruzan. Con identificadores locales como
+`dlaeveM…` y `BsWGS_…` eso se cumple. Con accesiones de GenBank, esta
+misma bandera lo rompe sin avisar; por eso los datos de hoy no las usan
+(anexo A).
+
+Si el ciclo tuviera veinte especies en lugar de dos, el comando sería
+el mismo con una lista más larga. Esa es la medida de que un ciclo está
+bien escrito.
 :::
 
 ### Ejercicio 2. Buscar en las dos direcciones
 
-Acá está el corazón del método. RBH necesita las dos búsquedas: cada
-proteoma como consulta contra el otro como base.
+Aquí está el corazón del método. RBH necesita las dos búsquedas: cada
+proteoma como consulta contra el otro como base. Cada una tarda unos
+dos minutos.
 
 ```bash
-blastp -query datos/cerevisiae.fasta -db datos/pombe \
+blastp -query datos/proteoma_dlaeve.faa -db datos/bradybaena \
        -outfmt "6 qseqid sseqid pident length evalue bitscore" \
-       -evalue 1e-5 -max_target_seqs 20 -num_threads 2 \
-       -out resultados/cere_vs_pombe.tsv
+       -evalue 1e-5 -max_target_seqs 20 -num_threads 1 \
+       -out resultados/dla_vs_bra.tsv
 
-blastp -query datos/pombe.fasta -db datos/cerevisiae \
+blastp -query datos/proteoma_bradybaena.faa -db datos/dlaeve \
        -outfmt "6 qseqid sseqid pident length evalue bitscore" \
-       -evalue 1e-5 -max_target_seqs 20 -num_threads 2 \
-       -out resultados/pombe_vs_cere.tsv
+       -evalue 1e-5 -max_target_seqs 20 -num_threads 1 \
+       -out resultados/bra_vs_dla.tsv
 
 wc -l resultados/*.tsv
 ```
 
-Por qué `-max_target_seqs 20` y no 1, si solo queremos el mejor?
+Mientras corren: ¿por qué `-max_target_seqs 20` y no 1, si solo
+queremos el mejor? ¿Y por qué estos dos comandos **no** van en un
+ciclo?
 
 ::: {.callout-note collapse="true"}
 ## Solución
 
-Por la trampa que vieron en la sesión de BLAST. `-max_target_seqs 1` no
-devuelve el mejor hit: devuelve el primero que supera el umbral, que no
-tiene por qué ser el de mayor score. Pedimos veinte y filtramos nosotros
-por `bitscore`, que es la forma correcta.
+```
+33652 resultados/dla_vs_bra.tsv
+33282 resultados/bra_vs_dla.tsv
+```
 
-Las dos tablas tienen seis columnas separadas por tabulador, sin
-encabezado, en este orden: identificador de la consulta, identificador
-del sujeto, porcentaje de identidad, longitud del alineamiento, E-value
-y bit score.
+Por la trampa de la sesión 8. `-max_target_seqs` poda **durante** la
+búsqueda, sobre una lista preliminar con puntajes aproximados, no sobre
+la tabla final: con 1 puede devolver un hit que no es el de mayor bit
+score. Pedimos veinte y elegimos nosotros después, con el bit score
+definitivo. Un dato de estas tablas: **546 de las 632** consultas de la
+babosa llenan el cupo de veinte proteínas distintas. El vecindario está
+lleno de parientes, y veinte es un compromiso, no un exceso.
+
+Las dos tablas tienen seis columnas, sin encabezado: consulta, subject,
+porcentaje de identidad, longitud del alineamiento, E-value y bit
+score. Este `-outfmt` no es el de la sesión 8: el bit score cayó en la
+columna **6**, no en la 12. Y sigue valiendo que una línea es un HSP,
+no un hit: 33,652 líneas para 632 consultas con a lo más veinte
+subjects cada una son, por fuerza, muchos bloques por par.
+
+¿Por qué sin ciclo? Porque entre un comando y el otro cambian tres
+cosas a la vez: la consulta, la base y la salida. Se puede escribir un
+ciclo con tres variables, y sería más largo y más difícil de leer que
+los dos comandos. Un ciclo se justifica cuando lo que cambia es **una**
+cosa y lo demás se deriva de ella, como en el ejercicio 1. La meta no
+es usar ciclos: es no repetirse sin perder claridad.
 
 Fíjense en que las dos búsquedas **no** son simétricas. El mejor hit de
 A en el proteoma de B no tiene por qué tener a A como su mejor hit de
@@ -118,41 +235,57 @@ De cada tabla necesitan una sola línea por consulta: la de mayor bit
 score.
 
 ```bash
-cd ~/bioinfo1/sesion10
-
-for archivo in cere_vs_pombe pombe_vs_cere; do
+for archivo in dla_vs_bra bra_vs_dla; do
   sort -k1,1 -k6,6gr resultados/${archivo}.tsv \
     | awk '!seen[$1]++' \
     | cut -f1,2,6 \
     > resultados/${archivo}.best.tsv
 done
 
-head -3 resultados/cere_vs_pombe.best.tsv
+head -3 resultados/dla_vs_bra.best.tsv
 wc -l resultados/*.best.tsv
 ```
+
+¿Todas las proteínas tuvieron hit? Si alguna no, ¿cuál?
 
 ::: {.callout-note collapse="true"}
 ## Solución
 
-Tres pasos encadenados, léanlos de izquierda a derecha.
+Tres pasos encadenados, de izquierda a derecha.
 
-`sort -k1,1 -k6,6gr` ordena primero por identificador de consulta
-(columna 1) y, dentro de cada uno, por bit score (columna 6) de mayor a
-menor. La `g` es orden numérico general, que maneja notación científica;
-la `r` invierte.
+`sort -k1,1 -k6,6gr` ordena primero por consulta (columna 1) y, dentro
+de cada una, por bit score (columna 6) de mayor a menor. La `g` es
+orden numérico general, el que entiende notación científica; la `r`
+invierte.
 
-`awk '!seen[$1]++'` es un idiom que vale la pena entender. `seen` es un
-arreglo asociativo; `seen[$1]++` devuelve el valor actual y luego lo
-incrementa. La primera vez que aparece un identificador vale 0, que en
-awk es falso, y el `!` lo vuelve verdadero, así que la línea se imprime.
-La segunda vez ya vale 1, verdadero, negado es falso, y la línea se
-descarta. Resultado: **la primera línea de cada consulta**, que por el
+`awk '!seen[$1]++'` es el idioma de la sesión 8 con otro nombre de
+arreglo: deja pasar **la primera línea de cada consulta**, que por el
 `sort` anterior es la de mayor bit score.
 
-`cut -f1,2,6` se queda con consulta, sujeto y bit score.
+`cut -f1,2,6` se queda con consulta, subject y bit score.
 
-El número de líneas debe ser menor que el de proteínas del proteoma:
-las que no tuvieron ningún hit bajo el umbral de E-value no aparecen.
+```
+632 resultados/dla_vs_bra.best.tsv
+712 resultados/bra_vs_dla.best.tsv
+```
+
+Las 632 proteínas de la babosa tienen hit; del caracol, 712 de 713. La
+que falta se encuentra con el `NR==FNR` de siempre, usando el propio
+FASTA como segundo archivo:
+
+```bash
+awk 'NR==FNR {hit[$1]=1; next} /^>/ {id=substr($1,2); if (!(id in hit)) print id}' \
+    resultados/bra_vs_dla.best.tsv datos/proteoma_bradybaena.faa
+grep -w BsWGS_20689 datos/mapa_bradybaena.tsv
+```
+
+Es `BsWGS_20689`, en el cromosoma 17: un fragmento parecido a DVL2 que
+cubre apenas el 10 % de su consulta. Entró al vecindario por un hit
+marginal y no tiene con quién aparearse en la babosa.
+
+El ciclo recorrió nombres de tablas, no de especies. La lista de un
+`for` es texto: puede ser cualquier cosa que les sirva para construir
+los nombres de archivo.
 :::
 
 ### Ejercicio 4. Cruzar las tablas y encontrar los recíprocos
@@ -162,8 +295,8 @@ y B apunta a A.
 
 ```bash
 awk 'NR==FNR {best[$1]=$2; next} best[$2]==$1 {print $1"\t"$2}' \
-  resultados/pombe_vs_cere.best.tsv \
-  resultados/cere_vs_pombe.best.tsv \
+  resultados/bra_vs_dla.best.tsv \
+  resultados/dla_vs_bra.best.tsv \
   > resultados/rbh.tsv
 
 wc -l resultados/rbh.tsv
@@ -174,102 +307,518 @@ head -5 resultados/rbh.tsv
 ## Solución
 
 Este `awk` lee dos archivos y hace cosas distintas con cada uno.
+Mientras lee el primero (`NR==FNR`), `best[$1]=$2` guarda el mejor hit
+de cada proteína del caracol, y `next` salta al siguiente renglón.
+Cuando empieza el segundo archivo se evalúa `best[$2]==$1`: para cada
+proteína de la babosa y su mejor hit en el caracol, pregunta si el
+mejor hit de esa proteína del caracol es, de regreso, la de la babosa.
+Si sí, es un par recíproco.
 
-`NR==FNR` es la condición que distingue el primer archivo del segundo.
-`NR` es el número de línea global y `FNR` el número de línea dentro del
-archivo actual; solo coinciden mientras se lee el primero. Durante esa
-fase, `best[$1]=$2` guarda el mejor hit de cada proteína de pombe, y
-`next` salta al siguiente renglón sin evaluar el resto.
+**300 pares.** Los primeros:
 
-Cuando empieza el segundo archivo, `NR==FNR` es falso y se evalúa
-`best[$2]==$1`: para cada proteína de cerevisiae y su mejor hit en
-pombe, pregunta si el mejor hit de esa proteína de pombe es, de regreso,
-la de cerevisiae. Si sí, es un par recíproco.
+```
+dlaeveM00000003112	BsWGS_00990
+dlaeveM00000006303	BsWGS_01078
+dlaeveM00000006664	BsWGS_04234
+dlaeveM00000009450	BsWGS_01129
+dlaeveM00000016227	BsWGS_01287
+```
 
-Ese `NR==FNR` es uno de los idioms más útiles de awk y lo van a
-reconocer en scripts ajenos toda la vida.
-:::
-
-### Ejercicio 5. Cuánto perdimos
-
-Comparen cuántos mejores hits había con cuántos sobrevivieron a la
-reciprocidad.
+La identidad de los 300 pares va de 36 % a 97 %, con mediana de 68 %:
+son especies cercanas. Busquen a un viejo conocido:
 
 ```bash
-echo "Proteínas de cerevisiae con algún hit:"
-wc -l < resultados/cere_vs_pombe.best.tsv
+grep -w dlaeveM00000555743 resultados/rbh.tsv
+```
+
+Es la única R-spondina de la babosa, y su par es `BsWGS_03211`, la
+única del caracol: la `RSPO_Bradybaena` que alinearon la sesión pasada.
+Una copia en cada especie, sin parientes cercanos que confundan. Ese es
+el caso para el que RBH fue diseñado.
+:::
+
+## Parte 2 · Cuánto se pierde
+
+### Ejercicio 5. La pérdida, global y por familia
+
+```bash
+echo "Proteínas de la babosa con algún hit:"
+wc -l < resultados/dla_vs_bra.best.tsv
 echo "Pares recíprocos (RBH):"
 wc -l < resultados/rbh.tsv
 ```
 
-Qué fracción se perdió, y por qué?
+¿Qué fracción sobrevivió a la reciprocidad? Ahora la misma pregunta por
+familia, usando la columna `familia_wnt` del mapa:
+
+```bash
+awk -F'\t' 'NR==FNR {rbh[$1]=1; next}
+     FNR>1 {n[$6]++; if ($1 in rbh) r[$6]++}
+     END {for (f in n) printf "%s\t%d\t%d\t%.0f%%\n", f, n[f], r[f], 100*r[f]/n[f]}' \
+    resultados/rbh.tsv datos/mapa_dlaeve.tsv | sort -t$'\t' -k2,2nr
+```
+
+`FNR>1` salta el encabezado del mapa. `n` cuenta proteínas por familia
+y `r` cuántas de ellas están en `rbh.tsv`.
+
+Comparen las familias de dominios repetitivos (CELSR1, LGR5, RXFP1) con
+las de un solo dominio (WNT, FZD, CTNNB1, RSPO2). ¿Por qué la pérdida
+no es pareja? Una pista más:
+
+```bash
+cut -f2 resultados/dla_vs_bra.best.tsv | sort -u | wc -l
+```
 
 ::: {.callout-note collapse="true"}
 ## Solución
 
-Los números exactos dependen del recorte de proteomas, pero el patrón
-es robusto: una fracción sustancial de las proteínas que tenían mejor
-hit **no** forman par recíproco.
+632 con hit, 300 recíprocos: sobrevive el **47.5 %** y se pierde el
+52.5 %. Del lado del caracol, 300 de 712: el 42 %. Dos especies del
+mismo orden, y más de la mitad de las proteínas se queda sin ortólogo.
 
-Cada pérdida tiene una explicación posible de las que listamos en el
-capítulo. Una duplicación específica de linaje rompe la reciprocidad
-porque el mejor hit de regreso cae en la copia hermana. Una pérdida
-diferencial de genes hace que gane un parálogo. Tasas evolutivas
-dispares hacen que un parálogo lento le gane el best hit al ortólogo
-verdadero.
+| familia | proteínas de la babosa | en RBH | sobrevive |
+|---|---|---|---|
+| CELSR1 (cadherinas, EGF) | 201 | 88 | 44 % |
+| LGR5 (LRR) | 165 | 75 | 45 % |
+| RXFP1 (LRR + 7TM) | 101 | 33 | 33 % |
+| FSHR | 35 | 23 | 66 % |
+| LGR6 | 33 | 17 | 52 % |
+| PRICKLE1 | 19 | 13 | 68 % |
+| DVL2 | 15 | 10 | 67 % |
+| WNT11 | 13 | 8 | 62 % |
+| TCF7L2 | 11 | 7 | 64 % |
+| FZD5, FZD7 | 8, 8 | 5, 4 | 62 %, 50 % |
+| CTNNB1 | 6 | 5 | 83 % |
+| WNT6, PIWI, PRICKLE2 | 5, 4, 4 | 2, 3, 3 | |
+| VANGL1 | 2 | 2 | 100 % |
+| RSPO2, WNT10A | 1, 1 | 1, 1 | 100 % |
 
-Y acá está el punto: **lo que acaban de perder no son necesariamente
-falsos positivos que RBH filtró bien. Buena parte son ortólogos
-verdaderos que RBH no puede ver.** Dalquen y Dessimoz midieron que en
-clados ricos en duplicación se pierde hasta el 60%.
+La pista: las 632 proteínas de la babosa eligen, entre todas, solo
+**343** proteínas distintas del caracol. Ese es el techo, porque cada
+proteína del caracol puede corresponderle a una sola. De las 343
+elegidas, 300 devuelven el favor. La pérdida no viene de que las dos
+especies "no se pongan de acuerdo": viene de que **muchas eligen a la
+misma**. 148 proteínas del caracol son el mejor hit de más de una de la
+babosa, y 169 al revés.
 
-RBH no filtra ruido. Filtra complejidad, y se queda solo con las
-relaciones uno a uno.
+Eso pasa en las familias de dominios repetitivos, con decenas de
+parálogos por especie y arreglos en tándem: tres cuartas partes del
+vecindario. Las familias de una sola copia y un solo dominio (RSPO2,
+WNT10A, VANGL1, la β-catenina) sobreviven casi enteras. Es la misma
+promiscuidad de dominio que inflaba los hits en la sesión 8 y que
+desordenaba el alineamiento del LRR en la 9, ahora rompiendo la
+reciprocidad.
+
+Y aquí está el punto: **lo que acaban de perder no son falsos positivos
+que RBH filtró bien. Buena parte son ortólogos verdaderos que RBH no
+puede ver.** Dalquen y Dessimoz midieron que en clados ricos en
+duplicación se pierde hasta el 60 %. RBH no filtra ruido. Filtra
+complejidad, y se queda con las relaciones uno a uno.
+
+Una cautela: estos números son del vecindario, no del proteoma. Con los
+proteomas completos algún mejor hit podría caer fuera del subconjunto.
+El patrón por familia no depende de eso.
 :::
 
-### Ejercicio 6. Encontrar un caso de uno a muchos
+### Ejercicio 6. Uno a muchos: primero la trampa, después el genoma
 
-Busquen una proteína de cerevisiae que tenga varios hits muy buenos en
-pombe, no solo uno.
+El comando natural para buscar proteínas con muchos hits buenos:
 
 ```bash
-awk '$6 > 100' resultados/cere_vs_pombe.tsv \
+awk '$6 > 100' resultados/dla_vs_bra.tsv \
   | cut -f1 | sort | uniq -c | sort -rn | head -5
 ```
 
-Tomen el identificador que más se repite y mírenlo completo:
+La primera tiene 240. Pero pidieron `-max_target_seqs 20`. ¿Cómo puede
+una consulta tener 240 hits? Cuenten bien:
 
 ```bash
-grep "IDENTIFICADOR" resultados/cere_vs_pombe.tsv | sort -k6,6gr | head
+grep -w dlaeveM00000595971 resultados/dla_vs_bra.tsv | cut -f2 | sort -u | wc -l
+```
+
+El "uno a muchos" que rompe al RBH es otro: no cuántos hits tiene una
+consulta, sino **cuántas consultas eligen al mismo subject**. Eso se
+lee en la columna 2 de los mejores hits:
+
+```bash
+cut -f2 resultados/dla_vs_bra.best.tsv | sort | uniq -c | sort -rn | head -5
+```
+
+Tomen al primero de la lista y pregúntenle al mapa dónde viven las
+proteínas de la babosa que lo eligieron:
+
+```bash
+awk -F'\t' 'NR==FNR {chr[$1]=$2; ini[$1]=$3; next}
+     $2=="BsWGS_23298" {print $1, chr[$1], ini[$1], $3}' OFS='\t' \
+    datos/mapa_dlaeve.tsv resultados/dla_vs_bra.best.tsv | sort -t$'\t' -k2,2 -k3,3n
+```
+
+¿Están regadas por el genoma? ¿A cuál de todas prefiere `BsWGS_23298`
+de regreso?
+
+::: {.callout-note collapse="true"}
+## Solución
+
+```
+240 dlaeveM00000595971      224 dlaeveM00000034790      211 dlaeveM00000768455
+210 dlaeveM00000206180      207 dlaeveM00001506268
+```
+
+Las cinco tienen exactamente **20** subjects distintos: el tope. Las
+más de 200 líneas son HSPs. Son proteínas gigantes de repeticiones
+(cadherinas, EGF, LRR; cuatro de las cinco son de la familia CELSR1)
+que alinean bloque por bloque contra cada pariente. `uniq -c` sobre la
+columna 1 cuenta líneas, no hits; para contar hits hay que de-duplicar
+el par con `cut -f1,2 | sort -u` primero. Es la advertencia de la
+sesión 8, y hoy casi les cuesta una conclusión.
+
+Los subjects más elegidos:
+
+```
+25 BsWGS_23298     14 BsWGS_13057     8 BsWGS_23847
+ 8 BsWGS_23426      8 BsWGS_10913
+```
+
+`BsWGS_23298` (cromosoma 20 del caracol) es el mejor hit de **25**
+proteínas de la babosa, y no están regadas: **24 forman un arreglo en
+tándem en chr14, entre 43.14 y 44.08 Mb**, de `dlaeveM00000968559` a
+`dlaeveM00000969105`, más una en chr22. Veinticuatro genes en menos de
+un megabase, todos con bit scores de 403 a 457 contra la misma
+proteína.
+
+```bash
+grep -w BsWGS_23298 resultados/bra_vs_dla.best.tsv
+```
+
+`BsWGS_23298` le devuelve el favor solo a `dlaeveM00000969105` (457):
+**un par recíproco de 25**. Y la historia es simétrica: una proteína
+del mismo arreglo, `dlaeveM00000968966`, es el mejor hit de 17 del
+caracol, 12 de ellas en dos arreglos de su cromosoma 20. La familia se
+expandió en tándem **en las dos especies**, y RBH conserva un par por
+bloque.
+
+Para estas proteínas, la pregunta "¿cuál es el ortólogo?" está mal
+planteada. La respuesta correcta es un conjunto: si las copias nacieron
+después de que los linajes se separaron, todas son **co-ortólogas** de
+las del otro lado, colectivamente. Son los in-paralogs del capítulo.
+RBH devuelve, cuando mucho, una, y cuál de las 24 gana lo deciden unos
+cuantos bits.
+:::
+
+## Parte 3 · Casos con nombre y apellido
+
+### Ejercicio 7. Los dos receptores del proyecto
+
+`dlaeveM00000441839` (chr6) y `dlaeveM00000727719` (chr10) son los dos
+receptores LGR tipo B de la babosa: los ohnólogos de la sesión 7, los
+dos "LGR4" de la sesión 8. ¿Cuál sobrevive al RBH?
+
+Un `for` sobre identificadores, con un truco: ordenar por bit score y
+quedarse con la primera línea **de cada subject**, para ver hits y no
+HSPs.
+
+```bash
+for gen in dlaeveM00000441839 dlaeveM00000727719; do
+  echo "== $gen"
+  grep -w $gen resultados/dla_vs_bra.tsv | sort -k6,6gr | awk '!s[$2]++' | head -3
+done
+```
+
+Ahora al revés, con los tres genes del caracol que aparecieron:
+
+```bash
+for gen in BsWGS_08187 BsWGS_18807 BsWGS_18808; do
+  echo "== $gen"
+  grep -w $gen resultados/bra_vs_dla.tsv | sort -k6,6gr | awk '!s[$2]++' | head -2
+done
+grep -w -e BsWGS_08187 -e BsWGS_18807 -e BsWGS_18808 datos/mapa_bradybaena.tsv | cut -f1-4
+```
+
+¿Cuál de los dos receptores tiene par recíproco? ¿Qué pasó con el otro?
+Miren con cuidado las columnas de identidad y de longitud del par de
+chr15: ¿a cuál de los dos receptores de la babosa se parece más, y a
+cuál elige?
+
+::: {.callout-note collapse="true"}
+## Solución
+
+Desde la babosa, los dos receptores eligen **al mismo gen**:
+
+```
+dlaeveM00000441839 (chr6)   BsWGS_08187  56.8 %  1403 col  1449 bits
+                            BsWGS_18807  57.0 %  1334 col  1437 bits
+dlaeveM00000727719 (chr10)  BsWGS_08187  83.2 %   925 col  1601 bits
+                            BsWGS_18808  69.8 %   934 col  1342 bits
+```
+
+Desde el caracol:
+
+```
+BsWGS_08187 (chr5)   prefiere chr10  (1621)  sobre chr6  (1444)
+BsWGS_18807 (chr15)  prefiere chr6   (1419)  sobre chr10 (1343)
+BsWGS_18808 (chr15)  prefiere chr6   (1412)  sobre chr10 (1345)
+```
+
+`BsWGS_08187` prefiere a chr10, así que **solo `dlaeveM00000727719` ↔
+`BsWGS_08187` es recíproco**. El receptor de chr6 se queda sin
+ortólogo: eligió a `BsWGS_08187` por **12 bits** (1449 contra 1437), y
+`BsWGS_08187` no lo eligió a él. Los dos genes de chr15, un par en
+tándem, sí eligen a chr6, pero chr6 no los elige a ellos. Nadie se
+equivocó de forma escandalosa, y aun así el resultado es un solo par.
+
+`BsWGS_08187` tampoco es un desconocido: su accesión en el mapa es
+`BFZ05148.1`, la consulta `LGR5|mollusc|Bradybaena_similaris` de la
+sesión 8, la que encontraba a chr10 con 83 %. Están viendo la misma
+búsqueda desde el otro lado.
+
+Ahora la letra chica. El par de chr15 es **70 % idéntico a chr10 y
+57 % idéntico a chr6**, y elige a chr6. No es un error: el bit score
+crece con la longitud alineada (sesión 8, ejercicio 3). La proteína de
+chr6 mide 1,682 aa y alinea a lo largo de unas 1,340 columnas; la de
+chr10 mide 933 y alinea unas 930. Más columnas a 57 % suman más bits
+que menos
+columnas a 70 %. Si el criterio de "mejor hit" fuera la identidad, los
+tres genes del caracol elegirían a chr10 y la tabla sería otra. **RBH
+no es un método: es una familia de métodos, uno por cada definición de
+"mejor"**, y en los casos difíciles la definición decide.
+
+La conclusión del proyecto, que usó sintenia y árboles y no solo BLAST,
+es que la relación es **2:2**: cada especie tiene dos loci que vienen
+de la misma duplicación (chr6 y chr10 en la babosa, chr5 y chr15 en el
+caracol). RBH la reduce a 1:1 y deja afuera justo al gen interesante.
+OrthoFinder pone a los cinco en un solo ortogrupo, `OG0001910`, que es
+la respuesta honesta: un conjunto.
+
+Y el ciclo: `for gen in …` con `echo "== $gen"` como separador es el
+patrón para hacerle la misma pregunta a varios identificadores y poder
+leer la respuesta. Son las cinco invocaciones de `alinear_par.sh` de la
+sesión 7, escritas una sola vez.
+:::
+
+### Ejercicio 8. El gen de la sonda, y el ciclo `while`
+
+El gen que anclan las sondas "lgr5" del laboratorio,
+`dlaeveM00000909458`, vive en un arreglo en tándem del cromosoma 13:
+genes solo-LRR, sin 7TM. Saquen del mapa a todos los vecinos del
+arreglo, entre 39.9 y 40.7 Mb:
+
+```bash
+awk -F'\t' '$2=="chr13" && $3>=39900000 && $3<=40700000 {print $1}' \
+    datos/mapa_dlaeve.tsv > arreglo_chr13.txt
+wc -l arreglo_chr13.txt
+```
+
+Un `for` recorre una lista que ustedes escriben. Cuando la lista está
+en un archivo, el ciclo es `while read`: lee un renglón, lo pone en la
+variable y ejecuta el cuerpo, hasta que el archivo se acaba.
+
+```bash
+while read gen; do
+  hit=$(grep -w "^$gen" resultados/dla_vs_bra.best.tsv | cut -f2)
+  vuelta=$(grep -w "^$hit" resultados/bra_vs_dla.best.tsv | cut -f2)
+  printf '%s\t%s\t%s\n' $gen $hit $vuelta
+done < arreglo_chr13.txt
+```
+
+`$( … )` captura la salida de un comando en una variable, como en
+`top5.sh`. Para cada gen del arreglo, `hit` es su mejor hit en el
+caracol y `vuelta` es el mejor hit de ese hit. El archivo entra al
+ciclo por el `<` que va **después** de `done`. El par es recíproco
+cuando la tercera columna repite a la primera.
+
+¿Cuántos genes tiene el arreglo, a cuántas proteínas distintas del
+caracol apuntan, y cuántos tienen par recíproco? ¿El gen de la sonda es
+uno de ellos? ¿En qué región del genoma del caracol viven los hits?
+
+::: {.callout-note collapse="true"}
+## Solución
+
+```
+dlaeveM00000909426  BsWGS_16462  dlaeveM00000909438
+dlaeveM00000909438  BsWGS_16462  dlaeveM00000909438   ← recíproco
+dlaeveM00000909458  BsWGS_16464  dlaeveM00000909470   ← la sonda
+dlaeveM00000909470  BsWGS_16464  dlaeveM00000909470   ← recíproco
+dlaeveM00000909480  BsWGS_16465  dlaeveM00000909487
+dlaeveM00000909487  BsWGS_16464  dlaeveM00000909470
+dlaeveM00000909503  BsWGS_16457  dlaeveM00000909571
+dlaeveM00000909515  BsWGS_16465  dlaeveM00000909487
+dlaeveM00000909527  BsWGS_16457  dlaeveM00000909571
+dlaeveM00000909571  BsWGS_16456  dlaeveM00000909571   ← recíproco
+dlaeveM00000909590  BsWGS_16464  dlaeveM00000909470
+```
+
+**Once genes, cinco subjects, tres pares recíprocos.** Se cuenta sin
+leer, agregando `| awk '$1==$3'` después de `done`: la salida de un
+ciclo entero se puede mandar por una tubería.
+
+El gen de la sonda elige a `BsWGS_16464`, que prefiere a su vecino
+`dlaeveM00000909470`: sin ortólogo por RBH. Cuatro genes del arreglo
+eligen a esa misma proteína.
+
+Los cinco subjects son vecinos entre sí: `BsWGS_16456` a `BsWGS_16465`,
+en el cromosoma 12 del caracol, entre 64.64 y 64.90 Mb.
+
+```bash
+grep -w -e BsWGS_16456 -e BsWGS_16457 -e BsWGS_16462 -e BsWGS_16464 -e BsWGS_16465 \
+     datos/mapa_bradybaena.tsv | cut -f1,3,4
+```
+
+Un arreglo en tándem de la babosa apunta entero a un arreglo en tándem
+del caracol. Es la firma clásica del uno a muchos, y su lectura más
+simple es que el arreglo es **más viejo que la separación** de las dos
+especies y que adentro ha habido duplicaciones y pérdidas en cada
+linaje. "El ortólogo de `dlaeveM00000909458`" no es una proteína sino
+una región. Para decidir
+a qué gen del caracol corresponde la sonda "lgr5", BLAST no alcanza:
+hace falta sintenia, el orden de los genes en el cromosoma.
+
+Sobre el ciclo: este `while` lanza dos `grep` por gen, y cada `grep`
+lee una tabla completa. Para 11 genes no importa. Para las 632
+proteínas serían 1,264 lecturas de archivo, y para un proteoma, el fin
+de semana. Cuando la pregunta es sobre **toda** la tabla, la
+herramienta es el `awk` con `NR==FNR` del ejercicio 4, que lee cada
+archivo una vez. El ciclo de bash sirve para pocas cosas, distintas
+entre sí; `awk` sirve para muchas cosas iguales.
+:::
+
+## Parte 4 · Una segunda opinión
+
+### Ejercicio 9. RBH contra OrthoFinder
+
+`orthogrupos_orthofinder.tsv` dice a qué ortogrupo pertenece cada
+proteína según OrthoFinder, que no trabaja con mejores hits sino con
+grafos y árboles de genes, sobre los proteomas completos de cuatro
+moluscos. ¿Qué tanto coincide con sus 300 pares?
+
+```bash
+head -3 datos/orthogrupos_orthofinder.tsv
+
+awk -F'\t' 'NR==FNR {og[$1]=$3; next}
+     {a=og[$1]; b=og[$2]
+      print $0 "\t" (a==""||b=="" ? "sin_OG" : (a==b ? "mismo_OG" : "OG_distinto"))}' \
+    datos/orthogrupos_orthofinder.tsv resultados/rbh.tsv | cut -f3 | sort | uniq -c
+```
+
+Y al revés: ¿qué dice el tamaño del ortogrupo sobre las proteínas que
+RBH **perdió**? Las columnas 4 y 5 cuentan cuántos genes de cada
+especie tiene el ortogrupo en los proteomas completos.
+
+```bash
+awk -F'\t' 'NR==FNR {r[$1]=1; next}
+     $2=="dlaeve" {c = ($4==1 && $5==1) ? "1_uno_a_uno" : ($4<=3 && $5<=3) ? "2_chico" : \
+                       ($4<=10) ? "3_mediano" : "4_grande"
+                   n[c]++; if ($1 in r) k[c]++}
+     END {for (c in n) printf "%s\t%d\t%d\t%.0f%%\n", c, n[c], k[c], 100*k[c]/n[c]}' \
+    resultados/rbh.tsv datos/orthogrupos_orthofinder.tsv | sort
 ```
 
 ::: {.callout-note collapse="true"}
 ## Solución
 
-Van a encontrar proteínas con cinco, diez o más hits de bit score alto.
-Son familias que se expandieron por duplicación en uno de los dos
-linajes, o dominios muy conservados que aparecen en muchas proteínas
-distintas.
+```
+  4 OG_distinto
+292 mismo_OG
+  4 sin_OG
+```
 
-Para esas, la pregunta "¿cuál es el ortólogo?" está mal planteada. La
-respuesta correcta es un conjunto, no un elemento: si la duplicación
-ocurrió después de la separación de los linajes, todas las copias son
-**co-ortólogas** del gen de la otra especie, colectivamente. Eso es lo
-que el capítulo llamó in-paralogs.
+**292 de 300 pares (97 %) caen en el mismo ortogrupo.** RBH es
+**preciso**: casi todo lo que llama ortólogo es una ortología
+razonable, con el respaldo de un método independiente.
 
-RBH devuelve, cuando mucho, una de ellas, y la elección entre copias
-casi idénticas la decide el ruido. Por eso existen OrthoFinder y los
-métodos basados en árboles: no son RBH mejorado, son otra forma de
-plantear la pregunta.
+Y es **incompleto**. Supervivencia al RBH de las proteínas de la
+babosa, según el tamaño de su ortogrupo:
+
+| ortogrupo | proteínas | en RBH | sobrevive |
+|---|---|---|---|
+| uno a uno (1 gen por especie) | 54 | 40 | 74 % |
+| chico (hasta 3 por especie) | 200 | 108 | 54 % |
+| mediano (4 a 10 de la babosa) | 125 | 73 | 58 % |
+| grande (más de 10) | 240 | 77 | 32 % |
+
+Las que RBH pierde viven, sobre todo, en ortogrupos grandes, donde la
+ortología es de uno a muchos o de muchos a muchos y un solo "mejor hit"
+no la puede representar. El ortogrupo más grande del vecindario tiene
+321 genes de la babosa y 32 del caracol: ahí no hay pares que encontrar,
+hay una familia que describir. (Que ni en los ortogrupos uno a uno
+sobreviva el 100 % es, sobre todo, el costo de trabajar con un
+vecindario: en 9 de las 14 que se pierden, la pareja del caracol quedó
+fuera del subconjunto.)
+
+Por eso existen OrthoFinder y los métodos basados en árboles: no son
+RBH mejorado, son otra forma de plantear la pregunta. RBH pregunta
+"¿quién es tu pareja?". Un ortogrupo pregunta "¿quiénes descienden del
+mismo gen ancestral?", y acepta que la respuesta sea un conjunto.
 :::
+
+## Anexos
+
+### A. La trampa de `-parse_seqids` y las accesiones de GenBank
+
+En GenBank, las proteínas de *Bradybaena* se llaman por su accesión:
+`BFZ05148.1`. La primera versión de esta práctica las usaba así, y
+daba **cero** pares recíprocos.
+
+La razón: con `-parse_seqids`, `makeblastdb` **reconoce** el formato de
+una accesión de GenBank, y en la columna `sseqid` BLAST la imprime con
+su base de origen, `dbj|BFZ05148.1|`. En la otra tabla, la misma
+proteína aparece como consulta con su nombre tal cual, `BFZ05148.1`.
+El `awk` del ejercicio 4 compara texto, las dos cadenas son distintas,
+y `rbh.tsv` sale vacío sin un solo mensaje de error.
+
+Los `dlaeveM…` y los `BsWGS_…` son identificadores locales, que BLAST
+imprime tal cual: por eso los datos de hoy usan el *locus tag*. Si
+algún día trabajan con accesiones, hay dos salidas: pedir
+`-outfmt "6 qseqid sacc …"`, donde `sacc` es la accesión limpia, o
+montar la base sin `-parse_seqids` cuando no vayan a extraer secuencias
+de ella.
+
+Moraleja: un pipeline que cruza tablas por identificador depende de que
+el **mismo objeto se llame igual en todas**. Cuando un cruce sale
+vacío, antes de dudar de la biología, miren una línea de cada tabla.
+
+### B. La misma práctica con datos públicos
+
+Los proteomas de hoy viven en el servidor del curso. Para repetir la
+práctica en otro lado, los comandos son los mismos con cualquier par de
+proteomas. El repositorio trae
+[`practicas/datos/preparar-sesion10.sh`](https://github.com/jerolon/Bioinformatica_I_2026/blob/main/practicas/datos/preparar-sesion10.sh),
+que baja de UniProt los proteomas de referencia de *Saccharomyces
+cerevisiae* y *Schizosaccharomyces pombe* (licencia CC BY 4.0), los
+recorta a 500 proteínas con un muestreo reproducible y deja escrita la
+procedencia. Con esos datos el ciclo del ejercicio 1 es `for especie in
+cerevisiae pombe`, y lo demás cambia solo de nombre. Dos levaduras
+separadas por unos 500 millones de años: otra distancia evolutiva, y la
+misma pérdida.
+
+### C. ¿De dónde salieron los datos?
+
+Del pipeline del proyecto. El proteoma de la babosa es la anotación
+v1.2, una proteína por gen; el del caracol, el de GenBank para el
+ensamblado GCA_050415755.1 (29,227 proteínas), con los identificadores
+cambiados de accesión a *locus tag*. El vecindario se definió con
+`blastp` 2.13.0 de las 72 consultas contra cada proteoma completo,
+conservando toda proteína con al menos un hit; `familia_wnt` es la
+consulta de mayor bit score. Los mapas salen de las anotaciones (el
+GFF de GenBank, en el caso del caracol), y los ortogrupos, de la
+corrida de OrthoFinder del proyecto con los proteomas completos de
+*D. laeve*, *Bradybaena*, *Magallana* y *Pomacea*. De las 1,345
+proteínas de hoy, 1,286 pertenecen a algún ortogrupo.
 
 ## Para entregar
 
 En su repositorio, dentro de `sesion10/`:
 
-- `procedencia.md` con la fecha, los proteomas usados y los comandos.
-- `resultados/rbh.tsv` (es chico, este sí se versiona).
-- Un párrafo respondiendo: qué fracción de mejores hits sobrevivió a la
-  reciprocidad, y un caso concreto de uno a muchos que hayan encontrado.
+- `procedencia.md` con la fecha, la versión de `blastp`, los proteomas
+  usados, de dónde se copiaron y los comandos.
+- `resultados/rbh.tsv` (es chico, este sí se versiona; lo van a volver
+  a usar en la unidad de R).
+- La **tabla por familia** del ejercicio 5, en Markdown.
+- Un párrafo respondiendo: qué fracción de los mejores hits sobrevivió
+  a la reciprocidad, en qué familias se concentra la pérdida y por qué,
+  y **un caso concreto de uno a muchos, con cromosomas**: el arreglo de
+  chr14, los receptores de chr6 y chr10, o el arreglo de la sonda en
+  chr13.
 
-No suban los `.fasta` ni los archivos de índice de las bases.
+No suban los `.faa`, los archivos de índice de las bases ni las dos
+tablas grandes de BLAST: se regeneran con los comandos de su
+`procedencia.md`.

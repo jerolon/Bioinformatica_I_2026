@@ -202,16 +202,22 @@ actuales colocan mal más del 30% de las columnas. No MUSCLE en
 particular: todos.
 
 En el alineamiento de la práctica lo vas a ver con tus propios datos:
-las columnas donde Clustal Omega y MAFFT no se ponen de acuerdo se
+las posiciones donde Clustal Omega y MAFFT no se ponen de acuerdo se
 concentran en unas cuantas regiones (@fig-desacuerdo), y son las
 mismas que los métodos de confianza marcan como poco fiables.
 
-![Acuerdo por columna entre los alineamientos de Clustal Omega y MAFFT
-para la familia de globinas de la práctica. Para cada columna del
-alineamiento de Clustal Omega se calcula qué fracción de sus pares de
-residuos sigue junta en el alineamiento de MAFFT. Los bloques
-conservados coinciden casi por completo; el desacuerdo se concentra en
-las regiones ricas en gaps.](../../figuras/svg/msa_desacuerdo.svg){#fig-desacuerdo}
+![Dos medidas independientes de incertidumbre sobre el mismo
+alineamiento: los 50 receptores LGR de la práctica, vistos a lo largo
+de LGR5 humano. Arriba, el acuerdo entre programas: para cada columna
+del alineamiento de Clustal Omega, qué fracción de sus pares de
+residuos sigue junta en el de MAFFT L-INS-i. Abajo, la confianza por
+letra de MUSCLE5 (de 0 a 9, reescalada a 0–1): qué fracción de un
+ensemble de 16 réplicas sostiene esa letra en su columna. Las siete
+hélices transmembranales (7TM) salen igual las alinee quien las alinee.
+El desacuerdo y la desconfianza caen en los mismos lugares: la cola
+C-terminal, de baja complejidad, y el ectodominio LRR, cuyas 14
+repeticiones en tándem admiten más de un registro casi igual de
+bueno.](../../figuras/svg/msa_desacuerdo.svg){#fig-desacuerdo}
 
 ::: consenso
 **El alineamiento múltiple no es un hecho, es una hipótesis con barra
@@ -277,61 +283,41 @@ secuencias, Clustal Omega o MAFFT `L-INS-i` son ideales.
 
 ## Práctica
 
-La práctica continúa el pipeline de la sesión anterior: la familia de
-proteínas que recuperaste con BLAST (las globinas de UniProt, licencia
-CC BY 4.0) ahora se alinea, se compara y se pone en duda.
+La práctica de la sesión está en [práctica de la sesión
+9](sesion09-practica.qmd). Continúa el pipeline de la sesión anterior:
+la familia de receptores LGR que recuperaste con BLAST en el proteoma
+de *Deroceras laeve* crece a 50 secuencias de 11 especies, y se le suma
+una familia chica, las 17 R-spondinas del mismo proyecto. Las dos se
+alinean, se comparan y se ponen en duda. El concepto de cómputo del día
+es **una variable como parámetro del pipeline** (`F=rspo`, después
+`F=lgr`), con `time` y los dos canales de salida (`>` y `2>`).
 
-Las herramientas viven en un ambiente de conda ya creado en ken;
-actívalo con `conda activate msa`. Si algún día necesitas recrearlo:
-
-```bash
-conda create -n msa -c conda-forge -c bioconda \
-    clustalo mafft muscle t-coffee seqkit hmmer
-```
-
-1.  **Alinear con dos métodos.** Clustal Omega:
-
-    ```bash
-    clustalo -i familia.fasta -o familia_clustalo.aln \
-        --outfmt=clu --guidetree-out=arbol.dnd
-    ```
-
-    MAFFT en su modo preciso (esto es, literalmente, `L-INS-i`):
-
-    ```bash
-    mafft --localpair --maxiterate 1000 familia.fasta \
-        > familia_mafft.fasta
-    ```
-
-2.  **Primer vistazo con números.** Antes de mirar letras, mide:
-
-    ```bash
-    seqkit stats -a familia_mafft.fasta
-    esl-alistat familia_clustalo.aln
-    ```
-
-    Anota cuántas columnas tiene cada alineamiento. Si el número
+1.  **Alinear con dos métodos.** Clustal Omega, guardando su árbol guía
+    (`--guidetree-out`), y MAFFT en su modo preciso: `mafft --localpair
+    --maxiterate 1000` es, literalmente, `L-INS-i`. De paso se descubre
+    que `mafft --auto`, con menos de 200 secuencias, *es* L-INS-i, y se
+    fuerza `FFT-NS-2` para tener con qué compararlo.
+2.  **Primer vistazo con números.** `seqkit stats -a` y `esl-alistat`:
+    mismas secuencias, mismos residuos, y tres anchos distintos (3,205,
+    2,902 y 3,019 columnas para los LGR). Si el número de columnas
     difiere entre programas, y casi siempre difiere, ya tienes la
     primera evidencia de que esto es una estimación.
-
-3.  **Comparación objetiva.** T-Coffee trae un modo que mide el
-    acuerdo entre dos alineamientos de las mismas secuencias:
-
-    ```bash
-    t_coffee -other_pg aln_compare \
-        -al1 familia_clustalo.aln -al2 familia_mafft.fasta
-    ```
-
-    El porcentaje que reporta es el acuerdo de suma de pares entre
-    ambos. Cuidado con la interpretación: como no hay verdad de
+3.  **Comparación objetiva.** `t_coffee -other_pg aln_compare` mide el
+    acuerdo entre dos alineamientos de las mismas secuencias, por pares
+    de residuos o por columnas enteras: 72 % contra 12 % para la misma
+    comparación. Cuidado con la interpretación: como no hay verdad de
     referencia, esto mide desacuerdo entre programas, no exactitud de
     ninguno. (Una alternativa clásica, si tienes Java a la mano, es
-    FastSP; Mirarab y Warnow 2011.)
-
-4.  **Mirar el árbol guía.** El `.dnd` que guardó Clustal Omega está
-    en formato Newick; míralo con `cat arbol.dnd`. Es el orden en que
-    el programa fue pegando las secuencias: el mismo objeto que
-    gobierna el pecado original de la sección 4.
+    FastSP; Mirarab y Warnow 2011.) Después el desacuerdo se **ubica**:
+    un script calcula el acuerdo columna por columna y `awk` lo promedia
+    por dominio de la proteína. Es la @fig-desacuerdo, hecha por ti.
+4.  **Mirar el árbol guía.** El `.dnd` que guardó Clustal Omega está en
+    formato Newick. Es el orden en que el programa fue pegando las
+    secuencias: el mismo objeto que gobierna el pecado original de la
+    sección 4. En la práctica, el de las R-spondinas se compara con su
+    árbol de máxima verosimilitud real, y pierde: pone a un anfioxo
+    entre los moluscos. El de los LGR agrupa a los fragmentos por ser
+    fragmentos.
 
     ::: {.callout-warning}
     El árbol guía no es un árbol filogenético. Se construye con
@@ -340,34 +326,25 @@ conda create -n msa -c conda-forge -c bioconda \
     rodeos: no debe usarse para inferir relaciones evolutivas.
     :::
 
-5.  **Confianza por columna.** Genera un ensemble con MUSCLE5 y
-    pregúntale al propio método de qué columnas desconfía:
+5.  **Confianza por columna.** Un ensemble de MUSCLE5 (`-align
+    -stratified`, 16 réplicas; `-diversified` genera 100 y es la opción
+    seria), la mejor réplica con `-maxcc` y la confianza de cada letra,
+    de 0 a 9, con `-letterconf`. Para los LGR el ensemble tarda 1 h
+    45 min en un CPU y se entrega ya calculado: ese es el precio de la
+    barra de error.
+6.  **Ver y recortar.** El alineamiento se mira en Jalview
+    (jalview.org), con la confianza de MUSCLE5 sobrepuesta, y se recorta
+    con `trimal -automated1` como haría un pipeline filogenético. En los
+    LGR trimAl se lleva el 79 % del ectodominio LRR: lo que queda para
+    el árbol es el 7TM.
 
-    ```bash
-    muscle -align familia.fasta -output ensamble.efa -stratified
-    muscle -maxcc ensamble.efa -output mejor.afa
-    muscle -letterconf ensamble.efa -ref mejor.afa \
-        -output confianza.afa -html confianza.html \
-        -jalview confianza.features
-    ```
-
-    `-stratified` genera 16 réplicas y es suficiente para la clase;
-    `-diversified` genera 100 y es la opción seria. Abre
-    `confianza.html` en tu navegador: cada letra trae su confianza de
-    0 a 9.
-
-6.  **Ver el alineamiento.** Descarga los archivos a tu laptop y
-    ábrelos en Jalview (jalview.org; hay instaladores para Linux, Mac
-    y Windows). Colorea por conservación e importa
-    `confianza.features` para sobreponer la confianza de MUSCLE5. Si
-    Java se pone difícil, el MSA Viewer del NCBI en el navegador es el
-    plan B.
-
-El entregable no es "el alineamiento", sino un párrafo sobre **dónde
-los dos métodos no se pusieron de acuerdo y por qué**, señalando dos
-regiones concretas (con posiciones) y diciendo si coinciden con las
-columnas de baja confianza del paso 5. Ésa es la parte que se califica
-en serio, porque es la que enseña a desconfiar del dato.
+El entregable no es "el alineamiento", sino un párrafo por familia
+sobre **dónde los dos métodos no se pusieron de acuerdo y por qué**,
+señalando dos regiones concretas (con posiciones en la secuencia de
+referencia) y diciendo si coinciden con las letras de baja confianza
+del paso 5 y con lo que recortó trimAl en el paso 6. Ésa es la parte
+que se califica en serio, porque es la que enseña a desconfiar del
+dato.
 
 ## Ejercicios
 

@@ -128,7 +128,7 @@ porque Quarto numera las figuras por orden de aparición en cada capítulo.
 | `blast_tres.R`          | Las tres preguntas: BLAST, BLAT, BWA (opcional, sin referenciar). | BLAST |
 | `msa_progresivo.py`     | Árbol guía y "once a gap, always a gap". | MSA |
 | `fig_msa_escalamiento.R`| Costo de la PD exacta (L^N) vs progresivo (N²·L²), escala log. | MSA |
-| `fig_msa_desacuerdo.R`  | Acuerdo por columna entre Clustal Omega y MAFFT sobre las globinas de la práctica (datos reales; se detiene si faltan). | MSA |
+| `fig_msa_desacuerdo.R`  | Acuerdo entre Clustal Omega y MAFFT, y confianza de MUSCLE5, a lo largo de LGR5 humano, sobre los 50 LGR de la práctica de la sesión 9 (datos reales: los alineamientos de la práctica en `figuras/datos/`; se detiene si faltan). | MSA |
 
 Las de score (`blast_seed_extend`, `blast_evd`, `blast_evalue_base`) calculan sus
 números; las demás de BLAST son esquemas. `blast_velocidad` es explícitamente

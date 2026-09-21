@@ -102,7 +102,7 @@ más: un encabezado YAML y bloques de código que se ejecutan al compilar.
 
 ````markdown
 ---
-title: "Análisis de homología en levaduras"
+title: "Análisis de homología: babosa contra caracol"
 author: "Su nombre"
 date: today
 format: html

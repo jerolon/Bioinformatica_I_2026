@@ -1,6 +1,13 @@
 #!/usr/bin/env bash
 #
-# Prepara los datos de la práctica de la sesión 10 (reciprocal best hits).
+# Prepara la versión con DATOS PÚBLICOS de la práctica de la sesión 10
+# (reciprocal best hits).
+#
+# En clase la práctica usa datos del laboratorio que sólo viven en el servidor
+# del curso (la babosa Deroceras laeve contra el caracol Bradybaena similaris;
+# ver contenido/03-alineamientos/sesion10-practica.qmd). Este script es la
+# alternativa del anexo B de esa práctica, para repetirla en cualquier otro
+# lado: mismos comandos, otros dos proteomas.
 #
 # Baja los proteomas de referencia de UniProt para S. cerevisiae y S. pombe,
 # los recorta a N proteínas con un muestreo reproducible y los deja en el
