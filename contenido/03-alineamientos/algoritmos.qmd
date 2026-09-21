@@ -13,11 +13,11 @@ editor:
 parámetros dados. ¿Es el alineamiento "verdadero"?**
 
 El algoritmo garantiza optimalidad matemática: entre todos los
-alineamientos posibles, devuelve uno de score máximo, y eso es
-demostrable. Lo que no garantiza es que ese alineamiento corresponda a
-la historia evolutiva real, porque el score depende enteramente de la
-matriz de sustitución y de las penalizaciones elegidas. Cambia los
-parámetros y podría cambiar el óptimo.
+alineamientos posibles, devuelve uno de score máximo. Lo que no
+garantiza es que ese alineamiento corresponda a la historia evolutiva
+real, porque el score depende enteramente de la matriz de sustitución y
+de las penalizaciones elegidas. Si los parámetros cambian, podría
+cambiar el óptimo.
 
 Los dos objetivos de la clase:
 
@@ -33,12 +33,12 @@ de atracciones, con una pequeña modificación: si hubiera calles
 diagonales. Esta sesión veremos cómo se calcula, por qué funciona y
 cuánto cuesta.
 
-## 1. Cuántos alineamientos hay
+## 1. ¿Cuántos alineamientos hay?
 
-Antes de buscar el mejor alineamiento conviene saber contra cuántos
-compite.
+Una manera de encontrar el mejor alineamiento, sería enumerar todos los
+posibles.
 
-Piensen en una cuadrícula donde una secuencia va en el eje horizontal y
+Pensemos en una cuadrícula donde una secuencia va en el eje horizontal y
 la otra en el vertical. Construir un alineamiento es recorrerla desde la
 esquina superior izquierda hasta la inferior derecha, y en cada paso hay
 exactamente tres movimientos: diagonal (alinear un residuo con otro),
@@ -52,8 +52,10 @@ distinto (derecha). Contar alineamientos y optimizarlos ocurren sobre
 esta misma
 estructura.](../../figuras/svg/fig01_reticula.svg){#fig-reticula}
 
-Contar esos caminos es un problema resuelto. Son los **números de
-Delannoy**, que cumplen una relación auto-referente o recursiva:
+Como curiosidad matemática, esos caminos pueden contarse con los
+[**números de
+Delannoy**](https://en.wikipedia.org/wiki/Delannoy_number), que cumplen
+una relación auto-referente o recursiva:
 
 $$D(i,j) = D(i-1,j-1) + D(i-1,j) + D(i,j-1)$$
 
@@ -64,14 +66,16 @@ caso en que i = j) crecen aproximadamente como $(3+2\sqrt{2})^n$, así
 que para secuencias de 100 nt la cifra deja de tener nombre útil.
 
 ::: callout-box
-Enumerar y comparar todos los alineamientos es inviable a partir de unos
-15 nucleótidos, menos de un primer.
+En todo caso, esto nos ayuda a entender que enumerar y comparar todos
+los alineamientos es inviable a partir de unos 15 nucleótidos, menos que
+un primer.
 :::
 
-Miren otra vez la recurrencia de Delannoy. Tiene tres términos y son
-exactamente los tres vecinos de la celda: diagonal, arriba, izquierda.
+La recurrencia de Delannoy viene con la intuición de que cada término es
+la suma de los vecinos de la diagonal, arriba, e izquierda para cada
+celda.
 
-## 2. Programación dinámica
+## 2. Programación dinámica: resolución eficiente para cálculos recursivos.
 
 **Richard Bellman** desarrolló la programación dinámica en los años
 cincuenta, en la RAND Corporation, para problemas de control y
@@ -111,17 +115,19 @@ largo para llegar a él, y utilizando ese número, vamos a calcular el
 siguiente. Vamos a hacer una especie de sudoku en donde primero llenamos
 lo más fácil y luego, a partir de ahí, vamos resolviendo lo siguiente.
 
-Para escribirlo hacen falta tres tablas y conviene no confundirlas
-(@fig-manhattan-dp). Dos guardan los datos del problema: el peso de cada
-calle. `Derecha[i,j]` es lo que se ve caminando de $(i,j)$ a $(i,j+1)$ y
-`Abajo[i,j]` es lo que se ve caminando de $(i,j)$ a $(i+1,j)$. La
-tercera, $s[i,j]$, es la que vamos llenando: el máximo número de
-atracciones con que se puede llegar al nodo $(i,j)$.
+Para escribirlo de una manera fácil de implementar, utilizaremos tres
+tablas (@fig-manhattan-dp). Dos guardan los datos del problema: el peso
+de cada calle. `Derecha[i,j]` es lo que se ve caminando de $(i,j)$ a
+$(i,j+1)$ y `Abajo[i,j]` es lo que se ve caminando de $(i,j)$ a
+$(i+1,j)$. La tercera, $s[i,j]$, es la que vamos llenando: el máximo
+número de atracciones que se pueden ver al llegar al nodo $(i,j)$. (Sí,
+para Mahattan puro no hay diagonales, pero es fácil ver que funcionaría
+con una tabla más.)
 
-Las tres tienen dimensiones distintas, y ahí es donde más se equivocan
-al programarlo. Con una cuadrícula de $n \times m$ cuadras hay
-$(n+1)(m+1)$ nodos, así que $s$ mide $(n+1) \times (m+1)$; las calles
-horizontales son $(n+1) \times m$ y las verticales $n \times (m+1)$.
+Hay que tener cuidado con que las tres tienen dimensiones distintas. Con
+una cuadrícula de $n \times m$ cuadras hay $(n+1)(m+1)$ nodos, así que
+$s$ mide $(n+1) \times (m+1)$; las calles horizontales son
+$(n+1) \times m$ y las verticales $n \times (m+1)$.
 
 Los bordes se llenan primero porque no hay nada que decidir: a la
 primera fila sólo se llega caminando a la derecha, y a la primera
@@ -161,8 +167,9 @@ Con gap lineal de penalización $d$ y matriz de sustitución $s$:
 $$F(i,j) = \max \begin{cases} F(i-1,j-1) + s(a_i, b_j) \\ F(i-1,j) - d \\ F(i,j-1) - d \end{cases}$$
 
 Los tres términos son los tres vecinos de la sección 1. El primero
-alinea $a_i$ con $b_j$; el segundo mete un gap en una secuencia; el
-tercero, en la otra.
+alinea $a_i$ con $b_j$ y lo premia con el score de la matriz de
+sustitución para esa comparación; el segundo mete un gap en una
+secuencia; el tercero, en la otra.
 
 Matriz de sustitución $s$ con gaps añadidos. $\mu = 1$ constante
 significa que un mismatch se penaliza con -1:
@@ -182,8 +189,7 @@ $$\begin{array}{r|ccccc}
 $$F(0,0) = 0, \qquad F(i,0) = -i \cdot d, \qquad F(0,j) = -j \cdot d$$
 
 La primera fila y la primera columna acumulan penalización. Tiene que
-ser así: llegar a esas celdas significa haber insertado gaps y nada más,
-y eso cuesta. Este es el punto donde más se equivocan al hacerlo a mano.
+ser así: llegar a esas celdas significa haber insertado gaps y nada más.
 
 ### El traceback
 
@@ -195,7 +201,7 @@ que es exactamente lo que significa "global".
 Cuando hay empates entre vecinos, hay más de un alineamiento óptimo. No
 es un error del algoritmo ni del que lo ejecuta: son alineamientos
 distintos con el mismo score, y el algoritmo no tiene forma de preferir
-uno. Vale la pena provocarlo en la práctica (@fig-nw-matriz).
+uno (@fig-nw-matriz).
 
 ![La matriz de Needleman–Wunsch para GCATGCG (columnas) contra GATTACA
 (filas), con match +1, mismatch −1 y gap −1. La fila y la columna de
@@ -233,27 +239,25 @@ esquema? Si mantenemos un gap penalty de -1, lo único que cambia es la
 matriz $Diagonal$ que ahora sería una matriz de n x m donde, para cada
 comparación, buscamos el valor de la matriz de puntaje de arriba.
 
-![El mismo par de la @fig-nw-matriz con el esquema transición/transversión y
-gap −1. Sobre cada arista diagonal, en teal, su peso: eso es la matriz
-$Diagonal$, la única tabla que cambió. Las aristas horizontales y verticales
-siguen valiendo −1 y no se dibujan. El score baja a −0.262 y, sobre todo, los
-alineamientos óptimos pasan de tres a dos: castigar distinto cada sustitución
-rompe uno de los
+![El mismo par de la @fig-nw-matriz con el esquema
+transición/transversión y gap −1. Sobre cada arista diagonal, en teal,
+su peso, o de otro modo, la matriz $Diagonal$, la única tabla que
+cambió. Las aristas horizontales y verticales siguen valiendo −1 y no se
+dibujan. El score baja a −0.262 y, sobre todo, los alineamientos óptimos
+pasan de tres a dos: castigar distinto cada sustitución rompe uno de los
 empates.](../../figuras/svg/fig02b_nw_matriz_transiciones.svg){#fig-nw-transiciones}
-
 
 ## 4. Smith–Waterman: alineamiento local
 
 Once años después, en un artículo de tres páginas, Smith y Waterman
 resolvieron un problema distinto: encontrar la mejor subsecuencia común,
 no el mejor alineamiento de las secuencias completas. Sirve cuando dos
-proteínas comparten un dominio pero no el resto, que es la situación
-normal.
+proteínas comparten un dominio pero no el resto, que es quizás una
+situación más común.
 
 ### Los tres cambios
 
-Aquí está el "ajá" de la clase. La diferencia más citada es el cero en
-la recurrencia:
+La diferencia más citada es el cero en la recurrencia:
 
 $$H(i,j) = \max \begin{cases} 0 \\ H(i-1,j-1) + s(a_i, b_j) \\ H(i-1,j) - d \\ H(i,j-1) - d \end{cases}$$
 
@@ -275,10 +279,9 @@ Pero el cero solo no basta. Son **tres cambios acoplados**
 ::: mito
 **"Smith–Waterman es sólo Needleman–Wunsch con max(0, …)."**
 
-Es la simplificación que circula, y está incompleta. Si agregan el cero
-pero dejan la inicialización con gaps acumulados, o si arrancan el
-traceback en la esquina, no obtienen un alineamiento local. Los tres
-cambios van juntos o no funciona.
+Todo es necesario. Si agregamos el cero pero dejamos la inicialización
+con gaps acumulados, o si arrancamos el *traceback* en la esquina, no
+obtenemos un alineamiento local.
 :::
 
 En el ejemplo del artículo original usan match = +1, mismatch = −1/3, y
@@ -287,9 +290,8 @@ peso de deleción $W_k = 1.0 + k/3$.
 ![Needleman–Wunsch (global) contra Smith–Waterman (local), el mismo par
 y el mismo scoring en los dos paneles. Es un par distinto al de la
 @fig-nw-matriz a propósito: el alineamiento local necesita un bloque
-conservado —aquí GATTA— que el global no necesita, y GCATGCG/GATTACA no
-comparte ninguno. Los tres cambios de NW a SW van acoplados: los bordes
-pasan de negativos a cero, aparecen ceros dentro de la matriz donde el
+conservado. Los tres cambios de NW a SW van acoplados: los bordes pasan
+de negativos a cero, aparecen ceros dentro de la matriz donde el
 alineamiento reinicia, y el traceback ya no va de esquina a esquina sino
 del máximo global (recuadro verde) a la primera celda con
 cero.](../../figuras/svg/fig03_nw_vs_sw.svg){#fig-nw-vs-sw}
@@ -309,9 +311,8 @@ los bordes y dónde se busca el máximo.
 - **Fitting**: ajusta una secuencia corta dentro de una larga sin
   penalizar los extremos de la larga.
 
-Si entienden que estas variantes se obtienen tocando bordes y máximos,
-entendieron el algoritmo (@fig-variantes). Si les parecen tres
-algoritmos nuevos, todavía no.
+Todos estos algoritmos se obtienen variando los bordes y los máximos
+(@fig-variantes).
 
 ![Las cuatro variantes son la misma maquinaria tocando bordes y máximos.
 Cada panel sombrea sólo dónde puede arrancar el traceback (el máximo, en
@@ -324,18 +325,17 @@ bordes.](../../figuras/svg/fig06_variantes.svg){#fig-variantes}
 ## 6. Penalizaciones de gap
 
 Hasta aquí usamos gap lineal: $\gamma(k) = k \cdot d$. Cada residuo del
-gap cuesta lo mismo.
-
-Biológicamente eso es difícil de defender. Un indel de diez residuos
-suele originarse en un evento mutacional, no en diez. El gap lineal
-cobra diez veces por un solo evento.
+gap cuesta lo mismo, pero biológicamente, un indel de diez residuos
+puede originarse en un sólo evento mutacional, no en diez. Con este
+esquema de scoring, el gap lineal nos cobra como si hubiera habido 10
+mutaciones.
 
 La alternativa es el **gap afín**:
 
 $$\gamma(k) = \text{apertura} + k \cdot \text{extensión}, \qquad \text{apertura} > \text{extensión}$$
 
 Abrir un gap es caro; extenderlo, barato. Eso favorece un gap largo
-sobre varios cortos, que es lo que la evolución tiende a producir
+sobre varios cortos, que es algo más probable evolutivamente
 (@fig-gap-costos).
 
 ![Tres formas de cobrar un gap de longitud $k$. La lineal cobra lo mismo
@@ -446,8 +446,8 @@ espacio O(min(m,n)) manteniendo tiempo O(mn): calcula la fila media
 hacia adelante y hacia atrás, encuentra el punto de cruce óptimo y
 recursa. Es elegante y sigue en uso.
 
-El problema no es alinear dos secuencias. El problema es alinear una
-contra una base de datos.
+Resuelto el problema de alinear dos secuencias, el siguiente problema es
+alinear una secuencia contra una base de datos.
 
 ::: callout-box
 Supongan una query de 300 residuos contra una base de 200 millones de
@@ -455,8 +455,8 @@ secuencias de 300 residuos en promedio. Son 300 × 300 × 200,000,000
 celdas, es decir, cerca de **1.8 × 10¹³ operaciones** por búsqueda. Con
 una implementación razonable, eso son horas.
 
-Nadie va a esperar horas por un BLAST. Y ese es exactamente el tema de
-la próxima sesión.
+En la siguiente sesión, veremos cómo hace el BLAST para que no tengamos
+que esperar horas.
 :::
 
 ## 9. Lo que cambió desde 1982
@@ -517,25 +517,23 @@ modelos de lenguaje de proteínas más una capa de DP diferenciable.
 Pero en todos esos métodos el motor sigue siendo programación dinámica.
 Lo que se aprende es el **scoring**, no el algoritmo de alineamiento.
 Ningún método neuronal reemplazó a Needleman–Wunsch para encontrar el
-óptimo. Si alguien les dice lo contrario, pidan el benchmark.
+óptimo.
 :::
 
 ## Mitos y realidades: el resumen
 
 ::: mito
-1.  **"Needleman–Wunsch es O(n²)."** La versión con gap lineal sí; la
-    formulación original con gaps arbitrarios es cúbica.
-2.  **"Smith–Waterman es sólo NW con max(0, …)."** Son tres cambios
+1.  **"Smith–Waterman es sólo NW con max(0, …)."** Son tres cambios
     acoplados: recurrencia, inicialización y traceback.
-3.  **"BLAST es una aproximación de Smith–Waterman."** Impreciso. BLAST
+2.  **"BLAST es una aproximación de Smith–Waterman."** Impreciso. BLAST
     es una heurística seed-and-extend con su propia teoría estadística.
     No calcula SW ni lo aproxima; comparte el objetivo, no el método.
-4.  **"BLOSUM62 es la matriz correcta."** Tiene \~15% de posiciones mal
+3.  **"BLOSUM62 es la matriz correcta."** Tiene \~15% de posiciones mal
     calculadas, y la versión corregida funciona peor.
-5.  **"La programación dinámica se inventó en biología."** Bellman en
+4.  **"La programación dinámica se inventó en biología."** Bellman en
     los cincuenta, Vintsyuk en voz en 1968. La biología llegó después.
-6.  **"El alineamiento óptimo es el alineamiento verdadero."** Es óptimo
-    respecto al esquema de scoring que ustedes eligieron. Nada más.
+5.  **"El alineamiento óptimo es el alineamiento verdadero."** Es óptimo
+    respecto al esquema de scoring que ustedes eligieron.
 :::
 
 ## Práctica
@@ -543,17 +541,17 @@ Ningún método neuronal reemplazó a Needleman–Wunsch para encontrar el
 La práctica de la sesión está en [práctica de la sesión
 7](clase07-algoritmos.qmd). Tres partes:
 
-1.  **Needleman–Wunsch a mano**, en papel, en parejas, con un par
-    corto de secuencias reales del proyecto de la babosa (por definir:
-    los primers de 20 nt de los amplicones ISH o el núcleo del epítopo
-    de 22 aa del anticuerpo) y scoring simple. Sin computadora. Llenar
-    la matriz, hacer el traceback, y reportar si encontraron más de un
+1.  **Needleman–Wunsch a mano**, en papel, en parejas, con un par corto
+    de secuencias reales del proyecto de la babosa (por definir: los
+    primers de 20 nt de los amplicones ISH o el núcleo del epítopo de 22
+    aa del anticuerpo) y scoring simple. Sin computadora. Llenar la
+    matriz, hacer el traceback, y reportar si encontraron más de un
     alineamiento óptimo.
 2.  **EMBOSS `needle` y `water`** con las secuencias del proyecto
-    R-spondina/LGR de *Deroceras laeve*: la escalera de identidad de
-    los parálogos LGR, global contra local en el gen que ancla la
-    sonda "lgr5", sondas y primers contra amplicones, y el anticuerpo
-    sin blanco.
+    R-spondina/LGR de *Deroceras laeve*: la escalera de identidad de los
+    parálogos LGR, global contra local en el gen que ancla la sonda
+    "lgr5", sondas y primers contra amplicones, y el anticuerpo sin
+    blanco.
 3.  **Rosalind**: progresión EDIT → EDTA → GLOB → LOCA → GAFF. El
     primero da sólo la distancia; el segundo pide reconstruir el
     alineamiento; los siguientes agregan matriz real y gap afín.
@@ -571,7 +569,9 @@ se propagó por copia. Nosotros usamos GCATGCG.
 
 ## Fuentes {.unnumbered}
 
-- Compeau, P. & Pevzner, P. *Bioinformatics Algorithms: An Active Learning Approach*. Active Learning Publishers. <https://bioinformaticsalgorithms.org>
+- Compeau, P. & Pevzner, P. *Bioinformatics Algorithms: An Active
+  Learning Approach*. Active Learning Publishers.
+  <https://bioinformaticsalgorithms.org>
 
 **Fuentes primarias**
 
