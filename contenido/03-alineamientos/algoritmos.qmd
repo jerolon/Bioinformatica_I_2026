@@ -7,6 +7,10 @@ editor:
     wrap: 72
 ---
 
+::: {.callout-note appearance="simple"}
+📽️ [Diapositivas de esta sesión](../../presentaciones/sesion07-algoritmos-de-alineamiento.html) — 02 de octubre de 2026.
+:::
+
 ## Idea central
 
 **La programación dinámica encuentra el alineamiento óptimo bajo los

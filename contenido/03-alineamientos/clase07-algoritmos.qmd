@@ -7,14 +7,13 @@ editor:
     wrap: 72
 ---
 
-## De qué se trata
+En la mañana vimos que Needleman–Wunsch y Smith–Waterman son algoritmos
+similares de programación dinámica con tres cambios acoplados. Esta
+práctica tiene tres partes:
 
-En la mañana abrimos la caja negra: Needleman–Wunsch y Smith–Waterman
-son la misma maquinaria de programación dinámica con tres cambios
-acoplados. Esta práctica tiene tres partes:
-
-1.  **Needleman–Wunsch a mano**, en papel, en parejas, con un par corto
-    de secuencias reales del proyecto.
+1.  **Needleman–Wunsch y Smith-Waterman a mano**, en papel, en parejas,
+    con un par corto de secuencias reales del proyecto. Creo que no es
+    muy aburrido veánlo como un sudoku.
 2.  **EMBOSS `needle` y `water`** sobre los datos del laboratorio: la
     parte de hoy.
 3.  **Rosalind**: la progresión EDIT → EDTA → GLOB → LOCA → GAFF.
@@ -56,7 +55,7 @@ anticuerpo comercial "anti-LGR5" hecho contra la proteína humana.
 Los archivos, ya en el servidor:
 
 | archivo | contenido |
-|------------------------------------|------------------------------------|
+|----|----|
 | `01_lgr_paralogos_4seq.faa` | 4 proteínas LGR: hLGR5 y hLGR4 (humanas), Dla_chr6 y Dla_chr10 (babosa) |
 | `02_contraste_locus_LGRcompleto_vs_LRRonly.faa` | Dla019 (receptor completo) y Dla027/Dla028 (solo-LRR, tándem de chr13) |
 | `03_sondas_HCR_rspo2.fasta` | las 20 ventanas de 52 nt del set de sondas HCR DLA-rspo2-B2 |
@@ -113,11 +112,24 @@ respecto de la salida exacta de EMBOSS.
 
 ## Parte 1 · La matriz a mano
 
-::: pendiente
-Por escribir (en otra sesión de trabajo). Candidatos del material real,
-por definir: los primers de 20 nt que vienen en los encabezados de
-`04_amplicones_ISH_rspo2_lgr5.fa` (matriz de DP en papel, por parejas) o
-el núcleo del epítopo de 22 aa de `06_epitopo_nucleo_22aa.faa`.
+::: {.callout-note appearance="simple"}
+**Alineamiento global:**
+
+<iframe src="grafo_global_nw_v6.pdf" width="100%" height="600px" style="border: none; margin-top: 10px;">
+
+<p>Tu navegador no soporta la visualización de PDFs. Puedes
+<a href="grafo_global_nw_v6.pdf">descargar el archivo aquí</a>.</p>
+
+</iframe>
+
+**Alineamiento local:**
+
+<iframe src="grafo_local_sw_v6.pdf" width="100%" height="600px" style="border: none; margin-top: 10px;">
+
+<p>Tu navegador no soporta la visualización de PDFs. Puedes
+<a href="grafo_local_sw_v6.pdf">descargar el archivo aquí</a>.</p>
+
+</iframe>
 :::
 
 ## Parte 2 · EMBOSS: needle y water
@@ -140,9 +152,8 @@ less chr6_vs_chr10.needle
 ```
 
 Miren la salida con calma (salgan de `less` con `q`). El encabezado
-declara con qué se corrió el alineamiento — matriz de sustitución,
-penalizaciones de gap — y luego vienen cuatro líneas que van a leer
-miles de veces en su carrera: `Length`, `Identity`, `Similarity`,
+declara con qué se corrió el alineamiento (matriz de sustitución,
+penalizaciones de gap) seguido de `Length`, `Identity`, `Similarity`,
 `Gaps`, `Score`.
 
 ¿Qué matriz usó `needle` sin que ustedes se la pidieran? ¿Y qué
@@ -153,10 +164,9 @@ diferencia hay entre *identity* y *similarity*?
 
 El encabezado reporta `Matrix: EBLOSUM62`, `Gap_penalty: 10.0`,
 `Extend_penalty: 0.5`. Es la BLOSUM62 de la sesión de matrices de
-Wilbert — y aquí está la conexión: la matriz de sustitución no es parte
-del algoritmo, es un **parámetro** del algoritmo. `needle` la eligió por
-ustedes; publicar un alineamiento sin decir con qué matriz y qué gaps se
-corrió es publicar la mitad del resultado.
+Wilbert. La matriz de sustitución es un **parámetro** del algoritmo.
+`needle` la eligió por nosotros; para publicar un alineamiento es
+necesario decir con qué matriz y qué gaps se corrió.
 
 Los valores de referencia, aproximadamente:
 
@@ -167,21 +177,20 @@ Score: ~3400
 ```
 
 `Identity` cuenta las columnas con el mismo aminoácido. `Similarity`
-suma además las sustituciones con puntaje **positivo** en BLOSUM62 — los
-reemplazos "baratos" evolutivamente, como isoleucina por leucina. Por
-eso en proteínas la similitud siempre es mayor que la identidad, y por
-eso en DNA (donde la matriz solo premia lo idéntico) las dos coinciden.
+suma además las sustituciones con puntaje **positivo** en BLOSUM62 i.e.
+los reemplazos "baratos" evolutivamente, como isoleucina por leucina.
+Por eso en proteínas la similitud siempre es mayor que la identidad, y
+por eso en DNA las dos suelen coincidir.
 
-Un 60% de identidad tras la duplicación genómica de los gasterópodos:
-guarden ese número, es el primer peldaño de una escalera.
+Un 60% de identidad tras la duplicación genómica de los gasterópodos.
 :::
 
-### Ejercicio 2. La escalera de la evolución (y su primer script)
+### Ejercicio 2. La escalera de la evolución
 
 El archivo 01 trae cuatro proteínas: los dos LGR de la babosa y los dos
-parálogos humanos hLGR5 y hLGR4. Eso da seis pares posibles, y ya
-alinearon uno. Escribir cinco veces ese comando de cuatro renglones es
-exactamente el tipo de sufrimiento que un script existe para evitar.
+parálogos humanos hLGR5 y hLGR4. Eso da seis pares posibles, de los
+cuales ya alineamos uno. Para evitarnos el sufrimiento de escribir el
+mismo comando cinco veces, haremos un script de bash.
 
 En un script de bash, `$1` y `$2` son el primer y el segundo argumento
 con que se invoca. Creen `alinear_par.sh` con su editor
@@ -224,7 +233,7 @@ chmod +x alinear_par.sh
 Con sus resultados llenen esta tabla en su libreta o su README:
 
 | par | evento que los separó | identidad |
-|------------------------|------------------------|------------------------|
+|----|----|----|
 | Dla_chr6 vs Dla_chr10 | duplicación genómica completa (ohnólogos) |  |
 | hLGR5 vs hLGR4 | duplicación génica (parálogos humanos) |  |
 | humano vs babosa (los 4 pares) | especiación, \~600 millones de años |  |
@@ -233,10 +242,8 @@ Con sus resultados llenen esta tabla en su libreta o su README:
 ## Solución
 
 Sobre el script: `$#` es el número de argumentos recibidos; si no son
-exactamente dos, el script imprime cómo usarse y termina con `exit 1`
-(estado distinto de cero = error, la convención de Unix). Esa guarda es
-la diferencia entre un script y un accidente esperando usuario: correrlo
-sin argumentos debe dar el mensaje de uso, no un `needle` confundido.
+exactamente dos (ne: not equal), el script imprime cómo usarse y termina
+con `exit 1` (estado distinto de cero = error, la convención de Unix).
 Las llaves de `${1}_vs_${2}` le dicen a bash dónde termina el nombre de
 la variable; sin ellas, `$1_vs_` se leería como una variable inexistente
 llamada `1_vs_`.
@@ -249,31 +256,34 @@ Valores de referencia de la escalera (identidad de needle, aproximada):
 | hLGR5 vs hLGR4             | \~45%     | \~59%     |
 | humano vs babosa (4 pares) | \~24–29%  | \~37–42%  |
 
-El patrón importa más que los decimales: **mismo algoritmo, mismos
-parámetros, tres profundidades de tiempo evolutivo** — y la identidad
-baja monotónicamente con la antigüedad del evento que separó al par.
-Están midiendo tiempo con un alineamiento.
+Se ve un patrón con el **mismo algoritmo y mismos parámetros**. Podemos
+hacer suposiciones sobre la antigüedad del evento que separó a cada par.
 
-Un detalle que vale un examen: la tabla del material del curso reporta
-estos mismos pares como 71.1%, 50.0% y \~34% — más alto que lo que les
-dio needle. Nadie está mal. Esos números se calcularon sobre el
-alineamiento múltiple del pipeline (`clave_respuesta_mafft…`, está en
-sus datos), contando identidades solo sobre columnas alineadas sin gaps;
-needle divide entre la longitud total del alineamiento, gaps incluidos.
-**"Porcentaje de identidad" no es una cantidad única: es un cociente, y
-hay que preguntar siempre qué hay en el denominador.**
+Un detalle es que los números que yo tengo en mi reporte, alineados con
+mafft son 71.1%, 50.0% y \~34%, más alto que lo que nos dio needle. Esos
+números se calcularon sobre el alineamiento múltiple del pipeline,
+contando identidades solo sobre columnas alineadas sin gaps; needle
+divide entre la longitud total del alineamiento, gaps incluidos.
+**"Porcentaje de identidad" es un cociente, y hay que preguntar siempre
+qué hay en el denominador.**
 :::
 
 ### Ejercicio 3. Global contra local: el gen que ancla la sonda "lgr5"
 
-Este es el ejercicio central de la práctica, y es la pregunta del
-proyecto tal cual: la sonda "lgr5" del laboratorio no ancla en ninguno
-de los dos receptores completos, sino en `Dla027`, un gen del arreglo en
-tándem del cromosoma 13. ¿Ese gen es un receptor de verdad, o le falta
+Breve historia de este proyecto. Hace 3 años que comenzamos a trabajar
+con la babosa, no teníamos un genoma, sólo un transcriptoma ensamblado a
+partir de datos de RNA-seq. La sonda "lgr5" del laboratorio se hizo a
+partir de un transcrito que daba similitud con LGR5 en blast por una
+anotación automática. Una vez secuenciado y anotado el genoma, quisimos
+ver a cuál gene estaría reconociendo esa sonda. El gen `Dla027`, un gen
+del cromosoma 13. ¿Ese gen es un receptor LGR5 de verdad, o le falta
 algo?
 
-Alineen el receptor completo `Dla019` (933 aa) contra `Dla027` (468 aa)
-de las dos maneras — global y local — sin cambiar nada más:
+Al anotar el genoma, encontramos un receptor con los dominios canónicos
+de LGR5 (\>16 repetidos ricos en leucina y un dominio de 7 hélices
+transmembranales). Alineemos este receptor completo `Dla019` (933 aa)
+contra el de la sonda `Dla027` (468 aa) de las dos maneras (global y
+local):
 
 ``` bash
 locus=datos/02_contraste_locus_LGRcompleto_vs_LRRonly.faa
@@ -287,8 +297,8 @@ water  -asequence $locus:Dla019_chr10_23.68 \
        -gapopen 10.0 -gapextend 0.5 -outfile locus_local.water
 ```
 
-Comparen las dos salidas: `Length`, `Gaps`, y sobre todo **qué región de
-Dla019 aparece en cada una** (las coordenadas van en los márgenes del
+Comparemos las dos salidas: `Length`, `Gaps`, y sobre todo **qué región
+de Dla019 aparece en cada una** (las coordenadas van en los márgenes del
 alineamiento).
 
 ::: {.callout-note collapse="true"}
@@ -302,25 +312,24 @@ water:   Length ~503   Identity ~25%   Gaps ~21%   Score ~284
          bloque: Dla019[≈39–505] contra Dla027[≈25–459]
 ```
 
-El global está obligado a rendir cuentas por cada residuo de las dos
-proteínas: como Dla019 mide el doble que Dla027, más de la mitad de las
-columnas son gaps y la identidad se diluye a \~14%.
+El global está toma en cuenta cada residuo de ambas proteínas. Como
+Dla019 mide el doble que Dla027, más de la mitad de las columnas son
+gaps y la identidad se diluye a \~14%.
 
-El local hace la pregunta contraria — ¿cuál es la *mejor región* en
-común? — y la respuesta es elocuente: el alineamiento cubre
-aproximadamente los residuos 39–505 de Dla019 y casi todo Dla027… y ahí
-se detiene. Los residuos \~506–933 de Dla019 — su dominio 7TM, las siete
-hélices que transducen la señal — **no tienen con qué aparearse**:
-Dla027 termina donde termina el ectodominio LRR.
+El local pregunta ¿cuál es la *mejor región* en común? El alineamiento
+cubre aproximadamente los residuos 39–505 de Dla019 y casi todo Dla027.
+Sin embargo, los residuos \~506–933 de Dla019 el dominio 7TM, las siete
+hélices membranales que transducen la señal **no tienen con qué
+aparearse**: Dla027 termina donde termina el ectodominio LRR.
 
-Esa es la respuesta del módulo: el gen que ancla la sonda "lgr5" no es
-un receptor completo. Es un gen solo-LRR, sin 7TM — la sonda está
+El gen que en un principio pensàbamos como "lgr5" no es un receptor
+completo. Es un gen con LRR, pero sin 7TM, es decir,la sonda está
 reportando la expresión de otra cosa que un LGR5 canónico. Un
 alineamiento global y uno local, juntos, contestaron una pregunta de
-biología celular.
+biología celular. Interesantemente, esta sonda tiene una alta expresión
+en intestino. No sabemos si podría tener una función.
 
-**Bonus — el peldaño que faltaba:** alineen a los dos vecinos del
-tándem, `Dla027` contra `Dla028`:
+**Para terminar,** alineemos al gen vecino de `Dla027,` `Dla028`:
 
 ``` bash
 needle -asequence $locus:Dla027_chr13_39.98 \
@@ -329,18 +338,21 @@ needle -asequence $locus:Dla027_chr13_39.98 \
 grep -E "Identity|Gaps|Score" tandem.needle
 ```
 
-Referencia: \~74% de identidad, casi sin gaps — duplicados en tándem, el
-evento más reciente de toda la práctica, y el peldaño que le faltaba a
-la escalera del ejercicio 2: tándem (\~74%) \> ohnólogos (\~60%) \>
-parálogos humanos (\~45%) \> entre filos (\~25%).
+Referencia: \~74% de identidad, casi sin gaps. Este gen vive en una
+región con varios duplicados en tándem, un evento bastante reciente:
+duplicación en tándem (\~74%) \> ohnólogos (\~60%) \> parálogos humanos
+(\~45%) \> entre filos (\~25%).
 :::
 
-### Ejercicio 4. La sonda, el amplicón y la hebra
+### Ejercicio 4. rspo2, el intrigante ligando de los receptores LGR
 
-Ahora DNA. El set DLA-rspo2-B2 son 20 ventanas de 52 nt repartidas a lo
-largo del transcrito de *rspo2*; el archivo 04 trae los amplicones de
-PCR de los que el laboratorio transcribe sus sondas ISH. Pregunta de
-control de calidad real: ¿las sondas HCR caen dentro del amplicón?
+El set DLA-rspo2-B2 son 20 ventanas de 52 nt repartidas a lo largo del
+transcrito de *rspo2*; el archivo 04 trae los amplicones de PCR de los
+que el laboratorio transcribe sus sondas ISH. Pregunta de control de
+calidad real: ¿las sondas HCR caen dentro del amplicón? Dicho de otra
+manera, ¿hay sobrelape entre la sonda de in situ tradicional y HCR?
+Pueden visitar <https://www.molecularinstruments.com/> si quieren màs
+detalles de como funciona esta detección de mensajeros.
 
 `water` acepta un archivo multi-FASTA completo como `-bsequence`: va a
 alinear la sonda contra *cada* amplicón del archivo, uno tras otro, en

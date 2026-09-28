@@ -15,14 +15,14 @@ editor:
 # viejas, Python) y figuras/sesion07/ (R).
 ---
 
-# Regreso al bloque {.section-divider}
+# Bloque 3. Alineamientos y homología {.section-divider}
 
 ## Dónde estamos
 
 - Sesiones 2–6 con Wilbert: secuencias, código genético, **matrices de
   sustitución** (PAM/BLOSUM), FASTA y el **alineamiento como concepto**
-- Hoy abrimos la caja negra: cómo se *calcula* el alineamiento óptimo,
-  por qué funciona y cuánto cuesta
+- Hoy veremos cómo se *calcula* el alineamiento óptimo, cómo funciona
+  intuitivamente
 - Bloque C (sesiones 7–11): algoritmos → BLAST → homología → bases de
   datos → browsers
 
@@ -36,8 +36,7 @@ Ajustar el ritmo de la mañana según la respuesta.
 
 1.  La **programación dinámica** llena una matriz y hace *traceback*:
     Needleman–Wunsch a mano, en papel, sí se puede
-2.  Global y local son **el mismo algoritmo** con tres cambios
-    acoplados
+2.  Global y local son **el mismo algoritmo** con tres cambios acoplados
 
 ::: callout-box
 El algoritmo garantiza el óptimo **bajo los parámetros dados**. No
@@ -46,12 +45,12 @@ garantiza que ese alineamiento sea la historia evolutiva real.
 
 ## El plan del día
 
-| Horario     | Bloque                                                   |
-|-------------|----------------------------------------------------------|
-| 10:00–11:45 | Teoría: programación dinámica, NW, SW, gaps, matrices     |
-| 11:45–12:15 | Descanso                                                 |
-| 12:15–14:30 | Práctica: NW a mano · `needle` y `water` · Rosalind      |
-| 14:30–15:00 | Cierre, dudas, entregable                                |
+| Horario     | Bloque                                                |
+|-------------|-------------------------------------------------------|
+| 10:00–11:45 | Teoría: programación dinámica, NW, SW, gaps, matrices |
+| 11:45–12:15 | Descanso                                              |
+| 12:15–14:30 | Práctica: NW a mano · `needle` y `water` · Problemas  |
+| 14:30–15:00 | Cierre, dudas, entregable                             |
 
 # ¿Cuántos alineamientos hay? {.section-divider}
 
@@ -70,8 +69,8 @@ garantiza que ese alineamiento sea la historia evolutiva real.
 ![](../figuras/sesion06/explosion.svg){fig-align="center"}
 
 - Dos secuencias de 11 nt: 705,432 alineamientos
-- De 100: cerca de 10⁵⁹ · de 300: 10¹⁷⁹ (átomos del universo
-  observable: ~10⁸⁰)
+- De 100: cerca de 10⁵⁹ · de 300: 10¹⁷⁹ (átomos del universo observable:
+  \~10⁸⁰)
 - Enumerarlos y quedarse con el mejor no es una opción
 
 ::: notes
@@ -85,17 +84,19 @@ o si basta con la tabla de números y pasar rápido a la solución.
 
 - **Richard Bellman**, RAND Corporation: un problema grande se resuelve
   combinando soluciones **óptimas de subproblemas** más chicos
-- Cada subproblema se resuelve **una sola vez** y se guarda en una
-  tabla
-- El nombre: *"dynamic programming"* para esconder que hacía
-  matemáticas de un jefe con *"a pathological fear and hatred of the
-  word research"* (Bellman, *Eye of the Hurricane*, 1984)
+- Los algoritmos recursivos son elegantes, pero resuelven los problemas
+  más chicos múltiples veces.
+- El truco de la programación dinámica es que cada subproblema se
+  resuelve **una sola vez** y se guarda en una tabla
+- El nombre: *"dynamic programming"* para esconder que hacía matemáticas
+  de un jefe con *"a pathological fear and hatred of the word research"*
+  (Bellman, *Eye of the Hurricane*, 1984)
 - Descubrimiento múltiple: Vintsyuk 1968 (reconocimiento de voz),
   Needleman & Wunsch 1970, Sankoff 1972
 
 [Dreyfus 2002, *Operations Research* 50(1):48-51]{.ref}
 
-## El turista de Manhattan
+## Las matrices de Manhattan
 
 ![](../figuras/sesion07/manhattan-tourist.svg){fig-align="center"}
 
@@ -113,7 +114,7 @@ partir de sus dos vecinas:
 
 $$s[i,j] = \max \begin{cases} s[i-1,j] + \text{Abajo}[i-1,j] \\ s[i,j-1] + \text{Derecha}[i,j-1] \end{cases}$$
 
-:::: columns-equal
+::::: columns-equal
 ::: {}
 **Tres tablas, tres tamaños**
 
@@ -128,7 +129,7 @@ $$s[i,j] = \max \begin{cases} s[i-1,j] + \text{Abajo}[i-1,j] \\ s[i,j-1] + \text
 - Una comparación por celda
 - $O(nm)$ en vez de $\binom{n+m}{n}$ caminos
 :::
-::::
+:::::
 
 ::: callout-box
 Falta **una** cosa para que esto sea un alineamiento: la tercera tabla
@@ -145,26 +146,29 @@ de pesos, la **diagonal**.
 
 $$F(i,j) = \max \begin{cases} F(i-1,j-1) + s(a_i, b_j) \\ F(i-1,j) - d \\ F(i,j-1) - d \end{cases}$$
 
-Los tres términos son los tres vecinos de la cuadrícula: alinear
-$a_i$ con $b_j$, gap en una secuencia, gap en la otra.
+Los tres términos son los tres vecinos de la cuadrícula: alinear $a_i$
+con $b_j$, gap en una secuencia, gap en la otra.
 
-## La inicialización: donde más se equivocan
+## El inicio es crucial
 
 $$F(0,0) = 0, \qquad F(i,0) = -i \cdot d, \qquad F(0,j) = -j \cdot d$$
 
 - La primera fila y la primera columna **acumulan** penalización
-- Llegar ahí significa haber insertado sólo gaps, y eso cuesta
+- Que un alineamiento termine en la primer fila o columna significa
+  haber insertado sólo gaps.
+- Queremos reflejar eso en el score
 
 ::: notes
 Insistir: en la práctica de la tarde, este es el error número uno al
 llenar la matriz a mano.
 :::
 
-## La matriz, llena {.smaller}
+## Reconstruir el alineamiento óptimo es una modificación del problema de obtener el camino más "largo" {.smaller}
 
 ![](../figuras/svg/fig02_nw_matriz.svg){fig-align="center"}
 
-GCATGCG contra GATTACA · match +1, mismatch −1, gap −1
+Necesitamos una tabla más u otra ronda de comparaciones para tener las
+flechas grises de cuál vecino vino el máximo
 
 ::: notes
 Ámbar: la inicialización. Flechas grises: de qué vecino vino cada
@@ -173,7 +177,7 @@ origen. Este par tiene TRES alineamientos óptimos, por eso el camino se
 ramifica. Ojo con el par GCATGCU que circula en internet: mezcla T y U.
 :::
 
-## El traceback
+## El traceback o la reconstrucción del algoritmo
 
 - Arranca en $F(m,n)$, la esquina inferior derecha; termina en $F(0,0)$
 - Se recorre hacia atrás siguiendo de qué vecino vino cada máximo
@@ -181,18 +185,18 @@ ramifica. Ojo con el par GCATGCU que circula en internet: mezcla T y U.
   significa "global"
 
 ::: callout-box
-Empates entre vecinos = más de un alineamiento óptimo. No es error del
-algoritmo ni de quien lo ejecuta. En la práctica lo van a provocar a
-propósito.
+La existencia de empates entre vecinos es por la existencia de más de un
+alineamiento óptimo. En la práctica, podemos/queremos modificar los
+scores para que no ocurra.
 :::
 
-## La matriz de sustitución cambia el óptimo {.smaller}
+## Los pesos de Manhattan vienen de la matriz de sustitución y, por lo tanto, cambian el óptimo {.smaller}
 
 ![](../figuras/svg/fig02b_nw_matriz_transiciones.svg){fig-align="center"}
 
 - Mismo par, gap −1, pero transiciones baratas y transversiones caras
-- Sólo cambió la tabla `Diagonal`: el score baja a −0.262 y los
-  óptimos pasan de tres a **dos**
+- Sólo cambió la tabla `Diagonal`: el score baja a −0.262 y los óptimos
+  pasan de tres a **dos**
 
 # Smith–Waterman: alineamiento local {.section-divider}
 
@@ -265,9 +269,9 @@ algoritmo.
 - Cada celda lee un vecino distinto y las tres se consultan entre sí
 
 ::: notes
-Altschul & Erickson 1986: el traceback de Gotoh, tal como se publicó,
-no siempre recupera un óptimo. El score sí era correcto; la
-reconstrucción no. Cuatro años sin que nadie lo notara.
+Altschul & Erickson 1986: el traceback de Gotoh, tal como se publicó, no
+siempre recupera un óptimo. El score sí era correcto; la reconstrucción
+no. Cuatro años sin que nadie lo notara.
 :::
 
 ## Cada penalización es una hipótesis sobre los indels
@@ -276,8 +280,8 @@ reconstrucción no. Cuatro años sin que nadie lo notara.
   grandes
 - Heng Li: el afín simple *"over-penalizes a long INDEL that was often
   evolutionarily created in one event"*
-- Sin esa corrección, el aligner parte un indel largo en varios cortos
-  y reporta mal las variantes estructurales
+- Sin esa corrección, el aligner parte un indel largo en varios cortos y
+  reporta mal las variantes estructurales
 
 # La matriz de sustitución es un parámetro {.section-divider}
 
@@ -326,9 +330,8 @@ reproducibilidad de la sesión 1.
 ## La aritmética que motiva la sesión 8
 
 ::: callout-box
-Query de 300 residuos contra 200 millones de secuencias de 300:
-300 × 300 × 200,000,000 ≈ **1.8 × 10¹³ operaciones** por búsqueda.
-Horas.
+Query de 300 residuos contra 200 millones de secuencias de 300: 300 ×
+300 × 200,000,000 ≈ **1.8 × 10¹³ operaciones** por búsqueda. Horas.
 :::
 
 Nadie va a esperar horas por un BLAST. ¿Qué se sacrifica para que tarde
@@ -368,7 +371,7 @@ benchmark.
     gaps arbitrarios es cúbica
 2.  **"SW es NW con max(0, …)"**: son tres cambios acoplados
 3.  **"BLAST aproxima a SW"**: comparte el objetivo, no el método
-4.  **"BLOSUM62 es la matriz correcta"**: ~15% mal calculada, y la
+4.  **"BLOSUM62 es la matriz correcta"**: \~15% mal calculada, y la
     corregida funciona peor
 5.  **"La DP se inventó en biología"**: Bellman, años cincuenta;
     Vintsyuk en voz, 1968
@@ -381,8 +384,8 @@ benchmark.
 
 - La práctica vive en el sitio: [**Práctica: needle y
   water**](../contenido/03-alineamientos/clase07-algoritmos.html)
-- **Parte 1**: Needleman–Wunsch a mano, en parejas, con un par corto
-  del proyecto R-spondina/LGR. Sin computadora
+- **Parte 1**: Needleman–Wunsch a mano, en parejas, con un par corto del
+  proyecto R-spondina/LGR. Sin computadora
 - **Parte 2**: EMBOSS `needle` y `water` sobre los parálogos LGR, la
   sonda "lgr5", los amplicones ISH y el anticuerpo sin blanco
 - **Parte 3**: Rosalind EDIT → EDTA → GLOB → LOCA → GAFF
@@ -406,8 +409,8 @@ amplicones ISH o el núcleo de 22 aa del epítopo) y el scoring simple.
 
 - Compeau & Pevzner, **cap. 5**: *How Do We Compare Biological
   Sequences?* ·
-  [bioinformaticsalgorithms.org](https://bioinformaticsalgorithms.org)
-  · acceso vía Cogniterra
+  [bioinformaticsalgorithms.org](https://bioinformaticsalgorithms.org) ·
+  acceso vía Cogniterra
 - Needleman & Wunsch 1970 · Smith & Waterman 1981 · Gotoh 1982: tres
   papers cortos, los tres en *J Mol Biol*
 
