@@ -14,6 +14,16 @@ Vamos a intentar tres definiciones de "parecido", verlas fallar, y de ese fracas
 La secuencia expositiva de este capítulo (de la distancia de Hamming a la subsecuencia común más larga, el problema del turista de Manhattan y el grafo de alineamiento) sigue el enfoque de Phillip Compeau y Pavel Pevzner en *Bioinformatics Algorithms: An Active Learning Approach*, adaptado y reescrito, sin reproducir sus figuras.
 :::
 
+::: {.callout-note appearance="simple"}
+📽️ **Diapositivas de esta sesión 6:**
+
+<iframe src="../../presentaciones/Sesión_6_250926.pdf" width="100%" height="600px" style="border: none; margin-top: 10px;">
+    <p>Tu navegador no soporta la visualización de PDFs. 
+    Puedes <a href="../../presentaciones/Sesión_6_250926.pdf">descargar el archivo aquí</a>.</p>
+</iframe>
+:::
+
+
 ## Desarrollo
 
 ### Homología no es similitud
