@@ -45,12 +45,12 @@ garantiza que ese alineamiento sea la historia evolutiva real.
 
 ## El plan del día
 
-| Horario     | Bloque                                                |
-|-------------|-------------------------------------------------------|
+| Horario | Bloque |
+|----|----|
 | 10:00–11:45 | Teoría: programación dinámica, NW, SW, gaps, matrices |
-| 11:45–12:15 | Descanso                                              |
-| 12:15–14:30 | Práctica: NW a mano · `needle` y `water` · Problemas  |
-| 14:30–15:00 | Cierre, dudas, entregable                             |
+| 11:45–12:15 | Descanso |
+| 12:15–14:30 | Práctica: NW a mano · implementación en python . `needle` y `water` |
+| 14:30–15:00 | Cierre, dudas, entregable |
 
 # ¿Cuántos alineamientos hay? {.section-divider}
 
@@ -65,8 +65,6 @@ garantiza que ese alineamiento sea la historia evolutiva real.
 - Cada camino distinto es un alineamiento distinto
 
 ## El número obsceno {.smaller}
-
-![](../figuras/sesion06/explosion.svg){fig-align="center"}
 
 - Dos secuencias de 11 nt: 705,432 alineamientos
 - De 100: cerca de 10⁵⁹ · de 300: 10¹⁷⁹ (átomos del universo observable:
@@ -214,7 +212,7 @@ $$H(i,j) = \max \begin{cases} 0 \\ H(i-1,j-1) + s(a_i, b_j) \\ H(i-1,j) - d \\ H
 ## Los tres cambios acoplados: el "ajá" {.smaller}
 
 |                          | Needleman–Wunsch      | Smith–Waterman             |
-|--------------------------|-----------------------|----------------------------|
+|------------------------|----------------------|--------------------------|
 | **Recurrencia**          | tres términos         | cuatro, con el 0           |
 | **Inicialización**       | $F(i,0) = -i \cdot d$ | $H(i,0) = 0$               |
 | **Inicio del traceback** | esquina $F(m,n)$      | máximo global de la matriz |
