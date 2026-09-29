@@ -46,7 +46,7 @@ garantiza que ese alineamiento sea la historia evolutiva real.
 ## El plan del día
 
 | Horario | Bloque |
-|----|----|
+|------------------------------------|------------------------------------|
 | 10:00–11:45 | Teoría: programación dinámica, NW, SW, gaps, matrices |
 | 11:45–12:15 | Descanso |
 | 12:15–14:30 | Práctica: NW a mano · implementación en python . `needle` y `water` |
@@ -382,11 +382,16 @@ benchmark.
 
 - La práctica vive en el sitio: [**Práctica: needle y
   water**](../contenido/03-alineamientos/clase07-algoritmos.html)
-- **Parte 1**: Needleman–Wunsch a mano, en parejas, con un par corto del
-  proyecto R-spondina/LGR. Sin computadora
-- **Parte 2**: EMBOSS `needle` y `water` sobre los parálogos LGR, la
+- **Parte 1**: Needleman–Wunsch y Smith-Waterman a mano, primero en el
+  pizarrón y luego sólo en papel.
+- **Parte 2**: Implementación en python de problmas del libro
+  Bioinformatics Algorithms en Cogniterra [Backtracking in the alignment
+  Graph](https://cogniterra.org/lesson/61855/step/1?unit=53519) y [From
+  Global to Local
+  Alignment](https://cogniterra.org/lesson/61860/step/3?unit=53524) En
+  Rosalind son os problemas ba5c, ba5e y ba5f.
+- **Parte 3**: EMBOSS `needle` y `water` sobre los parálogos LGR, la
   sonda "lgr5", los amplicones ISH y el anticuerpo sin blanco
-- **Parte 3**: Rosalind EDIT → EDTA → GLOB → LOCA → GAFF
 - Cómputo del día: **variables** y el primer script de bash con
   argumentos (`$1`, `$2`)
 

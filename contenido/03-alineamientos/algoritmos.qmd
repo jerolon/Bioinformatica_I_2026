@@ -26,7 +26,7 @@ cambiar el óptimo.
 Los dos objetivos de la clase:
 
 - Intuición de cómo la programación dinámica llena una matriz y hace el
-  *traceback* en Needleman–Wunsch.
+  *traceback* en Needleman–Wunsch y Smith-Waterman.
 - Entender la diferencia entre global y local: son el mismo algoritmo
   con tres cambios.
 
