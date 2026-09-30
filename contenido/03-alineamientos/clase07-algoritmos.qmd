@@ -40,15 +40,16 @@ script con argumentos; del lado de Python, las listas de listas y la
 
 ## El algoritmo en Python
 
-Ya llenamos matrices con flechas en el pizarrón; luego podemos dejar que
-EMBOSS las llene por nosotros. Entre una cosa y la otra, y para ver un
-poco de python, podemos hacer nuestra propia implementación: la
+Ya llenamos matrices con flechas en el pizarrón y en el papel; luego
+podemos dejar que EMBOSS las llene por nosotros. Entre una cosa y la
+otra, y para ver un poco de python, podemos hacer nuestra propia
+implementación comenzando por un problema un poco más simple la
 **subsecuencia común más larga** (*longest common subsequence*, LCS). Es
 Needleman–Wunsch con parámetros extra simples, cada *match* premia +1, y
 *mismatches* y *gaps* son 0. Al quitar los *penalties* es más fácil de
 ver el esqueleto que comparten todos los algoritmos de la mañana: matriz
 de puntajes, y una matriz de flechas para hacer backtracking. (Es el
-problema [BA5C](https://rosalind.info/problems/ba5c/)de Rosalind y está
+problema [BA5C](https://rosalind.info/problems/ba5c/) de Rosalind y está
 en el [capítulo
 5.8](https://cogniterra.org/lesson/61855/step/6?unit=53519) del libro de
 Compeau y Pevzner).
@@ -169,7 +170,7 @@ Con `v = "GACT"` (renglones) y `w = "ATG"` (columnas), puntaje y flecha
 de cada celda:
 
 |   |   | A | T | G |
-|---------------|---------------|---------------|---------------|---------------|
+|----|----|----|----|----|
 |  | [0]{style="background-color: lightgreen;"} | 0 | 0 | 0 |
 | **G** | 0 | [↓ 0]{style="background-color: lightgreen;"} | ↓ 0 | ↘ 1 |
 | **A** | 0 | ↘ 1 | [→ 1]{style="background-color: lightgreen;"} | ↓ 1 |
@@ -862,7 +863,7 @@ anticuerpo comercial "anti-LGR5" hecho contra la proteína humana.
 Los archivos, ya en el servidor:
 
 | archivo | contenido |
-|------------------------------------|------------------------------------|
+|----|----|
 | `01_lgr_paralogos_4seq.faa` | 4 proteínas LGR: hLGR5 y hLGR4 (humanas), Dla_chr6 y Dla_chr10 (babosa) |
 | `02_contraste_locus_LGRcompleto_vs_LRRonly.faa` | Dla019 (receptor completo) y Dla027/Dla028 (solo-LRR, tándem de chr13) |
 | `03_sondas_HCR_rspo2.fasta` | las 20 ventanas de 52 nt del set de sondas HCR DLA-rspo2-B2 |
@@ -1009,7 +1010,7 @@ chmod +x alinear_par.sh
 Con sus resultados llenen esta tabla en su libreta o su README:
 
 | par | evento que los separó | identidad |
-|------------------------|------------------------|------------------------|
+|----|----|----|
 | Dla_chr6 vs Dla_chr10 | duplicación genómica completa (ohnólogos) |  |
 | hLGR5 vs hLGR4 | duplicación génica (parálogos humanos) |  |
 | humano vs babosa (los 4 pares) | especiación, \~600 millones de años |  |

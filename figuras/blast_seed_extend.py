@@ -6,6 +6,13 @@ se recorre un par de secuencias de juguete acumulando BLOSUM62 desde una semilla
 y la extensión para donde el acumulado cae X por debajo de su máximo (X-drop).
 El HSP es el segmento entre los máximos de cada dirección.
 
+El panel de arriba dibuja el acumulado COMO LO CALCULA EL ALGORITMO: dos curvas
+que nacen en 0 en los bordes de la semilla, una recorrida hacia la derecha y la
+otra hacia la izquierda, cada una con su propio máximo (que fija un borde del
+HSP) y su propio umbral máximo − X. Nada de cumsum global de izquierda a
+derecha: eso escondía el score del HSP en una diferencia de alturas ilegible.
+La aritmética queda a la vista: semilla + ganancia izq. + ganancia der. = HSP.
+
 Par elegido y por qué: un par de ~30 aa con núcleo conservado (semilla CWHYF)
 y flancos divergentes. El HSP resultante (posiciones 8–21) CONTIENE mismatches
 —K/R, R/K, I/V, D/E, todos con score positivo en BLOSUM62— para que se vea que
@@ -17,7 +24,7 @@ Regenerar:  python figuras/blast_seed_extend.py
 """
 import numpy as np
 import matplotlib.pyplot as plt
-from matplotlib.patches import FancyBboxPatch
+from matplotlib.patches import FancyArrowPatch, FancyBboxPatch
 
 import estilo
 
@@ -81,41 +88,74 @@ def construir():
     estilo.configurar()
     B = _blosum()
     sc = np.array([B[(a, b)] for a, b in zip(Q, S)])
-    cum = np.cumsum(sc)
     L = len(sc)
     bl, br, pl, pr, gl, gr = _extender(sc, SEED[0], SEED[1], X)
-    # HSP = [bl, br]; su score en el eje acumulado
     seed_sc = int(sc[SEED[0]:SEED[1]].sum())
     hsp_sc = int(sc[bl:br + 1].sum())
-    pico = cum[br]              # nivel del máximo acumulado (borde derecho)
+    # la aritmética que la figura enseña: semilla + ganancia izq + ganancia der
+    assert hsp_sc == seed_sc + gl + gr
+
+    # acumulado de cada extensión, desde el borde de la semilla hacia afuera
+    pos_der = np.arange(SEED[1], pr + 1)
+    cum_der = np.cumsum(sc[SEED[1]:pr + 1])
+    pos_izq = np.arange(SEED[0] - 1, pl - 1, -1)   # 11, 10, …, pl
+    cum_izq = np.cumsum(sc[pl:SEED[0]][::-1])
 
     fig, (axc, axl) = plt.subplots(
         2, 1, figsize=(9.6, 5.4), sharex=True,
         gridspec_kw={"height_ratios": [2.1, 1.3], "hspace": 0.08})
 
-    # --- Panel de score acumulado ---
+    # --- Panel de score: una curva por lado, ancladas en 0 en la semilla ---
     axc.axvspan(bl - 0.5, br + 0.5, color=estilo.VERDE_CLARO, zorder=0)
-    axc.plot(range(L), cum, color=estilo.TEAL, lw=2.2, zorder=3)
-    axc.scatter(range(L), cum, s=12, color=estilo.TEAL, zorder=4)
-    # máximo (borde derecho del HSP)
-    axc.scatter([br], [cum[br]], s=60, color=estilo.VERDE, zorder=5, ec="white")
-    axc.annotate("máximo → borde del HSP", xy=(br, cum[br]),
-                 xytext=(br - 8.5, cum[br] + 6), fontsize=9, color=estilo.VERDE,
-                 arrowprops=dict(arrowstyle="-|>", color=estilo.VERDE, lw=1.2))
-    # umbral de X-drop y punto donde para la extensión (derecha)
-    axc.axhline(pico - X, ls=":", lw=1.2, color=estilo.AMBAR, zorder=2)
-    axc.text(L - 0.5, pico - X + 1.5, "máximo − X", ha="right", va="bottom",
+    axc.axvspan(SEED[0] - 0.5, SEED[1] - 0.5, color=estilo.FONDO_CELDA, zorder=0.5)
+    axc.axhline(0, lw=0.8, color=estilo.GRIS, alpha=0.6, zorder=1)
+    axc.plot([SEED[1] - 0.5] + list(pos_der), [0] + list(cum_der),
+             color=estilo.TEAL, lw=2.2, zorder=3)
+    axc.plot([SEED[0] - 0.5] + list(pos_izq), [0] + list(cum_izq),
+             color=estilo.TEAL, lw=2.2, zorder=3)
+    axc.scatter(pos_der, cum_der, s=12, color=estilo.TEAL, zorder=4)
+    axc.scatter(pos_izq, cum_izq, s=12, color=estilo.TEAL, zorder=4)
+    axc.text((SEED[0] + SEED[1]) / 2 - 0.5, 6.5, f"semilla\nvale {seed_sc}",
+             ha="center", va="center", fontsize=9, color=estilo.TEAL,
+             fontweight="bold")
+    axc.text((pl + SEED[0]) / 2, -4.2, "← se acumula hacia la izquierda",
+             ha="center", va="center", fontsize=8, color=estilo.TEAL,
+             style="italic")
+    axc.text((SEED[1] + pr) / 2, -4.2, "se acumula hacia la derecha →",
+             ha="center", va="center", fontsize=8, color=estilo.TEAL,
+             style="italic")
+    # el máximo de cada lado fija un borde del HSP
+    axc.scatter([bl, br], [gl, gr], s=60, color=estilo.VERDE, zorder=5,
+                ec="white")
+    axc.text(15, 25.6, "el máximo de cada lado fija un borde del HSP",
+             ha="center", va="center", fontsize=9, color=estilo.VERDE)
+    for p0, p1 in (((10.2, 24.4), (bl + 0.25, gl + 1.0)),
+                   ((19.8, 24.4), (br - 0.15, gr + 0.9))):
+        axc.add_patch(FancyArrowPatch(p0, p1, arrowstyle="-|>",
+                                      mutation_scale=10, color=estilo.VERDE,
+                                      lw=1.2, zorder=5))
+    # X-drop: cada lado tiene su umbral máximo − X y su punto de paro
+    axc.hlines(gr - X, SEED[1] - 0.5, pr + 2.4, colors=estilo.AMBAR,
+               linestyles=":", lw=1.2, zorder=2)
+    axc.hlines(gl - X, pl - 2.4, SEED[0] - 0.5, colors=estilo.AMBAR,
+               linestyles=":", lw=1.2, zorder=2)
+    axc.text(pr + 2.4, gr - X - 0.9, "máximo − X", ha="right", va="top",
              fontsize=8.5, color=estilo.AMBAR)
-    axc.scatter([pr], [cum[pr]], s=45, color=estilo.AMBAR, zorder=5, ec="white")
+    axc.text(pl - 2.4, gl - X - 0.9, "máximo − X", ha="left", va="top",
+             fontsize=8.5, color=estilo.AMBAR)
+    axc.scatter([pl, pr], [cum_izq[-1], cum_der[-1]], s=45, color=estilo.AMBAR,
+                zorder=5, ec="white")
     axc.annotate("cae X bajo el máximo:\nla extensión para (X-drop)",
-                 xy=(pr, cum[pr]), xytext=(pr - 1.5, cum[pr] - 30), fontsize=8.6,
-                 color=estilo.AMBAR, ha="center",
+                 xy=(pr, cum_der[-1] + 0.7), xytext=(26.5, 18.5), fontsize=8.6,
+                 color=estilo.AMBAR, ha="center", va="top",
                  arrowprops=dict(arrowstyle="-|>", color=estilo.AMBAR, lw=1.2))
-    axc.set_ylabel("score acumulado\n(BLOSUM62)", fontsize=10)
-    axc.set_ylim(cum.min() - 12, cum.max() + 16)
+    axc.set_ylabel("score de la extensión\n(acumulado desde la semilla)",
+                   fontsize=10)
+    axc.set_ylim(-6, 28.5)
+    axc.set_yticks([0, 5, 10, 15, 20])
     for lado in ("top", "right"):
         axc.spines[lado].set_visible(False)
-    axc.tick_params(labelbottom=False)
+    axc.tick_params(labelbottom=False, bottom=False)
 
     # --- Panel de secuencias ---
     axl.add_patch(plt.Rectangle((bl - 0.5, -0.6), (br - bl + 1), 2.2,
@@ -135,7 +175,8 @@ def construir():
     # corchete del HSP
     axl.annotate("", xy=(bl - 0.5, -0.75), xytext=(br + 0.5, -0.75),
                  arrowprops=dict(arrowstyle="-", color=estilo.VERDE, lw=1.6))
-    axl.text((bl + br) / 2, -1.25, f"HSP  (score {hsp_sc}; la semilla sola vale {seed_sc})",
+    axl.text((bl + br) / 2, -1.25,
+             f"HSP: score {seed_sc} (semilla) + {gl} (izq.) + {gr} (der.) = {hsp_sc}",
              ha="center", va="top", fontsize=9.5, color=estilo.VERDE, fontweight="bold")
     axl.set_ylim(-1.7, 2.2)
     axl.set_xlim(-0.8, L - 0.2)
@@ -149,4 +190,5 @@ if __name__ == "__main__":
     bl, br, pl, pr, gl, gr = _extender(np.array(sc), SEED[0], SEED[1], X)
     print(f"  HSP = posiciones {bl}..{br}  (semilla {SEED[0]}..{SEED[1]-1})")
     print(f"  X-drop para en: izq {pl}, der {pr}  (X={X})")
+    print(f"  ganancias: izq +{gl}, der +{gr}")
     estilo.guardar(construir(), "blast_seed_extend")

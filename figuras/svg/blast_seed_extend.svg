@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8" standalone="no"?>
 <!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"
   "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
-<svg xmlns:xlink="http://www.w3.org/1999/xlink" width="601.983398pt" height="313.776pt" viewBox="0 0 601.983398 313.776" xmlns="http://www.w3.org/2000/svg" version="1.1">
+<svg xmlns:xlink="http://www.w3.org/1999/xlink" width="594.726875pt" height="313.776pt" viewBox="0 0 594.726875 313.776" xmlns="http://www.w3.org/2000/svg" version="1.1">
  <metadata>
   <rdf:RDF xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:cc="http://creativecommons.org/ns#" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
    <cc:Work>
@@ -21,216 +21,182 @@
  <g id="figure_1">
   <g id="patch_1">
    <path d="M 0 313.776 
-L 601.983398 313.776 
-L 601.983398 0 
+L 594.726875 313.776 
+L 594.726875 0 
 L 0 0 
 z
 " style="fill: #ffffff"/>
   </g>
   <g id="axes_1">
    <g id="patch_2">
-    <path d="M 59.103398 184.996833 
-L 594.783398 184.996833 
-L 594.783398 7.2 
-L 59.103398 7.2 
+    <path d="M 51.846875 184.996833 
+L 587.526875 184.996833 
+L 587.526875 7.2 
+L 51.846875 7.2 
 z
 " style="fill: #ffffff"/>
    </g>
    <g id="patch_3">
-    <path d="M 204.402222 184.996833 
-L 449.484575 184.996833 
-L 449.484575 7.2 
-L 204.402222 7.2 
+    <path d="M 197.145699 184.996833 
+L 442.228051 184.996833 
+L 442.228051 7.2 
+L 197.145699 7.2 
 z
-" clip-path="url(#pffe6e8e548)" style="fill: #d7ebd8; stroke: #d7ebd8; stroke-linejoin: miter"/>
+" clip-path="url(#paf2ed3d622)" style="fill: #d7ebd8; stroke: #d7ebd8; stroke-linejoin: miter"/>
    </g>
-   <g id="matplotlib.axis_1">
-    <g id="xtick_1">
-     <g id="line2d_1">
-      <defs>
-       <path id="mafd9f6d0bf" d="M 0 0 
-L 0 3.5 
-" style="stroke: #000000; stroke-width: 0.8"/>
-      </defs>
-      <g>
-       <use xlink:href="#mafd9f6d0bf" x="73.108104" y="184.996833" style="stroke: #000000; stroke-width: 0.8"/>
-      </g>
-     </g>
-    </g>
-    <g id="xtick_2">
-     <g id="line2d_2">
-      <g>
-       <use xlink:href="#mafd9f6d0bf" x="160.637516" y="184.996833" style="stroke: #000000; stroke-width: 0.8"/>
-      </g>
-     </g>
-    </g>
-    <g id="xtick_3">
-     <g id="line2d_3">
-      <g>
-       <use xlink:href="#mafd9f6d0bf" x="248.166928" y="184.996833" style="stroke: #000000; stroke-width: 0.8"/>
-      </g>
-     </g>
-    </g>
-    <g id="xtick_4">
-     <g id="line2d_4">
-      <g>
-       <use xlink:href="#mafd9f6d0bf" x="335.69634" y="184.996833" style="stroke: #000000; stroke-width: 0.8"/>
-      </g>
-     </g>
-    </g>
-    <g id="xtick_5">
-     <g id="line2d_5">
-      <g>
-       <use xlink:href="#mafd9f6d0bf" x="423.225751" y="184.996833" style="stroke: #000000; stroke-width: 0.8"/>
-      </g>
-     </g>
-    </g>
-    <g id="xtick_6">
-     <g id="line2d_6">
-      <g>
-       <use xlink:href="#mafd9f6d0bf" x="510.755163" y="184.996833" style="stroke: #000000; stroke-width: 0.8"/>
-      </g>
-     </g>
-    </g>
+   <g id="patch_4">
+    <path d="M 267.169228 184.996833 
+L 354.69864 184.996833 
+L 354.69864 7.2 
+L 267.169228 7.2 
+z
+" clip-path="url(#paf2ed3d622)" style="fill: #e0f7fa; stroke: #e0f7fa; stroke-linejoin: miter"/>
    </g>
+   <g id="line2d_1">
+    <path d="M 51.846875 154.075644 
+L 587.526875 154.075644 
+" clip-path="url(#paf2ed3d622)" style="fill: none; stroke: #666666; stroke-opacity: 0.6; stroke-width: 0.8; stroke-linecap: square"/>
+   </g>
+   <g id="matplotlib.axis_1"/>
    <g id="matplotlib.axis_2">
     <g id="ytick_1">
-     <g id="line2d_7">
+     <g id="line2d_2">
       <defs>
        <path id="m290dfac17a" d="M 0 0 
 L -3.5 0 
 " style="stroke: #000000; stroke-width: 0.8"/>
       </defs>
       <g>
-       <use xlink:href="#m290dfac17a" x="59.103398" y="164.079558" style="stroke: #000000; stroke-width: 0.8"/>
+       <use xlink:href="#m290dfac17a" x="51.846875" y="154.075644" style="stroke: #000000; stroke-width: 0.8"/>
       </g>
      </g>
      <g id="text_1">
-      <text style="font-size: 11px; font-family: 'Source Sans Pro', 'Segoe UI', 'Roboto', 'Helvetica Neue', 'Arial', sans-serif; text-anchor: end" x="52.103398" y="168.083709" transform="rotate(-0 52.103398 168.083709)">−20</text>
+      <text style="font-size: 11px; font-family: 'Source Sans Pro', 'Segoe UI', 'Roboto', 'Helvetica Neue', 'Arial', sans-serif; text-anchor: end" x="44.846875" y="158.079795" transform="rotate(-0 44.846875 158.079795)">0</text>
      </g>
     </g>
     <g id="ytick_2">
-     <g id="line2d_8">
+     <g id="line2d_3">
       <g>
-       <use xlink:href="#m290dfac17a" x="59.103398" y="129.217434" style="stroke: #000000; stroke-width: 0.8"/>
+       <use xlink:href="#m290dfac17a" x="51.846875" y="128.307987" style="stroke: #000000; stroke-width: 0.8"/>
       </g>
      </g>
      <g id="text_2">
-      <text style="font-size: 11px; font-family: 'Source Sans Pro', 'Segoe UI', 'Roboto', 'Helvetica Neue', 'Arial', sans-serif; text-anchor: end" x="52.103398" y="133.221585" transform="rotate(-0 52.103398 133.221585)">0</text>
+      <text style="font-size: 11px; font-family: 'Source Sans Pro', 'Segoe UI', 'Roboto', 'Helvetica Neue', 'Arial', sans-serif; text-anchor: end" x="44.846875" y="132.312138" transform="rotate(-0 44.846875 132.312138)">5</text>
      </g>
     </g>
     <g id="ytick_3">
-     <g id="line2d_9">
+     <g id="line2d_4">
       <g>
-       <use xlink:href="#m290dfac17a" x="59.103398" y="94.35531" style="stroke: #000000; stroke-width: 0.8"/>
+       <use xlink:href="#m290dfac17a" x="51.846875" y="102.540331" style="stroke: #000000; stroke-width: 0.8"/>
       </g>
      </g>
      <g id="text_3">
-      <text style="font-size: 11px; font-family: 'Source Sans Pro', 'Segoe UI', 'Roboto', 'Helvetica Neue', 'Arial', sans-serif; text-anchor: end" x="52.103398" y="98.35946" transform="rotate(-0 52.103398 98.35946)">20</text>
+      <text style="font-size: 11px; font-family: 'Source Sans Pro', 'Segoe UI', 'Roboto', 'Helvetica Neue', 'Arial', sans-serif; text-anchor: end" x="44.846875" y="106.544481" transform="rotate(-0 44.846875 106.544481)">10</text>
      </g>
     </g>
     <g id="ytick_4">
-     <g id="line2d_10">
+     <g id="line2d_5">
       <g>
-       <use xlink:href="#m290dfac17a" x="59.103398" y="59.493186" style="stroke: #000000; stroke-width: 0.8"/>
+       <use xlink:href="#m290dfac17a" x="51.846875" y="76.772674" style="stroke: #000000; stroke-width: 0.8"/>
       </g>
      </g>
      <g id="text_4">
-      <text style="font-size: 11px; font-family: 'Source Sans Pro', 'Segoe UI', 'Roboto', 'Helvetica Neue', 'Arial', sans-serif; text-anchor: end" x="52.103398" y="63.497336" transform="rotate(-0 52.103398 63.497336)">40</text>
+      <text style="font-size: 11px; font-family: 'Source Sans Pro', 'Segoe UI', 'Roboto', 'Helvetica Neue', 'Arial', sans-serif; text-anchor: end" x="44.846875" y="80.776824" transform="rotate(-0 44.846875 80.776824)">15</text>
      </g>
     </g>
     <g id="ytick_5">
-     <g id="line2d_11">
+     <g id="line2d_6">
       <g>
-       <use xlink:href="#m290dfac17a" x="59.103398" y="24.631062" style="stroke: #000000; stroke-width: 0.8"/>
+       <use xlink:href="#m290dfac17a" x="51.846875" y="51.005017" style="stroke: #000000; stroke-width: 0.8"/>
       </g>
      </g>
      <g id="text_5">
-      <text style="font-size: 11px; font-family: 'Source Sans Pro', 'Segoe UI', 'Roboto', 'Helvetica Neue', 'Arial', sans-serif; text-anchor: end" x="52.103398" y="28.635212" transform="rotate(-0 52.103398 28.635212)">60</text>
+      <text style="font-size: 11px; font-family: 'Source Sans Pro', 'Segoe UI', 'Roboto', 'Helvetica Neue', 'Arial', sans-serif; text-anchor: end" x="44.846875" y="55.009167" transform="rotate(-0 44.846875 55.009167)">20</text>
      </g>
     </g>
     <g id="text_6">
-     <text style="font-size: 10px; font-family: 'Source Sans Pro', 'Segoe UI', 'Roboto', 'Helvetica Neue', 'Arial', sans-serif" transform="translate(15.259863 133.630448) rotate(-90)">score acumulado</text>
-     <text style="font-size: 10px; font-family: 'Source Sans Pro', 'Segoe UI', 'Roboto', 'Helvetica Neue', 'Arial', sans-serif" transform="translate(25.958105 123.906229) rotate(-90)">(BLOSUM62)</text>
+     <text style="font-size: 10px; font-family: 'Source Sans Pro', 'Segoe UI', 'Roboto', 'Helvetica Neue', 'Arial', sans-serif" transform="translate(15.405176 142.376541) rotate(-90)">score de la extensión</text>
+     <text style="font-size: 10px; font-family: 'Source Sans Pro', 'Segoe UI', 'Roboto', 'Helvetica Neue', 'Arial', sans-serif" transform="translate(26.22627 159.88826) rotate(-90)">(acumulado desde la semilla)</text>
     </g>
    </g>
-   <g id="line2d_12">
-    <path d="M 59.103398 52.520761 
-L 594.783398 52.520761 
-" clip-path="url(#pffe6e8e548)" style="fill: none; stroke-dasharray: 1.2,1.98; stroke-dashoffset: 0; stroke: #d98c00; stroke-width: 1.2"/>
+   <g id="LineCollection_1">
+    <path d="M 354.69864 102.540331 
+L 545.512757 102.540331 
+" clip-path="url(#paf2ed3d622)" style="fill: none; stroke-dasharray: 1.2,1.98; stroke-dashoffset: 0; stroke: #d98c00; stroke-width: 1.2"/>
    </g>
-   <g id="patch_4">
-    <path d="M 59.103398 184.996833 
-L 59.103398 7.2 
-" style="fill: none; stroke: #666666; stroke-width: 0.8; stroke-linejoin: miter; stroke-linecap: square"/>
+   <g id="LineCollection_2">
+    <path d="M 76.35511 138.61505 
+L 267.169228 138.61505 
+" clip-path="url(#paf2ed3d622)" style="fill: none; stroke-dasharray: 1.2,1.98; stroke-dashoffset: 0; stroke: #d98c00; stroke-width: 1.2"/>
    </g>
    <g id="patch_5">
-    <path d="M 59.103398 184.996833 
-L 594.783398 184.996833 
+    <path d="M 51.846875 184.996833 
+L 51.846875 7.2 
 " style="fill: none; stroke: #666666; stroke-width: 0.8; stroke-linejoin: miter; stroke-linecap: square"/>
    </g>
-   <g id="line2d_13">
-    <path d="M 73.108104 134.446753 
-L 90.613987 141.419178 
-L 108.119869 146.648496 
-L 125.625751 148.391602 
-L 143.131634 151.877815 
-L 160.637516 158.85024 
-L 178.143398 160.593346 
-L 195.649281 164.079558 
-L 213.155163 157.107133 
-L 230.661045 153.620921 
-L 248.166928 144.90539 
-L 265.67281 141.419178 
-L 283.178693 125.731222 
-L 300.684575 106.557054 
-L 318.190457 92.612204 
-L 335.69634 80.41046 
-L 353.202222 69.951823 
-L 370.708104 64.722505 
-L 388.213987 57.75008 
-L 405.719869 49.034549 
-L 423.225751 38.575912 
-L 440.731634 35.089699 
-L 458.237516 42.062124 
-L 475.743398 45.548336 
-L 493.249281 47.291443 
-L 510.755163 52.520761 
-L 528.261045 59.493186 
-L 545.766928 62.979398 
-L 563.27281 69.951823 
-L 580.778693 75.181142 
-" clip-path="url(#pffe6e8e548)" style="fill: none; stroke: #1a7a8a; stroke-width: 2.2; stroke-linecap: square"/>
-   </g>
    <g id="patch_6">
-    <path d="M 392.821154 28.785647 
-Q 415.78362 31.807044 437.415911 34.653417 
-" style="fill: none; stroke: #2e7d32; stroke-width: 1.2; stroke-linecap: round"/>
-    <path d="M 434.081495 32.39916 
-L 437.415911 34.653417 
-L 433.611856 35.968395 
-z
-" style="fill: #2e7d32; stroke: #2e7d32; stroke-width: 1.2; stroke-linecap: round"/>
+    <path d="M 51.846875 184.996833 
+L 587.526875 184.996833 
+" style="fill: none; stroke: #666666; stroke-width: 0.8; stroke-linejoin: miter; stroke-linecap: square"/>
+   </g>
+   <g id="line2d_7">
+    <path d="M 354.69864 154.075644 
+L 363.451581 138.61505 
+L 380.957463 118.000925 
+L 398.463346 92.233268 
+L 415.969228 61.312079 
+L 433.47511 51.005017 
+L 450.980993 71.619142 
+L 468.486875 81.926205 
+L 485.992757 87.079736 
+L 503.49864 102.540331 
+" clip-path="url(#paf2ed3d622)" style="fill: none; stroke: #1a7a8a; stroke-width: 2.2; stroke-linecap: square"/>
+   </g>
+   <g id="line2d_8">
+    <path d="M 267.169228 154.075644 
+L 258.416287 143.768582 
+L 240.910404 118.000925 
+L 223.404522 107.693862 
+L 205.89864 87.079736 
+L 188.392757 97.386799 
+L 170.886875 102.540331 
+L 153.380993 123.154456 
+L 135.87511 133.461519 
+L 118.369228 138.61505 
+" clip-path="url(#paf2ed3d622)" style="fill: none; stroke: #1a7a8a; stroke-width: 2.2; stroke-linecap: square"/>
    </g>
    <g id="text_7">
-    <text style="font-size: 9px; font-family: 'Source Sans Pro', 'Segoe UI', 'Roboto', 'Helvetica Neue', 'Arial', sans-serif; text-anchor: start; fill: #2e7d32" x="291.931634" y="24.631062" transform="rotate(-0 291.931634 24.631062)">máximo → borde del HSP</text>
+    <text style="font-weight: 700; font-size: 9px; font-family: 'Source Sans Pro', 'Segoe UI', 'Roboto', 'Helvetica Neue', 'Arial', sans-serif; fill: #1a7a8a" transform="translate(296.138074 118.092583)">semilla</text>
+    <text style="font-weight: 700; font-size: 9px; font-family: 'Source Sans Pro', 'Segoe UI', 'Roboto', 'Helvetica Neue', 'Arial', sans-serif; fill: #1a7a8a" transform="translate(296.009403 127.831567)">vale 41</text>
    </g>
    <g id="text_8">
-    <text style="font-size: 8.5px; font-family: 'Source Sans Pro', 'Segoe UI', 'Roboto', 'Helvetica Neue', 'Arial', sans-serif; text-anchor: end; fill: #d98c00" x="589.531634" y="48.117284" transform="rotate(-0 589.531634 48.117284)">máximo − X</text>
+    <text style="font-style: italic; font-size: 8px; font-family: 'Source Sans Pro', 'Segoe UI', 'Roboto', 'Helvetica Neue', 'Arial', sans-serif; text-anchor: middle; fill: #1a7a8a" x="197.145699" y="177.756101" transform="rotate(-0 197.145699 177.756101)">← se acumula hacia la izquierda</text>
+   </g>
+   <g id="text_9">
+    <text style="font-style: italic; font-size: 8px; font-family: 'Source Sans Pro', 'Segoe UI', 'Roboto', 'Helvetica Neue', 'Arial', sans-serif; text-anchor: middle; fill: #1a7a8a" x="433.47511" y="177.841804" transform="rotate(-0 433.47511 177.841804)">se acumula hacia la derecha →</text>
+   </g>
+   <g id="text_10">
+    <text style="font-size: 9px; font-family: 'Source Sans Pro', 'Segoe UI', 'Roboto', 'Helvetica Neue', 'Arial', sans-serif; text-anchor: middle; fill: #2e7d32" x="328.439816" y="24.483132" transform="rotate(-0 328.439816 24.483132)">el máximo de cada lado fija un borde del HSP</text>
+   </g>
+   <g id="text_11">
+    <text style="font-size: 8.5px; font-family: 'Source Sans Pro', 'Segoe UI', 'Roboto', 'Helvetica Neue', 'Arial', sans-serif; text-anchor: end; fill: #d98c00" x="545.512757" y="113.594681" transform="rotate(-0 545.512757 113.594681)">máximo − X</text>
+   </g>
+   <g id="text_12">
+    <text style="font-size: 8.5px; font-family: 'Source Sans Pro', 'Segoe UI', 'Roboto', 'Helvetica Neue', 'Arial', sans-serif; text-anchor: start; fill: #d98c00" x="76.35511" y="149.6694" transform="rotate(-0 76.35511 149.6694)">máximo − X</text>
    </g>
    <g id="patch_7">
-    <path d="M 492.247997 84.38742 
-Q 500.998914 69.31961 509.076037 55.411973 
+    <path d="M 518.47727 81.491923 
+Q 511.639796 89.453395 505.676434 96.397061 
 " style="fill: none; stroke: #d98c00; stroke-width: 1.2; stroke-linecap: round"/>
-    <path d="M 505.861059 57.522876 
-L 509.076037 55.411973 
-L 508.835773 59.250498 
+    <path d="M 509.222518 94.908006 
+L 505.676434 96.397061 
+L 506.61284 92.666761 
 z
 " style="fill: #d98c00; stroke: #d98c00; stroke-width: 1.2; stroke-linecap: round"/>
    </g>
-   <g id="text_9">
-    <text style="font-size: 8.6px; font-family: 'Source Sans Pro', 'Segoe UI', 'Roboto', 'Helvetica Neue', 'Arial', sans-serif; fill: #d98c00" transform="translate(443.196183 95.169014)">cae X bajo el máximo:</text>
-    <text style="font-size: 8.6px; font-family: 'Source Sans Pro', 'Segoe UI', 'Roboto', 'Helvetica Neue', 'Arial', sans-serif; fill: #d98c00" transform="translate(435.228418 104.813947)">la extensión para (X-drop)</text>
+   <g id="text_13">
+    <text style="font-size: 8.6px; font-family: 'Source Sans Pro', 'Segoe UI', 'Roboto', 'Helvetica Neue', 'Arial', sans-serif; fill: #d98c00" transform="translate(488.457307 65.791765)">cae X bajo el máximo:</text>
+    <text style="font-size: 8.6px; font-family: 'Source Sans Pro', 'Segoe UI', 'Roboto', 'Helvetica Neue', 'Arial', sans-serif; fill: #d98c00" transform="translate(480.489541 75.436699)">la extensión para (X-drop)</text>
    </g>
    <g id="PathCollection_1">
     <defs>
@@ -246,40 +212,32 @@ C -0.899939 1.549551 -0.459345 1.732051 0 1.732051
 z
 " style="stroke: #1a7a8a"/>
     </defs>
-    <g clip-path="url(#pffe6e8e548)">
-     <use xlink:href="#m30d5b3b214" x="73.108104" y="134.446753" style="fill: #1a7a8a; stroke: #1a7a8a"/>
-     <use xlink:href="#m30d5b3b214" x="90.613987" y="141.419178" style="fill: #1a7a8a; stroke: #1a7a8a"/>
-     <use xlink:href="#m30d5b3b214" x="108.119869" y="146.648496" style="fill: #1a7a8a; stroke: #1a7a8a"/>
-     <use xlink:href="#m30d5b3b214" x="125.625751" y="148.391602" style="fill: #1a7a8a; stroke: #1a7a8a"/>
-     <use xlink:href="#m30d5b3b214" x="143.131634" y="151.877815" style="fill: #1a7a8a; stroke: #1a7a8a"/>
-     <use xlink:href="#m30d5b3b214" x="160.637516" y="158.85024" style="fill: #1a7a8a; stroke: #1a7a8a"/>
-     <use xlink:href="#m30d5b3b214" x="178.143398" y="160.593346" style="fill: #1a7a8a; stroke: #1a7a8a"/>
-     <use xlink:href="#m30d5b3b214" x="195.649281" y="164.079558" style="fill: #1a7a8a; stroke: #1a7a8a"/>
-     <use xlink:href="#m30d5b3b214" x="213.155163" y="157.107133" style="fill: #1a7a8a; stroke: #1a7a8a"/>
-     <use xlink:href="#m30d5b3b214" x="230.661045" y="153.620921" style="fill: #1a7a8a; stroke: #1a7a8a"/>
-     <use xlink:href="#m30d5b3b214" x="248.166928" y="144.90539" style="fill: #1a7a8a; stroke: #1a7a8a"/>
-     <use xlink:href="#m30d5b3b214" x="265.67281" y="141.419178" style="fill: #1a7a8a; stroke: #1a7a8a"/>
-     <use xlink:href="#m30d5b3b214" x="283.178693" y="125.731222" style="fill: #1a7a8a; stroke: #1a7a8a"/>
-     <use xlink:href="#m30d5b3b214" x="300.684575" y="106.557054" style="fill: #1a7a8a; stroke: #1a7a8a"/>
-     <use xlink:href="#m30d5b3b214" x="318.190457" y="92.612204" style="fill: #1a7a8a; stroke: #1a7a8a"/>
-     <use xlink:href="#m30d5b3b214" x="335.69634" y="80.41046" style="fill: #1a7a8a; stroke: #1a7a8a"/>
-     <use xlink:href="#m30d5b3b214" x="353.202222" y="69.951823" style="fill: #1a7a8a; stroke: #1a7a8a"/>
-     <use xlink:href="#m30d5b3b214" x="370.708104" y="64.722505" style="fill: #1a7a8a; stroke: #1a7a8a"/>
-     <use xlink:href="#m30d5b3b214" x="388.213987" y="57.75008" style="fill: #1a7a8a; stroke: #1a7a8a"/>
-     <use xlink:href="#m30d5b3b214" x="405.719869" y="49.034549" style="fill: #1a7a8a; stroke: #1a7a8a"/>
-     <use xlink:href="#m30d5b3b214" x="423.225751" y="38.575912" style="fill: #1a7a8a; stroke: #1a7a8a"/>
-     <use xlink:href="#m30d5b3b214" x="440.731634" y="35.089699" style="fill: #1a7a8a; stroke: #1a7a8a"/>
-     <use xlink:href="#m30d5b3b214" x="458.237516" y="42.062124" style="fill: #1a7a8a; stroke: #1a7a8a"/>
-     <use xlink:href="#m30d5b3b214" x="475.743398" y="45.548336" style="fill: #1a7a8a; stroke: #1a7a8a"/>
-     <use xlink:href="#m30d5b3b214" x="493.249281" y="47.291443" style="fill: #1a7a8a; stroke: #1a7a8a"/>
-     <use xlink:href="#m30d5b3b214" x="510.755163" y="52.520761" style="fill: #1a7a8a; stroke: #1a7a8a"/>
-     <use xlink:href="#m30d5b3b214" x="528.261045" y="59.493186" style="fill: #1a7a8a; stroke: #1a7a8a"/>
-     <use xlink:href="#m30d5b3b214" x="545.766928" y="62.979398" style="fill: #1a7a8a; stroke: #1a7a8a"/>
-     <use xlink:href="#m30d5b3b214" x="563.27281" y="69.951823" style="fill: #1a7a8a; stroke: #1a7a8a"/>
-     <use xlink:href="#m30d5b3b214" x="580.778693" y="75.181142" style="fill: #1a7a8a; stroke: #1a7a8a"/>
+    <g clip-path="url(#paf2ed3d622)">
+     <use xlink:href="#m30d5b3b214" x="363.451581" y="138.61505" style="fill: #1a7a8a; stroke: #1a7a8a"/>
+     <use xlink:href="#m30d5b3b214" x="380.957463" y="118.000925" style="fill: #1a7a8a; stroke: #1a7a8a"/>
+     <use xlink:href="#m30d5b3b214" x="398.463346" y="92.233268" style="fill: #1a7a8a; stroke: #1a7a8a"/>
+     <use xlink:href="#m30d5b3b214" x="415.969228" y="61.312079" style="fill: #1a7a8a; stroke: #1a7a8a"/>
+     <use xlink:href="#m30d5b3b214" x="433.47511" y="51.005017" style="fill: #1a7a8a; stroke: #1a7a8a"/>
+     <use xlink:href="#m30d5b3b214" x="450.980993" y="71.619142" style="fill: #1a7a8a; stroke: #1a7a8a"/>
+     <use xlink:href="#m30d5b3b214" x="468.486875" y="81.926205" style="fill: #1a7a8a; stroke: #1a7a8a"/>
+     <use xlink:href="#m30d5b3b214" x="485.992757" y="87.079736" style="fill: #1a7a8a; stroke: #1a7a8a"/>
+     <use xlink:href="#m30d5b3b214" x="503.49864" y="102.540331" style="fill: #1a7a8a; stroke: #1a7a8a"/>
     </g>
    </g>
    <g id="PathCollection_2">
+    <g clip-path="url(#paf2ed3d622)">
+     <use xlink:href="#m30d5b3b214" x="258.416287" y="143.768582" style="fill: #1a7a8a; stroke: #1a7a8a"/>
+     <use xlink:href="#m30d5b3b214" x="240.910404" y="118.000925" style="fill: #1a7a8a; stroke: #1a7a8a"/>
+     <use xlink:href="#m30d5b3b214" x="223.404522" y="107.693862" style="fill: #1a7a8a; stroke: #1a7a8a"/>
+     <use xlink:href="#m30d5b3b214" x="205.89864" y="87.079736" style="fill: #1a7a8a; stroke: #1a7a8a"/>
+     <use xlink:href="#m30d5b3b214" x="188.392757" y="97.386799" style="fill: #1a7a8a; stroke: #1a7a8a"/>
+     <use xlink:href="#m30d5b3b214" x="170.886875" y="102.540331" style="fill: #1a7a8a; stroke: #1a7a8a"/>
+     <use xlink:href="#m30d5b3b214" x="153.380993" y="123.154456" style="fill: #1a7a8a; stroke: #1a7a8a"/>
+     <use xlink:href="#m30d5b3b214" x="135.87511" y="133.461519" style="fill: #1a7a8a; stroke: #1a7a8a"/>
+     <use xlink:href="#m30d5b3b214" x="118.369228" y="138.61505" style="fill: #1a7a8a; stroke: #1a7a8a"/>
+    </g>
+   </g>
+   <g id="PathCollection_3">
     <defs>
      <path id="m267c32c873" d="M 0 3.872983 
 C 1.027127 3.872983 2.012324 3.464901 2.738613 2.738613 
@@ -293,11 +251,32 @@ C -2.012324 3.464901 -1.027127 3.872983 0 3.872983
 z
 " style="stroke: #ffffff"/>
     </defs>
-    <g clip-path="url(#pffe6e8e548)">
-     <use xlink:href="#m267c32c873" x="440.731634" y="35.089699" style="fill: #2e7d32; stroke: #ffffff"/>
+    <g clip-path="url(#paf2ed3d622)">
+     <use xlink:href="#m267c32c873" x="205.89864" y="87.079736" style="fill: #2e7d32; stroke: #ffffff"/>
+     <use xlink:href="#m267c32c873" x="433.47511" y="51.005017" style="fill: #2e7d32; stroke: #ffffff"/>
     </g>
    </g>
-   <g id="PathCollection_3">
+   <g id="patch_8">
+    <path d="M 243.338566 30.01419 
+Q 227.344644 55.125804 212.071459 79.105808 
+" clip-path="url(#paf2ed3d622)" style="fill: none; stroke: #2e7d32; stroke-width: 1.2; stroke-linecap: round"/>
+    <path d="M 215.907183 76.806413 
+L 212.071459 79.105808 
+L 212.533378 74.657592 
+z
+" clip-path="url(#paf2ed3d622)" style="fill: #2e7d32; stroke: #2e7d32; stroke-width: 1.2; stroke-linecap: round"/>
+   </g>
+   <g id="patch_9">
+    <path d="M 413.897349 29.732042 
+Q 421.660408 37.349893 428.465869 44.02806 
+" clip-path="url(#paf2ed3d622)" style="fill: none; stroke: #2e7d32; stroke-width: 1.2; stroke-linecap: round"/>
+    <path d="M 427.011667 39.798959 
+L 428.465869 44.02806 
+L 424.210067 42.653961 
+z
+" clip-path="url(#paf2ed3d622)" style="fill: #2e7d32; stroke: #2e7d32; stroke-width: 1.2; stroke-linecap: round"/>
+   </g>
+   <g id="PathCollection_4">
     <defs>
      <path id="mf4c7db1f9c" d="M 0 3.354102 
 C 0.889518 3.354102 1.742724 3.000693 2.371708 2.371708 
@@ -311,233 +290,234 @@ C -1.742724 3.000693 -0.889518 3.354102 0 3.354102
 z
 " style="stroke: #ffffff"/>
     </defs>
-    <g clip-path="url(#pffe6e8e548)">
-     <use xlink:href="#mf4c7db1f9c" x="510.755163" y="52.520761" style="fill: #d98c00; stroke: #ffffff"/>
+    <g clip-path="url(#paf2ed3d622)">
+     <use xlink:href="#mf4c7db1f9c" x="118.369228" y="138.61505" style="fill: #d98c00; stroke: #ffffff"/>
+     <use xlink:href="#mf4c7db1f9c" x="503.49864" y="102.540331" style="fill: #d98c00; stroke: #ffffff"/>
     </g>
    </g>
   </g>
   <g id="axes_2">
-   <g id="patch_8">
-    <path d="M 204.402222 275.532109 
-L 449.484575 275.532109 
-L 449.484575 213.444326 
-L 204.402222 213.444326 
+   <g id="patch_10">
+    <path d="M 197.145699 275.532109 
+L 442.228051 275.532109 
+L 442.228051 213.444326 
+L 197.145699 213.444326 
 z
-" clip-path="url(#p52a470ce2e)" style="fill: #d7ebd8"/>
-   </g>
-   <g id="text_10">
-    <text style="font-size: 11px; font-family: 'SFMono-Regular', 'Menlo', 'Consolas', 'Liberation Mono', monospace; text-anchor: middle; fill: #d98c00" x="73.108104" y="233.046791" transform="rotate(-0 73.108104 233.046791)">A</text>
-   </g>
-   <g id="text_11">
-    <text style="font-size: 11px; font-family: 'SFMono-Regular', 'Menlo', 'Consolas', 'Liberation Mono', monospace; text-anchor: middle; fill: #d98c00" x="73.108104" y="261.268511" transform="rotate(-0 73.108104 261.268511)">W</text>
-   </g>
-   <g id="text_12">
-    <text style="font-size: 11px; font-family: 'SFMono-Regular', 'Menlo', 'Consolas', 'Liberation Mono', monospace; text-anchor: middle; fill: #d98c00" x="90.613987" y="233.046791" transform="rotate(-0 90.613987 233.046791)">P</text>
-   </g>
-   <g id="text_13">
-    <text style="font-size: 11px; font-family: 'SFMono-Regular', 'Menlo', 'Consolas', 'Liberation Mono', monospace; text-anchor: middle; fill: #d98c00" x="90.613987" y="261.268511" transform="rotate(-0 90.613987 261.268511)">W</text>
+" clip-path="url(#p715620994b)" style="fill: #d7ebd8"/>
    </g>
    <g id="text_14">
-    <text style="font-size: 11px; font-family: 'SFMono-Regular', 'Menlo', 'Consolas', 'Liberation Mono', monospace; text-anchor: middle; fill: #d98c00" x="108.119869" y="233.046791" transform="rotate(-0 108.119869 233.046791)">A</text>
+    <text style="font-size: 11px; font-family: 'SFMono-Regular', 'Menlo', 'Consolas', 'Liberation Mono', monospace; text-anchor: middle; fill: #d98c00" x="65.851581" y="233.046791" transform="rotate(-0 65.851581 233.046791)">A</text>
    </g>
    <g id="text_15">
-    <text style="font-size: 11px; font-family: 'SFMono-Regular', 'Menlo', 'Consolas', 'Liberation Mono', monospace; text-anchor: middle; fill: #d98c00" x="108.119869" y="261.268511" transform="rotate(-0 108.119869 261.268511)">W</text>
+    <text style="font-size: 11px; font-family: 'SFMono-Regular', 'Menlo', 'Consolas', 'Liberation Mono', monospace; text-anchor: middle; fill: #d98c00" x="65.851581" y="261.268511" transform="rotate(-0 65.851581 261.268511)">W</text>
    </g>
    <g id="text_16">
-    <text style="font-size: 11px; font-family: 'SFMono-Regular', 'Menlo', 'Consolas', 'Liberation Mono', monospace; text-anchor: middle; fill: #d98c00" x="125.625751" y="233.046791" transform="rotate(-0 125.625751 233.046791)">P</text>
+    <text style="font-size: 11px; font-family: 'SFMono-Regular', 'Menlo', 'Consolas', 'Liberation Mono', monospace; text-anchor: middle; fill: #d98c00" x="83.357463" y="233.046791" transform="rotate(-0 83.357463 233.046791)">P</text>
    </g>
    <g id="text_17">
-    <text style="font-size: 11px; font-family: 'SFMono-Regular', 'Menlo', 'Consolas', 'Liberation Mono', monospace; text-anchor: middle; fill: #d98c00" x="125.625751" y="261.268511" transform="rotate(-0 125.625751 261.268511)">K</text>
+    <text style="font-size: 11px; font-family: 'SFMono-Regular', 'Menlo', 'Consolas', 'Liberation Mono', monospace; text-anchor: middle; fill: #d98c00" x="83.357463" y="261.268511" transform="rotate(-0 83.357463 261.268511)">W</text>
    </g>
    <g id="text_18">
-    <text style="font-size: 11px; font-family: 'SFMono-Regular', 'Menlo', 'Consolas', 'Liberation Mono', monospace; text-anchor: middle; fill: #d98c00" x="143.131634" y="233.046791" transform="rotate(-0 143.131634 233.046791)">G</text>
+    <text style="font-size: 11px; font-family: 'SFMono-Regular', 'Menlo', 'Consolas', 'Liberation Mono', monospace; text-anchor: middle; fill: #d98c00" x="100.863346" y="233.046791" transform="rotate(-0 100.863346 233.046791)">A</text>
    </g>
    <g id="text_19">
-    <text style="font-size: 11px; font-family: 'SFMono-Regular', 'Menlo', 'Consolas', 'Liberation Mono', monospace; text-anchor: middle; fill: #d98c00" x="143.131634" y="261.268511" transform="rotate(-0 143.131634 261.268511)">W</text>
+    <text style="font-size: 11px; font-family: 'SFMono-Regular', 'Menlo', 'Consolas', 'Liberation Mono', monospace; text-anchor: middle; fill: #d98c00" x="100.863346" y="261.268511" transform="rotate(-0 100.863346 261.268511)">W</text>
    </g>
    <g id="text_20">
-    <text style="font-size: 11px; font-family: 'SFMono-Regular', 'Menlo', 'Consolas', 'Liberation Mono', monospace; text-anchor: middle; fill: #d98c00" x="160.637516" y="233.046791" transform="rotate(-0 160.637516 233.046791)">P</text>
+    <text style="font-size: 11px; font-family: 'SFMono-Regular', 'Menlo', 'Consolas', 'Liberation Mono', monospace; text-anchor: middle; fill: #d98c00" x="118.369228" y="233.046791" transform="rotate(-0 118.369228 233.046791)">P</text>
    </g>
    <g id="text_21">
-    <text style="font-size: 11px; font-family: 'SFMono-Regular', 'Menlo', 'Consolas', 'Liberation Mono', monospace; text-anchor: middle; fill: #d98c00" x="160.637516" y="261.268511" transform="rotate(-0 160.637516 261.268511)">W</text>
+    <text style="font-size: 11px; font-family: 'SFMono-Regular', 'Menlo', 'Consolas', 'Liberation Mono', monospace; text-anchor: middle; fill: #d98c00" x="118.369228" y="261.268511" transform="rotate(-0 118.369228 261.268511)">K</text>
    </g>
    <g id="text_22">
-    <text style="font-size: 11px; font-family: 'SFMono-Regular', 'Menlo', 'Consolas', 'Liberation Mono', monospace; text-anchor: middle; fill: #d98c00" x="178.143398" y="233.046791" transform="rotate(-0 178.143398 233.046791)">A</text>
+    <text style="font-size: 11px; font-family: 'SFMono-Regular', 'Menlo', 'Consolas', 'Liberation Mono', monospace; text-anchor: middle; fill: #d98c00" x="135.87511" y="233.046791" transform="rotate(-0 135.87511 233.046791)">G</text>
    </g>
    <g id="text_23">
-    <text style="font-size: 11px; font-family: 'SFMono-Regular', 'Menlo', 'Consolas', 'Liberation Mono', monospace; text-anchor: middle; fill: #d98c00" x="178.143398" y="261.268511" transform="rotate(-0 178.143398 261.268511)">K</text>
+    <text style="font-size: 11px; font-family: 'SFMono-Regular', 'Menlo', 'Consolas', 'Liberation Mono', monospace; text-anchor: middle; fill: #d98c00" x="135.87511" y="261.268511" transform="rotate(-0 135.87511 261.268511)">W</text>
    </g>
    <g id="text_24">
-    <text style="font-size: 11px; font-family: 'SFMono-Regular', 'Menlo', 'Consolas', 'Liberation Mono', monospace; text-anchor: middle; fill: #d98c00" x="195.649281" y="233.046791" transform="rotate(-0 195.649281 233.046791)">G</text>
+    <text style="font-size: 11px; font-family: 'SFMono-Regular', 'Menlo', 'Consolas', 'Liberation Mono', monospace; text-anchor: middle; fill: #d98c00" x="153.380993" y="233.046791" transform="rotate(-0 153.380993 233.046791)">P</text>
    </g>
    <g id="text_25">
-    <text style="font-size: 11px; font-family: 'SFMono-Regular', 'Menlo', 'Consolas', 'Liberation Mono', monospace; text-anchor: middle; fill: #d98c00" x="195.649281" y="261.268511" transform="rotate(-0 195.649281 261.268511)">W</text>
+    <text style="font-size: 11px; font-family: 'SFMono-Regular', 'Menlo', 'Consolas', 'Liberation Mono', monospace; text-anchor: middle; fill: #d98c00" x="153.380993" y="261.268511" transform="rotate(-0 153.380993 261.268511)">W</text>
    </g>
    <g id="text_26">
-    <text style="font-size: 11px; font-family: 'SFMono-Regular', 'Menlo', 'Consolas', 'Liberation Mono', monospace; text-anchor: middle; fill: #1a1a1a" x="213.155163" y="233.046791" transform="rotate(-0 213.155163 233.046791)">L</text>
+    <text style="font-size: 11px; font-family: 'SFMono-Regular', 'Menlo', 'Consolas', 'Liberation Mono', monospace; text-anchor: middle; fill: #d98c00" x="170.886875" y="233.046791" transform="rotate(-0 170.886875 233.046791)">A</text>
    </g>
    <g id="text_27">
-    <text style="font-size: 11px; font-family: 'SFMono-Regular', 'Menlo', 'Consolas', 'Liberation Mono', monospace; text-anchor: middle; fill: #1a1a1a" x="213.155163" y="261.268511" transform="rotate(-0 213.155163 261.268511)">L</text>
+    <text style="font-size: 11px; font-family: 'SFMono-Regular', 'Menlo', 'Consolas', 'Liberation Mono', monospace; text-anchor: middle; fill: #d98c00" x="170.886875" y="261.268511" transform="rotate(-0 170.886875 261.268511)">K</text>
    </g>
    <g id="text_28">
-    <text style="font-size: 11px; font-family: 'SFMono-Regular', 'Menlo', 'Consolas', 'Liberation Mono', monospace; text-anchor: middle; fill: #d98c00" x="230.661045" y="233.046791" transform="rotate(-0 230.661045 233.046791)">K</text>
+    <text style="font-size: 11px; font-family: 'SFMono-Regular', 'Menlo', 'Consolas', 'Liberation Mono', monospace; text-anchor: middle; fill: #d98c00" x="188.392757" y="233.046791" transform="rotate(-0 188.392757 233.046791)">G</text>
    </g>
    <g id="text_29">
-    <text style="font-size: 11px; font-family: 'SFMono-Regular', 'Menlo', 'Consolas', 'Liberation Mono', monospace; text-anchor: middle; fill: #d98c00" x="230.661045" y="261.268511" transform="rotate(-0 230.661045 261.268511)">R</text>
+    <text style="font-size: 11px; font-family: 'SFMono-Regular', 'Menlo', 'Consolas', 'Liberation Mono', monospace; text-anchor: middle; fill: #d98c00" x="188.392757" y="261.268511" transform="rotate(-0 188.392757 261.268511)">W</text>
    </g>
    <g id="text_30">
-    <text style="font-size: 11px; font-family: 'SFMono-Regular', 'Menlo', 'Consolas', 'Liberation Mono', monospace; text-anchor: middle; fill: #1a1a1a" x="248.166928" y="233.046791" transform="rotate(-0 248.166928 233.046791)">E</text>
+    <text style="font-size: 11px; font-family: 'SFMono-Regular', 'Menlo', 'Consolas', 'Liberation Mono', monospace; text-anchor: middle; fill: #1a1a1a" x="205.89864" y="233.046791" transform="rotate(-0 205.89864 233.046791)">L</text>
    </g>
    <g id="text_31">
-    <text style="font-size: 11px; font-family: 'SFMono-Regular', 'Menlo', 'Consolas', 'Liberation Mono', monospace; text-anchor: middle; fill: #1a1a1a" x="248.166928" y="261.268511" transform="rotate(-0 248.166928 261.268511)">E</text>
+    <text style="font-size: 11px; font-family: 'SFMono-Regular', 'Menlo', 'Consolas', 'Liberation Mono', monospace; text-anchor: middle; fill: #1a1a1a" x="205.89864" y="261.268511" transform="rotate(-0 205.89864 261.268511)">L</text>
    </g>
    <g id="text_32">
-    <text style="font-size: 11px; font-family: 'SFMono-Regular', 'Menlo', 'Consolas', 'Liberation Mono', monospace; text-anchor: middle; fill: #d98c00" x="265.67281" y="233.046791" transform="rotate(-0 265.67281 233.046791)">R</text>
+    <text style="font-size: 11px; font-family: 'SFMono-Regular', 'Menlo', 'Consolas', 'Liberation Mono', monospace; text-anchor: middle; fill: #d98c00" x="223.404522" y="233.046791" transform="rotate(-0 223.404522 233.046791)">K</text>
    </g>
    <g id="text_33">
-    <text style="font-size: 11px; font-family: 'SFMono-Regular', 'Menlo', 'Consolas', 'Liberation Mono', monospace; text-anchor: middle; fill: #d98c00" x="265.67281" y="261.268511" transform="rotate(-0 265.67281 261.268511)">K</text>
+    <text style="font-size: 11px; font-family: 'SFMono-Regular', 'Menlo', 'Consolas', 'Liberation Mono', monospace; text-anchor: middle; fill: #d98c00" x="223.404522" y="261.268511" transform="rotate(-0 223.404522 261.268511)">R</text>
    </g>
    <g id="text_34">
-    <text style="font-weight: 700; font-size: 11px; font-family: 'SFMono-Regular', 'Menlo', 'Consolas', 'Liberation Mono', monospace; text-anchor: middle; fill: #1a1a1a" x="283.178693" y="233.046791" transform="rotate(-0 283.178693 233.046791)">C</text>
+    <text style="font-size: 11px; font-family: 'SFMono-Regular', 'Menlo', 'Consolas', 'Liberation Mono', monospace; text-anchor: middle; fill: #1a1a1a" x="240.910404" y="233.046791" transform="rotate(-0 240.910404 233.046791)">E</text>
    </g>
    <g id="text_35">
-    <text style="font-weight: 700; font-size: 11px; font-family: 'SFMono-Regular', 'Menlo', 'Consolas', 'Liberation Mono', monospace; text-anchor: middle; fill: #1a1a1a" x="283.178693" y="261.268511" transform="rotate(-0 283.178693 261.268511)">C</text>
+    <text style="font-size: 11px; font-family: 'SFMono-Regular', 'Menlo', 'Consolas', 'Liberation Mono', monospace; text-anchor: middle; fill: #1a1a1a" x="240.910404" y="261.268511" transform="rotate(-0 240.910404 261.268511)">E</text>
    </g>
    <g id="text_36">
-    <text style="font-weight: 700; font-size: 11px; font-family: 'SFMono-Regular', 'Menlo', 'Consolas', 'Liberation Mono', monospace; text-anchor: middle; fill: #1a1a1a" x="300.684575" y="233.046791" transform="rotate(-0 300.684575 233.046791)">W</text>
+    <text style="font-size: 11px; font-family: 'SFMono-Regular', 'Menlo', 'Consolas', 'Liberation Mono', monospace; text-anchor: middle; fill: #d98c00" x="258.416287" y="233.046791" transform="rotate(-0 258.416287 233.046791)">R</text>
    </g>
    <g id="text_37">
-    <text style="font-weight: 700; font-size: 11px; font-family: 'SFMono-Regular', 'Menlo', 'Consolas', 'Liberation Mono', monospace; text-anchor: middle; fill: #1a1a1a" x="300.684575" y="261.268511" transform="rotate(-0 300.684575 261.268511)">W</text>
+    <text style="font-size: 11px; font-family: 'SFMono-Regular', 'Menlo', 'Consolas', 'Liberation Mono', monospace; text-anchor: middle; fill: #d98c00" x="258.416287" y="261.268511" transform="rotate(-0 258.416287 261.268511)">K</text>
    </g>
    <g id="text_38">
-    <text style="font-weight: 700; font-size: 11px; font-family: 'SFMono-Regular', 'Menlo', 'Consolas', 'Liberation Mono', monospace; text-anchor: middle; fill: #1a1a1a" x="318.190457" y="233.046791" transform="rotate(-0 318.190457 233.046791)">H</text>
+    <text style="font-weight: 700; font-size: 11px; font-family: 'SFMono-Regular', 'Menlo', 'Consolas', 'Liberation Mono', monospace; text-anchor: middle; fill: #1a1a1a" x="275.922169" y="233.046791" transform="rotate(-0 275.922169 233.046791)">C</text>
    </g>
    <g id="text_39">
-    <text style="font-weight: 700; font-size: 11px; font-family: 'SFMono-Regular', 'Menlo', 'Consolas', 'Liberation Mono', monospace; text-anchor: middle; fill: #1a1a1a" x="318.190457" y="261.268511" transform="rotate(-0 318.190457 261.268511)">H</text>
+    <text style="font-weight: 700; font-size: 11px; font-family: 'SFMono-Regular', 'Menlo', 'Consolas', 'Liberation Mono', monospace; text-anchor: middle; fill: #1a1a1a" x="275.922169" y="261.268511" transform="rotate(-0 275.922169 261.268511)">C</text>
    </g>
    <g id="text_40">
-    <text style="font-weight: 700; font-size: 11px; font-family: 'SFMono-Regular', 'Menlo', 'Consolas', 'Liberation Mono', monospace; text-anchor: middle; fill: #1a1a1a" x="335.69634" y="233.046791" transform="rotate(-0 335.69634 233.046791)">Y</text>
+    <text style="font-weight: 700; font-size: 11px; font-family: 'SFMono-Regular', 'Menlo', 'Consolas', 'Liberation Mono', monospace; text-anchor: middle; fill: #1a1a1a" x="293.428051" y="233.046791" transform="rotate(-0 293.428051 233.046791)">W</text>
    </g>
    <g id="text_41">
-    <text style="font-weight: 700; font-size: 11px; font-family: 'SFMono-Regular', 'Menlo', 'Consolas', 'Liberation Mono', monospace; text-anchor: middle; fill: #1a1a1a" x="335.69634" y="261.268511" transform="rotate(-0 335.69634 261.268511)">Y</text>
+    <text style="font-weight: 700; font-size: 11px; font-family: 'SFMono-Regular', 'Menlo', 'Consolas', 'Liberation Mono', monospace; text-anchor: middle; fill: #1a1a1a" x="293.428051" y="261.268511" transform="rotate(-0 293.428051 261.268511)">W</text>
    </g>
    <g id="text_42">
-    <text style="font-weight: 700; font-size: 11px; font-family: 'SFMono-Regular', 'Menlo', 'Consolas', 'Liberation Mono', monospace; text-anchor: middle; fill: #1a1a1a" x="353.202222" y="233.046791" transform="rotate(-0 353.202222 233.046791)">F</text>
+    <text style="font-weight: 700; font-size: 11px; font-family: 'SFMono-Regular', 'Menlo', 'Consolas', 'Liberation Mono', monospace; text-anchor: middle; fill: #1a1a1a" x="310.933934" y="233.046791" transform="rotate(-0 310.933934 233.046791)">H</text>
    </g>
    <g id="text_43">
-    <text style="font-weight: 700; font-size: 11px; font-family: 'SFMono-Regular', 'Menlo', 'Consolas', 'Liberation Mono', monospace; text-anchor: middle; fill: #1a1a1a" x="353.202222" y="261.268511" transform="rotate(-0 353.202222 261.268511)">F</text>
+    <text style="font-weight: 700; font-size: 11px; font-family: 'SFMono-Regular', 'Menlo', 'Consolas', 'Liberation Mono', monospace; text-anchor: middle; fill: #1a1a1a" x="310.933934" y="261.268511" transform="rotate(-0 310.933934 261.268511)">H</text>
    </g>
    <g id="text_44">
-    <text style="font-size: 11px; font-family: 'SFMono-Regular', 'Menlo', 'Consolas', 'Liberation Mono', monospace; text-anchor: middle; fill: #d98c00" x="370.708104" y="233.046791" transform="rotate(-0 370.708104 233.046791)">I</text>
+    <text style="font-weight: 700; font-size: 11px; font-family: 'SFMono-Regular', 'Menlo', 'Consolas', 'Liberation Mono', monospace; text-anchor: middle; fill: #1a1a1a" x="328.439816" y="233.046791" transform="rotate(-0 328.439816 233.046791)">Y</text>
    </g>
    <g id="text_45">
-    <text style="font-size: 11px; font-family: 'SFMono-Regular', 'Menlo', 'Consolas', 'Liberation Mono', monospace; text-anchor: middle; fill: #d98c00" x="370.708104" y="261.268511" transform="rotate(-0 370.708104 261.268511)">V</text>
+    <text style="font-weight: 700; font-size: 11px; font-family: 'SFMono-Regular', 'Menlo', 'Consolas', 'Liberation Mono', monospace; text-anchor: middle; fill: #1a1a1a" x="328.439816" y="261.268511" transform="rotate(-0 328.439816 261.268511)">Y</text>
    </g>
    <g id="text_46">
-    <text style="font-size: 11px; font-family: 'SFMono-Regular', 'Menlo', 'Consolas', 'Liberation Mono', monospace; text-anchor: middle; fill: #1a1a1a" x="388.213987" y="233.046791" transform="rotate(-0 388.213987 233.046791)">L</text>
+    <text style="font-weight: 700; font-size: 11px; font-family: 'SFMono-Regular', 'Menlo', 'Consolas', 'Liberation Mono', monospace; text-anchor: middle; fill: #1a1a1a" x="345.945699" y="233.046791" transform="rotate(-0 345.945699 233.046791)">F</text>
    </g>
    <g id="text_47">
-    <text style="font-size: 11px; font-family: 'SFMono-Regular', 'Menlo', 'Consolas', 'Liberation Mono', monospace; text-anchor: middle; fill: #1a1a1a" x="388.213987" y="261.268511" transform="rotate(-0 388.213987 261.268511)">L</text>
+    <text style="font-weight: 700; font-size: 11px; font-family: 'SFMono-Regular', 'Menlo', 'Consolas', 'Liberation Mono', monospace; text-anchor: middle; fill: #1a1a1a" x="345.945699" y="261.268511" transform="rotate(-0 345.945699 261.268511)">F</text>
    </g>
    <g id="text_48">
-    <text style="font-size: 11px; font-family: 'SFMono-Regular', 'Menlo', 'Consolas', 'Liberation Mono', monospace; text-anchor: middle; fill: #1a1a1a" x="405.719869" y="233.046791" transform="rotate(-0 405.719869 233.046791)">Q</text>
+    <text style="font-size: 11px; font-family: 'SFMono-Regular', 'Menlo', 'Consolas', 'Liberation Mono', monospace; text-anchor: middle; fill: #d98c00" x="363.451581" y="233.046791" transform="rotate(-0 363.451581 233.046791)">I</text>
    </g>
    <g id="text_49">
-    <text style="font-size: 11px; font-family: 'SFMono-Regular', 'Menlo', 'Consolas', 'Liberation Mono', monospace; text-anchor: middle; fill: #1a1a1a" x="405.719869" y="261.268511" transform="rotate(-0 405.719869 261.268511)">Q</text>
+    <text style="font-size: 11px; font-family: 'SFMono-Regular', 'Menlo', 'Consolas', 'Liberation Mono', monospace; text-anchor: middle; fill: #d98c00" x="363.451581" y="261.268511" transform="rotate(-0 363.451581 261.268511)">V</text>
    </g>
    <g id="text_50">
-    <text style="font-size: 11px; font-family: 'SFMono-Regular', 'Menlo', 'Consolas', 'Liberation Mono', monospace; text-anchor: middle; fill: #1a1a1a" x="423.225751" y="233.046791" transform="rotate(-0 423.225751 233.046791)">N</text>
+    <text style="font-size: 11px; font-family: 'SFMono-Regular', 'Menlo', 'Consolas', 'Liberation Mono', monospace; text-anchor: middle; fill: #1a1a1a" x="380.957463" y="233.046791" transform="rotate(-0 380.957463 233.046791)">L</text>
    </g>
    <g id="text_51">
-    <text style="font-size: 11px; font-family: 'SFMono-Regular', 'Menlo', 'Consolas', 'Liberation Mono', monospace; text-anchor: middle; fill: #1a1a1a" x="423.225751" y="261.268511" transform="rotate(-0 423.225751 261.268511)">N</text>
+    <text style="font-size: 11px; font-family: 'SFMono-Regular', 'Menlo', 'Consolas', 'Liberation Mono', monospace; text-anchor: middle; fill: #1a1a1a" x="380.957463" y="261.268511" transform="rotate(-0 380.957463 261.268511)">L</text>
    </g>
    <g id="text_52">
-    <text style="font-size: 11px; font-family: 'SFMono-Regular', 'Menlo', 'Consolas', 'Liberation Mono', monospace; text-anchor: middle; fill: #d98c00" x="440.731634" y="233.046791" transform="rotate(-0 440.731634 233.046791)">D</text>
+    <text style="font-size: 11px; font-family: 'SFMono-Regular', 'Menlo', 'Consolas', 'Liberation Mono', monospace; text-anchor: middle; fill: #1a1a1a" x="398.463346" y="233.046791" transform="rotate(-0 398.463346 233.046791)">Q</text>
    </g>
    <g id="text_53">
-    <text style="font-size: 11px; font-family: 'SFMono-Regular', 'Menlo', 'Consolas', 'Liberation Mono', monospace; text-anchor: middle; fill: #d98c00" x="440.731634" y="261.268511" transform="rotate(-0 440.731634 261.268511)">E</text>
+    <text style="font-size: 11px; font-family: 'SFMono-Regular', 'Menlo', 'Consolas', 'Liberation Mono', monospace; text-anchor: middle; fill: #1a1a1a" x="398.463346" y="261.268511" transform="rotate(-0 398.463346 261.268511)">Q</text>
    </g>
    <g id="text_54">
-    <text style="font-size: 11px; font-family: 'SFMono-Regular', 'Menlo', 'Consolas', 'Liberation Mono', monospace; text-anchor: middle; fill: #d98c00" x="458.237516" y="233.046791" transform="rotate(-0 458.237516 233.046791)">P</text>
+    <text style="font-size: 11px; font-family: 'SFMono-Regular', 'Menlo', 'Consolas', 'Liberation Mono', monospace; text-anchor: middle; fill: #1a1a1a" x="415.969228" y="233.046791" transform="rotate(-0 415.969228 233.046791)">N</text>
    </g>
    <g id="text_55">
-    <text style="font-size: 11px; font-family: 'SFMono-Regular', 'Menlo', 'Consolas', 'Liberation Mono', monospace; text-anchor: middle; fill: #d98c00" x="458.237516" y="261.268511" transform="rotate(-0 458.237516 261.268511)">W</text>
+    <text style="font-size: 11px; font-family: 'SFMono-Regular', 'Menlo', 'Consolas', 'Liberation Mono', monospace; text-anchor: middle; fill: #1a1a1a" x="415.969228" y="261.268511" transform="rotate(-0 415.969228 261.268511)">N</text>
    </g>
    <g id="text_56">
-    <text style="font-size: 11px; font-family: 'SFMono-Regular', 'Menlo', 'Consolas', 'Liberation Mono', monospace; text-anchor: middle; fill: #d98c00" x="475.743398" y="233.046791" transform="rotate(-0 475.743398 233.046791)">G</text>
+    <text style="font-size: 11px; font-family: 'SFMono-Regular', 'Menlo', 'Consolas', 'Liberation Mono', monospace; text-anchor: middle; fill: #d98c00" x="433.47511" y="233.046791" transform="rotate(-0 433.47511 233.046791)">D</text>
    </g>
    <g id="text_57">
-    <text style="font-size: 11px; font-family: 'SFMono-Regular', 'Menlo', 'Consolas', 'Liberation Mono', monospace; text-anchor: middle; fill: #d98c00" x="475.743398" y="261.268511" transform="rotate(-0 475.743398 261.268511)">W</text>
+    <text style="font-size: 11px; font-family: 'SFMono-Regular', 'Menlo', 'Consolas', 'Liberation Mono', monospace; text-anchor: middle; fill: #d98c00" x="433.47511" y="261.268511" transform="rotate(-0 433.47511 261.268511)">E</text>
    </g>
    <g id="text_58">
-    <text style="font-size: 11px; font-family: 'SFMono-Regular', 'Menlo', 'Consolas', 'Liberation Mono', monospace; text-anchor: middle; fill: #d98c00" x="493.249281" y="233.046791" transform="rotate(-0 493.249281 233.046791)">P</text>
+    <text style="font-size: 11px; font-family: 'SFMono-Regular', 'Menlo', 'Consolas', 'Liberation Mono', monospace; text-anchor: middle; fill: #d98c00" x="450.980993" y="233.046791" transform="rotate(-0 450.980993 233.046791)">P</text>
    </g>
    <g id="text_59">
-    <text style="font-size: 11px; font-family: 'SFMono-Regular', 'Menlo', 'Consolas', 'Liberation Mono', monospace; text-anchor: middle; fill: #d98c00" x="493.249281" y="261.268511" transform="rotate(-0 493.249281 261.268511)">K</text>
+    <text style="font-size: 11px; font-family: 'SFMono-Regular', 'Menlo', 'Consolas', 'Liberation Mono', monospace; text-anchor: middle; fill: #d98c00" x="450.980993" y="261.268511" transform="rotate(-0 450.980993 261.268511)">W</text>
    </g>
    <g id="text_60">
-    <text style="font-size: 11px; font-family: 'SFMono-Regular', 'Menlo', 'Consolas', 'Liberation Mono', monospace; text-anchor: middle; fill: #d98c00" x="510.755163" y="233.046791" transform="rotate(-0 510.755163 233.046791)">A</text>
+    <text style="font-size: 11px; font-family: 'SFMono-Regular', 'Menlo', 'Consolas', 'Liberation Mono', monospace; text-anchor: middle; fill: #d98c00" x="468.486875" y="233.046791" transform="rotate(-0 468.486875 233.046791)">G</text>
    </g>
    <g id="text_61">
-    <text style="font-size: 11px; font-family: 'SFMono-Regular', 'Menlo', 'Consolas', 'Liberation Mono', monospace; text-anchor: middle; fill: #d98c00" x="510.755163" y="261.268511" transform="rotate(-0 510.755163 261.268511)">W</text>
+    <text style="font-size: 11px; font-family: 'SFMono-Regular', 'Menlo', 'Consolas', 'Liberation Mono', monospace; text-anchor: middle; fill: #d98c00" x="468.486875" y="261.268511" transform="rotate(-0 468.486875 261.268511)">W</text>
    </g>
    <g id="text_62">
-    <text style="font-size: 11px; font-family: 'SFMono-Regular', 'Menlo', 'Consolas', 'Liberation Mono', monospace; text-anchor: middle; fill: #d98c00" x="528.261045" y="233.046791" transform="rotate(-0 528.261045 233.046791)">P</text>
+    <text style="font-size: 11px; font-family: 'SFMono-Regular', 'Menlo', 'Consolas', 'Liberation Mono', monospace; text-anchor: middle; fill: #d98c00" x="485.992757" y="233.046791" transform="rotate(-0 485.992757 233.046791)">P</text>
    </g>
    <g id="text_63">
-    <text style="font-size: 11px; font-family: 'SFMono-Regular', 'Menlo', 'Consolas', 'Liberation Mono', monospace; text-anchor: middle; fill: #d98c00" x="528.261045" y="261.268511" transform="rotate(-0 528.261045 261.268511)">W</text>
+    <text style="font-size: 11px; font-family: 'SFMono-Regular', 'Menlo', 'Consolas', 'Liberation Mono', monospace; text-anchor: middle; fill: #d98c00" x="485.992757" y="261.268511" transform="rotate(-0 485.992757 261.268511)">K</text>
    </g>
    <g id="text_64">
-    <text style="font-size: 11px; font-family: 'SFMono-Regular', 'Menlo', 'Consolas', 'Liberation Mono', monospace; text-anchor: middle; fill: #d98c00" x="545.766928" y="233.046791" transform="rotate(-0 545.766928 233.046791)">G</text>
+    <text style="font-size: 11px; font-family: 'SFMono-Regular', 'Menlo', 'Consolas', 'Liberation Mono', monospace; text-anchor: middle; fill: #d98c00" x="503.49864" y="233.046791" transform="rotate(-0 503.49864 233.046791)">A</text>
    </g>
    <g id="text_65">
-    <text style="font-size: 11px; font-family: 'SFMono-Regular', 'Menlo', 'Consolas', 'Liberation Mono', monospace; text-anchor: middle; fill: #d98c00" x="545.766928" y="261.268511" transform="rotate(-0 545.766928 261.268511)">K</text>
+    <text style="font-size: 11px; font-family: 'SFMono-Regular', 'Menlo', 'Consolas', 'Liberation Mono', monospace; text-anchor: middle; fill: #d98c00" x="503.49864" y="261.268511" transform="rotate(-0 503.49864 261.268511)">W</text>
    </g>
    <g id="text_66">
-    <text style="font-size: 11px; font-family: 'SFMono-Regular', 'Menlo', 'Consolas', 'Liberation Mono', monospace; text-anchor: middle; fill: #d98c00" x="563.27281" y="233.046791" transform="rotate(-0 563.27281 233.046791)">P</text>
+    <text style="font-size: 11px; font-family: 'SFMono-Regular', 'Menlo', 'Consolas', 'Liberation Mono', monospace; text-anchor: middle; fill: #d98c00" x="521.004522" y="233.046791" transform="rotate(-0 521.004522 233.046791)">P</text>
    </g>
    <g id="text_67">
-    <text style="font-size: 11px; font-family: 'SFMono-Regular', 'Menlo', 'Consolas', 'Liberation Mono', monospace; text-anchor: middle; fill: #d98c00" x="563.27281" y="261.268511" transform="rotate(-0 563.27281 261.268511)">W</text>
+    <text style="font-size: 11px; font-family: 'SFMono-Regular', 'Menlo', 'Consolas', 'Liberation Mono', monospace; text-anchor: middle; fill: #d98c00" x="521.004522" y="261.268511" transform="rotate(-0 521.004522 261.268511)">W</text>
    </g>
    <g id="text_68">
-    <text style="font-size: 11px; font-family: 'SFMono-Regular', 'Menlo', 'Consolas', 'Liberation Mono', monospace; text-anchor: middle; fill: #d98c00" x="580.778693" y="233.046791" transform="rotate(-0 580.778693 233.046791)">A</text>
+    <text style="font-size: 11px; font-family: 'SFMono-Regular', 'Menlo', 'Consolas', 'Liberation Mono', monospace; text-anchor: middle; fill: #d98c00" x="538.510404" y="233.046791" transform="rotate(-0 538.510404 233.046791)">G</text>
    </g>
    <g id="text_69">
-    <text style="font-size: 11px; font-family: 'SFMono-Regular', 'Menlo', 'Consolas', 'Liberation Mono', monospace; text-anchor: middle; fill: #d98c00" x="580.778693" y="261.268511" transform="rotate(-0 580.778693 261.268511)">W</text>
-   </g>
-   <g id="patch_9">
-    <path d="M 277.051634 271.863285 
-L 359.329281 271.863285 
-Q 361.429987 271.863285 361.429987 268.476679 
-L 361.429987 220.499756 
-Q 361.429987 217.113149 359.329281 217.113149 
-L 277.051634 217.113149 
-Q 274.950928 217.113149 274.950928 220.499756 
-L 274.950928 268.476679 
-Q 274.950928 271.863285 277.051634 271.863285 
-L 277.051634 271.863285 
-z
-" clip-path="url(#p52a470ce2e)" style="fill: none; stroke: #1a7a8a; stroke-width: 2; stroke-linejoin: miter"/>
+    <text style="font-size: 11px; font-family: 'SFMono-Regular', 'Menlo', 'Consolas', 'Liberation Mono', monospace; text-anchor: middle; fill: #d98c00" x="538.510404" y="261.268511" transform="rotate(-0 538.510404 261.268511)">K</text>
    </g>
    <g id="text_70">
-    <text style="font-weight: 700; font-size: 9px; font-family: 'Source Sans Pro', 'Segoe UI', 'Roboto', 'Helvetica Neue', 'Arial', sans-serif; text-anchor: middle; fill: #1a7a8a" x="318.190457" y="207.317025" transform="rotate(-0 318.190457 207.317025)">semilla (word)</text>
-   </g>
-   <g id="patch_10">
-    <path d="M 447.483857 279.765367 
-Q 326.94265 279.765367 206.401444 279.765367 
-" style="fill: none; stroke: #2e7d32; stroke-width: 1.6; stroke-linecap: round"/>
+    <text style="font-size: 11px; font-family: 'SFMono-Regular', 'Menlo', 'Consolas', 'Liberation Mono', monospace; text-anchor: middle; fill: #d98c00" x="556.016287" y="233.046791" transform="rotate(-0 556.016287 233.046791)">P</text>
    </g>
    <g id="text_71">
-    <text style="font-weight: 700; font-size: 9.5px; font-family: 'Source Sans Pro', 'Segoe UI', 'Roboto', 'Helvetica Neue', 'Arial', sans-serif; text-anchor: middle; fill: #2e7d32" x="326.943398" y="300.909195" transform="rotate(-0 326.943398 300.909195)">HSP  (score 74; la semilla sola vale 41)</text>
+    <text style="font-size: 11px; font-family: 'SFMono-Regular', 'Menlo', 'Consolas', 'Liberation Mono', monospace; text-anchor: middle; fill: #d98c00" x="556.016287" y="261.268511" transform="rotate(-0 556.016287 261.268511)">W</text>
+   </g>
+   <g id="text_72">
+    <text style="font-size: 11px; font-family: 'SFMono-Regular', 'Menlo', 'Consolas', 'Liberation Mono', monospace; text-anchor: middle; fill: #d98c00" x="573.522169" y="233.046791" transform="rotate(-0 573.522169 233.046791)">A</text>
+   </g>
+   <g id="text_73">
+    <text style="font-size: 11px; font-family: 'SFMono-Regular', 'Menlo', 'Consolas', 'Liberation Mono', monospace; text-anchor: middle; fill: #d98c00" x="573.522169" y="261.268511" transform="rotate(-0 573.522169 261.268511)">W</text>
+   </g>
+   <g id="patch_11">
+    <path d="M 269.79511 271.863285 
+L 352.072757 271.863285 
+Q 354.173463 271.863285 354.173463 268.476679 
+L 354.173463 220.499756 
+Q 354.173463 217.113149 352.072757 217.113149 
+L 269.79511 217.113149 
+Q 267.694404 217.113149 267.694404 220.499756 
+L 267.694404 268.476679 
+Q 267.694404 271.863285 269.79511 271.863285 
+L 269.79511 271.863285 
+z
+" clip-path="url(#p715620994b)" style="fill: none; stroke: #1a7a8a; stroke-width: 2; stroke-linejoin: miter"/>
+   </g>
+   <g id="text_74">
+    <text style="font-weight: 700; font-size: 9px; font-family: 'Source Sans Pro', 'Segoe UI', 'Roboto', 'Helvetica Neue', 'Arial', sans-serif; text-anchor: middle; fill: #1a7a8a" x="310.933934" y="207.317025" transform="rotate(-0 310.933934 207.317025)">semilla (word)</text>
+   </g>
+   <g id="patch_12">
+    <path d="M 440.227333 279.765367 
+Q 319.686127 279.765367 199.14492 279.765367 
+" style="fill: none; stroke: #2e7d32; stroke-width: 1.6; stroke-linecap: round"/>
+   </g>
+   <g id="text_75">
+    <text style="font-weight: 700; font-size: 9.5px; font-family: 'Source Sans Pro', 'Segoe UI', 'Roboto', 'Helvetica Neue', 'Arial', sans-serif; text-anchor: middle; fill: #2e7d32" x="319.686875" y="300.909195" transform="rotate(-0 319.686875 300.909195)">HSP: score 41 (semilla) + 13 (izq.) + 20 (der.) = 74</text>
    </g>
   </g>
  </g>
  <defs>
-  <clipPath id="pffe6e8e548">
-   <rect x="59.103398" y="7.2" width="535.68" height="177.796833"/>
+  <clipPath id="paf2ed3d622">
+   <rect x="51.846875" y="7.2" width="535.68" height="177.796833"/>
   </clipPath>
-  <clipPath id="p52a470ce2e">
-   <rect x="59.103398" y="196.511294" width="535.68" height="110.064706"/>
+  <clipPath id="p715620994b">
+   <rect x="51.846875" y="196.511294" width="535.68" height="110.064706"/>
   </clipPath>
  </defs>
 </svg>
