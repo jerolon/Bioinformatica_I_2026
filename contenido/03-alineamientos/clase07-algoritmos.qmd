@@ -18,7 +18,7 @@ El concepto de cómputo del día son las **variables** de bash y su primer
 script con argumentos; del lado de Python, las listas de listas y la
 **recursión**.
 
-## La matriz a mano
+## Parte 1: La matriz a mano
 
 **Alineamiento global:**
 
@@ -38,21 +38,22 @@ script con argumentos; del lado de Python, las listas de listas y la
 
 </iframe>
 
-## El algoritmo en Python
+## Parte 2: El algoritmo en Python
 
 Ya llenamos matrices con flechas en el pizarrón y en el papel; luego
 podemos dejar que EMBOSS las llene por nosotros. Entre una cosa y la
 otra, y para ver un poco de python, podemos hacer nuestra propia
 implementación comenzando por un problema un poco más simple la
-**subsecuencia común más larga** (*longest common subsequence*, LCS). Es
-Needleman–Wunsch con parámetros extra simples, cada *match* premia +1, y
-*mismatches* y *gaps* son 0. Al quitar los *penalties* es más fácil de
-ver el esqueleto que comparten todos los algoritmos de la mañana: matriz
-de puntajes, y una matriz de flechas para hacer backtracking. (Es el
-problema [BA5C](https://rosalind.info/problems/ba5c/) de Rosalind y está
-en el [capítulo
-5.8](https://cogniterra.org/lesson/61855/step/6?unit=53519) del libro de
-Compeau y Pevzner).
+**subsecuencia común más larga** (*longest common subsequence*, LCS).
+
+Es más o menos Needleman–Wunsch con parámetros extra simples, cada
+*match* premia +1, y *mismatches* y *gaps* son 0. Al quitar los
+*penalties* es más fácil de ver el esqueleto que comparten todos los
+algoritmos de la mañana: matriz de puntajes, y una matriz de flechas
+para hacer backtracking. (Es el problema
+[BA5C](https://rosalind.info/problems/ba5c/) de Rosalind y está en el
+[capítulo 5.8](https://cogniterra.org/lesson/61855/step/6?unit=53519)
+del libro de Compeau y Pevzner).
 
 - **Input:** dos cadenas `s` y `t`.
 - **Output:** una subsecuencia común más larga de `s` y `t`. Puede
@@ -71,7 +72,7 @@ través de las flechas re-construyendo la LCS en el proceso.
 
 ### Paso 1 · Inicialización de la matriz de puntajes y la matriz de "punteros" (flechas)
 
-``` python
+``` {.python .numberLines}
 def lcs_backtrack(v, w):
     n, m = len(v), len(w)
     puntajes = [[0] * (m + 1) for _ in range(n + 1)]
@@ -80,21 +81,20 @@ def lcs_backtrack(v, w):
 
 Qué hace cada línea:
 
-- `len(v)` es la longitud de la cadena; la asignación múltiple
+- 2: `len(v)` es la longitud de la cadena; la asignación múltiple
   `n, m = ...` guarda las dos de un jalón.
-- `[0] * (m + 1)` fabrica **un renglón**: una lista de `m + 1` ceros.
-- `[... for _ in range(n + 1)]` repite esa fabricación `n + 1` veces y
-  junta los renglones en una lista de listas: la matriz. El guion bajo
-  `_` es una variable como cualquier otra; el nombre avisa que su valor
-  no se usa, solo la repetición.
-- ¿Por qué `+ 1`? El renglón 0 y la columna 0 representan el **prefijo
-  vacío**
+- 3: `[0] * (m + 1)` fabrica **un renglón**: una lista de `m + 1` ceros.
+- 3y4: `[... for _ in range(n + 1)]` repite esa fabricación `n + 1`
+  veces y junta los renglones en una lista de listas: la matriz. El
+  guion bajo `_` es una variable como cualquier otra; el nombre avisa
+  que su valor no se usa, solo la repetición.
+- ¿Por qué `+ 1`? El renglón 0 y la columna 0 representan el **prefijo vacío**
 
 ### Paso 2 · Llenar la matriz de puntajes
 
 Seguimos dentro de la función (en python es importante la sangría):
 
-``` python
+``` {.python .numberLines}
     for i in range(1, n + 1):
         for j in range(1, m + 1):
             match = 1 if v[i - 1] == w[j - 1] else 0
@@ -166,24 +166,25 @@ def output_lcs(backtrack, v, i, j):
 
 ### Véanlo con GACT contra ATG
 
-Con `v = "GACT"` (renglones) y `w = "ATG"` (columnas), puntaje y flecha
-de cada celda:
+Estamos viendo los valores de las matrices `backtrack` y `puntajes` con
+`v = "GACT"` (renglones) y `w = "ATG"` (columnas), puntaje y flecha de
+cada celda:
 
 |   |   | A | T | G |
-|----|----|----|----|----|
-|  | [0]{style="background-color: lightgreen;"} | 0 | 0 | 0 |
-| **G** | 0 | [↓ 0]{style="background-color: lightgreen;"} | ↓ 0 | ↘ 1 |
-| **A** | 0 | ↘ 1 | [→ 1]{style="background-color: lightgreen;"} | ↓ 1 |
-| **C** | 0 | ↓ 1 | [↓ 1]{style="background-color: lightgreen;"} | ↓ 1 |
-| **T** | 0 | ↓ 1 | ↘ 2 | [→ 2]{style="background-color: lightgreen;"} |
+|---------------|---------------|---------------|---------------|---------------|
+|  | 0 | 0 | 0 | 0 |
+| **G** | [0]{style="background-color: lightgreen;"} | ↓ 0 | ↓ 0 | ↘ 1 |
+| **A** | 0 | [↘ 1]{style="background-color: lightgreen;"} | → 1 | ↓ 1 |
+| **C** | 0 | [↓ 1]{style="background-color: lightgreen;"} | ↓ 1 | ↓ 1 |
+| **T** | 0 | ↓ 1 | [↘ 2]{style="background-color: lightgreen;"} | [→ 2]{style="background-color: lightgreen;"} |
 
 La esquina inferior derecha dice 2: la LCS mide dos letras. ¿Cuáles? A
 caminar. La esquina tiene `→`: muévanse a la izquierda, a la celda `↘ 2`
 del renglón T. Diagonal: esa celda aporta la **T** y salta al renglón C,
 columna A (`↓ 1`), que sube a la celda `↘ 1` del renglón A. Otra
-diagonal: aporta la **A** y salta al renglón G, columna 0 — borde, se
-acabó. El camino pisó las letras en orden T, A; la recursión las pega de
-regreso: **AT**.
+diagonal: aporta la **A** y salta al renglón G, columna 0 en el borde,
+se acabó. El camino pisó las letras en orden T, A; que en reversa, son
+la solución a LCS: **AT**.
 
 Comprueben dos o tres flechas de la tabla contra el paso 3: es el sudoku
 que acabamos de llenar en papel (con match = 1 y gaps = 0).
@@ -296,7 +297,7 @@ ahora.
 ### De LCS a Needleman–Wunsch: el alineamiento global
 
 El [siguiente](https://cogniterra.org/lesson/61860/step/3?unit=53524)
-*Code Challenge* del libro es exactamente eso. En Rosalind es el
+*Code Challenge* del libro el alineamineto global. En Rosalind es el
 problema [ba5e](https://rosalind.info/problems/ba5e/) (sort of, este
 último usa una matriz de puntaje (substitución)).
 
@@ -307,12 +308,18 @@ problema [ba5e](https://rosalind.info/problems/ba5e/) (sort of, este
   haber varios alineamientos óptimos; cualquiera es válido.)
 
 Ojo con los signos: los castigos llegan como números **positivos**
-("mismatch penalty 1", "indel penalty 2") y es el código el que los
-resta. Y en vez de una matriz de sustitución completa como BLOSUM62,
-este problema usa la más sencilla posible: un solo número para cualquier
+("mismatch penalty 1", "indel penalty 2") y el que los resta es el
+código. En vez de una matriz de sustitución completa como BLOSUM62, este
+problema usa la más sencilla posible: un solo número para cualquier
 match y otro para cualquier mismatch.
 
-Sobre una copia del `lcs.py` podemos modificar tres cosas.
+Sobre una copia del `lcs.py` que llamaremos `alineamiento_global.py`
+podemos modificar tres cosas.
+
+``` bash
+cp lcs.py alineamiento_global.py
+nano alineamiento_global.py
+```
 
 #### Cambio 1 · Los bordes ya no son gratis
 
@@ -338,9 +345,9 @@ Y como los bordes ahora sí forman parte del camino (una racha de gaps al
 inicio), también llevan flecha: todo el borde izquierdo baja, todo el
 borde superior corre a la derecha.
 
-#### Cambio 2 · La recurrencia cobra de verdad
+#### Cambio 2 · Entran los scores al llenar la matriz y cambia el orden del if
 
-``` python
+``` {.python .numberLines}
     for i in range(1, n + 1):
         for j in range(1, m + 1):
             if v[i - 1] == w[j - 1]:
@@ -363,10 +370,9 @@ borde superior corre a la derecha.
   `+match_reward` si las letras coinciden y `-mismatch_penalty` si no.
   La guardamos en la variable `diagonal` porque se usa dos veces (la
   usamos en el `max` y en el `if`).
-- En este punto, podríamos agregar una función para que `diagonal`
-  refleje el valor de una [matriz de
-  sustitución](https://jerolon.github.io/Bioinformatica_I_2026/contenido/02-secuencias/matrices-de-sustitucion.html)
-  como PAM o Blosum.
+- En este punto, podríamos modificar para que `diagonal` refleje el
+  valor de una [matriz de sustitución](#0) como PAM o Blosum.
+  Simplemente, `diagonal = MatrizSust[i,j]`
 - Las entradas vertical y horizontal descuentan `indel_penalty`.
 - El orden de los `if` se volteó: la diagonal se pregunta **primero**.
   En LCS eso habría sido un bug porque una `↘` podía ser un *mismatch*
@@ -384,7 +390,7 @@ nada": aporta una **columna** completa del alineamiento, dos letras
 iguales en un match, dos letras diferentes en un mismatch o una letra y
 un "-" donde hay gaps.
 
-``` python
+``` {.python .numberLines}
 def output_alignment(backtrack, v, w, i, j):
     alin_v, alin_w = [], []
     while i > 0 or j > 0:
@@ -406,18 +412,19 @@ def output_alignment(backtrack, v, w, i, j):
     return "".join(alin_v), "".join(alin_w)
 ```
 
-- También le pasamos i, j para decirle donde comenzar el traceback. Como
+- 1: También le pasamos i, j para decirle donde comenzar el traceback. Como
   es global, i,j sigue siendo la esquina inferior derecha.
-- La función regresa **dos** cadenas a la vez
-- `↓` escribe letra de `v` sobre un guion; `→`, guion sobre letra de
-  `w`; `↘`, las dos letras, sean iguales o no.
-- El caso base cambió: `i == 0 and j == 0`. En LCS, tocar cualquier
+- 3: El caso base cambió: `i == 0 and j == 0`. En LCS, tocar cualquier
   borde era "se acabó"; aquí los bordes tienen flechas y hay que
   recorrerlos, escribiendo los gaps iniciales que ya pagamos en el
   cambio 1. La caminata solo termina en la esquina superior izquierda.
+- 4: `↓` escribe letra de `v` sobre un guion; 8: `→`, guion sobre letra de
+  `w`; 12: `↘`, las dos letras, sean iguales o no.
+- 19: La función regresa **dos** cadenas a la vez
+
 
 El puntaje no hay que reconstruirlo: ya está en la esquina inferior
-derecha, `puntajes[n][m]`. Y fíjense en los ejemplos de abajo: puede ser
+derecha, `puntajes[n][m]`. Fíjense en el ejemplo de abajo: puede ser
 **negativo**. "El mejor alineamiento posible" no significa "un buen
 alineamiento" pues global obliga a pagar cada letra de las dos cadenas,
 que es justo lo que van a ver con `needle` en el ejercicio 3 de la parte
@@ -429,27 +436,27 @@ Premio 1, mismatch 1, indel 2 (el primer ejemplo del problema). La
 matriz, con puntaje y flecha:
 
 |   |   | G | A | T |
-|----|----|----|----|----|
-|  | \colorbox{green!30}{0} | → -2 | → -4 | → -6 |
-| **G** | ↓ -2 | \colorbox{green!30}{↘ 1} | → -1 | → -3 |
-| **A** | ↓ -4 | ↓ -1 | \colorbox{green!30}{↘ 2} | → 0 |
-| **G** | ↓ -6 | ↘ -3 | \colorbox{green!30}{↓ 0} | ↘ 1 |
-| **A** | ↓ -8 | ↓ -5 | ↘ -2 | \colorbox{green!30}{↘ -1} |
+|---------------|---------------|---------------|---------------|---------------|
+|  | [0]{style="background-color: lightgreen;"} | → -2 | → -4 | → -6 |
+| **G** | ↓ -2 | [↘ 1]{style="background-color: lightgreen;"} | → -1 | → -3 |
+| **A** | ↓ -4 | ↓ -1 | [↘ 2]{style="background-color: lightgreen;"} | → 0 |
+| **G** | ↓ -6 | ↘ -3 | [↓ 0]{style="background-color: lightgreen;"} | ↘ 1 |
+| **A** | ↓ -8 | ↓ -5 | ↘ -2 | [↘ -1]{style="background-color: lightgreen;"} |
 
 Dos cosas nuevas respecto a la tabla de LCS: los bordes cuestan (la
 columna 0 baja de -2 en -2) y hay celdas negativas por todos lados. La
-esquina dice -1: ese es el puntaje. La caminata: `↘` escribe la columna
+esquina dice -1: ese es el puntaje. La caminata `↘` escribe la columna
 A/T (¡un desapareamiento!), `↓` escribe G/-, y dos `↘` más escriben A/A
-y G/G. Leído de regreso:
+y G/G. Leído en reversa nos da el alineamiento global óptimo:
 
 ```         
 GAGA
 GA-T
 ```
 
-Existen varios empates: por ejemplo, en la esquina el `↓` también
-explicaba el -1, y habría dado `GAGA` sobre `GAT-` — mismo puntaje, otro
-alineamiento óptimo. Eso es lo que eligió el orden de los `if`.
+Existen varios empates: por ejemplo, en la esquina, bajar `↓` también
+explicaba el -1, y habría dado `GAGA` sobre `GAT-`. Mismo puntaje, otro
+alineamiento óptimo. El desempate es por el orden de los `if`.
 
 #### Todo junto
 
@@ -546,7 +553,6 @@ for match, mismatch, indel, s, t in casos:
 ```
 
 ``` bash
-nano alineamiento_global.py
 python3 alineamiento_global.py
 ```
 
@@ -571,6 +577,11 @@ Alignment](https://cogniterra.org/lesson/61860/step/10?unit=53524) o
   precedido de dicho puntaje.
 
 Tres grandes modificaciones sobre `alineamiento_global.py`.
+
+``` bash
+cp alineamiento_global.py alineamiento_local.py
+nano alineamiento_locall.py
+```
 
 #### Modificación 1 · El cero vuelve a entrar en los bordes y además en la recurrencia
 
@@ -607,11 +618,10 @@ def local_backtrack(match_reward, mismatch_penalty, indel_penalty, v, w):
 ```
 
 El términos técnicos: "si lo mejor que puedo hacer llegando hasta aquí
-es deber puntos, mejor nadota". Que el alinieamiento comience en esa
-celda. Por eso en lugar flecha es la cadena vacía `""`, que es la misma
+es deber puntos, mejor nadota". Que el alineamiento comience en esa
+celda. Por eso en lugar de flecha es la cadena vacía `""`, que es la misma
 con la que nació `backtrack`. En LCS y en global, `""` significaba
-"celda sin llenar"; aquí se convierte en la cuarta señal: **alto**. Y
-fíjense que el `if` del 0 se pregunta primero: en un empate entre
+"celda sin llenar"; aquí se convierte en una señal de **alto**. También fíjense que el `if` del 0 se pregunta primero: en un empate entre
 "empezar de nuevo" y "venir arrastrando un cero", gana empezar de nuevo,
 y sale el más corto de los alineamientos óptimos.
 
@@ -652,7 +662,7 @@ completas, así que el puntaje máximo esperaba en `puntajes[n][m]`. En
 local el mejor alineamiento puede terminar donde sea: hay que **buscar**
 el máximo en toda la matriz.
 
-``` python
+``` {.python .numberLines}
 def local_alignment(match_reward: float, mismatch_penalty: float,
                     indel_penalty: float, s: str, t: str) -> Tuple[float, str, str]:
     """
@@ -670,13 +680,14 @@ def local_alignment(match_reward: float, mismatch_penalty: float,
     return mejor, alin_s, alin_t
 ```
 
-- Otro par de `for` anidados barre la matriz completa; el `>` estricto
-  se queda con el **primer** máximo que encuentra (otro desempate
-  silencioso).
-- `mejor` arranca en 0, no en menos infinito. Consecuencia: el resultado
+- 9: `mejor` se inicializa en 0, no en menos infinito. Consecuencia: el resultado
   nunca es negativo, si ninguna región vale la pena, la respuesta es 0
   con dos cadenas vacías. **Smith–Waterman nunca dice "no encontré
   nada"**.
+- 10: Otro par de `for` anidados barre la matriz completa; el `>` estricto
+  se queda con el **primer** máximo que encuentra (otro desempate
+  silencioso).
+
 
 #### El mismo par, otra pregunta
 
@@ -685,9 +696,9 @@ ejemplo de la sección global, el que dio -1. La matriz local:
 
 |   |   | G | A | T |
 |----|----|----|----|----|
-|  | \colorbox{green!30}{0} | 0 | 0 | 0 |
-| **G** | 0 | \colorbox{green!30}{↘ 1} | 0 | 0 |
-| **A** | 0 | 0 | \colorbox{green!30}{↘ 2} | 0 |
+|  | 0 | 0 | 0 | 0 |
+| **G** | 0 | [↘ 1]{style="background-color: lightgreen;"} | 0 | 0 |
+| **A** | 0 | 0 | [↘ 2]{style="background-color: lightgreen;"} | 0 |
 | **G** | 0 | ↘ 1 | 0 | ↘ 1 |
 | **A** | 0 | 0 | ↘ 2 | 0 |
 
@@ -805,7 +816,6 @@ for match, mismatch, indel, s, t in casos:
 ```
 
 ``` bash
-nano alineamiento_local.py
 python3 alineamiento_local.py
 ```
 
@@ -827,7 +837,7 @@ Por eso sus salidas de EMBOSS no van a coincidir número por número con
 las de sus scripts — pero el algoritmo de adentro es el que ya
 escribieron dos veces.
 
-## Parte 2 · EMBOSS: needle y water
+## Parte 3 · EMBOSS: needle y water
 
 Ninguna secuencia de hoy es de juguete. Todas salen del proyecto
 R-spondina/LGR de *Deroceras laeve* (la babosa del laboratorio) y cada
@@ -863,7 +873,7 @@ anticuerpo comercial "anti-LGR5" hecho contra la proteína humana.
 Los archivos, ya en el servidor:
 
 | archivo | contenido |
-|----|----|
+|------------------------------------|------------------------------------|
 | `01_lgr_paralogos_4seq.faa` | 4 proteínas LGR: hLGR5 y hLGR4 (humanas), Dla_chr6 y Dla_chr10 (babosa) |
 | `02_contraste_locus_LGRcompleto_vs_LRRonly.faa` | Dla019 (receptor completo) y Dla027/Dla028 (solo-LRR, tándem de chr13) |
 | `03_sondas_HCR_rspo2.fasta` | las 20 ventanas de 52 nt del set de sondas HCR DLA-rspo2-B2 |
@@ -1010,7 +1020,7 @@ chmod +x alinear_par.sh
 Con sus resultados llenen esta tabla en su libreta o su README:
 
 | par | evento que los separó | identidad |
-|----|----|----|
+|------------------------|------------------------|------------------------|
 | Dla_chr6 vs Dla_chr10 | duplicación genómica completa (ohnólogos) |  |
 | hLGR5 vs hLGR4 | duplicación génica (parálogos humanos) |  |
 | humano vs babosa (los 4 pares) | especiación, \~600 millones de años |  |
