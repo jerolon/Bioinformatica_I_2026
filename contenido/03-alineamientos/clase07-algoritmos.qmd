@@ -172,7 +172,7 @@ Estamos viendo los valores de las matrices `backtrack` y `puntajes` con
 cada celda:
 
 |   |   | A | T | G |
-|----|----|----|----|----|
+|---------------|---------------|---------------|---------------|---------------|
 |  | 0 | 0 | 0 | 0 |
 | **G** | [0]{style="background-color: lightgreen;"} | ↓ 0 | ↓ 0 | ↘ 1 |
 | **A** | 0 | [↘ 1]{style="background-color: lightgreen;"} | → 1 | ↓ 1 |
@@ -436,7 +436,7 @@ Premio 1, mismatch 1, indel 2 (el primer ejemplo del problema). La
 matriz, con puntaje y flecha:
 
 |   |   | G | A | T |
-|----|----|----|----|----|
+|---------------|---------------|---------------|---------------|---------------|
 |  | [0]{style="background-color: lightgreen;"} | → -2 | → -4 | → -6 |
 | **G** | ↓ -2 | [↘ 1]{style="background-color: lightgreen;"} | → -1 | → -3 |
 | **A** | ↓ -4 | ↓ -1 | [↘ 2]{style="background-color: lightgreen;"} | → 0 |
@@ -893,29 +893,37 @@ ver dónde se expresan estos genes, el laboratorio usa sondas de
 hibridación *in situ* (HCR e ISH); para ver la proteína, se evaluó un
 anticuerpo comercial "anti-LGR5" hecho contra la proteína humana.
 
+Esto es algo relativamente nuevo. La consecuencia de tener a un par de
+organismos modelo como representantes de todos los invertebrados. Se
+pensaba que la vía LGR5/Rspo2 era una innovación única de vertebrados.
+
+Ahora sabemos que probablemente esta vía estaba conservada en el último
+ancestro común de todos los bilaterados.
+
 Los archivos, ya en el servidor:
 
 | archivo | contenido |
-|----|----|
+|------------------------------------|------------------------------------|
 | `01_lgr_paralogos_4seq.faa` | 4 proteínas LGR: hLGR5 y hLGR4 (humanas), Dla_chr6 y Dla_chr10 (babosa) |
 | `02_contraste_locus_LGRcompleto_vs_LRRonly.faa` | Dla019 (receptor completo) y Dla027/Dla028 (solo-LRR, tándem de chr13) |
 | `03_sondas_HCR_rspo2.fasta` | las 20 ventanas de 52 nt del set de sondas HCR DLA-rspo2-B2 |
 | `04_amplicones_ISH_rspo2_lgr5.fa` | amplicones de PCR para sondas ISH de *rspo2* y *lgr5*; sus primers van en el encabezado |
 | `05_inmunogeno_PA5-23000.faa` | el péptido de 50 aa contra el que se produjo el anticuerpo comercial |
 | `06_epitopo_nucleo_22aa.faa` | el núcleo de 22 aa de ese inmunógeno |
-| `clave_respuesta_mafft_4paralogos.aln.fasta` | el alineamiento múltiple real del pipeline del laboratorio |
 
 ## Preparación
 
-EMBOSS está instalado en `ken` como módulo. `module` es el sistema con
-el que los clústers académicos cargan software sin que cada quien edite
-su `PATH` a mano; lo van a encontrar en todos lados.
+Recuerden que `module` es el sistema con el que los clústers académicos
+cargan software sin que cada quien edite su `PATH` a mano. En este caso,
+cargamos un módulo desde mi carpeta jmiranda. Si les da curiosidad como
+funciona module, pueden leer lo que está en modulefiles.
 
 ``` bash
 ssh usuario@ken.lavis.unam.mx
 mkdir -p /mnt/data/bioinfo1/jmiranda/sesion07/{datos,resultados,scripts}
 cd /mnt/data/bioinfo1/jmiranda/sesion07/
-module use /mnt/data/bioinfo1/jmiranda/modulefiles module load emboss
+module use /mnt/data/bioinfo1/jmiranda/modulefiles
+module load emboss
 needle -version
 ```
 
@@ -938,23 +946,10 @@ lo sustituye por la ruta completa antes de ejecutar. Los nombres de
 archivo de hoy son largos a propósito: escriban las primeras letras y
 completen con la tecla TAB.
 
-::: pendiente
-Instructor, antes de la clase: (1) verificar que el módulo
-`emboss/6.6.0` carga tal cual (la receta está en el README de planeación
-de esta práctica); (2) copiar los archivos de
-`planeacion/practica_alineamiento_pareado/` a la ruta `$origen` que se
-fije y corregirla aquí; (3) correr los comandos de la práctica una vez:
-los números de las soluciones son valores de referencia recalculados con
-una reimplementación de needle/water y pueden variar en decimales
-respecto de la salida exacta de EMBOSS; (4) confirmar que `python3`
-corre en `ken` sin cargar módulos, porque la sección de Python lo usa.
-:::
-
 ### Ejercicio 1. Los dos ohnólogos de la babosa
 
-La primera pregunta: ¿qué tanto se parecen entre sí los dos receptores
-LGR de la babosa, separados por la duplicación genómica de los
-gasterópodos?
+¿Qué tanto se parecen entre sí los dos receptores LGR de la babosa,
+separados por la duplicación genómica de los gasterópodos?
 
 EMBOSS puede tomar una secuencia específica de un archivo multi-FASTA
 con la sintaxis `archivo:identificador`:
@@ -972,7 +967,7 @@ declara con qué se corrió el alineamiento (matriz de sustitución,
 penalizaciones de gap) seguido de `Length`, `Identity`, `Similarity`,
 `Gaps`, `Score`.
 
-¿Qué matriz usó `needle` sin que ustedes se la pidieran? ¿Y qué
+¿Qué matriz usó `needle` sin que ustedes la pidiéramos? ¿Y qué
 diferencia hay entre *identity* y *similarity*?
 
 ::: {.callout-note collapse="true"}
@@ -1049,7 +1044,7 @@ loops)
 Con sus resultados llenen esta tabla en su libreta o su README:
 
 | par | evento que los separó | identidad |
-|----|----|----|
+|------------------------|------------------------|------------------------|
 | Dla_chr6 vs Dla_chr10 | duplicación genómica completa (ohnólogos) |  |
 | hLGR5 vs hLGR4 | duplicación génica (parálogos humanos) |  |
 | humano vs babosa (los 4 pares) | especiación, \~600 millones de años |  |
@@ -1304,6 +1299,23 @@ En su repositorio, dentro de `sesion07/`:
 
 No suban los archivos de `datos/`: en su `README.md` documenten de dónde
 se copiaron, que es lo que hace reproducible el análisis.
+
+## Opcional:
+
+Resolver los ejercicios del Capítulo 5. [How do we compare biological
+secuences](https://cogniterra.org/lesson/61830/step/1?unit=53494) del
+libro Bioinformatics Algorithms.
+
++0.1 puntos en el examen parcial de la unidad por cada ? o code
+challenge resulto (hoy resolvimos tres, que también valen).
+
+¡Casi dos puntos extras si los resuelven todos!
+
+¿Puedo usar IA? Sí. Y si lo haces, también intenta resolverlos en
+Python, Go, Java o C++. O pide a la IA que te explique qué hace cada
+línea. Experimenta con diferentes implementaciones. Pide que resuelva el
+ejercicio en python pero que introduzca bugs sutiles y líneas en
+desorden. Haz una animación que explique cómo funciona el algoritmo.
 
 ## Fuentes {.unnumbered}
 
