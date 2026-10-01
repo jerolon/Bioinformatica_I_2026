@@ -15,6 +15,34 @@ La **idea** del turista de Manhattan viene de Compeau y Pevzner,
 citando; **sus figuras no**. Esta se dibuja desde cero: pesos propios,
 geometría propia, y los números que anota los calcula el script.
 
+## Figuras externas (no generadas)
+
+Reproducciones, no redibujos: se usan con atribución completa en el caption,
+con fines docentes. Ambas van en `clase07-algoritmos.qmd`, en "El material de
+hoy" (receptores LGR).
+
+- `sato2009_organoides_lgr5.webp` — Figura 1 de Sato *et al*. (2009),
+  *Nature* 459:262–265, doi:10.1038/nature07935. `@fig-organoide-lgr5`.
+- `wang2025_lgr5_dominios.png` — Figura 1 de Wang *et al*. (2025), *Cancer
+  Metastasis Rev* 44:23, doi:10.1007/s10555-024-10239-x (PMC11742290).
+  `@fig-lgr5-dominios`. Topología GPCR + dominios de LGR5 (péptido señal,
+  17 LRR, 7TM).
+- `choi2018_hcr_mecanismo.png` — Figura 2 (recorte) de Choi *et al*. (2018),
+  *Development* 145:dev165753, doi:10.1242/dev.165753 (PMC6031405).
+  `@fig-hcr-mecanismo`, en el ejercicio 4. Mecanismo de HCR v3.0:
+  medias-sondas con iniciador dividido + amplificación con horquillas H1/H2.
+
+## Figuras propias (datos del laboratorio)
+
+Imágenes del proyecto, sin fuente externa que citar.
+
+- `lgr5lrr_ish.png` — hibridación *in situ* en intestino de *D. laeve* con la
+  sonda "lgr5" (que ancla en el gen solo-LRR del cromosoma 13).
+  `@fig-lgr5lrr-ish`, al cierre del ejercicio 4.
+- `lgr5_inmuno.png` — inmunotinción con el anticuerpo PA5-23000 en tejido de
+  *D. laeve*: produce patrón aunque el epítopo no existe en la babosa.
+  `@fig-lgr5-inmuno`, al cierre del ejercicio 5, antes de "Para entregar".
+
 ## Regenerar
 
 ```bash

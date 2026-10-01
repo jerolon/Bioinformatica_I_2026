@@ -88,7 +88,8 @@ Qué hace cada línea:
   veces y junta los renglones en una lista de listas: la matriz. El
   guion bajo `_` es una variable como cualquier otra; el nombre avisa
   que su valor no se usa, solo la repetición.
-- ¿Por qué `+ 1`? El renglón 0 y la columna 0 representan el **prefijo vacío**
+- ¿Por qué `+ 1`? El renglón 0 y la columna 0 representan el **prefijo
+  vacío**
 
 ### Paso 2 · Llenar la matriz de puntajes
 
@@ -171,7 +172,7 @@ Estamos viendo los valores de las matrices `backtrack` y `puntajes` con
 cada celda:
 
 |   |   | A | T | G |
-|---------------|---------------|---------------|---------------|---------------|
+|----|----|----|----|----|
 |  | 0 | 0 | 0 | 0 |
 | **G** | [0]{style="background-color: lightgreen;"} | ↓ 0 | ↓ 0 | ↘ 1 |
 | **A** | 0 | [↘ 1]{style="background-color: lightgreen;"} | → 1 | ↓ 1 |
@@ -412,16 +413,15 @@ def output_alignment(backtrack, v, w, i, j):
     return "".join(alin_v), "".join(alin_w)
 ```
 
-- 1: También le pasamos i, j para decirle donde comenzar el traceback. Como
-  es global, i,j sigue siendo la esquina inferior derecha.
+- 1: También le pasamos i, j para decirle donde comenzar el traceback.
+  Como es global, i,j sigue siendo la esquina inferior derecha.
 - 3: El caso base cambió: `i == 0 and j == 0`. En LCS, tocar cualquier
   borde era "se acabó"; aquí los bordes tienen flechas y hay que
   recorrerlos, escribiendo los gaps iniciales que ya pagamos en el
   cambio 1. La caminata solo termina en la esquina superior izquierda.
-- 4: `↓` escribe letra de `v` sobre un guion; 8: `→`, guion sobre letra de
-  `w`; 12: `↘`, las dos letras, sean iguales o no.
+- 4: `↓` escribe letra de `v` sobre un guion; 8: `→`, guion sobre letra
+  de `w`; 12: `↘`, las dos letras, sean iguales o no.
 - 19: La función regresa **dos** cadenas a la vez
-
 
 El puntaje no hay que reconstruirlo: ya está en la esquina inferior
 derecha, `puntajes[n][m]`. Fíjense en el ejemplo de abajo: puede ser
@@ -436,7 +436,7 @@ Premio 1, mismatch 1, indel 2 (el primer ejemplo del problema). La
 matriz, con puntaje y flecha:
 
 |   |   | G | A | T |
-|---------------|---------------|---------------|---------------|---------------|
+|----|----|----|----|----|
 |  | [0]{style="background-color: lightgreen;"} | → -2 | → -4 | → -6 |
 | **G** | ↓ -2 | [↘ 1]{style="background-color: lightgreen;"} | → -1 | → -3 |
 | **A** | ↓ -4 | ↓ -1 | [↘ 2]{style="background-color: lightgreen;"} | → 0 |
@@ -619,9 +619,10 @@ def local_backtrack(match_reward, mismatch_penalty, indel_penalty, v, w):
 
 El términos técnicos: "si lo mejor que puedo hacer llegando hasta aquí
 es deber puntos, mejor nadota". Que el alineamiento comience en esa
-celda. Por eso en lugar de flecha es la cadena vacía `""`, que es la misma
-con la que nació `backtrack`. En LCS y en global, `""` significaba
-"celda sin llenar"; aquí se convierte en una señal de **alto**. También fíjense que el `if` del 0 se pregunta primero: en un empate entre
+celda. Por eso en lugar de flecha es la cadena vacía `""`, que es la
+misma con la que nació `backtrack`. En LCS y en global, `""` significaba
+"celda sin llenar"; aquí se convierte en una señal de **alto**. También
+fíjense que el `if` del 0 se pregunta primero: en un empate entre
 "empezar de nuevo" y "venir arrastrando un cero", gana empezar de nuevo,
 y sale el más corto de los alineamientos óptimos.
 
@@ -680,14 +681,13 @@ def local_alignment(match_reward: float, mismatch_penalty: float,
     return mejor, alin_s, alin_t
 ```
 
-- 9: `mejor` se inicializa en 0, no en menos infinito. Consecuencia: el resultado
-  nunca es negativo, si ninguna región vale la pena, la respuesta es 0
-  con dos cadenas vacías. **Smith–Waterman nunca dice "no encontré
-  nada"**.
-- 10: Otro par de `for` anidados barre la matriz completa; el `>` estricto
-  se queda con el **primer** máximo que encuentra (otro desempate
-  silencioso).
-
+- 9: `mejor` se inicializa en 0, no en menos infinito. Consecuencia: el
+  resultado nunca es negativo, si ninguna región vale la pena, la
+  respuesta es 0 con dos cadenas vacías. **Smith–Waterman nunca dice "no
+  encontré nada"**.
+- 10: Otro par de `for` anidados barre la matriz completa; el `>`
+  estricto se queda con el **primer** máximo que encuentra (otro
+  desempate silencioso).
 
 #### El mismo par, otra pregunta
 
@@ -839,7 +839,10 @@ escribieron dos veces.
 
 ## Parte 3 · EMBOSS: needle y water
 
-Ninguna secuencia de hoy es de juguete. Todas salen del proyecto
+Si nos da tiempo de llegar a esta sección durante la práctica, quiero
+explorar el uso de estas herramientas ya implementadas en la terminal.
+Una implementación algo vieja es la que viene en las herramientas de
+EMBOSS. Ninguna secuencia de hoy es de juguete. Todas salen del proyecto
 R-spondina/LGR de *Deroceras laeve* (la babosa del laboratorio) y cada
 ejercicio es una pregunta que el proyecto tuvo que responder de verdad
 con estos mismos archivos. La respuesta de un alineamiento decidió,
@@ -856,11 +859,31 @@ la vía Wnt. Sato *et al*., demostraron en 2009 que una sola célula del
 intestino Lgr5 positiva podía dar lugar a todas las células del órgano
 en cultivo: un organoide.
 
+![Una sola célula Lgr5⁺ construye un "mini-intestino" en cultivo. **a**,
+crecimiento de un organoide a partir de una sola célula a lo largo de 5
+días; las flechas señalan las criptas que van brotando. **b**, **c**,
+organoides jóvenes y maduros en el cultivo. **d**, las células Lgr5⁺
+(verde) quedan confinadas a las puntas de las criptas. **e**, esquema
+del organoide: lumen al centro, dominio de vellosidad y dominios de
+cripta donde viven las células troncales. Figura 1 de Sato *et al*.
+(2009), *Nature*
+459:262–265.](../../figuras/sesion07/sato2009_organoides_lgr5.webp){#fig-organoide-lgr5
+width="60%"}
+
 Su arquitectura para esta práctica: un **ectodominio de repeticiones
 ricas en leucina (LRR)** que reconoce al ligando, seguido de un
 **dominio de siete hélices transmembranales (7TM)** que transmite señal
 a la célula. El laboratorio quiere saber dónde está esa maquinaria en la
 babosa (y si funciona durante la regeneración).
+
+![La arquitectura de LGR5. **a**, topología de un GPCR: siete hélices
+transmembranales (TM1–TM7) conectadas por asas extracelulares (ECL) e
+intracelulares (ICL). **b**, los dominios sobre la secuencia: péptido
+señal, el ectodominio de 17 repeticiones ricas en leucina (LRR, residuos
+\~67–446) y las siete hélices transmembranales (\~574–820). Son los dos
+bloques que van a perseguir con `needle` y `water` en los ejercicios de
+hoy. Figura 1 de Wang *et al*. (2025), *Cancer Metastasis Rev*
+44:23.](../../figuras/sesion07/wang2025_lgr5_dominios.png){#fig-lgr5-dominios}
 
 **El genoma de la babosa** tiene dos receptores LGR completos (en los
 cromosomas 6 y 10, **ohnólogos**: parálogos nacidos de la duplicación
@@ -873,7 +896,7 @@ anticuerpo comercial "anti-LGR5" hecho contra la proteína humana.
 Los archivos, ya en el servidor:
 
 | archivo | contenido |
-|------------------------------------|------------------------------------|
+|----|----|
 | `01_lgr_paralogos_4seq.faa` | 4 proteínas LGR: hLGR5 y hLGR4 (humanas), Dla_chr6 y Dla_chr10 (babosa) |
 | `02_contraste_locus_LGRcompleto_vs_LRRonly.faa` | Dla019 (receptor completo) y Dla027/Dla028 (solo-LRR, tándem de chr13) |
 | `03_sondas_HCR_rspo2.fasta` | las 20 ventanas de 52 nt del set de sondas HCR DLA-rspo2-B2 |
@@ -889,7 +912,11 @@ el que los clústers académicos cargan software sin que cada quien edite
 su `PATH` a mano; lo van a encontrar en todos lados.
 
 ``` bash
-ssh usuario@ken.lavis.unam.mx mkdir -p ~/bioinfo1/sesion07/datos cd ~/bioinfo1/sesion07  module use /mnt/data/bioinfo1/jmiranda/modulefiles module load emboss needle -version
+ssh usuario@ken.lavis.unam.mx
+mkdir -p /mnt/data/bioinfo1/jmiranda/sesion07/{datos,resultados,scripts}
+cd /mnt/data/bioinfo1/jmiranda/sesion07/
+module use /mnt/data/bioinfo1/jmiranda/modulefiles module load emboss
+needle -version
 ```
 
 Si `needle -version` responde con algo como `EMBOSS:6.6.0.0`, están
@@ -900,7 +927,9 @@ Waterman.
 Copien los datos usando la primera variable del día:
 
 ``` bash
-origen=/mnt/data/bioinfo1/jmiranda/sesion07 cp $origen/* datos/ ls -l datos/
+origen=/mnt/data/bioinfo1/jmiranda/sesion07/datos
+cp $origen/* datos/
+ls -l datos/
 ```
 
 Una variable de bash se define **sin espacios** alrededor del `=` y se
@@ -934,8 +963,8 @@ con la sintaxis `archivo:identificador`:
 needle -asequence datos/01_lgr_paralogos_4seq.faa:Dla_chr6_LGR \
        -bsequence datos/01_lgr_paralogos_4seq.faa:Dla_chr10_LGR \
        -gapopen 10.0 -gapextend 0.5 \
-       -outfile chr6_vs_chr10.needle
-less chr6_vs_chr10.needle
+       -outfile resultados/chr6_vs_chr10.needle
+less resultados/chr6_vs_chr10.needle
 ```
 
 Miren la salida con calma (salgan de `less` con `q`). El encabezado
@@ -981,11 +1010,11 @@ mismo comando cinco veces, haremos un script de bash.
 
 En un script de bash, `$1` y `$2` son el primer y el segundo argumento
 con que se invoca. Creen `alinear_par.sh` con su editor
-(`nano alinear_par.sh`):
+(`nano scripts/alinear_par.sh`):
 
 ``` bash
 #!/usr/bin/env bash
-# uso: ./alinear_par.sh ID1 ID2
+# uso: scripts/alinear_par.sh ID1 ID2
 # Alineamiento global de dos secuencias del archivo de parálogos LGR.
 
 if [ $# -ne 2 ]; then
@@ -997,30 +1026,30 @@ archivo=datos/01_lgr_paralogos_4seq.faa
 
 needle -asequence $archivo:$1 -bsequence $archivo:$2 \
        -gapopen 10.0 -gapextend 0.5 \
-       -outfile ${1}_vs_${2}.needle
+       -outfile resultados/${1}_vs_${2}.needle
 
-grep -E "Identity|Similarity|Gaps|Score" ${1}_vs_${2}.needle
+grep -E "Identity|Similarity|Gaps|Score" resultados/${1}_vs_${2}.needle
 ```
 
 Denle permiso de ejecución y complétense la escalera:
 
 ``` bash
-chmod +x alinear_par.sh
-./alinear_par.sh
-./alinear_par.sh hLGR5_O75473 hLGR4_Q9BXB1
-./alinear_par.sh hLGR5_O75473 Dla_chr6_LGR
-./alinear_par.sh hLGR5_O75473 Dla_chr10_LGR
-./alinear_par.sh hLGR4_Q9BXB1 Dla_chr6_LGR
-./alinear_par.sh hLGR4_Q9BXB1 Dla_chr10_LGR
+chmod +x scripts/alinear_par.sh
+scripts/alinear_par.sh
+scripts/alinear_par.sh hLGR5_O75473 hLGR4_Q9BXB1
+scripts/alinear_par.sh hLGR5_O75473 Dla_chr6_LGR
+scripts/alinear_par.sh hLGR5_O75473 Dla_chr10_LGR
+scripts/alinear_par.sh hLGR4_Q9BXB1 Dla_chr6_LGR
+scripts/alinear_par.sh hLGR4_Q9BXB1 Dla_chr10_LGR
 ```
 
-(Cinco invocaciones casi idénticas… guarden esa molestia: en la sesión
-10 la resuelven los ciclos.)
+(Cinco invocaciones casi idénticas… En otra sesión lo resolveremos con
+loops)
 
 Con sus resultados llenen esta tabla en su libreta o su README:
 
 | par | evento que los separó | identidad |
-|------------------------|------------------------|------------------------|
+|----|----|----|
 | Dla_chr6 vs Dla_chr10 | duplicación genómica completa (ohnólogos) |  |
 | hLGR5 vs hLGR4 | duplicación génica (parálogos humanos) |  |
 | humano vs babosa (los 4 pares) | especiación, \~600 millones de años |  |
@@ -1062,9 +1091,10 @@ con la babosa, no teníamos un genoma, sólo un transcriptoma ensamblado a
 partir de datos de RNA-seq. La sonda "lgr5" del laboratorio se hizo a
 partir de un transcrito que daba similitud con LGR5 en blast por una
 anotación automática. Una vez secuenciado y anotado el genoma, quisimos
-ver a cuál gene estaría reconociendo esa sonda. El gen `Dla027`, un gen
-del cromosoma 13. ¿Ese gen es un receptor LGR5 de verdad, o le falta
-algo?
+ver a cuál gene estaría reconociendo esa sonda. Así, encontramos que
+habíamos diseñado una sonda contra el transcrito producido por `Dla027`,
+un gen del cromosoma 13. ¿Ese gen es un receptor LGR5 de verdad, o le
+falta algo?
 
 Al anotar el genoma, encontramos un receptor con los dominios canónicos
 de LGR5 (\>16 repetidos ricos en leucina y un dominio de 7 hélices
@@ -1077,11 +1107,11 @@ locus=datos/02_contraste_locus_LGRcompleto_vs_LRRonly.faa
 
 needle -asequence $locus:Dla019_chr10_23.68 \
        -bsequence $locus:Dla027_chr13_39.98 \
-       -gapopen 10.0 -gapextend 0.5 -outfile locus_global.needle
+       -gapopen 10.0 -gapextend 0.5 -outfile resultados/locus_global.needle
 
 water  -asequence $locus:Dla019_chr10_23.68 \
        -bsequence $locus:Dla027_chr13_39.98 \
-       -gapopen 10.0 -gapextend 0.5 -outfile locus_local.water
+       -gapopen 10.0 -gapextend 0.5 -outfile resultados/locus_local.water
 ```
 
 Comparemos las dos salidas: `Length`, `Gaps`, y sobre todo **qué región
@@ -1116,13 +1146,21 @@ alineamiento global y uno local, juntos, contestaron una pregunta de
 biología celular. Interesantemente, esta sonda tiene una alta expresión
 en intestino. No sabemos si podría tener una función.
 
+![Para qué era todo esto: hibridación *in situ* en el intestino de *D.
+laeve* con la sonda "lgr5" — la que, como averiguamos en el ejercicio 3,
+en realidad ancla en el gen del cromosoma 13 que solo tiene el
+ectodominio LRR. La señal en el epitelio intestinal es abundante y real;
+lo que reporta no es un receptor LGR5 completo sino ese gen solo-LRR.
+Datos del
+laboratorio.](../../figuras/sesion07/lgr5lrr_ish.png){#fig-lgr5lrr-ish}
+
 **Para terminar,** alineemos al gen vecino de `Dla027,` `Dla028`:
 
 ``` bash
 needle -asequence $locus:Dla027_chr13_39.98 \
        -bsequence $locus:Dla028_chr13_40.04 \
-       -gapopen 10.0 -gapextend 0.5 -outfile tandem.needle
-grep -E "Identity|Gaps|Score" tandem.needle
+       -gapopen 10.0 -gapextend 0.5 -outfile resultados/tandem.needle
+grep -E "Identity|Similarity|Gaps|Score" resultados/tandem.needle
 ```
 
 Referencia: \~74% de identidad, casi sin gaps. Este gen vive en una
@@ -1141,114 +1179,75 @@ manera, ¿hay sobrelape entre la sonda de in situ tradicional y HCR?
 Pueden visitar <https://www.molecularinstruments.com/> si quieren màs
 detalles de como funciona esta detección de mensajeros.
 
-`water` acepta un archivo multi-FASTA completo como `-bsequence`: va a
-alinear la sonda contra *cada* amplicón del archivo, uno tras otro, en
-la misma salida.
+![Cómo detecta HCR a su mensajero. En la **etapa de detección**, cada
+"sonda" del set es en realidad un par de medias-sondas que se hibridan
+una junto a la otra sobre el mRNA blanco; el iniciador I1 va partido
+entre las dos, así que solo se arma completo cuando ambas pegan en su
+sitio (una media-sonda pegada por azar no dispara nada). En la **etapa
+de amplificación**, el iniciador completo abre las horquillas
+metaestables H1 y H2, que polimerizan en cadena un amplificador
+fluorescente anclado al mensajero. Las 20 ventanas de 52 nt del archivo
+03 son los blancos de esos pares de medias-sondas. Figura 2 de Choi *et
+al*. (2018), *Development*
+145:dev165753.](../../figuras/sesion07/choi2018_hcr_mecanismo.png){#fig-hcr-mecanismo}
+
+`water` acepta un archivo multi-FASTA completo como `-bsequence`:
+alineemos las 20 sondas con el transcrito de rspondina, y luego, contra
+el de lgr5.
 
 ``` bash
-water -asequence datos/03_sondas_HCR_rspo2.fasta:DLA-rspo2-B2_3 \
-      -bsequence datos/04_amplicones_ISH_rspo2_lgr5.fa \
-      -gapopen 10.0 -gapextend 0.5 -outfile sonda3.water
+water -asequence datos/04_amplicones_ISH_rspo2_lgr5.fa:DLAE276037_TRINITY_DN55266_c0_g1_i5 -bsequence datos/03_sondas_HCR_rspo2.fasta  -gapopen 10.0 -gapextend 5 -outfile resultados/sondas.needle.rspo2
 
-grep -E "2:|Identity|Score" sonda3.water
+grep -E "2:|Identity|Score" resultados/sondas.needle.rspo2
+
+#Contra lgr5 DLAE250155_TRINITY_DN44699_c0_g1_i22
+water -asequence datos/04_amplicones_ISH_rspo2_lgr5.fa:DLAE250155_TRINITY_DN44699_c0_g1_i22 -bsequence datos/03_sondas_HCR_rspo2.fasta  -gapopen 10.0 -gapextend 5 -outfile resultados/sondas.needle.lgr5
+grep -E "2:|Identity|Score" resultados/sondas.needle.lgr5
 ```
-
-Repitan con la sonda `DLA-rspo2-B2_1`. ¿Qué cambió?
 
 ::: {.callout-note collapse="true"}
 ## Solución
 
-La salida de `B2_3` trae **cuatro** alineamientos (uno por amplicón), y
-no se parecen entre sí:
+La salida de `sondas.needle.rspo2` trae **veinte** alineamientos (uno
+por sonda):
 
-- Contra el amplicón de **RSPO2**: 52/52, identidad 100%, score 260 — la
-  sonda está contenida *exacta*, alrededor de la posición 125.
-- Contra los tres amplicones de **LGR5**: islas chatarra de \~40% de
-  identidad y score \~65. (Los tres alineamientos LGR5 son idénticos
-  entre sí — y eso también es un dato: las tres entradas son el mismo
-  amplicón anotado sobre tres isoformas del transcriptoma.)
+- Casi todos tienen: 52/52, identidad 100%, score 260. Las sondas están
+  perfectamente diseñadas.
+- Las últimas 3 sondas tienen poca identidad. El extremo 3' UTR es
+  variable o hubo un error en su ensamble transcriptómico, sin embargo,
+  con 10 sondas perfectamente alineadas es suficiente para detectar el
+  transcrito.
 
 La sonda distingue a su gen: eso es la **especificidad**, medida con un
 alineamiento.
 
-Con `B2_1` no hay ningún 100%: su mejor isla contra RSPO2 anda por \~55%
-de identidad y score \~54, es decir, ruido. `B2_1` es una sonda real del
-set, pero su ventana cae en una parte del transcrito que el amplicón de
-799 pb **no cubre** (el amplicón abarca las ventanas de las sondas 2–4 y
-13–16). Lección de diseño experimental: la sonda ISH y el set HCR no ven
-exactamente lo mismo del gen.
-:::
+Puede tener sentido penalizar más los gaps aquí. No nos interesa este
+alineamiento como hipótesis evolutiva sino saber si es probable que esta
+sonda se pegue de manera inespecífica.
 
-Ahora la hebra. En el encabezado del amplicón de RSPO2 vienen sus dos
-primers de PCR. Métanlos en variables y busquen cada uno en el amplicón
-con `water`:
-
-``` bash
-p1=TACGTGTTTCGCTCGGTCAA
-p2=CAATGCACCACCAAAGCACA
-
-water -asequence asis::$p1 -bsequence datos/04_amplicones_ISH_rspo2_lgr5.fa \
-      -gapopen 10.0 -gapextend 0.5 -outfile p1.water
-water -asequence asis::$p2 -bsequence datos/04_amplicones_ISH_rspo2_lgr5.fa \
-      -gapopen 10.0 -gapextend 0.5 -outfile p2.water
-grep -E "Identity|Score" p1.water p2.water
-```
-
-(El prefijo `asis::` le dice a EMBOSS que la secuencia va escrita ahí
-mismo, sin archivo.) El primer 1 aparece perfecto; el primer 2 **no
-aparece**. Pero ese primer funcionó en el laboratorio: el amplicón
-existe. ¿Dónde está?
-
-::: {.callout-note collapse="true"}
-## Solución
-
-`p1` da 20/20 al inicio del amplicón. Lo mejor que `water` encuentra
-para `p2` es una isla de \~12/17 (score \~40): ruido.
-
-La respuesta está en la química de la PCR: el primer reverso se aparea
-con **la otra hebra**, así que en la hebra que está escrita en el
-archivo lo que aparece es su **complemento reverso**, al final del
-amplicón. Compruébenlo con otra herramienta de EMBOSS:
-
-``` bash
-revseq -sequence asis::$p2 -outseq p2_rc.fasta
-water -asequence p2_rc.fasta -bsequence datos/04_amplicones_ISH_rspo2_lgr5.fa \
-      -gapopen 10.0 -gapextend 0.5 -outfile p2_rc.water
-grep -E "Identity|Score" p2_rc.water
-```
-
-Ahora sí: 20/20, score 100, en las posiciones 780–799 — las últimas
-veinte bases del amplicón de 799 pb. De paso lo pueden *ver* en el
-archivo: abran `datos/04_amplicones_ISH_rspo2_lgr5.fa` con `less` — los
-tramos en MAYÚSCULAS al inicio y al final de cada amplicón son
-exactamente las huellas de los dos primers.
-
-Moraleja para toda su vida con secuencias: **el DNA tiene dos hebras y
-los archivos solo escriben una**. Cuando un alineamiento "no aparece",
-la primera sospecha es la orientación. `revseq` cuesta un segundo;
-descubrirlo tres horas tarde cuesta tres horas.
+Para `sondas.needle.lgr5`, ninguna sonda da un buen alineamiento.
 :::
 
 ### Ejercicio 5. El anticuerpo sin blanco
 
-Último acto, y decisión de compra real. El anticuerpo comercial
-PA5-23000 ("anti-LGR5") se produjo contra un péptido sintético de 50 aa
-de la proteína humana; su núcleo reconocible son los 22 aa del archivo
-06. ¿Ese anticuerpo detectaría algo en la babosa?
+Compramos un anticuerpo PA5-23000 ("anti-LGR5") que se produjo contra un
+péptido sintético de 50 aa de la proteína humana; su núcleo reconocible
+son los 22 aa del archivo 06. ¿Ese anticuerpo detectaría algo en la
+babosa?
 
-Primero el control positivo — el epítopo contra la proteína de la que
-salió — y luego la pregunta de verdad:
+Primero el control positivo (el epítopo contra la proteína de la que
+salió) y luego la pregunta contra el candidato de babosa.
 
 ``` bash
 water -asequence datos/06_epitopo_nucleo_22aa.faa \
       -bsequence datos/01_lgr_paralogos_4seq.faa:hLGR5_O75473 \
-      -gapopen 10.0 -gapextend 0.5 -outfile epitopo_humano.water
+      -gapopen 10.0 -gapextend 0.5 -outfile resultados/epitopo_humano.water
 
 water -asequence datos/06_epitopo_nucleo_22aa.faa \
       -bsequence datos/01_lgr_paralogos_4seq.faa:Dla_chr6_LGR \
-      -gapopen 10.0 -gapextend 0.5 -outfile epitopo_babosa.water
+      -gapopen 10.0 -gapextend 0.5 -outfile resultados/epitopo_babosa.water
 
-grep -E "Identity|Similarity|Score" epitopo_humano.water epitopo_babosa.water
+grep -E "Identity|Similarity|Score" resultados/{epitopo_humano.water,epitopo_babosa.water}
 ```
 
 Antes de ver la solución: los dos comandos van a reportar *un*
@@ -1259,31 +1258,33 @@ devolver "no encontré nada"?
 ## Solución
 
 Contra hLGR5, el control positivo sale impecable: 22/22, identidad 100%,
-score 110, en los residuos 661–682 — exactamente la región 650–700 de la
-que el fabricante recortó su inmunógeno. El método funciona y el archivo
-dice la verdad.
+score 110, en los residuos 661–682, la región en que el fabricante
+recortó su inmunógeno. El método funciona y el archivo dice la verdad.
 
 Contra el LGR de la babosa: una isla de 14 residuos con 5 identidades
-(\~36%), score \~24. Y aquí está la lección más importante de la tarde:
-**Smith–Waterman nunca devuelve "no hay nada"**. El cero de la
+(\~36%), score \~24. **Smith–Waterman nunca devuelve "no hay nada",
+excepto que las dos secuencias no compartan símbolos**. El cero de la
 recurrencia garantiza que siempre exista un mejor alineamiento local,
-aunque sea una isla trivial. `water` no les dijo "el anticuerpo no tiene
-blanco"; les dijo "esto es lo mejor que hay", y distinguir "lo mejor que
-hay" de "algo real" es responsabilidad de ustedes.
+aunque sea una isla trivial. `water` no nos dice "el anticuerpo no tiene
+blanco" sino "esto es lo mejor que hay".
 
 El proyecto lo midió también con el inmunógeno completo: 12 identidades
 en 50 posiciones contra el LGR de la babosa (pueden reproducirlo:
 `needle` con `datos/05_inmunogeno_PA5-23000.faa` contra `Dla_chr6_LGR`).
-Conclusión del laboratorio: el anticuerpo no tiene blanco en *D. laeve*
-— y esa immunotinción que no se compró habría producido bandas de algo,
-porque los anticuerpos, como water, siempre pegan en *algo*.
+Conclusión del laboratorio: el anticuerpo no tiene blanco en *D. laeve.*
+Sin embargo, la immunotinción produce un patrón.
 
 ¿Cómo se decide formalmente si un score local es señal o ruido? Esa es
-la pregunta de la **significancia estadística** — puntajes, E-values — y
-es exactamente donde arranca la próxima sesión, con BLAST. Guarden la
-incomodidad. Y guarden también el péptido de 22 aa: es candidato para la
-matriz a mano.
+la pregunta de la **significancia estadística**, puntajes, E-values.
 :::
+
+![El patrón sin blanco: inmunotinción con el anticuerpo PA5-23000
+("anti-LGR5") en tejido de *D. laeve*. El anticuerpo produce señal,
+aunque los alineamientos del ejercicio dicen que su epítopo no existe en
+la babosa. Un patrón no es evidencia de especificidad, igual que un
+alineamiento de `water` no es evidencia de homología: ambos siempre
+encuentran *algo*. Datos del
+laboratorio.](../../figuras/sesion07/lgr5_inmuno.png){#fig-lgr5-inmuno}
 
 ## Para entregar
 
@@ -1309,3 +1310,11 @@ se copiaron, que es lo que hace reproducible el análisis.
 - Sato T, Vries RG, Snippert HJ, et al. Single Lgr5 stem cells build
   crypt-villus structures in vitro without a mesenchymal niche. Nature.
   2009;459(7244):262-265. doi:10.1038/nature07935
+- Wang W, Lokman NA, Barry SC, Oehler MK, Ricciardelli C. LGR5: An
+  emerging therapeutic target for cancer metastasis and chemotherapy
+  resistance. Cancer Metastasis Rev. 2025;44(1):23.
+  doi:10.1007/s10555-024-10239-x
+- Choi HMT, Schwarzkopf M, Fornace ME, et al. Third-generation in situ
+  hybridization chain reaction: multiplexed, quantitative, sensitive,
+  versatile, robust. Development. 2018;145(12):dev165753.
+  doi:10.1242/dev.165753

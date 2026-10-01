@@ -8,7 +8,9 @@ editor:
 ---
 
 ::: {.callout-note appearance="simple"}
-📽️ [Diapositivas de esta sesión](../../presentaciones/sesion07-algoritmos-de-alineamiento.html) — 02 de octubre de 2026.
+📽️ [Diapositivas de esta
+sesión](../../presentaciones/sesion07-algoritmos-de-alineamiento.html) —
+02 de octubre de 2026.
 :::
 
 ## Idea central
@@ -274,7 +276,7 @@ Pero el cero solo no basta. Son **tres cambios acoplados**
 (@fig-nw-vs-sw):
 
 |                          | Needleman–Wunsch      | Smith–Waterman             |
-|------------------------|----------------------|--------------------------|
+|--------------------------|-----------------------|----------------------------|
 | **Recurrencia**          | tres términos         | cuatro, con el 0           |
 | **Inicialización**       | $F(i,0) = -i \cdot d$ | $H(i,0) = 0$               |
 | **Inicio del traceback** | esquina $F(m,n)$      | máximo global de la matriz |
@@ -316,13 +318,16 @@ los bordes y dónde se busca el máximo.
   penalizar los extremos de la larga.
 
 Todos estos algoritmos se obtienen variando los bordes y los máximos
-(@fig-variantes). Pregunta: ¿Cómo se ven las celdas amarillas y verdes para el algoritmo Smith-Waterman?
+(@fig-variantes). Pregunta: ¿Cómo se ven las celdas amarillas y verdes
+para el algoritmo Smith-Waterman?
 
 ![Las cuatro variantes son la misma maquinaria tocando bordes y máximos.
 Cada panel sombrea sólo dónde puede arrancar el traceback (el máximo, en
 verde) y dónde puede terminar (en ámbar): en las esquinas opuestas para
 el global, en los cuatro bordes para el semi-global, y en bordes
-concretos para overlap y fitting. Son más o menos el mismo algoritmo con cuatro variantes de bordes.](../../figuras/svg/fig06_variantes.svg){#fig-variantes}
+concretos para overlap y fitting. Son más o menos el mismo algoritmo con
+cuatro variantes de
+bordes.](../../figuras/svg/fig06_variantes.svg){#fig-variantes}
 
 ## 6. Penalizaciones de gap
 
@@ -549,7 +554,8 @@ La práctica de la sesión está en [práctica de la sesión
     aa del anticuerpo) y scoring simple. Sin computadora. Llenar la
     matriz, hacer el traceback, y reportar si encontraron más de un
     alineamiento óptimo.
-2.  Implementación en python de los algoritmos de acuerdo a los problemas de **Rosalind** o el libro Bioinformatics Algorithms.
+2.  Implementación en python de los algoritmos de acuerdo a los
+    problemas de **Rosalind** o el libro Bioinformatics Algorithms.
 3.  **EMBOSS `needle` y `water`** con las secuencias del proyecto
     R-spondina/LGR de *Deroceras laeve*: la escalera de identidad de los
     parálogos LGR, global contra local en el gen que ancla la sonda
