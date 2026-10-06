@@ -4,6 +4,13 @@ subtitle: "Unidad 6 · Sesión 13"
 author: "Haydeé Peruyero"
 ---
 
+::: {.callout-note appearance="simple"}
+📷 Diapositivas de esta sesión — 13 de noviembre de 2026, por publicar.
+<!-- Haydeé: cuando tengas tus diapositivas, cambia la línea de arriba por
+📷 [Diapositivas de esta sesión](TU-URL) — 13 de noviembre de 2026.
+La URL puede ser lo que sea: tu propio repo, un PDF, Google Slides... -->
+:::
+
 ::: callout-box
 **Lo que estos alumnos ya traen, y que no hay que volver a enseñar.**
 

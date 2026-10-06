@@ -7,6 +7,12 @@ editor:
     wrap: 72
 ---
 
+::: {.callout-note appearance="simple"}
+📽️ [Diapositivas de esta
+sesión](../../presentaciones/sesion09-alineamiento-multiple.html) — 16
+de octubre de 2026.
+:::
+
 ## Idea central
 
 **Alinear tres o más secuencias a la vez es un problema NP-completo.

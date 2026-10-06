@@ -7,6 +7,12 @@ editor:
     wrap: 72
 ---
 
+::: {.callout-note appearance="simple"}
+📽️ [Diapositivas de esta
+sesión](../../presentaciones/sesion10-homologia.html) — 23 de octubre
+de 2026.
+:::
+
 ## Idea central
 
 **La homología es binaria.** Dos secuencias comparten un ancestro común

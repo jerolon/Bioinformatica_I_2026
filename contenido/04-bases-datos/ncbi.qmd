@@ -4,6 +4,12 @@ subtitle: "Unidad 4 · Sesión 11"
 author: "Jero"
 ---
 
+::: {.callout-note appearance="simple"}
+📽️ Diapositivas de esta sesión — 30 de octubre de 2026, por publicar.
+<!-- Jero: cuando esté la presentación de la sesión 11, enlázala aquí
+como en contenido/03-alineamientos/algoritmos.qmd -->
+:::
+
 ## Idea central
 
 El NCBI no es una base de datos. Son unas cuarenta, conectadas entre sí,

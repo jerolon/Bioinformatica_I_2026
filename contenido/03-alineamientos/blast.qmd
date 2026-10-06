@@ -7,6 +7,12 @@ editor:
     wrap: 72
 ---
 
+::: {.callout-note appearance="simple"}
+📽️ [Diapositivas de esta
+sesión](../../presentaciones/sesion08-blast-y-blat.html) — 09 de octubre
+de 2026.
+:::
+
 ## Idea central
 
 **BLAST (basic Local alignment and search tool) es distinto de
@@ -39,7 +45,7 @@ otras.
 Smith–Waterman exacto sigue siendo la referencia cuando la sensibilidad
 importa más que la velocidad. Sin embargo, una operación cotidiana en
 bioinformática es tomar una secuencia y preguntar qué se le parece allá
-afuera. correr Smith–Waterman contra la base entera es inviable. Hay que
+afuera. Correr Smith–Waterman contra la base entera es inviable. Hay que
 hacer un poco de trampa.
 
 ## 2. La prehistoria: FASTP y FASTA
@@ -86,14 +92,13 @@ el **MSP** (maximal segment pair), y es lo que BLAST realmente optimiza
 
 ![Seed-and-extend. BLAST siembra una palabra (word; aquí vale 41) y la
 extiende sin gaps hacia ambos lados. Cada extensión acumula su propio
-score desde el borde de la semilla —la curva izquierda se recorre hacia
-la izquierda— y se detiene cuando el acumulado cae X = 10 por debajo del
-máximo de su lado: la regla del X-drop, en ámbar. El máximo de cada lado
-fija un borde del HSP, el segmento de score localmente máximo, y el
-score del HSP es la suma: 41 de la semilla, más 13 de la extensión
-izquierda, más 20 de la derecha, 74 en total. Calculado con BLOSUM62
-sobre un par de secuencias de juguete; los residuos que no aparean están
-en color
+score desde el borde de la semilla y se detiene cuando el acumulado cae
+X = 10 por debajo del máximo de su lado: la regla del X-drop, en ámbar.
+El máximo de cada lado fija un borde del HSP, el segmento de score
+localmente máximo, y el score del HSP es la suma: 41 de la semilla, más
+13 de la extensión izquierda, más 20 de la derecha, 74 en total.
+Calculado con BLOSUM62 sobre un par de secuencias de juguete; los
+residuos que no aparean están en color
 ámbar.](../../figuras/svg/blast_seed_extend.svg){#fig-seed-extend}
 
 Los parámetros de blast vienen con trade-offs (o canjes) que gobiernan
@@ -103,14 +108,16 @@ el resultado
 Bajar $T$ aumenta la probabilidad de sembrar un HSP verdadero, pero
 dispara el número de hits y con eso el tiempo. Subir $W$ acelera pero
 pierde homólogos lejanos. Cada default de BLAST es una postura sobre ese
-equilibrio, no una verdad.
+canje.
 :::
 
 Puede no ser lo más intuitivo, que tener un word-size $W$ más grande
 *acelere* el algoritmo. Lo que sucede es comparar palabras más grandes
 hace que haya menos hits probablemente espurios y por tanto, menos
 operaciones onerosas de extensión. Así, también se entiende que pierda
-sensibilidad a homólogos lejanos.
+sensibilidad a homólogos lejanos. Esto tiene más relevancia para blast
+de ácidos nucléicos, donde, como se mencionó, sólo se toman matches
+exactos en toda la palabra.
 
 **La extensión con gaps de 1997.** La primera versión (1990) sólo hacía
 extensión sin gaps. Gapped BLAST y PSI-BLAST (Altschul et al. 1997)
@@ -132,13 +139,19 @@ pero lejos, no disparan nada. Así se puede subir el umbral T y acelerar
 el escaneo sin perder sensibilidad
 neta.](../../figuras/svg/blast_dos_hits.svg){#fig-dos-hits}
 
-## 4. La estadística: el E-value
+## 4. La estadística de la comparación local de secuencias: E-value
 
-Ésta es la parte que nadie debería saltarse, porque es lo que separa a
-BLAST de "un programa que encuentra parecidos" y lo convierte en un
-instrumento de medición.
+Esta parte traduce textualmente segmentos del capítulo del NCBI sobre
+[estadísticas](https://www.ncbi.nlm.nih.gov/BLAST/tutorial/Altschul-1.html#ref43).
 
-La ecuación de Karlin–Altschul (1990) es:
+Comunmente, la pregunta implícita que está detrás de hacer un blast es:
+Este alineamiento: ¿Constituye evidencia de homología? Para responder
+esta pregunta, conviene saber cuál es el score máximo que uno podría
+esperar sólo por azar.
+
+La ecuación de Karlin–Altschul (1990), describe el número esperado de
+alineamientos (HSPs, high scoring pairs, sin gaps) con score de al menos
+$S$:
 
 $$E = K \cdot m \cdot n \cdot e^{-\lambda S}$$
 
@@ -155,9 +168,16 @@ $$E = K \cdot m \cdot n \cdot e^{-\lambda S}$$
 
 ### El bit score
 
-El score crudo $S$ no sirve para comparar entre búsquedas: depende de la
-matriz. Por eso BLAST reporta también el **bit score**, que absorbe
-$\lambda$ y $K$:
+El score crudo $S$ no sirve para comparar entre búsquedas.
+
+>  Raw scores have little meaning without detailed knowledge of the
+> scoring system used, or more simply its statistical parameters *K* and
+> *lambda*. Unless the scoring system is understood, citing a raw score
+> alone is like citing a distance without specifying feet, meters, or
+> light years.
+
+Por eso BLAST reporta también el **bit score**, que absorbe $\lambda$ y
+$K$. Entonces, el E-value para un bit-score dado también se transforma.
 
 $$S' = \frac{\lambda S - \ln K}{\ln 2}, \qquad E = m \cdot n \cdot 2^{-S'}$$
 
@@ -177,18 +197,17 @@ usara una normal para calcular la probabilidad de un score alto por
 azar, subestimaría gravemente esa probabilidad, y creería significativo
 lo que es ruido. La EVD es lo que le da sentido al E-value (@fig-evd).
 
-![En escala logarítmica se ve lo que importa, que vive en la cola. En la
-cola derecha, la de los scores altos, la densidad normal se desploma
-mientras la de la EVD baja mucho más despacio. Calcular la significancia
-con una normal haría pasar por reales muchos parecidos que en realidad
-son azar. Parámetros
+![En la cola derecha, la de los scores altos, la densidad normal se
+desploma mientras la de la EVD baja mucho más despacio. Calcular la
+significancia con una normal haría pasar por reales muchos parecidos que
+en realidad son azar. Parámetros
 ilustrativos.](../../figuras/svg/blast_evd.svg){#fig-evd}
 
-### El punto que cambia todo: el E-value depende del tamaño de la base
+### Entonces el E-value depende del tamaño de la base
 
-Mírenlo en la ecuación: $E$ es proporcional a $n$. El mismo alineamiento
-(mismo score, mismo bit score) obtiene un E-value **mayor**, es decir
-menos significativo, si la base crece.
+$E$ es proporcional a $n$. El mismo alineamiento (mismo score, mismo bit
+score) obtiene un E-value **mayor**, es decir menos significativo, si la
+base crece.
 
 ::: callout-box
 Fijen un bit score de 40. Entonces $E = m \cdot n \cdot 2^{-40}$. Con
@@ -207,11 +226,10 @@ ruido en la base de hoy (E ≈ 27), sin que cambie ni una letra de la
 biología. El bit score no se mueve; el E-value
 sí.](../../figuras/svg/blast_evalue_base.svg){#fig-evalue-base}
 
-Es el mismo mensaje del capítulo pasado, en otra clave: el resultado
-depende de un parámetro que ustedes, o el crecimiento de las bases,
-eligieron. Un hit reportado como significativo en un paper de 1998 puede
-no serlo hoy sin que nada biológico haya cambiado. Al citar un E-value,
-citen contra qué base y de qué año.
+Un hit reportado como significativo en un paper de 1998 puede no serlo
+hoy sin que nada biológico haya cambiado. Como comenzamos a ver, los
+resultados son altamente dependientes de los parámetros. Al citar un
+E-value, hay que citar contra qué base y de qué año.
 
 ::: debate
 **La estadística de BLAST no está probada para gaps.**
@@ -221,31 +239,38 @@ alineamientos locales **sin** gaps. Para alineamientos con gaps, que son
 los que BLAST reporta desde 1997, no existe demostración analítica:
 $\lambda$ y $K$ se estiman **empíricamente**, alineando secuencias
 aleatorias y ajustando la distribución de valores extremos a los
-resultados. Casi nadie que usa BLAST a diario lo sabe. No invalida nada,
-porque la estimación empírica es sólida y está calibrada, pero conviene
-saber que el número más autoritario de la bioinformática descansa, en su
-caso más usado, sobre una simulación y no sobre un teorema.
+resultados. No es inválido, porque la estimación empírica es sólida y
+está calibrada, pero es bueno saber que más que un teorema, el número
+descansa sobre resultados empíricos.
 :::
 
 ## 5. Lo que un E-value no es
 
-Casi todos los errores con BLAST son errores de lectura del E-value.
+De aquí también podemos decir qué es lo que no es un E-value
 
-- **No es un porcentaje de identidad.** Son cosas distintas. Se puede
-  tener 99% de identidad sobre 20 residuos y un E-value pésimo.
+- **No es un porcentaje de identidad.**
+
 - **No es la probabilidad de que el hit esté biológicamente
-  equivocado.** Un E-value bajo dice "improbable por azar", no "es
-  homólogo" y mucho menos "es ortólogo". La homología es una inferencia
-  biológica que el E-value no hace por ustedes.
-- **No es un p-value.** Están relacionados por $p = 1 - e^{-E}$, y para
-  $E$ chico ($E \lesssim 0.1$) se cumple $p \approx E$. Pero el p-value
-  es una probabilidad (entre 0 y 1) y el E-value es un conteo esperado,
-  que puede ser mayor que 1.
+  equivocado.** Un E-value bajo dice "improbable por azar", y puede
+  apoyar la inferencia de homología.
 
-Y una cosa más que no se ve en el E-value: la **cobertura**. Un hit con
-90% de identidad sobre 20 residuos de una query de 400 casi no dice
-nada. La identidad sin la fracción de la query que se alineó (`qcovs`)
-es engañosa. En la práctica se enseñan las dos, siempre juntas.
+- No tiene que ver con la cobertura, puede haber un hit con 90% de
+  identidad sobre 20 residuos de una query de 400. La fracción de la
+  query que se alineó (`qcovs`) es otro parámetro importante.
+
+- **No es un p-value.**
+
+  $E$ es como un $\lambda$ en la distribución Poisson (el número
+  esperado en un intervalo dado). Entonces, la probabilidad de obtener
+  exactamente $a$ HSPs con score $\geq S$ es:
+
+  $$ \frac{E^ae^{-E}}{a!}$$
+
+  La probabilidad de obtener al menos 1 alineamiento con score $\geq S$
+  es 1 menos la ecuación de arriba con $a=0$, es decir $p = 1 - e^{-E}$,
+  el p-valor. Para $E$ chico ($E \lesssim 0.1$) se cumple $p \approx E$.
+  Pero el p-value es una probabilidad (entre 0 y 1) y el E-value es un
+  conteo esperado, que puede ser mayor que 1.
 
 ## 6. Los sabores de BLAST
 
@@ -253,28 +278,15 @@ BLAST es una familia de programas. La primera decisión es qué se
 traduce:
 
 | Programa | Query | Base | Traduce | Uso típico |
-|----|----|----|----|----|
+|---------------|---------------|---------------|---------------|---------------|
 | `blastn` | nucleótido | nucleótido | no | DNA vs DNA |
 | `blastp` | proteína | proteína | no | proteína vs proteína |
-| `blastx` | nucleótido | proteína | la query (6 marcos) | anotar ORFs o reads |
+| `blastx` | nucleótido | proteína | la query (6 marcos) | anotar ORFs |
 | `tblastn` | proteína | nucleótido | la base (6 marcos) | buscar en genomas sin anotar |
 | `tblastx` | nucleótido | nucleótido | ambos (36 marcos) | comparar regiones sin anotar |
 | `dc-megablast` | nucleótido | nucleótido | no | codificantes divergentes (semillas no contiguas) |
 | `deltablast` | proteína | proteína | no | perfil inicial desde dominios conservados (CDD) |
 | PHI-BLAST | proteína | proteína | no | sólo hits que contienen un patrón dado |
-
-::: mito
-**"Yo sólo hago un `blastn`."**
-
-No: casi seguro corren **megablast** sin saberlo. `megablast` (word size
-28) es el default tanto de la web de nucleótidos del NCBI como del
-comando `blastn`. Está optimizado para secuencias muy parecidas,
-intraespecie, y por su word size grande **pierde homólogos lejanos**. El
-`blastn` de word size 11, el que sirve para comparar entre especies, hay
-que pedirlo explícitamente con `-task blastn`. Es el default silencioso
-más caro de la bioinformática cotidiana: alguien busca el ortólogo de
-otra especie, corre "un blastn", y no lo ve.
-:::
 
 Del lado de los perfiles, el que hay que conocer es **PSI-BLAST**: hace
 un blastp, construye una matriz de scoring específica de posición (PSSM)
@@ -308,7 +320,7 @@ con BLAST.
 
 Los números exactos de aceleración varían muchísimo según versión y
 modo. El "20,000×" de DIAMOND es de su modo rápido de 2015, no de sus
-modos sensibles. Cítenlos siempre con versión y modo, nunca sueltos.
+modos sensibles.
 :::
 
 ![El espacio velocidad / sensibilidad. Smith–Waterman es la referencia
@@ -319,22 +331,14 @@ posiciones son aproximadas, en el espíritu de los benchmarks de Buchfink
 et al. 2021 y Steinegger & Söding
 2017.](../../figuras/svg/blast_velocidad.svg){#fig-velocidad}
 
-La postura para la clase, sin diplomacia: para una consulta puntual, una
-query contra `nr` en la web, BLAST sigue siendo el default correcto, por
-interpretabilidad, E-values calibrados y el ecosistema del NCBI. Para
-trabajo a escala (proteomas completos, metagenómica, clustering del
-universo de proteínas) BLAST ya no es la elección razonable en 2026:
-DIAMOND para proteínas y traducido, MMseqs2 para búsqueda y clustering
-masivos. Que el propio paper de DIAMOND llame a BLASTP "el estándar de
-oro" reconoce que BLAST sigue siendo la referencia de **sensibilidad**,
-no de **velocidad**. Enséñenlo como el idioma común y la referencia
-conceptual; úsenlo, a escala, con criterio.
-
-Y cuando la señal de secuencia se agota del todo, en la twilight zone
-por debajo de \~25% de identidad donde ninguna semilla sobrevive, la
-búsqueda deja de ser por secuencia y pasa a ser por estructura. Eso ya
-no es una mejora de BLAST: es cambiar de alfabeto, y lo vemos al final
-de este capítulo.
+Para una consulta puntual, una query contra `nr` en la web, BLAST sigue
+siendo el default correcto, por interpretabilidad, E-values calibrados y
+el ecosistema del NCBI. Para trabajo a escala (proteomas completos,
+metagenómica, clustering del universo de proteínas) BLAST ya no es la
+elección razonable en 2026: DIAMOND para proteínas y traducido, MMseqs2
+para búsqueda y clustering masivos. Que el propio paper de DIAMOND llame
+a BLASTP "el estándar de oro" reconoce que BLAST sigue siendo la
+referencia de **sensibilidad**, no de **velocidad**.
 
 ## 8. BLAT: la misma idea, al revés
 
@@ -353,65 +357,50 @@ Jim Kent, en 2002, invirtió el arreglo. En sus palabras:
 > linearly through the database, BLAT builds an index of the database
 > and then scans linearly through the query sequence."
 
-BLAT indexa **el genoma**, lo mantiene en memoria, y hace pasar la
-consulta por ahí (@fig-indexado).
+BLAT indexa **el genoma o base de datos**, lo mantiene en memoria, y
+hace pasar la consulta por ahí (@fig-indexado).
 
-![Qué se indexa y qué se recorre. La decisión define para qué sirve cada
-herramienta.](../../figuras/svg/blast_indexado.svg){#fig-indexado}
+![](../../figuras/svg/blast_indexado.svg){#fig-indexado}
 
-Suena a un detalle de implementación y no lo es. Cambia por completo
-para qué sirve cada herramienta.
+En Blast, al indexar la query, podemos buscar contra cualquier base de
+datos, tan grande como queramos "¿qué hay en el mundo que se parezca a
+esto?".
 
-Si indexan la consulta, pueden buscar contra cualquier base de datos,
-tan grande como quieran, sin preparar nada. Es lo que uno quiere cuando
-pregunta "¿qué hay en el mundo que se parezca a esto?".
-
-Si indexan la base, pagan una vez por construir el índice y después cada
-consulta es casi instantánea. Es lo que uno quiere cuando va a hacer
-**muchas** preguntas contra **el mismo** genoma.
+Si indexamos la base de datos, pagamos una vez por construir el índice y
+después cada consulta es casi instantánea. Es lo que uno quiere cuando
+va a hacer **muchas** preguntas contra **el mismo** genoma o
+transcriptoma.
 
 ::: callout-box
-Una honestidad sobre el contraste, porque la frase de Kent es de 2002 y
-BLAST cambió.
-
-BLAST **también** puede indexar la base hoy. El NCBI publicó
+Actualmente, BLAST **también** puede indexar la base. El NCBI publicó
 `makembindex` en 2008 y el megablast indexado es lo que corre por debajo
 cuando uno busca contra un solo genoma en la web.
-
-Entonces la dicotomía limpia es una simplificación didáctica: era
-literalmente cierta como diseño original, y hoy tiene excepciones. Lo
-que sigue siendo cierto es la consecuencia: BLAT asume alta identidad y
-BLAST no.
 :::
 
-### 8.2 Para qué se construyó
+### 8.2 BLAT nació de un deadline panic
 
-BLAT no nació de una idea elegante. Nació de una fecha límite.
+Más que de una idea elegante, de la necesidad.
 
 Kent estaba en la UCSC en 2000, con el borrador del genoma humano por
 ensamblarse y la necesidad de colocar tres millones de ESTs y trece
 millones de lecturas de ratón sobre él, en ciclos de dos semanas por
 ensamblado.
 
-Eso define todas sus decisiones. El índice guarda los k-mers no
-traslapados del genoma, con tamaño de tesela 11 por defecto para DNA, y
-vive en RAM. Los k-mers demasiado frecuentes se excluyen del índice
-mediante un archivo de teselas sobreusadas, que es el equivalente a
-nivel de índice del enmascaramiento de baja complejidad que ya conocen.
+Él guardó los k-mers no traslapados del genoma, con tamaño de tesela 11
+por defecto para DNA, y vive en RAM. Los k-mers demasiado frecuentes se
+excluyen del índice mediante un archivo de teselas sobreusadas, que es
+el equivalente a nivel de índice del enmascaramiento de baja complejidad
+que ya conocen.
 
-Y el diseño apunta a un caso concreto: **secuencias de 95% de identidad
-o más, de longitud mayor a 40**. Fuera de esa ventana, BLAT no encuentra
-nada.
+El diseño apuntó a un caso concreto de **secuencias de 95% de identidad
+o más, de longitud mayor a 40**.
 
-Esa limitación no es un defecto. Es lo que compra la velocidad. Colocar
-un mRNA humano sobre el genoma humano es un problema de alta identidad
-por definición, y suponerlo permite descartar casi todo el espacio de
+Esa limitación fue lo que se canjeó por la velocidad. Colocar un mRNA
+humano sobre el genoma humano es un problema de alta identidad por
+definición, y suponerlo permite descartar casi todo el espacio de
 búsqueda de inmediato.
 
-### 8.3 Coser exones
-
-Hay una cosa que BLAT hace y BLAST no, y que sale directo de su caso de
-uso.
+### 8.3 Juntar exones
 
 Cuando se coloca un cDNA sobre el genoma, el cDNA no tiene intrones y el
 genoma sí. El alineamiento correcto no es un bloque continuo: son varios
@@ -420,11 +409,6 @@ bloques separados por huecos enormes, uno por exón.
 BLAT agrupa los aciertos que caen en la misma diagonal, los alinea por
 separado, y después los **cose** con programación dinámica, ajustando
 los bordes de los huecos grandes a sitios canónicos de splicing.
-
-O sea que BLAT no solo encuentra dónde está el gen: reconstruye su
-estructura de exones. Si en la sesión 11 vieron un dot plot de genómico
-contra cDNA con sus diagonales separadas, esto es la versión algorítmica
-de esa figura.
 
 Su formato de salida se llama **PSL**, y es tabular con los bloques del
 alineamiento en columnas propias.
@@ -440,7 +424,9 @@ lecturas largas y con splicing, minimap2 lo desplazó.
 
 Su nicho actual es exactamente el que Kent construyó: colocar
 interactivamente una secuencia sobre un genoma de la misma especie, con
-alta identidad. Ahí no tiene rival cómodo.
+alta identidad. Ahí no tiene rival cómodo. In silico PCR, escrito
+también por Jim Kent, por ejemplo, reconstruye los posibles amplicones
+de PCR sobre un genoma o transcriptoma dados dos o más pares de primers.
 
 ::: callout-box
 **Semillas espaciadas, en un párrafo.**
@@ -452,19 +438,19 @@ posiciones marcadas con uno, tiene el mismo peso (once coincidencias) y
 **más sensibilidad**.
 
 La razón es sutil y bonita. Los aciertos de una semilla consecutiva
-están muy correlacionados entre sí: si una acierta, la de al lado casi
+están muy correlacionados entre sí, si una acierta, la de al lado casi
 seguro también, así que muchos aciertos se amontonan sobre la misma
 región y se desperdician. Los de una semilla espaciada son más
 independientes, y cubren más homologías reales por cada falso positivo.
 
 Las semillas espaciadas son hoy estándar: LAST y LASTZ las usan, y
-DIAMOND también. Es de esas ideas que se ven obvias en retrospectiva y
-que nadie tuvo durante diez años.
+DIAMOND también.
 :::
 
-## 9. Coda: mapear millones de lecturas
+## 9. Pilón: mapear millones de lecturas
 
-Hay un tercer caso, y con él se cierra el eje.
+El tercer caso está fuera del temario pero a mí se me hace interesante
+aunque creo que lo verán en otro semestre.
 
 ### 9.1 Otro problema
 
@@ -474,11 +460,11 @@ pregunta dónde está esta secuencia en este genoma.
 **BWA pregunta de dónde vino cada uno de estos cien millones de
 fragmentos.**
 
-Es mapeo de lecturas, y es un problema distinto en las tres dimensiones
-que importan. La escala es de millones o miles de millones de consultas,
-no una. La identidad esperada es altísima, porque las lecturas vienen
-del mismo organismo o de uno muy cercano. Y el resultado no es una lista
-de parecidos, sino una posición por lectura.
+El mapeo de lecturas es un problema distinto en parámetros importantes.
+La escala es de millones o miles de millones de consultas, no una. La
+identidad esperada es altísima, porque las lecturas vienen del mismo
+organismo o de uno muy cercano. Y el resultado es una posición por
+lectura.
 
 Con esos supuestos, ni el seed-and-extend de BLAST ni el índice de
 k-mers de BLAT alcanzan. Hace falta otra estructura de datos.
@@ -520,54 +506,41 @@ hacia atrás, tiempo proporcional a la lectura, índice residente.
 
 ### 9.3 MAPQ contra E-value
 
-Y llegamos al punto que de verdad quiero que se lleven de esta coda.
-
-BWA no reporta un E-value. Reporta un **MAPQ**, y no son lo mismo.
+En todo caso, podemos usar esto para re-tomar el E-value. Utilizando la
+diferencia con lo que reporta BWA (**MAPQ)**.
 
 La especificación del formato SAM lo define así: MAPQ vale menos diez
 veces el logaritmo base diez de la probabilidad de que la posición
 asignada sea la equivocada. Va de 0 a 60 en BWA-MEM. Un 60 significa una
 probabilidad de error de uno en un millón.
 
-Comparen las dos preguntas.
-
 El **E-value** pregunta: *¿cuántos alineamientos tan buenos como este
 esperaría por azar en una base de datos de este tamaño?* Es una medida
-de sorpresa, y crece con el tamaño de la base. El mismo bit score se
+de sorpresa que crece con el tamaño de la base. El mismo bit score se
 vuelve insignificante conforme las bases crecen.
 
 El **MAPQ** pregunta: *¿qué tan seguro estoy de que esta lectura viene
 de aquí y no de otro lado?* Es una medida de unicidad, y no depende del
 tamaño del genoma sino de si hay otro lugar que explique la lectura
-igual de bien.
+igual de bien (@fig-mapq).
 
-La consecuencia es contraintuitiva y vale la pena decirla despacio
-(@fig-mapq).
-
-![Sorpresa contra unicidad. Dos preguntas distintas que producen números
-que se ven parecidos.](../../figuras/svg/blast_mapq.svg){#fig-mapq}
+![](../../figuras/svg/blast_mapq.svg){#fig-mapq}
 
 **Una lectura puede ser 100% idéntica al genoma y tener MAPQ cero.** Si
-cae en una repetición y encaja igual de bien en dos sitios, BWA no sabe
-de cuál vino, y lo dice. La identidad es perfecta; la confianza en la
-posición es nula.
+cae en una repetición y encaja igual de bien en dos sitios, la identidad
+es perfecta; la confianza en la posición es nula.
 
 En BWA-MEM el cálculo sale esencialmente de la diferencia entre el mejor
 score y el segundo mejor. Si el segundo mejor empata con el primero, el
 MAPQ se va a cero directamente.
 
-Los alumnos confunden estos números todo el tiempo porque los dos se ven
-como "qué tan bueno es este resultado". No lo son. Uno mide rareza
-estadística, el otro mide ambigüedad posicional.
-
 Un aviso adicional: **MAPQ no es comparable entre alineadores**. BWA-MEM
 usa 0 a 60, el viejo `bwa aln` llegaba a 37, y Bowtie2 escala distinto.
-Comparar MAPQ entre herramientas no significa nada.
 
-### 9.4 Las tres, en una tabla
+### 9.4 En resumen
 
 |   | BLAST | BLAT | BWA-MEM |
-|----|----|----|----|
+|------------------|------------------|------------------|------------------|
 | Qué indexa | la consulta | el genoma | el genoma (índice FM) |
 | Qué recorre | la base de datos | la consulta | las lecturas |
 | Consulta típica | una secuencia | mRNAs, primers | millones de lecturas |
@@ -590,11 +563,15 @@ propia herramienta.
 
 ## 10. Cuando la secuencia ya no alcanza
 
-El principio que lo hace posible es viejo: la estructura se conserva más
-que la secuencia. Dos proteínas homólogas mantienen su plegamiento a
-distancias evolutivas donde la secuencia ya es irreconocible. Lo nuevo
-no es el principio, es que ahora se puede explotar a escala, porque por
-primera vez existe estructura predicha para casi todo.
+Y cuando la señal de secuencia se agota, en la twilight zone por debajo
+de \~25% de identidad donde ninguna semilla sobrevive, la búsqueda deja
+de ser por secuencia y pasa a ser por estructura.
+
+El principio que lo hace posible es la observación no novedosa de que la
+estructura se conserva más que la secuencia. Dos proteínas homólogas
+mantienen su plegamiento a distancias evolutivas aún cuando la secuencia
+diverge. Como puedes imaginarte, alphafold le ha dado nueva vida a este
+principio.
 
 ### 10.1 Foldseek
 
@@ -604,16 +581,16 @@ rápida.
 
 El truco es el **alfabeto 3Di**: 20 estados que describen las
 interacciones terciarias entre cada residuo y su vecino espacialmente
-más cercano. No describe el backbone, y por eso funciona: tiene menor
-dependencia entre letras consecutivas y concentra la información en los
-núcleos conservados. Con eso, una estructura se vuelve una cadena de
-letras y se puede buscar como si fuera secuencia, con una matriz de
+más cercano. Al no describir el backbone, la secuencia primaria, tiene
+menor dependencia entre letras consecutivas y concentra la información
+en los núcleos conservados. Con eso, una estructura se vuelve una cadena
+de letras y se puede buscar como si fuera secuencia, con una matriz de
 sustitución tipo BLOSUM.
 
-Los números del abstract: Foldseek reduce el tiempo de cómputo en cuatro
-a cinco órdenes de magnitud, conservando 86%, 88% y 133% de la
-sensibilidad de Dali, TM-align y CE respectivamente. En el benchmark
-SCOPe40 es \>4,000× más rápido que TM-align.
+Foldseek reduce el tiempo de cómputo en cuatro a cinco órdenes de
+magnitud, conservando 86%, 88% y 133% de la sensibilidad de Dali,
+TM-align y CE respectivamente. En el benchmark SCOPe40 es \>4,000× más
+rápido que TM-align.
 :::
 
 ### 10.2 La escala nueva
@@ -647,49 +624,51 @@ A favor: FoldTree (Moi et al., *Nat Struct Mol Biol* 2025) construye
 filogenias a partir de la forma; Unicore (Kim et al. 2025) reconstruye
 con genes core estructurales.
 
-En contra, y hay que citarlo para equilibrio: *"Newly Developed
-Structure-Based Methods Do Not Outperform Standard Sequence-Based
-Methods for Large-Scale Phylogenomics"* (*Mol Biol Evol* 2025). El
-modelo de secuencia LG superó a los métodos estructurales en
-filogenómica a gran escala.
+En contra, *"Newly Developed Structure-Based Methods Do Not Outperform
+Standard Sequence-Based Methods for Large-Scale Phylogenomics"* (*Mol
+Biol Evol* 2025). El modelo de secuencia LG superó a los métodos
+estructurales en filogenómica a gran escala.
 
-La homología remota por estructura es un avance real y consolidado. La
-ortología por estructura, no todavía.
+La homología remota por estructura es un avance real y en consolidación,
+no así aún la ortología por estructura.
 :::
 
-## Mitos y realidades: el resumen
+## Resumen
 
 ::: mito
 1.  **"BLAST es una aproximación de Smith–Waterman."** Con matiz:
     aproxima el *resultado* de un alineamiento local óptimo, pero no
     ejecuta ni aproxima el algoritmo Smith–Waterman. Es seed-and-extend,
-    con objetivo (el MSP), estadística (Karlin–Altschul) y mecánica
+    con objetivo (el MSP), estadísticas (Karlin–Altschul) y mecánica
     propios.
-2.  **"El E-value es un p-value."** No. Relacionados por
+2.  **"El E-value no es un p-value."** Aunque estén relacionados por
     $p = 1 - e^{-E}$; el E-value puede ser mayor que 1.
-3.  **"Un E-value bajo significa homólogo."** No. Significa improbable
-    por azar. La homología es otra inferencia, y puede haber
+3.  **"Un E-value bajo sólo es evidencia de homólogía."** Significa
+    improbable por azar. La homología es otra inferencia, y puede haber
     significancia por sesgo composicional o baja complejidad.
-4.  **"Lo que importa es el % de identidad."** Importa junto con la
-    cobertura. 99% sobre 20 residuos de 400 no vale casi nada.
-5.  **"`megablast` es sólo `blastn` más rápido."** No: word size 28
-    vs 11. `megablast` pierde homólogos lejanos.
-6.  **"BLAST encuentra todos los homólogos."** No. Es heurístico; pierde
-    los que no tienen semilla y los de la twilight zone.
-7.  **"El mejor hit de BLAST es el ortólogo."** No. Eso monta la
-    sesión 10. Puede ser parálogo, xenólogo, o un homólogo más
+4.  **"La cobertura importa además del % de identidad."** Importa junto
+    con la cobertura. 99% sobre 20 residuos no nos dice mucho.
+5.  **"`megablast` vs `blastn`"** Word size mayor (28 vs 11) sobre todo
+    para nucleóticos, sube la velocidad a costa de la sensibilidad.
+    `megablast` pierde homólogos lejanos.
+6.  **"BLAST no encuentra todos los homólogos."** Es heurístico y a
+    diferencia de SmithWaterman no garantiza el óptimo; pierde los que
+    no tienen semilla y los de la twilight zone.
+7.  **"El mejor hit de BLAST no es necesariamente el ortólogo."** Para
+    ver en sesión 0. Puede ser parálogo, xenólogo, o un homólogo más
     conservado que el ortólogo real.
-8.  **"`-max_target_seqs 1` devuelve el mejor hit."** No. Devuelve el
+8.  **"`-max_target_seqs 1` no devuelve el mejor hit."** Devuelve el
     primer hit que pasa el umbral, no el de mayor score (ver la
     práctica).
-9.  **"Un E-value de 0 significa identidad perfecta."** No. Es redondeo
-    de un número extremadamente pequeño; no dice nada de la identidad.
-10. **"BLAT es BLAST pero más rápido."** No. Indexa la base en lugar de
+9.  **"Un E-value de 0 sólo es** el redondeo de un número extremadamente
+    pequeño.
+10. **"BLAT no es BLAST pero más rápido."** Indexa la base en lugar de
     la consulta y asume ≥95% de identidad. Es más rápido *porque* busca
     otra cosa.
-11. **"Estructura conservada implica homología."** Es evidencia fuerte,
-    no prueba: existe convergencia estructural. Y el principio tampoco
-    es universal, porque loops y coils no se conservan.
+11. **"Estructura conservada no implica homología."** Es evidencia
+    fuerte pero no descarta convergencia estructural. Además de que
+    puede haber motivos estructurales como loops y coils que no se
+    conserven.
 :::
 
 ## Práctica
