@@ -278,7 +278,7 @@ BLAST es una familia de programas. La primera decisión es qué se
 traduce:
 
 | Programa | Query | Base | Traduce | Uso típico |
-|---------------|---------------|---------------|---------------|---------------|
+|----|----|----|----|----|
 | `blastn` | nucleótido | nucleótido | no | DNA vs DNA |
 | `blastp` | proteína | proteína | no | proteína vs proteína |
 | `blastx` | nucleótido | proteína | la query (6 marcos) | anotar ORFs |
@@ -540,7 +540,7 @@ usa 0 a 60, el viejo `bwa aln` llegaba a 37, y Bowtie2 escala distinto.
 ### 9.4 En resumen
 
 |   | BLAST | BLAT | BWA-MEM |
-|------------------|------------------|------------------|------------------|
+|----|----|----|----|
 | Qué indexa | la consulta | el genoma | el genoma (índice FM) |
 | Qué recorre | la base de datos | la consulta | las lecturas |
 | Consulta típica | una secuencia | mRNAs, primers | millones de lecturas |
