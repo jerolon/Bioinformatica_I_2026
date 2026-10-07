@@ -429,7 +429,7 @@ también por Jim Kent, por ejemplo, reconstruye los posibles amplicones
 de PCR sobre un genoma o transcriptoma dados dos o más pares de primers.
 
 ::: callout-box
-**Semillas espaciadas, en un párrafo.**
+**Semillas espaciadas**
 
 BLAST busca semillas de once bases consecutivas. PatternHunter (Ma,
 Tromp y Li, 2002) notó que no tienen por qué ser consecutivas: una
