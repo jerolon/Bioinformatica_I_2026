@@ -44,7 +44,7 @@ métrica también, el E-value.
 ## El plan del día
 
 | Horario | Bloque |
-|----|----|
+|------------------------------------|------------------------------------|
 | 10:00–11:45 | Teoría: seed-and-extend, E-value, sabores, BLAT, BWA, estructura |
 | 11:45–12:15 | Descanso |
 | 12:15–14:30 | Práctica: BLAST+ local sobre la vía WNT de la babosa |
@@ -57,7 +57,7 @@ métrica también, el E-value.
 - El problema es alinear **una contra todas las demás**
 - Smith–Waterman exacto sigue siendo la referencia de sensibilidad, pero
   contra la base entera es inpráctico
-- Hace falta tomar un atajo. BLAST hace eso
+- Hace falta tomar un atajo.
 
 ## FASTP y FASTA (1985, 1988) {.smaller}
 
@@ -76,10 +76,14 @@ métrica también, el E-value.
 ## Neighbour words (sólo blastp) {.smaller}
 
 Digamos que k es 3, y que la secuencia que vamos a buscar contiene el
-kmer CFC: - ¿Cuáles son los posibles 3-mers que tengan un score por
-arriba de cierto threshold con cierta matriz de sustitución? - Digamos,
-CIC, CLC, CMC, CWC y CYC - Las semillas matches exactos de todos estos
-(mas CFC) en el genoma
+kmer CFC:
+
+- ¿Cuáles son los posibles 3-mers que tengan un score por arriba de
+  cierto threshold con cierta matriz de sustitución?
+
+- Pueden ser, CIC, CLC, CMC, CWC y CYC
+
+- Las semillas matches exactos de todos estos (mas CFC) en el genoma
 
 ## Sembrar y extender {.smaller}
 
@@ -88,7 +92,7 @@ CIC, CLC, CMC, CWC y CYC - Las semillas matches exactos de todos estos
 - **Sembrar**: palabras de tamaño $W$; en proteínas, todas las vecinas
   que puntúen ≥ $T$ contra la query; en DNA, match exacto
 - **Extender**: sin gaps, hacia ambos lados, hasta caer $X$ por debajo
-  del máximo (X-drop) → **HSP**; el de mayor score es el **MSP**
+  del máximo (X-drop) → **HSP**
 
 ## Las dos parámetros
 
@@ -98,10 +102,10 @@ dispara el número de hits y el tiempo. Subir $W$ acelera pero pierde
 homólogos lejanos.
 :::
 
-**Cada default de BLAST es una postura sobre ese equilibrio.** En la
-web, sólo Word size está expuesto como un parámetro modificable de 2,3,5
-y 6. En la línea de comandos los parámetros son `-word_size` y
-`-threshold`. Este último sólo para proteínas.
+**Cada parámetro de BLAST equilibra ese canje.** En la web, sólo Word
+size está expuesto como un parámetro modificable de 2,3,5 y 6. En la
+línea de comandos los parámetros son `-word_size` y `-threshold`. Este
+último sólo para proteínas.
 
 ## Gapped BLAST y PSI-BLAST {.smaller}
 
@@ -111,7 +115,8 @@ y 6. En la línea de comandos los parámetros son `-word_size` y
   en la misma diagonal y cercanos → se puede subir $T$ sin perder
   sensibilidad neta
 - **Extensión con gaps**: un Smith–Waterman confinado a una franja
-- **PSI-BLAST**: perfiles
+- **PSI-BLAST**: en iteraciones, perfiles empíricos sustituyen a la
+  matriz Blosum o PAM
 
 # La estadística de la comparación local: el E-value {.section-divider}
 
@@ -130,7 +135,7 @@ Es lo que separa a BLAST de "un programa que encuentra parecidos" y lo
 convierte en un instrumento de medición.
 :::
 
-## El bit score es log odds en base 2
+## El bit score es log odds en base 2 {.smaller}
 
 $$S' = \frac{\lambda S - \ln K}{\ln 2}, \qquad E = m \cdot n \cdot 2^{-S'}$$
 
@@ -141,7 +146,8 @@ $$S' = \frac{\lambda S - \ln K}{\ln 2}, \qquad E = m \cdot n \cdot 2^{-S'}$$
   unidades de bits
 - Bit score es el $log_2$ de cuán más probable es el alineamiento bajo
   homología que bajo azar
-- No depende de la longitud
+- No depende de la longitud de la secuencia ni la base de datos
+- Sólo depende de la longitud del alineamiento.
 
 ## El E-value es el valor esperado
 
@@ -157,7 +163,7 @@ $$S' = \frac{\lambda S - \ln K}{\ln 2}, \qquad E = m \cdot n \cdot 2^{-S'}$$
 - Igual que la suma de variables estocásticas independientes es normal,
   el máximo de las mismas tiende a una distribución EVD
 - Un score local óptimo ya es un **máximo** entre muchísimos
-  alineamientos
+  alineamientos (HSPs)
 - Se usa Gumbel que modela la distribución del máximo de un número de
   muestras de varias distribuciones
 - Si se usara la distribución normal se subestimaría la probabilidad de
@@ -180,17 +186,17 @@ Un hit significativo en un paper de 1998 puede no serlo hoy.
 
 # Los sabores de BLAST {.section-divider}
 
-## La primera decisión: qué se traduce {.smaller}
+## Comparación entre aminoácidos y/o ácidos nucléicos {.smaller}
 
-| Programa       | Query | Base | Traduce             | Uso típico               |
-|----------------|-------|------|---------------------|--------------------------|
-| `blastn`       | nt    | nt   | no                  | DNA vs DNA               |
-| `blastp`       | aa    | aa   | no                  | proteína vs proteína     |
-| `blastx`       | nt    | aa   | la query (6 marcos) | anotar ORFs o reads      |
-| `tblastn`      | aa    | nt   | la base (6 marcos)  | genomas sin anotar       |
-| `tblastx`      | nt    | nt   | ambos (36 marcos)   | regiones sin anotar      |
-| `dc-megablast` | nt    | nt   | no                  | codificantes divergentes |
-| `deltablast`   | aa    | aa   | no                  | perfil inicial desde CDD |
+| Programa | Query | Base | Traduce | Uso típico |
+|-------------|-------------|-------------|---------------|-------------------|
+| `blastn` | nt | nt | no | DNA vs DNA |
+| `blastp` | aa | aa | no | proteína vs proteína |
+| `blastx` | nt | aa | la query (6 marcos) | anotar ORFs o reads |
+| `tblastn` | aa | nt | la base (6 marcos) | genomas sin anotar |
+| `tblastx` | nt | nt | ambos (36 marcos) | regiones sin anotar |
+| `dc-megablast` | nt | nt | no | codificantes divergentes (semillas que ignoran la tercer posición del codón) |
+| `deltablast` | aa | aa | no | perfil inicial desde conserved domain database (CDD) |
 
 ## PSI-BLAST y la deriva de perfil {.smaller}
 
@@ -203,26 +209,33 @@ Un hit significativo en un paper de 1998 puede no serlo hoy.
 ![](../figuras/svg/blast_velocidad.svg){fig-align="center"}
 
 - **DIAMOND** (Buchfink 2015, 2021): doble indexado, spaced seeds,
-  alfabeto reducido; sensibilidad de BLASTP con 2–4 órdenes de magnitud
-  menos de tiempo
-- **MMseqs2** (Steinegger & Söding 2017): prefiltro de k-mers; los MSA
-  de AlphaFold y ColabFold se generan con MMseqs2
+  alfabeto reducido \[KREDQN\] \[ILV\] \[STA\] los cuenta como el mismo
+  aminoácido; sensibilidad de BLASTP con 2–4 órdenes de magnitud menos
+  de tiempo
+- **MMseqs2** (Steinegger & Söding 2017): prefiltro de k-mers para
+  descartar la mayoría de las secuencias antes de alinear; los MSA de
+  AlphaFold y ColabFold se generan con MMseqs2
 
-## Heurística de uso
+## Heurística de uso {.smaller}
 
 - Consulta puntual, una query contra `nr` en la web: **BLAST** sigue
   siendo el default correcto (interpretabilidad, E-values calibrados,
   ecosistema del NCBI)
+
 - A escala (proteomas, metagenómica, clustering): **DIAMOND** para
   proteínas y traducido, **MMseqs2** (Many against many sequence search)
   para búsqueda y clustering masivos
+
 - BLAST es la referencia de **sensibilidad**, no de **velocidad**
-- "In an experimental study we estimated that querying the (NCBI)
-  non-redundant (nr) database (\~280 million sequences) against the
-  UniRef50 database (\~40 million sequences) using BLASTP would require
-  more than 2 months even on a supercomputer ... However, the newly
-  developed version of DIAMOND can now accomplish the same task in
-  several hours, with an alignment sensitivity that matches BLAST"
+
+  ::: {}
+  > "In an experimental study we estimated that querying the (NCBI)
+  > non-redundant (nr) database (\~280 million sequences) against the
+  > UniRef50 database (\~40 million sequences) using BLASTP would
+  > require more than 2 months even on a supercomputer ... However, the
+  > newly developed version of DIAMOND can now accomplish the same task
+  > in several hours, with an alignment sensitivity that matches BLAST"
+  :::
 
 # BLAT es STALB (blast al revés) {.section-divider}
 
@@ -267,7 +280,7 @@ consecuencia sigue siendo cierta: BLAT asume alta identidad y BLAST no.
 - Índice de k-mers no traslapados en RAM; k-mers sobreusadas excluidas
 - Diseñado para **≥95% de identidad y longitud \> 40**. Fuera de esa
   ventana no encuentra nada
-- Es el canhe por la velocidad
+- Es el canje por la velocidad
 
 ## Coser exones
 
@@ -287,10 +300,10 @@ consecuencia sigue siendo cierta: BLAT asume alta identidad y BLAST no.
   minimap2
 
 ::: callout-box
-**PatternHunter (2002)**: una semilla como `111010010100110111` (donde
-sólo los 1 son matches) pesa lo mismo que once consecutivas y tiene
-**más sensibilidad**, porque sus aciertos son más independientes. Hoy es
-estándar en LAST, LASTZ y DIAMOND.
+**PatternHunter (2002)**: una semilla espaciada como
+`111010010100110111` (donde sólo los 1 son matches) pesa lo mismo que
+once consecutivas y tiene **más sensibilidad**, porque sus aciertos son
+más independientes. Hoy es estándar en LAST, LASTZ y DIAMOND.
 :::
 
 # Pilón: mapear millones de lecturas {.section-divider}
@@ -318,8 +331,8 @@ Si les da curiosidad, es el [capítulo
 9](https://cogniterra.org/lesson/62001/step/1?unit=53665) del libro de
 Compeau y Pevzner
 
-\::: notes No construimos la BWT aquí. El mapeo a fondo (bwa index, bwa
-mem, samtools) es contenido de cuarto semestre. \:::
+El mapeo a fondo (bwa index, bwa mem, samtools) es contenido de cuarto
+semestre.
 
 ## MAPQ contra E-value {.smaller}
 
@@ -335,7 +348,7 @@ mem, samtools) es contenido de cuarto semestre. \:::
 ## En resumen {.smaller}
 
 |   | BLAST | BLAT | BWA-MEM |
-|----|----|----|----|
+|------------------|------------------|------------------|------------------|
 | Qué indexa | la consulta (query) | el genoma (subject) | el genoma (índice FM) |
 | Qué recorre | la base (subject) | la consulta (query) | las lecturas |
 | Consulta típica | una secuencia | mRNAs, primers | millones de lecturas |
@@ -357,16 +370,16 @@ o en una diapositiva aparte.
 - La estructura se conserva más que la secuencia; lo nuevo es que hay
   estructura predicha para casi todo
 - **Alfabeto 3Di** (van Kempen et al. 2024): 20 estados de interacción
-  terciaria con el vecino espacial más cercano → una estructura se
-  vuelve una cadena y se busca con una matriz tipo BLOSUM
+  terciaria de cada residuo i con el vecino espacial más cercano j → una
+  estructura se vuelve una cadena y se busca con una matriz tipo BLOSUM
 - 4–5 órdenes de magnitud más rápido que Dali y TM-align, conservando
   \~86–88% de su sensibilidad
 
 ## La escala nueva y los perfiles que no murieron {.smaller}
 
 - AlphaFold DB: \~300 mil estructuras (2021) → \>214 millones (2024)
-- Barrio-Hernandez et al. 2023: 2.3 millones de clusters, \~31% sin
-  anotación → la materia oscura del espacio de proteínas
+- Barrio-Hernandez et al. 2023: 2.3 millones de clusters estructurales,
+  \~31% sin anotación → la materia oscura del espacio de proteínas
 - Orden creciente en sensibilidad y costo computacional: **secuencia**
   (BLAST, DIAMOND, MMseqs2) → **perfil** (HMMER, HHblits) →
   **embeddings** (pLM-BLAST) → **estructura** (Foldseek)

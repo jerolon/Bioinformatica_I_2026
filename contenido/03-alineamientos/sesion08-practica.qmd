@@ -40,7 +40,7 @@ Ahora sabemos que probablemente esta vía estaba conservada en el último ancest
 Los archivos, ya en el servidor:
 
 | archivo | contenido |
-|------------------------------------|------------------------------------|
+|----|----|
 | `proteoma_dlaeve_v1.2.faa` | **43,905 proteínas** de la anotación v1.2 de *D. laeve*, una por gen codificante (la isoforma más larga). Será la **base de datos**. |
 | `consultas_wnt.faa` | **72 proteínas de referencia**: 18 genes de la vía WNT × 4 especies (humano y tres moluscos: el ostión *Magallana gigas*, el caracol manzana *Pomacea canaliculata* y el caracol terrestre *Bradybaena similaris*, pariente cercano de la babosa). Serán las **consultas**. |
 | `mapa_mrna.tsv` | tabla `mrna → cromosoma → posición → gen → símbolo` de toda la anotación. Con ella van a ubicar los hits en el genoma. |
@@ -155,7 +155,7 @@ Unos 40 segundos. Mientras corre, lean el comando:
 - `-outfmt 6` es **el formato tabular**. `std` son doce columnas estándar y le añadimos `qcovs`, la cobertura de la consulta en porcentaje, como columna 13 (ver blastp -help).
 
 | \# | columna | qué es |
-|------------------------|------------------------|------------------------|
+|----|----|----|
 | 1 | `qseqid` | identificador de la consulta |
 | 2 | `sseqid` | identificador del hit (*subject*) |
 | 3 | `pident` | \% de identidad del alineamiento |
@@ -484,7 +484,7 @@ seqkit grep -nrp '^LGR5\|' datos/consultas_wnt.faa > referencias_lgr5.faa
 
 Tres detalles del script, cada uno con su razón:
 
--  `!v[$1]++` Era una expresión booleana, que también podemos modificar a `++n[$1] <= 5` es el Esto deja pasar las primeras cinco l{ineas de cada consulta. El `++` va antes para que el contador valga 1 (y no 0) en la primera aparición. Cambiar el 5 por un argumento (e.j. `$3` ) también es posible.
+- `!v[$1]++` Era una expresión booleana, que también podemos modificar a `++n[$1] <= 5` es el Esto deja pasar las primeras cinco l{ineas de cada consulta. El `++` va antes para que el contador valga 1 (y no 0) en la primera aparición. Cambiar el 5 por un argumento (e.j. `$3` ) también es posible.
 - El `sort` va por la columna 6 porque **este** `-outfmt` pide siete columnas en un orden custom, y pusimos `bitscore` en la sexta.
 - `${consultas%.*}` le quita al nombre la extensión (todo desde el último punto); `basename` le quita la ruta. De `datos/referencias_lgr5.faa` sale `referencias_lgr5`, y el archivo de salida se llama solo a partir de sus entradas. As{i no escribimos sólo `hits.tsv` sobreescribiendo los resultados.
 
