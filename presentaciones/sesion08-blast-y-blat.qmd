@@ -44,7 +44,7 @@ métrica también, el E-value.
 ## El plan del día
 
 | Horario | Bloque |
-|------------------------------------|------------------------------------|
+|----|----|
 | 10:00–11:45 | Teoría: seed-and-extend, E-value, sabores, BLAT, BWA, estructura |
 | 11:45–12:15 | Descanso |
 | 12:15–14:30 | Práctica: BLAST+ local sobre la vía WNT de la babosa |
@@ -189,7 +189,7 @@ Un hit significativo en un paper de 1998 puede no serlo hoy.
 ## Comparación entre aminoácidos y/o ácidos nucléicos {.smaller}
 
 | Programa | Query | Base | Traduce | Uso típico |
-|-------------|-------------|-------------|---------------|-------------------|
+|----|----|----|----|----|
 | `blastn` | nt | nt | no | DNA vs DNA |
 | `blastp` | aa | aa | no | proteína vs proteína |
 | `blastx` | nt | aa | la query (6 marcos) | anotar ORFs o reads |
@@ -348,7 +348,7 @@ semestre.
 ## En resumen {.smaller}
 
 |   | BLAST | BLAT | BWA-MEM |
-|------------------|------------------|------------------|------------------|
+|----|----|----|----|
 | Qué indexa | la consulta (query) | el genoma (subject) | el genoma (índice FM) |
 | Qué recorre | la base (subject) | la consulta (query) | las lecturas |
 | Consulta típica | una secuencia | mRNAs, primers | millones de lecturas |
