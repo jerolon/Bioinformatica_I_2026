@@ -1,5 +1,5 @@
 ---
-title: "Alineamiento múltiple: Clustal, MAFFT y la duda"
+title: "Alineamiento múltiple: Clustal, MAFFT y Muscle"
 subtitle: "Bioinformática I · LCG · 3er semestre · Sesión 9"
 author: "Jerónimo Miranda Rodríguez · Instituto de Neurobiología, UNAM"
 date: "2026-10-16"
@@ -21,34 +21,34 @@ editor:
 ## Donde nos quedamos
 
 - Sesión 7: el alineamiento óptimo de **dos** secuencias es un problema
-  resuelto y barato
-- Sesión 8: una contra una base de datos exige hacer trampa (BLAST)
-- Hoy: tres o más a la vez. Y aquí la trampa no es opcional
+  resuelto y muy optimizado
+- Sesión 8: una secuencia contra una base de datos necesita atajos
+  (BLAST)
+- Alineamiento múltiple: $\ge$ 3 también requiere heurística
 
 ::: callout-box
-Alinear $N$ secuencias es **NP-completo**. Todo lo que usan (Clustal,
+Alinear $N$ secuencias es **NP-completo**. Todo lo que usamos (Clustal,
 MAFFT, MUSCLE) son heurísticas sin garantía de optimalidad.
 :::
 
-## La idea que casi nunca se enseña
+## Un alineamiento múltiple es una estimación, con error
 
-**El alineamiento múltiple no es un dato observado: es una estimación
-con error, y ese error se propaga a todo lo que hagan después.**
+**El error se error se propagar subsecuentemente.**
 
-- Un árbol filogenético, un análisis de selección, una anotación de
-  dominios: todos parten de un alineamiento múltiple
-- Casi todos lo tratan como si fuera la verdad. No lo es: es la mejor
-  conjetura de un programa heurístico
+- Árboles filogenéticos, análisis de selección (dN/dS), anotación de
+  dominios, toman un alineamiento múltiple como punto de partida
+- Por eso hay que mantener cautela sobre que no necesariamente es la
+  solución óptima.
 - **Cambiar de programa puede cambiar la conclusión**
 
 ## El plan del día
 
-| Horario     | Bloque                                                            |
-|-------------|-------------------------------------------------------------------|
+| Horario | Bloque |
+|--------------------|----------------------------------------------------|
 | 10:00–11:45 | Teoría: por qué no escala, suma de pares, progresivo, herramientas, incertidumbre |
-| 11:45–12:15 | Descanso                                                          |
+| 11:45–12:15 | Descanso |
 | 12:15–14:30 | Práctica: Clustal Omega contra MAFFT sobre los LGR de la sesión 8 y sus R-spondinas |
-| 14:30–15:00 | Cierre, dudas, entregable                                         |
+| 14:30–15:00 | Cierre, dudas, entregable |
 
 # Por qué la programación dinámica no escala {.section-divider}
 
@@ -58,9 +58,9 @@ con error, y ese error se propaga a todo lo que hagan después.**
 
 - Dos secuencias: una matriz. $N$ secuencias: un hipercubo, costo del
   orden de $L^N$
-- Tres todavía se puede; veinte, ni de lejos
-- El progresivo crece como $N^2 L^2$: por eso es el que todo el mundo
-  usa
+- Factible con muy pocas secuencas
+- El progresivo crece como $N^2 L^2$ por lo que es el usado en la
+  práctica
 
 ## No es que falte un algoritmo {.smaller}
 
@@ -69,17 +69,17 @@ con error, y ese error se propaga a todo lo que hagan después.**
 - **Elias 2006** cerró los casos abiertos, incluido el alfabeto del DNA
 - **Just 2001**: además es APX-difícil; no hay esquema que se acerque
   tanto como uno quiera al óptimo en tiempo polinomial (salvo P = NP)
-- Matiz: la estrella central (Gusfield 1993) garantiza quedar a lo más
-  al doble del óptimo. Lo prohibido es acercarse **arbitrariamente**
+- La estrella central (Gusfield 1993) garantiza quedar a lo más al doble
+  del óptimo. Lo prohibido es acercarse **arbitrariamente**
 
 ::: callout-box
-**No existe, ni existirá, un programa que garantice el mejor
+**No existe, ni existirá?, un programa que garantice el mejor
 alineamiento múltiple.** Todo lo que se usa son atajos.
 :::
 
-# Cómo se califica: la suma de pares {.section-divider}
+# La suma de pares es la métrica o score de MSA {.section-divider}
 
-## Suma de pares (SP)
+## Suma de pares (SP): todos contra todos
 
 - La puntuación de una columna es la suma, sobre todos los
   $\binom{N}{2}$ pares de renglones, del puntaje de ese par
@@ -89,42 +89,41 @@ alineamiento múltiple.** Todo lo que se usa son atajos.
 Esquema didáctico: match $+1$, mismatch $-1$, residuo/gap $-2$, gap/gap
 $0$:
 
-```
+```         
 s1  W K L
 s2  W - L
 s3  W K M
 ```
 
 Columna 1: $+3$ · columna 2: $-2 + 1 - 2 = -3$ · columna 3:
-$+1 - 1 - 1 = -1$ · **total: $-1$**
+$+1 - 1 - 1 = -1$ · **total:** $-1$
 
-## Algo incómodo
+## Sensibilidad a parámetros se multiplica por $\binom{N}{2}$
 
-- Cambien la penalización de gap de $-2$ a $-1$: el mismo alineamiento
-  ahora vale $+1$
-- La puntuación, y con ella cuál alineamiento resulta "el óptimo",
-  depende de decisiones de modelado que alguien tomó por ustedes
-- Ya lo vieron con pares (sesión 7); con $N$ secuencias el efecto se
-  multiplica por $\binom{N}{2}$
+- Igual que con los algoritmos de alineamiento pareados, la puntuación,
+  y por tanto, el alineamiento depende de decisiones de modelado y
+  parámetros
+- Ahora con $N$ secuencias, el efecto se multiplica por $\binom{N}{2}$
 
 ::: notes
-Ejercicio 1 del capítulo para la tarde o para tarea: recalcular con
-gap −1 y con el gap de s2 movido a la última columna.
+Ejercicio 1 del capítulo para la tarde o para tarea: recalcular con gap
+−1 y con el gap de s2 movido a la última columna.
 :::
 
 # Alineamiento progresivo {.section-divider}
 
 ## Feng & Doolittle 1987
 
-- No alinear todo a la vez, sino por partes, empezando por los pares
-  más parecidos
+- No alinear todo a la vez, sino por partes, empezando por los pares más
+  parecidos
 - Primero un **árbol guía** a partir de las similitudes entre pares;
   luego se alinean los más cercanos y se van agregando secuencias y
   grupos, de las ramas a la raíz
-- Rápido y funciona sorprendentemente bien
-- El problema que los propios autores vieron: los gaps de A contra B no
-  tienen por qué coincidir con los de A contra C. **El orden de fusión
-  determina el resultado**
+- Rápido y funciona bien
+- El problema que los propios autores vieron ya se percataron (aunque
+  para ellos era un *feature*) es que los gaps de A contra B no tienen
+  por qué coincidir con los de A contra C. No hay conmutatividad. **El
+  orden de fusión determina el resultado**
 
 ## El pecado original {.smaller}
 
@@ -139,10 +138,10 @@ corrige nunca.**
 
 ::: notes
 La lógica era razonable: la mejor información sobre un gap está entre
-las secuencias más parecidas. El costo: si el árbol guía se equivoca
-de orden, el gap se propaga hacia arriba. Casi toda la historia
-posterior del MSA es un intento de mitigar esto. Ejercicio 2 del
-capítulo (A/B/C con MSTK...) lo muestra a mano: 16 contra 14.
+las secuencias más parecidas. El costo: si el árbol guía se equivoca de
+orden, el gap se propaga hacia arriba. Casi toda la historia posterior
+del MSA es un intento de mitigar esto. Ejercicio 2 del capítulo (A/B/C
+con MSTK...) lo muestra a mano: 16 contra 14.
 :::
 
 # La caja de herramientas {.section-divider}
@@ -154,36 +153,63 @@ capítulo (A/B/C con MSTK...) lo muestra a mano: 16 contra 14.
   contra HMM. Versión 1.2.4 desde 2016: software terminado, no
   abandonado
 - **MAFFT** (Katoh 2002): transformada rápida de Fourier para localizar
-  bloques homólogos (volumen y polaridad de cada residuo)
+  bloques homólogos por correlación (volumen y polaridad de cada
+  residuo)
 - **MUSCLE** (Edgar 2004): progresivo más refinamiento iterativo;
   MUSCLE5 cambia el juego
-- **T-Coffee** (Notredame 2000): biblioteca de alineamientos por pares
-  y búsqueda del múltiple más **consistente** con ella. Más lento,
-  escala mal
+- **T-Coffee** (Notredame 2000): biblioteca de alineamientos por pares y
+  búsqueda del múltiple más **consistente** con ella. Más lento, escala
+  mal
 
 ::: notes
 CLUSTAL W fue el artículo número 10 más citado de toda la ciencia en el
 conteo de Nature 2014 (ClustalX el 28), por encima de BLAST. Los
-perfiles HMM son la misma idea que las PSSM de PSI-BLAST de la sesión
-8: una columna deja de ser una letra y se vuelve una distribución.
+perfiles HMM son la misma idea que las PSSM de PSI-BLAST de la sesión 8:
+una columna deja de ser una letra y se vuelve una distribución.
+:::
+
+## MAFFT: FFT encuentra correlación rápidamente {.smaller}
+
+::::: columns
+::: {.column width="50%"}
+![](../figuras/sesion09/katoh2002_fft_correlacion.png){height="480px"}
+
+[Katoh et al. 2002, *Nucleic Acids Res* 30:3059, Fig. 1]{.ref}
+:::
+
+::: {.column width="50%"}
+- Cada residuo se vuelve un número: su **volumen** y su **polaridad**
+- **A**: la correlación $c(k)$ para cada desfase $k$ entre las dos
+  secuencias; la FFT la calcula para todos los $k$ a la vez
+- Los **picos** ($k = 2$, $k = -1$) son candidatos a segmentos homólogos
+- **B**: con cada desfase, aparece un bloque homólogo (recuadros)
+- La programación dinámica solo se gasta en conectar esos bloques
+:::
+:::::
+
+::: notes
+Es la misma lógica de seed-and-extend de BLAST (sesión 8): localizar
+rápido las regiones prometedoras y solo ahí gastar el alineamiento caro.
+Aquí las semillas no son palabras sino picos de correlación. Ojo: el
+2002 es el MAFFT original (FFT-NS-2 y FFT-NS-i); L-INS-i y compañía
+llegaron después.
 :::
 
 ## MAFFT: elegir la estrategia es media práctica {.smaller}
 
-| Modo       | Qué hace                                        | Para                          |
-|------------|-------------------------------------------------|-------------------------------|
-| `FFT-NS-2` | progresivo puro, rápido (default)               | hasta ~30,000 secuencias      |
-| `FFT-NS-i` | progresivo + refinamiento iterativo             | intermedio                    |
-| `L-INS-i`  | pares locales (estilo SW) + refinamiento        | < ~200 secuencias, precisión  |
-| `G-INS-i`  | pares globales + refinamiento                   | secuencias de largo parecido  |
-| `E-INS-i`  | regiones grandes no alineables                  | dominios en contexto variable |
+| Modo | Qué hace | Para |
+|------------------|---------------------------------|---------------------|
+| `FFT-NS-2` | progresivo puro, rápido (default) | hasta \~30,000 secuencias |
+| `FFT-NS-i` | progresivo + refinamiento iterativo | intermedio |
+| `L-INS-i` | pares locales (estilo SW) + refinamiento | \< \~200 secuencias, precisión |
+| `G-INS-i` | pares globales + refinamiento | secuencias de largo parecido |
+| `E-INS-i` | regiones grandes no alineables | dominios en contexto variable |
 
-`mafft --auto` elige entre L-INS-i, FFT-NS-i y FFT-NS-2 según el
-tamaño.
+`mafft --auto` elige entre L-INS-i, FFT-NS-i y FFT-NS-2 según el tamaño.
 
 ## Dos ideas que cruzan toda la tabla
 
-:::: columns-equal
+::::: columns-equal
 ::: {}
 **Refinamiento iterativo**
 
@@ -197,10 +223,10 @@ tamaño.
 **Consistencia**
 
 - La apuesta de T-Coffee
-- Usar la información de **todos** los pares desde el principio, en
-  vez de corregir después
+- Usar la información de **todos** los pares desde el principio, en vez
+  de corregir después
 :::
-::::
+:::::
 
 # El alineamiento es una estimación, no un dato {.section-divider}
 
@@ -209,8 +235,8 @@ tamaño.
 - **Wong, Suchard & Huelsenbeck 2008** (*Science*): 853 genes ortólogos
   de siete levaduras, siete alineadores → **conclusiones filogenéticas
   distintas**
-- **Wu, Chatterji & Eisen 2012**: cerca del 46% de los genes produjo
-  uno o más árboles diferentes según el alineador
+- **Wu, Chatterji & Eisen 2012**: cerca del 46% de los genes produjo uno
+  o más árboles diferentes según el alineador
 - El problema de fondo: los métodos río abajo tratan el alineamiento
   como una observación fija y **no propagan su incertidumbre**
 - Si el alineamiento está mal, el árbol está mal, y nadie se entera
@@ -246,18 +272,17 @@ Es la figura que ellos mismos van a reconstruir en la tarde, con `awk`,
 en los ejercicios 5 y 8 de la práctica. Números por dominio (acuerdo
 medio / LC medio de MUSCLE5): LRR 0.61 / 7.2, bisagra 0.78 / 7.5, 7TM
 0.96 / 9.0, cola 0.40 / 4.7. No adelantar por qué el LRR es difícil
-aunque esté conservado (14 repeticiones en tándem: problema de
-registro, no de conservación): es la pregunta del ejercicio 5. Se
-regenera con figuras/fig_msa_desacuerdo.R a partir de los alineamientos
-de la clave.
+aunque esté conservado (14 repeticiones en tándem: problema de registro,
+no de conservación): es la pregunta del ejercicio 5. Se regenera con
+figuras/fig_msa_desacuerdo.R a partir de los alineamientos de la clave.
 :::
 
 ## Una hipótesis con barra de error {.smaller}
 
 ::: callout-box
-**El alineamiento múltiple no es un hecho, es una hipótesis con barra
-de error.** Mírenlo con la misma sospecha con la que miran cualquier
-otra estimación.
+**El alineamiento múltiple no es un hecho, es una hipótesis con barra de
+error.** Mírenlo con la misma sospecha con la que miran cualquier otra
+estimación.
 :::
 
 - **GUIDANCE2** (Sela et al. 2015) puntúa qué columnas son confiables
@@ -273,15 +298,14 @@ otra estimación.
 - Lo que sí: MAFFT es hoy uno de los defaults más comunes en servidores
   y pipelines (motor del Job Dispatcher del EBI); ningún benchmark
   corona a un ganador
-- La frontera ya se movió: alineadores con estructura predicha o
-  modelos de lenguaje de proteínas. **Quédense con la idea, no con los
-  nombres**
+- La frontera ya se movió: alineadores con estructura predicha o modelos
+  de lenguaje de proteínas. **Quédense con la idea, no con los nombres**
 
 # ¿Cuál usar cuándo? {.section-divider}
 
 ## Sin ceremonia
 
-- **Pocas secuencias (< ~200), máxima precisión**: MAFFT `L-INS-i` o
+- **Pocas secuencias (\< \~200), máxima precisión**: MAFFT `L-INS-i` o
   T-Coffee
 - **Miles a cientos de miles**: Clustal Omega o MAFFT `FFT-NS-2`
 - **Filogenia seria, donde importa la incertidumbre**: MUSCLE5 con su
@@ -289,16 +313,16 @@ otra estimación.
 - **Default docente equilibrado**: `mafft --auto`
 
 ::: callout-box
-Para la práctica, una familia con decenas de secuencias: Clustal Omega
-o MAFFT `L-INS-i`.
+Para la práctica, una familia con decenas de secuencias: Clustal Omega o
+MAFFT `L-INS-i`.
 :::
 
 # Mitos y realidades {.section-divider}
 
 ## El resumen {.smaller}
 
-1.  **"CLUSTAL es el estándar"**: inercia de citación; mide historia,
-    no precisión. En muchos pipelines el motor por defecto es MAFFT
+1.  **"CLUSTAL es el estándar"**: inercia de citación; mide historia, no
+    precisión. En muchos pipelines el motor por defecto es MAFFT
 2.  **"El alineamiento múltiple es un dato"**: es la estimación de un
     programa heurístico, con error propagable
 3.  **"Más secuencias, mejor alineamiento"**: sin curaduría, secuencias
@@ -317,8 +341,8 @@ o MAFFT `L-INS-i`.
   MAFFT**](../contenido/03-alineamientos/sesion09-practica.html)
 - Continúa la sesión 8: sus candidatos LGR crecen a **50 receptores de
   11 especies**, más una familia chica, las **17 R-spondinas**
-- **Alinear dos veces**: `clustalo` (guardando el árbol guía) y `mafft
-  --localpair --maxiterate 1000` (eso es `L-INS-i`)
+- **Alinear dos veces**: `clustalo` (guardando el árbol guía) y
+  `mafft --localpair --maxiterate 1000` (eso es `L-INS-i`)
 - **Primero números**, después `t_coffee -other_pg aln_compare`: mide
   desacuerdo entre programas, **no** exactitud de ninguno
 - **Ubicar el desacuerdo** por dominio de la proteína, con `awk`: la
@@ -333,7 +357,7 @@ o MAFFT `L-INS-i`.
 Pendientes de instructor (están en la caja "Pendiente" de la práctica):
 crear el módulo `msa` en ken (clustalo, mafft, muscle 5.1, t-coffee,
 hmmer, seqkit, trimal), copiar datos/, scripts/ y clave/ a la ruta
-$origen y correr la práctica una vez. El ensemble de MUSCLE5 para los
+\$origen y correr la práctica una vez. El ensemble de MUSCLE5 para los
 LGR tarda 1 h 45 min en un CPU: se entrega calculado.
 :::
 
@@ -342,8 +366,8 @@ LGR tarda 1 h 45 min en un CPU: se entrega calculado.
 ::: callout-box
 Un párrafo por familia sobre **dónde los dos métodos no se pusieron de
 acuerdo y por qué**: dos regiones concretas, con posiciones en la
-secuencia de referencia, y si coinciden con las letras de baja
-confianza de MUSCLE5 y con lo que recortó `trimal`.
+secuencia de referencia, y si coinciden con las letras de baja confianza
+de MUSCLE5 y con lo que recortó `trimal`.
 :::
 
 - Ésa es la parte que se califica en serio, porque es la que enseña a

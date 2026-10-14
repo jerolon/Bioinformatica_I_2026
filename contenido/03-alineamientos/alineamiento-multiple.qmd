@@ -16,9 +16,8 @@ de octubre de 2026.
 ## Idea central
 
 **Alinear tres o más secuencias a la vez es un problema NP-completo.
-Todos los programas que usan (CLUSTAL, MAFFT, MUSCLE) son heurísticas
-sin garantía de optimalidad. Y el alineamiento que producen no es un
-dato observado: es una estimación con error.**
+Todos los programas que se usan (CLUSTAL, MAFFT, MUSCLE) son heurísticas
+sin garantía de optimalidad.**
 
 El alineamiento múltiple es el punto de partida de un árbol
 filogenético, un análisis de selección, o una anotación de dominios.
@@ -32,7 +31,7 @@ En la sesión 7 vimos que alinear dos secuencias por programación
 dinámica llena una matriz de dos dimensiones. Alinear $N$ secuencias
 exige un hipercubo de $N$ dimensiones: el costo es del orden de $L^N$,
 exponencial en el número de secuencias. Para tres secuencias todavía se
-puede; para veinte, ni de lejos (@fig-escalamiento).
+puede; para veinte, ni de broma (@fig-escalamiento).
 
 ![El costo de la programación dinámica exacta crece como $L^N$ y sale de
 cualquier escala imaginable con apenas unas cuantas secuencias. El
@@ -46,7 +45,7 @@ múltiple con puntuación de suma de pares mejor que un umbral dado es
 **NP-completo**; Elias (2006) cerró los casos que quedaban abiertos,
 incluyendo alfabetos tan chicos como el del DNA. Just (2001) fue más
 lejos por otro camino: el problema es APX-difícil, es decir, no existe
-un esquema que se aproxime tanto como uno quiera al óptimo en tiempo
+un esquema que se aproxime arbitrariamente al óptimo en tiempo
 polinomial, salvo que P = NP.
 
 Esto no prohíbe toda aproximación. El método de la estrella central

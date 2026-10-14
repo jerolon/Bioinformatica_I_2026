@@ -227,7 +227,7 @@ En un FASTA alineado todas las secuencias miden lo mismo, así que `min_len`, `a
 
 ¿Cuántas columnas tiene cada uno de los tres alineamientos? ¿Tienen los tres los mismos residuos? ¿Qué mide la identidad promedio de `esl-alistat`, y por qué es tan baja en familias que BLAST recuperó sin ningún problema? Y una pregunta para `lgr`: la proteína más larga mide 1,682 aa y el alineamiento tiene unas 3,000 columnas. ¿De dónde salen?
 
-::: {.callout-note collapse="true"}
+:::: {.callout-note collapse="true"}
 ## Solución
 
 |   | rspo | lgr |
@@ -264,7 +264,7 @@ awk procesa el texto renglón por renglón; `$0` es el renglón completo, que aq
 `seqkit seq -s -w 0` imprime cada secuencia en un solo renglón, sin encabezado. Resultado: **731 de 2,902**, una de cada cuatro columnas. De esas, 394 son de `Dlaeve_chr11_0.60` (1,553 aa) y 141 de `Dlaeve_chr6_LGR` (los 1,682 aa de la advertencia): dos modelos génicos largos de la anotación automática aportan por sí solos el 18 % del ancho del alineamiento. Solo 469 columnas tienen residuo en 45 o más de las 50 secuencias ¿Qué cambiarías en el código para saber esto?.
 
 Más secuencias no es mejor alineamiento porque y cada inserción propia de una secuencia, sea real o sea un error de anotación, se paga en columnas extra para todas.
-:::
+::::
 
 ## Parte 3 · Medir el desacuerdo
 
@@ -626,20 +626,23 @@ Detalle de `-maxcc`: imprime la confianza de columna (CC) mínima, media y máxi
 
 ### Ejercicio 9. Jalview y trimAl
 
-Primero, mirar. **Desde su laptop**, no desde `ken`:
+Primero, mirar. **Desde su laptop**, no desde `ken`. Recuerden que acá no pueden copiar y pegar, tienen que cambiar `usuario` y quizás el directorio donde tienen cuardado el archivo.
 
 ``` {.bash .numberLines}
 # traer del servidor los HTML, el alineamiento y los features
-scp "usuario@ken.lavis.unam.mx:~/bioinfo1/sesion09/*_confianza.html" .
-scp "usuario@ken.lavis.unam.mx:~/bioinfo1/sesion09/*_mafft.fasta" .
-scp "usuario@ken.lavis.unam.mx:~/bioinfo1/sesion09/*_confianza.features" .
+scp "usuario@ken.lavis.unam.mx:/mnt/data/bioinfo1/usuario/sesion09/*_confianza.html" .
+scp "usuario@ken.lavis.unam.mx:/mnt/data/bioinfo1/usuario/sesion09/*_mafft.fasta" .
+scp "usuario@ken.lavis.unam.mx:/mnt/data/bioinfo1/usuario/sesion09/*_confianza.features" .
 ```
 
-Las comillas evitan que su laptop intente expandir el `*` contra sus propios archivos: el patrón se resuelve contra los de `ken`. Abran `rspo_confianza.html` en el navegador: es el alineamiento de MUSCLE5 con cada letra coloreada por su LC. Después abran `rspo_mafft.fasta` en [Jalview](https://www.jalview.org), coloreen por conservación, importen `rspo_confianza.features` (*File → Load Features / Annotations*) para sobreponer la confianza de MUSCLE5, y recorran el alineamiento buscando las regiones de los ejercicios 5 y 8. Si Java se pone difícil, el MSA Viewer del NCBI en el navegador es el plan B.
+Las comillas evitan que su laptop intente expandir el `*` contra sus propios archivos: el patrón se resuelve contra los de `ken`. Abran `rspo_confianza.html` en el navegador: es el alineamiento de MUSCLE5 con cada letra coloreada por su LC. Después abran `rspo_mafft.fasta` en [Jalview](https://www.jalview.org), coloreen por conservación, importen `rspo_confianza.features` (*File → Load Features / Annotations*) para sobreponer la confianza de MUSCLE5, y recorran el alineamiento buscando las regiones de los ejercicios 5 y 8. Si Java se pone punk, también se puede ver en el [MSA Viewer del NCBI](https://www.ncbi.nlm.nih.gov/projects/msaviewer/).
 
 Ahora, lo que hace un pipeline filogenético antes de construir el árbol:
 
 ``` {.bash .numberLines}
+#Cargamos trimal hace mucho, por si estás en otra sesión:
+module load trimal seqkit
+
 # recorte automático; el HTML pinta qué columnas se fueron
 trimal -in ${F}_mafft.fasta -out ${F}_mafft_trimal.fasta \
        -automated1 -htmlout ${F}_trimal.html
@@ -655,6 +658,8 @@ seqkit stats ${F}_mafft.fasta ${F}_mafft_trimal.fasta
 trimal -in ${F}_mafft.fasta -automated1 -colnumbering -out /dev/null \
   | sed 's/#ColumnsMap//' | tr -d ' \t' | tr ',' '\n' \
   | grep -E '^[0-9]+$' > ${F}_trimal_cols.txt
+
+#ref=RSPO2_human o ref=LGR5_human
 
 # 2) por cada residuo de la referencia: ¿su columna sobrevivió?
 awk -v id=">$ref" 'NR==FNR {kept[$1]=1; next}
@@ -684,11 +689,11 @@ El del paso 2 cruza dos archivos con `NR==FNR` otra vez, pero el primer archivo 
 El del paso 3 es otro cruce `NR==FNR`: guarda el 1/0 por posición y se lo pega a la tabla del ejercicio 8; como `$0` es la fila completa, `print $0, k[$1]` solo le agrega la columna nueva.
 :::
 
-`${F}_tabla.tsv` es el resultado de la tarde: una fila por residuo de la referencia, con su **acuerdo**, su **LC** y si `trimal` lo **conservó** (1) o no (0).
+`${F}_tabla.tsv` es nuestro resultado numérico, una fila por residuo de la referencia, con su **acuerdo**, su **LetterConfidence** y si `trimal` lo **conservó** (1) o no (0).
 
 ¿Las posiciones que `trimal` eliminó son las que señalaban los ejercicios 5 y 8? Compárenlas con las conservadas, y cuenten las eliminadas por dominio. El proyecto recortó su alineamiento de R-spondinas de 407 a 197 columnas antes de IQ-TREE. ¿Qué se gana y qué se pierde al recortar?
 
-::: {.callout-note collapse="true"}
+:::: {.callout-note collapse="true"}
 ## Solución
 
 ``` {.bash .numberLines}
@@ -705,7 +710,7 @@ awk -F'\t' '{g = ($4==0) ? "recortada " : "conservada"
 ::: {.callout-note collapse="true"}
 ## ¿Qué hace este awk?
 
-Como el cruce de acuerdo y LC del ejercicio 8, pero agrupando por la columna 4 de la tabla final: `g` vale `recortada ` si `$4==0` y `conservada` si no (el espacio extra alinea la salida). Sin condición delante de la llave, la acción corre en **todas** las filas. `n[g]` cuenta posiciones por grupo, `s[g]` acumula el LC (`$3`) y `b[g]` cuenta las de acuerdo bajo, pidiendo primero `$2!="NA"` para no comparar un texto contra 0.5. El `END` imprime, por grupo, el n, la fracción con acuerdo \< 0.5 y el LC medio.
+Como el cruce de acuerdo y LC del ejercicio 8, pero agrupando por la columna 4 de la tabla final: `g` vale `recortada` si `$4==0` y `conservada` si no (el espacio extra alinea la salida). Sin condición delante de la llave, la acción corre en **todas** las filas. `n[g]` cuenta posiciones por grupo, `s[g]` acumula el LC (`$3`) y `b[g]` cuenta las de acuerdo bajo, pidiendo primero `$2!="NA"` para no comparar un texto contra 0.5. El `END` imprime, por grupo, el n, la fracción con acuerdo \< 0.5 y el LC medio.
 :::
 
 |   | rspo | lgr |
@@ -725,7 +730,7 @@ En `lgr` recorta **el 79 % del LRR** y la cola entera, y conserva el 7TM casi co
 **Se pierde**: el ectodominio LRR es justo lo que distingue a los subtipos A, B y C, porque es lo que reconoce al ligando. Un árbol de puro 7TM puede resolver la familia, pero ya no usa la evidencia que la define. Y para los cuatro fragmentos casi no queda señal.
 
 La salida sensata es recortar con criterio (un umbral de gaps como `-gt 0.8`, o a mano por dominio) y **reportar** cuántas columnas quedaron y cuáles. Recortar no es limpiar: es otra decisión de modelado que alguien toma por ustedes si no la toman ustedes.
-:::
+::::
 
 ## Anexos
 
@@ -733,7 +738,7 @@ La salida sensata es recortar con criterio (un umbral de gaps como `-gt 0.8`, o 
 
 Del pipeline del proyecto, que guarda cada secuencia con su procedencia; por eso existen los dos archivos de metadata. Las proteínas de *D. laeve* son la isoforma más larga de cada gen en la anotación v1.2, las mismas de la base que montaron en la sesión 8. Las 11 referencias LGR vienen de un manifiesto curado de UniProt, con su subtipo. Los 31 LGR de moluscos se recuperaron de dos maneras: con `blastp` en los tres proteomas anotados (*Bradybaena*, *Magallana*, *Pomacea*) y con `miniprot`, que alinea una proteína contra un genoma y predice el gen, en cuatro genomas de babosas y caracoles (*D. lasithionense*, *Arion*, *Meghimatium*, *Achatina*). De ahí los fragmentos: son modelos parciales de `miniprot`.
 
-El árbol ML de R-spondinas es el del proyecto: MAFFT L-INS-i, trimAl, IQ-TREE con selección automática de modelo, 1,000 réplicas de *ultrafast bootstrap* y 1,000 de SH-aLRT. Son los dos números de cada nodo.
+El árbol ML de R-spondinas es el del proyecto: MAFFT L-INS-i, trimAl, IQ-TREE con selección automática de modelo, 1,000 réplicas de *ultrafast bootstrap* y 1,000 de SH-aLRT.
 
 ### B. Tiempos de referencia, y por qué existen las colas
 
@@ -750,7 +755,7 @@ Con 1 CPU:
 | `acuerdo_por_columna.py` | 0.1 s | 0.3 s |
 | `trimal -automated1` | \< 0.1 s | 0.1 s |
 
-Todo es interactivo salvo una celda. Un ensemble son 16 alineamientos completos (100 con `-diversified`), y ese es el precio de la barra de error. Un trabajo de dos horas no se corre en una terminal abierta ni en un nodo compartido: se manda a una **cola**. En un clúster con SLURM, el ensemble de `lgr` se pide así:
+Puede diferir un poco por la ocupancia de ken y porque estos números los corrí primero en fénix. Muscle `-stratified` nos daría un ensamble con 16 alineamientos completos (100 con `-diversified`), por eso no se puede correr en el tiempo de la clase. Esa clase de trabajos más tardados, de horas a meses, se envían a la **cola o queue**. En un clúster con SLURM, el ensemble de `lgr` se pide así. Pero ya lo usarán si no es que no lo usan ya para sus proyectos de laboratorio.
 
 ``` {.bash .numberLines}
 #!/usr/bin/env bash
@@ -762,16 +767,16 @@ muscle -align datos/familia_lgr.faa -output lgr_ensamble.efa \
        -stratified -threads 8
 ```
 
-Se envía con `sbatch muscle_lgr.slurm` y se vigila con `squeue -u $USER`. Pedir siempre `--time`: un trabajo sin límite de tiempo es el último que la cola quiere correr.
+Se envía con `sbatch muscle_lgr.slurm` y se vigila con `squeue -u $USER`. Pedir siempre `--time` si tienen un buen estimado del tiempo, así slurm da prioridad sobre los trabajos que no tienen límite de tiempo.
 
 ## Para entregar
 
 En su repositorio, dentro de `sesion09/`:
 
-- **Un párrafo por familia** sobre dónde los dos métodos no se pusieron de acuerdo y por qué: dos regiones concretas, con posiciones en la secuencia de referencia (RSPO2_human, LGR5_human), diciendo si coinciden con las letras de baja confianza de MUSCLE5 y con lo que recortó `trimal`. Es la parte que se califica en serio.
+- **Un párrafo por familia** sobre dónde los dos métodos no se pusieron de acuerdo y por qué: dos regiones concretas, con posiciones en la secuencia de referencia (RSPO2_human, LGR5_human), diciendo si coinciden con las letras de baja confianza de MUSCLE5 y con lo que recortó `trimal`.
 - La **tabla por dominio** de cada familia en Markdown: acuerdo medio, LC medio y residuos eliminados por `trimal`.
-- `rspo_tabla.tsv` y `lgr_tabla.tsv` (son chicas, estas sí se versionan).
-- **Una frase** para el compañero que pone el `.dnd` en su tesis como "la filogenia de la familia", con un ejemplo tomado de sus árboles.
-- En su `README.md`: las versiones de `clustalo`, `mafft`, `muscle` y `trimal`, de dónde se copiaron los datos, y que el ensemble de `lgr` no lo calcularon ustedes.
+- `rspo_tabla.tsv` y `lgr_tabla.tsv` (son chicas, sí se pueden versionar, y además me da chance de revisar si les da un resultado muy distinto en los ejercicios de arriba).
+- **Una frase** para un compañero de biología o de neurociencias que les preguntesi está bien poner en su tesis el `.dnd` de clustal como la filogenia de su gen.
+- En su `README.md`: las versiones de `clustalo`, `mafft`, `muscle` y `trimal`, de dónde se copiaron los datos.
 
-No suban `datos/`, los alineamientos, los `.efa` ni los `.html`: son grandes y se regeneran con los comandos que documenta su README.
+No suban `datos/`, los alineamientos ni los `.efa`. Pueden subir los `.html` si tienen algún repo con pages.
