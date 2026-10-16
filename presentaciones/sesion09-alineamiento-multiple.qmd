@@ -33,18 +33,18 @@ MAFFT, MUSCLE) son heurísticas sin garantía de optimalidad.
 
 ## Un alineamiento múltiple es una estimación, con error
 
-**El error se error se propagar subsecuentemente.**
+**El error se error se puede propagar subsecuentemente.**
 
 - Árboles filogenéticos, análisis de selección (dN/dS), anotación de
   dominios, toman un alineamiento múltiple como punto de partida
-- Por eso hay que mantener cautela sobre que no necesariamente es la
-  solución óptima.
+- Por eso hay que mantener cautela. No necesariamente es la solución
+  óptima.
 - **Cambiar de programa puede cambiar la conclusión**
 
 ## El plan del día
 
 | Horario | Bloque |
-|--------------------|----------------------------------------------------|
+|---------------------|---------------------------------------------------|
 | 10:00–11:45 | Teoría: por qué no escala, suma de pares, progresivo, herramientas, incertidumbre |
 | 11:45–12:15 | Descanso |
 | 12:15–14:30 | Práctica: Clustal Omega contra MAFFT sobre los LGR de la sesión 8 y sus R-spondinas |
@@ -114,16 +114,15 @@ Ejercicio 1 del capítulo para la tarde o para tarea: recalcular con gap
 
 ## Feng & Doolittle 1987
 
-- No alinear todo a la vez, sino por partes, empezando por los pares más
-  parecidos
+- Alinear por pares, empezando por los pares más parecidos
 - Primero un **árbol guía** a partir de las similitudes entre pares;
   luego se alinean los más cercanos y se van agregando secuencias y
   grupos, de las ramas a la raíz
 - Rápido y funciona bien
-- El problema que los propios autores vieron ya se percataron (aunque
-  para ellos era un *feature*) es que los gaps de A contra B no tienen
-  por qué coincidir con los de A contra C. No hay conmutatividad. **El
-  orden de fusión determina el resultado**
+- El problema que los propios autores ya se percataron (aunque para
+  ellos era un *feature*) es que los gaps de A contra B no tienen por
+  qué coincidir con los de A contra C. No hay conmutatividad. **El orden
+  de fusión determina el resultado**
 
 ## El pecado original {.smaller}
 
@@ -156,7 +155,7 @@ con MSTK...) lo muestra a mano: 16 contra 14.
   bloques homólogos por correlación (volumen y polaridad de cada
   residuo)
 - **MUSCLE** (Edgar 2004): progresivo más refinamiento iterativo;
-  MUSCLE5 cambia el juego
+  MUSCLE5 cambia importantemente.
 - **T-Coffee** (Notredame 2000): biblioteca de alineamientos por pares y
   búsqueda del múltiple más **consistente** con ella. Más lento, escala
   mal
@@ -200,14 +199,14 @@ llegaron después.
 | Modo | Qué hace | Para |
 |------------------|---------------------------------|---------------------|
 | `FFT-NS-2` | progresivo puro, rápido (default) | hasta \~30,000 secuencias |
-| `FFT-NS-i` | progresivo + refinamiento iterativo | intermedio |
+| `FFT-NS-i` | `FFT-NS-2`+ refinamiento iterativo | intermedio |
 | `L-INS-i` | pares locales (estilo SW) + refinamiento | \< \~200 secuencias, precisión |
 | `G-INS-i` | pares globales + refinamiento | secuencias de largo parecido |
 | `E-INS-i` | regiones grandes no alineables | dominios en contexto variable |
 
 `mafft --auto` elige entre L-INS-i, FFT-NS-i y FFT-NS-2 según el tamaño.
 
-## Dos ideas que cruzan toda la tabla
+## Dos ideas que aplican a todos
 
 ::::: columns-equal
 ::: {}
@@ -222,13 +221,13 @@ llegaron después.
 ::: {}
 **Consistencia**
 
-- La apuesta de T-Coffee
+- T-Coffee
 - Usar la información de **todos** los pares desde el principio, en vez
   de corregir después
 :::
 :::::
 
-# El alineamiento es una estimación, no un dato {.section-divider}
+# El alineamiento es una estimación/aproximación {.section-divider}
 
 ## Programas distintos, árboles distintos {.smaller}
 
@@ -239,9 +238,9 @@ llegaron después.
   o más árboles diferentes según el alineador
 - El problema de fondo: los métodos río abajo tratan el alineamiento
   como una observación fija y **no propagan su incertidumbre**
-- Si el alineamiento está mal, el árbol está mal, y nadie se entera
+- Si el alineamiento está mal, el árbol puede estar mal
 
-## MUSCLE5: del diagnóstico al método {.smaller}
+## MUSCLE5: fuerza bruta 💪 {.smaller}
 
 - En vez de un alineamiento, un **ensemble** de réplicas: cada una
   perturba los parámetros del HMM y permuta el árbol guía
@@ -257,7 +256,7 @@ mal **más del 30% de las columnas**. No MUSCLE en particular: todos.
 
 [Edgar 2022, *Nat Commun* 13:6968]{.ref}
 
-## Con sus propios datos {.smaller}
+## Con nuestros propios {.smaller}
 
 ![](../figuras/svg/msa_desacuerdo.svg){fig-align="center"}
 
@@ -277,7 +276,7 @@ no de conservación): es la pregunta del ejercicio 5. Se regenera con
 figuras/fig_msa_desacuerdo.R a partir de los alineamientos de la clave.
 :::
 
-## Una hipótesis con barra de error {.smaller}
+## La brarra de error {.smaller}
 
 ::: callout-box
 **El alineamiento múltiple no es un hecho, es una hipótesis con barra de
@@ -297,13 +296,13 @@ estimación.
 - Las referencias mismas tienen sesgos
 - Lo que sí: MAFFT es hoy uno de los defaults más comunes en servidores
   y pipelines (motor del Job Dispatcher del EBI); ningún benchmark
-  corona a un ganador
-- La frontera ya se movió: alineadores con estructura predicha o modelos
-  de lenguaje de proteínas. **Quédense con la idea, no con los nombres**
+  corona a un ganador único
+- Alineadores con estructura predicha o modelos de lenguaje de
+  proteínas. **Seguirá cambiando**
 
 # ¿Cuál usar cuándo? {.section-divider}
 
-## Sin ceremonia
+## Heurísticamente o reglas de dedo:
 
 - **Pocas secuencias (\< \~200), máxima precisión**: MAFFT `L-INS-i` o
   T-Coffee
@@ -317,21 +316,36 @@ Para la práctica, una familia con decenas de secuencias: Clustal Omega o
 MAFFT `L-INS-i`.
 :::
 
-# Mitos y realidades {.section-divider}
+# Resumen {.section-divider}
 
 ## El resumen {.smaller}
 
-1.  **"CLUSTAL es el estándar"**: inercia de citación; mide historia, no
-    precisión. En muchos pipelines el motor por defecto es MAFFT
-2.  **"El alineamiento múltiple es un dato"**: es la estimación de un
-    programa heurístico, con error propagable
-3.  **"Más secuencias, mejor alineamiento"**: sin curaduría, secuencias
-    ruidosas o mal escogidas lo empeoran
-4.  **"Existe el alineamiento correcto y el programa lo encuentra"**:
-    NP-completo, y aun los mejores yerran más del 30% de las columnas
-5.  **"El árbol guía es una filogenia"**: es un agrupamiento rápido por
-    similitud para ordenar las fusiones. Usarlo como árbol evolutivo es
-    un error clásico
+- **CLUSTAL W** fue el artículo número 10 más citado de la ciencia en el
+  conteo de Nature de 2014. En muchos pipelines actuales el motor por
+  defecto es MAFFT, y ningún *benchmark* corona a un solo programa como
+  ganador.
+
+<!-- -->
+
+- **El alineamiento múltiple es una estimación** de un programa
+  heurístico, con error propagable al árbol y a análisis subsecuentes
+
+<!-- -->
+
+- **Más secuencias no significan un mejor alineamiento.** Aún se
+  requiere curaduría porque secuencias ruidosas o mal escogidas empeoran
+  el resultado.
+
+<!-- -->
+
+- **Encontrar el alineamiento óptimo es** NP-completo y aun los mejores
+  métodos yerran más del 30% de las columnas en *benchmarks*
+  estructurales.
+
+<!-- -->
+
+- **El árbol guía es no una filogenia.** Es una aproximación aún más
+  rápida sólo para ordenar el alineamiento progresivo.
 
 # La práctica de hoy. Después del break {.section-divider}
 
@@ -339,45 +353,27 @@ MAFFT `L-INS-i`.
 
 - La práctica vive en el sitio: [**Práctica: Clustal Omega contra
   MAFFT**](../contenido/03-alineamientos/sesion09-practica.html)
+
 - Continúa la sesión 8: sus candidatos LGR crecen a **50 receptores de
   11 especies**, más una familia chica, las **17 R-spondinas**
+
 - **Alinear dos veces**: `clustalo` (guardando el árbol guía) y
   `mafft --localpair --maxiterate 1000` (eso es `L-INS-i`)
+
 - **Primero números**, después `t_coffee -other_pg aln_compare`: mide
   desacuerdo entre programas, **no** exactitud de ninguno
+
 - **Ubicar el desacuerdo** por dominio de la proteína, con `awk`: la
   parte de hoy
+
 - **El árbol guía** (`.dnd`) contra el árbol ML real de las R-spondinas
+
 - **Barra de error**: ensemble de MUSCLE5 (`-stratified`,
   `-letterconf`); después Jalview y `trimal`
+
 - Concepto de cómputo: **una variable como parámetro** (`F=rspo`, luego
-  `F=lgr`), `time`, y los dos canales de salida (`>`, `2>`)
-
-::: notes
-Pendientes de instructor (están en la caja "Pendiente" de la práctica):
-crear el módulo `msa` en ken (clustalo, mafft, muscle 5.1, t-coffee,
-hmmer, seqkit, trimal), copiar datos/, scripts/ y clave/ a la ruta
-\$origen y correr la práctica una vez. El ensemble de MUSCLE5 para los
-LGR tarda 1 h 45 min en un CPU: se entrega calculado.
-:::
-
-## El entregable no es "el alineamiento" {.smaller}
-
-::: callout-box
-Un párrafo por familia sobre **dónde los dos métodos no se pusieron de
-acuerdo y por qué**: dos regiones concretas, con posiciones en la
-secuencia de referencia, y si coinciden con las letras de baja confianza
-de MUSCLE5 y con lo que recortó `trimal`.
-:::
-
-- Ésa es la parte que se califica en serio, porque es la que enseña a
-  desconfiar del dato
-
-::: desventaja
-El árbol guía **no** es un árbol filogenético: distancias crudas, sin
-modelo evolutivo, sólo para ordenar las fusiones. Si un compañero pone
-el `.dnd` en su tesis como "la filogenia de la familia", ¿qué le dicen?
-:::
+  `F=lgr`), `time`, y los dos canales de salida (`>`, `2>`) y el
+  poderosísimo `awk`
 
 ::: callout-box
 Capítulo de referencia: [Alineamiento múltiple (CLUSTAL,
