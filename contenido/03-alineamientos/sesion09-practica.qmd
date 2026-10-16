@@ -29,7 +29,7 @@ Dos familias, las dos mitades del mismo módulo de señalización. Las **R-spond
 Los archivos, ya en el servidor:
 
 | archivo | contenido |
-|----|----|
+|------------------------------------|------------------------------------|
 | `familia_rspo.faa` | **17 R-spondinas** (234–316 aa): las 4 humanas, ratón, *Xenopus*, anfioxo, erizo y 9 de moluscos, incluida la única R-spondina de *D. laeve* y la de su congénere *D. lasithionense*. Es exactamente el set del árbol del proyecto. **La familia chica**. |
 | `familia_lgr.faa` | **50 receptores LGR** (280–1,682 aa): 8 de *D. laeve* (sus 6 candidatos de la sesión 8 y 2 más que el proyecto clasificó como LGR completos), 11 referencias de subtipo conocido (tipo A: FSHR, LHR, TSHR; tipo B: LGR4/5/6, LGRB de ostión, DLGR2 de mosca; tipo C: RXFP1/2, GRL101 de *Lymnaea*) y 31 LGR de 7 moluscos. **La familia grande.** |
 | `familia_rspo_metadata.tsv`, `familia_lgr_metadata.tsv` | nombre → especie, grupo, accession o locus, longitud en aminoácidos, nota. |
@@ -44,7 +44,7 @@ Dos advertencias sobre `familia_lgr.faa`, las dos deliberadas:
 Para leer los resultados, necesitaremos la anatomía de una proteína de referencia por familia. Las posiciones son de la secuencia humana:
 
 | referencia | dominio | posiciones |
-|----|----|----|
+|------------------------|------------------------|------------------------|
 | **RSPO2_human** (243 aa) | péptido señal | 1–21 |
 |  | dominios furina FU1+FU2, ricos en cisteína | 40–141 |
 |  | dominio TSP1 | 145–198 |
@@ -115,10 +115,6 @@ Empecemos con la familia chica, para que cada paso responda en segundos. Cuando 
 
 ::: callout-box
 `ken` es un nodo compartido. Clustal Omega y MUSCLE toman **todos** los núcleos disponibles de la máquina por defecto, por eso los comandos de hoy llevan `--threads=1` y `-threads 1`.
-:::
-
-::: pendiente
-Instructor, antes de la clase: (1) crear el módulo `msa` con la receta de EMBOSS (README de planeación de la sesión 7) sobre un ambiente conda con `clustalo mafft muscle=5.1 t-coffee hmmer seqkit trimal` (`hmmer` trae `esl-alistat` y `esl-reformat`), y corregir aquí el nombre exacto. MUSCLE tiene que ser **5.1**: la 5.3 muere en `-letterconf` con `-html` o `-jalview` (*Bad conf=\^*). Hace falta `python3`, sin paquetes. (2) Copiar `datos/`, `scripts/` y `clave/` de `planeacion/practica_alineamiento_multiple/` a la ruta `$origen` que se fije; de `clave/` los alumnos solo leen `lgr/ensamble.efa`. (3) Correr la práctica una vez: los números de las soluciones salen de clustalo 1.2.4, mafft 7.526, t_coffee 13.46, muscle 5.1, trimal 1.2 y Easel 0.49 (corrida del 2026-09-17, 1 CPU). El trimal de bioconda será 1.4 o posterior: `-automated1` puede recortar algunas columnas distintas. (4) `t_coffee aln_compare` usa unos 600 MB de RAM por persona: treinta a la vez son 18 GB. (5) Si el ensemble de `rspo` (46 s con 1 CPU) resulta pesado con el grupo completo, también está en `clave/rspo/`.
 :::
 
 ## Parte 1 · Alinear con dos métodos
@@ -231,7 +227,7 @@ En un FASTA alineado todas las secuencias miden lo mismo, así que `min_len`, `a
 ## Solución
 
 |   | rspo | lgr |
-|----|----|----|
+|------------------------|------------------------|------------------------|
 | columnas: Clustal Omega / L-INS-i / FFT-NS-2 | 409 / 391 / 418 | 3,205 / 2,902 / 3,019 |
 | residuos (`sum_len − sum_gap`) | 4,656 en los tres | 48,847 en los tres |
 | identidad promedio: Clustal Omega / L-INS-i | 37 % / 38 % | 28 % / 29 % |
@@ -602,7 +598,7 @@ Promedien también el LC por dominio: es el `awk` del ejercicio 5 sobre `${F}_po
 ## Solución
 
 |   | acuerdo \< 0.5 | acuerdo ≥ 0.5 |
-|----|----|----|
+|------------------------|------------------------|------------------------|
 | rspo: LC medio (fracción con LC ≤ 6) | 7.92 (0.14), n = 51 | 8.93 (0.01), n = 192 |
 | lgr: LC medio (fracción con LC ≤ 6) | 6.25 (0.47), n = 311 | 8.07 (0.20), n = 595 |
 
@@ -714,7 +710,7 @@ Como el cruce de acuerdo y LC del ejercicio 8, pero agrupando por la columna 4 d
 :::
 
 |   | rspo | lgr |
-|----|----|----|
+|------------------------|------------------------|------------------------|
 | columnas L-INS-i → trimal | 391 → 231 (**59 %** conservadas) | 2,902 → 381 (**13 %** conservadas) |
 | residuos de la referencia eliminados | 37 de 243 (15 %) | 558 de 907 (62 %) |
 | por dominio | señal 10, enlace N 6, FU 3, TSP1 0, cola 17 | LRR 357 de 454, bisagra 87 de 119, 7TM 32 de 247, cola 82 de 87 |
@@ -745,7 +741,7 @@ El árbol ML de R-spondinas es el del proyecto: MAFFT L-INS-i, trimAl, IQ-TREE c
 Con 1 CPU:
 
 | paso | rspo (17 × 274 aa) | lgr (50 × 977 aa) |
-|----|----|----|
+|------------------------|------------------------|------------------------|
 | `clustalo` | 0.4 s / 14 MB | 14 s / 229 MB |
 | `mafft` L-INS-i | 0.7 s / 17 MB | 91 s / 150 MB |
 | `mafft` FFT-NS-2 | 0.7 s / 24 MB | 2 s / 65 MB |
