@@ -395,6 +395,9 @@ lo que recortó trimAl en el paso 6.
 - Edgar RC (2004) "MUSCLE: multiple sequence alignment with high
   accuracy and high throughput", *Nucleic Acids Res* 32(5):1792-1797.
   [doi:10.1093/nar/gkh340](https://doi.org/10.1093/nar/gkh340)
+- Edgar RC (2004) "MUSCLE: a multiple sequence alignment method with
+  reduced time and space complexity", *BMC Bioinformatics* 5:113.
+  [doi:10.1186/1471-2105-5-113](https://doi.org/10.1186/1471-2105-5-113)
 - Edgar RC (2022) "Muscle5: High-accuracy alignment ensembles enable
   unbiased assessments of sequence homology and phylogeny", *Nat Commun*
   13:6968.
@@ -403,6 +406,9 @@ lo que recortó trimAl en el paso 6.
   for fast and accurate multiple sequence alignment", *J Mol Biol*
   302(1):205-217.
   [doi:10.1006/jmbi.2000.4042](https://doi.org/10.1006/jmbi.2000.4042)
+- Notredame C (2007) "Recent evolutions of multiple sequence alignment
+  algorithms", *PLoS Comput Biol* 3(8):e123.
+  [doi:10.1371/journal.pcbi.0030123](https://doi.org/10.1371/journal.pcbi.0030123)
 
 **Incertidumbre y comparación de alineamientos**
 

@@ -44,7 +44,7 @@ MAFFT, MUSCLE) son heurísticas sin garantía de optimalidad.
 ## El plan del día
 
 | Horario | Bloque |
-|---------------------|---------------------------------------------------|
+|----|----|
 | 10:00–11:45 | Teoría: por qué no escala, suma de pares, progresivo, herramientas, incertidumbre |
 | 11:45–12:15 | Descanso |
 | 12:15–14:30 | Práctica: Clustal Omega contra MAFFT sobre los LGR de la sesión 8 y sus R-spondinas |
@@ -197,7 +197,7 @@ llegaron después.
 ## MAFFT: elegir la estrategia es media práctica {.smaller}
 
 | Modo | Qué hace | Para |
-|------------------|---------------------------------|---------------------|
+|----|----|----|
 | `FFT-NS-2` | progresivo puro, rápido (default) | hasta \~30,000 secuencias |
 | `FFT-NS-i` | `FFT-NS-2`+ refinamiento iterativo | intermedio |
 | `L-INS-i` | pares locales (estilo SW) + refinamiento | \< \~200 secuencias, precisión |
@@ -226,6 +226,62 @@ llegaron después.
   de corregir después
 :::
 :::::
+
+## De las hojas a la raíz {.smaller}
+
+![](../figuras/sesion09/edgar2004_progresivo_perfiles.png){fig-align="center"
+height="300px"}
+
+[Edgar 2004, *BMC Bioinformatics* 5:113]{.ref}
+
+- Hojas (derecha): las secuencias solas. Cada nodo alinea a sus dos
+  hijos y produce un **perfil**
+- En la raíz se alinean **perfil contra perfil**: un gap nuevo se
+  inserta como columna entera en todo un perfil (gris en `LQS-W` y
+  `L-S-F`)
+- Los gaps de los nodos de abajo viajan intactos hacia la raíz: nadie
+  los vuelve a revisar
+
+::: notes
+Seguir la figura de derecha a izquierda. El gap gris de `LH-IW` lo puso
+el primer nodo; el de `L-SF`, el segundo. En la raíz, el perfil de abajo
+recibe una columna de gaps completa en sus dos renglones: así se alinean
+perfiles, sin tocar el interior de ninguno. Es "once a gap, always a
+gap" visto en un árbol concreto, y lo que todos los métodos comparten.
+Puente a T-Coffee: la consistencia intenta que esos gaps tempranos ya
+nazcan bien informados por las demás secuencias.
+:::
+
+## T-Coffee: que los demás opinen {.smaller}
+
+::::: columns
+::: {.column width="58%"}
+![](../figuras/sesion09/notredame2000_tcoffee_biblioteca.png){height="480px"}
+
+[Notredame, Higgins & Heringa 2000, *J Mol Biol* 302:205, Fig. 1]{.ref}
+:::
+
+::: {.column width="42%"}
+- **a)** El progresivo alinea A y B primero y se equivoca: el `CAT` de B
+  queda bajo el `FAT` de A. El error ya no se corrige
+- **b)** **Biblioteca primaria**: todos los pares, cada uno con su peso
+  (su identidad)
+- **c)** **Biblioteca extendida**: para A–B también cuentan los caminos
+  A–C–B y A–D–B. Si C y D "votan" por emparejar los dos `CAT`, ese par
+  gana peso
+- La programación dinámica sobre la biblioteca extendida da el
+  alineamiento A–B correcto
+:::
+:::::
+
+::: notes
+La consistencia es la respuesta al pecado original: en vez de decidir
+A–B solo con A y B, cada decisión pareada ya trae la opinión de las
+demás secuencias. El costo es construir y extender la biblioteca de
+todos los pares: por eso T-Coffee es preciso pero escala mal. L-INS-i de
+MAFFT hace la misma apuesta (pares locales de todos contra todos), y la
+práctica usa `t_coffee` solo por su `aln_compare`.
+:::
 
 # El alineamiento es una estimación/aproximación {.section-divider}
 

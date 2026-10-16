@@ -15,3 +15,15 @@ fines docentes.
   `presentaciones/sesion09-alineamiento-multiple.qmd`, diapositiva
   "MAFFT: la FFT encuentra el desfase". Panel A: correlación c(k) por desfase;
   panel B: los bloques homólogos que revelan los picos k = 2 y k = −1.
+- `edgar2004_progresivo_perfiles.png` — figura de Edgar RC (2004) "MUSCLE: a
+  multiple sequence alignment method with reduced time and space complexity",
+  *BMC Bioinformatics* 5:113, doi:10.1186/1471-2105-5-113 (PMC517706; acceso
+  abierto, CC BY). Diapositiva "De las hojas a la raíz", tras Feng & Doolittle.
+  Alineamiento progresivo por el árbol guía: cada nodo produce un perfil y los
+  gaps nuevos (gris) entran como columnas enteras.
+- `notredame2000_tcoffee_biblioteca.png` — Figura 1 de Notredame C, Higgins DG,
+  Heringa J (2000) "T-Coffee: A novel method for fast and accurate multiple
+  sequence alignment", *J Mol Biol* 302(1):205-217, doi:10.1006/jmbi.2000.4042.
+  Diapositiva "T-Coffee: que los demás pares opinen", tras "Dos ideas que
+  aplican a todos". El ejemplo GARFIELD THE LAST FAT CAT: (a) error del
+  progresivo, (b) biblioteca primaria, (c) biblioteca extendida.
