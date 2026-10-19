@@ -1,4 +1,4 @@
-## Fig. @fig-nomenclatura (Sesión 11, § chr17 contra 17)
+## Fig. @fig-nomenclatura (Unidad 4, § chr17 contra 17)
 ## El error silencioso: un BED estilo UCSC contra un GTF estilo Ensembl da
 ## cero intersecciones y ningún mensaje de error.
 ##

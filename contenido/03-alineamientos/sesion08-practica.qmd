@@ -519,7 +519,7 @@ Este MSA es el punto de partida de la sesión 9: cómo se construye un alineamie
 
 ## Parte 5 · Bonus: mejor hit recíproco
 
-El criterio clásico de ortología, que en la sesión 10 van a implementar en forma: A→B es creíble si B→A también. La base de vuelta son las 72 consultas:
+El criterio clásico de ortología, que en la sesión 10 van a ver en forma, con sus límites: A→B es creíble si B→A también. La base de vuelta son las 72 consultas:
 
 ``` bash
 makeblastdb -in datos/consultas_wnt.faa -dbtype prot -out consultas

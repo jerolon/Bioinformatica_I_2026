@@ -1,6 +1,6 @@
 ---
 title: "R desde un algoritmo que ya conocen"
-subtitle: "Unidad 6 · Sesión 12"
+subtitle: "Unidad 5 · Sesión 12"
 author: "Haydeé Peruyero"
 ---
 

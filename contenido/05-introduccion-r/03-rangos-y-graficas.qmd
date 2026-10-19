@@ -1,6 +1,6 @@
 ---
 title: "Rangos y gráficas"
-subtitle: "Unidad 6 · Sesión 14"
+subtitle: "Unidad 5 · Sesión 14"
 author: "Haydeé Peruyero"
 ---
 
@@ -43,7 +43,7 @@ en esta sesión es el objeto de rangos y la gramática de gráficas.
 
 Hoy hacen dos cosas que ya saben hacer, pero en R.
 
-La primera es cruzar intervalos genómicos, que en la sesión 11 hicieron
+La primera es cruzar intervalos genómicos, que en la sesión 10 hicieron
 con `bedtools`. La segunda es mirar los resultados, que hasta ahora
 hacían exportando a otro lado.
 
@@ -54,7 +54,7 @@ la figura más bonita que van a producir en este curso.
 
 ### Un intervalo que sabe que es un intervalo
 
-En la sesión 11, un intervalo genómico era tres columnas de un archivo de
+En la sesión 10, un intervalo genómico era tres columnas de un archivo de
 texto: cromosoma, inicio, fin. Nada más. Si el archivo decía `chr17` y el
 otro decía `17`, `bedtools` devolvía cero sin quejarse. Si mezclaban un
 GTF 1-based con un BED 0-based, todo salía corrido una base.
@@ -84,7 +84,7 @@ genome(gr) <- "GRCh38"
 seqinfo(gr)
 ```
 
-Ese `genome` es lo que resuelve el problema de la sesión 11. Si intentan
+Ese `genome` es lo que resuelve el problema de la sesión 10. Si intentan
 cruzar dos objetos con genomas distintos declarados, R se niega y les
 dice por qué, en lugar de devolver cero en silencio.
 
@@ -163,7 +163,7 @@ acá viene lo importante: **al importar, `rtracklayer` hace la conversión
 de coordenadas por ustedes**. Un BED 0-based entra y sale como un GRanges
 1-based, correcto, sin que tengan que restar uno a nada.
 
-El off-by-one de la sesión 11 desaparece porque el objeto sabe de dónde
+El off-by-one de la sesión 10 desaparece porque el objeto sabe de dónde
 vino.
 
 ```r
@@ -365,7 +365,7 @@ porque son vectoriales y se pueden editar después sin perder calidad.
 
 ### Ejercicio 1. Del BED al GRanges
 
-Importen su archivo de exones de la sesión 11 con `rtracklayer` y
+Importen su archivo de exones de la sesión 10 con `rtracklayer` y
 compárenlo con lo que veían en el archivo de texto.
 
 Las coordenadas son las mismas?
@@ -384,7 +384,7 @@ en base 0; el objeto GRanges lo muestra en base 1, así que el número de
 inicio aparece con una unidad más.
 
 `rtracklayer` hizo la conversión al importar. Es exactamente el `+1` que
-en la sesión 11 tuvieron que hacer a mano con `awk`, y que si se les
+en la sesión 10 tuvieron que hacer a mano con `awk`, y que si se les
 olvidaba corría todo una base.
 
 Comprueben que el ancho sí coincide:
@@ -399,7 +399,7 @@ la diferencia no cambia. Lo que cambia es dónde empieza a contarse.
 
 ### Ejercicio 2. Cruzar en R lo que cruzaron en bash
 
-Repitan el cruce de la sesión 11 (exones de TP53 contra variantes de
+Repitan el cruce de la sesión 10 (exones de TP53 contra variantes de
 ClinVar) usando `plyranges`. Comparen el número de resultados con el que
 obtuvieron con `bedtools`.
 
@@ -428,7 +428,7 @@ El primero es la **nomenclatura de cromosomas**. Revísenla con
 seqlevelsStyle(exones) <- "Ensembl"
 ```
 
-Ese comando es la versión civilizada del `sed` de la sesión 11, y encima
+Ese comando es la versión civilizada del `sed` de la sesión 10, y encima
 sabe qué estilos existen.
 
 El segundo es que `bedtools` y `plyranges` cuenten distinto los

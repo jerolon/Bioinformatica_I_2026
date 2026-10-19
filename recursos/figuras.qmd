@@ -32,8 +32,8 @@ pestaña nueva para ver el nombre), su código es `figuras/blast_mapq.R`.
 | [`sesion05/`](https://github.com/jerolon/Bioinformatica_I_2026/tree/main/figuras/sesion05) | Sesión 5 — Formatos de secuencia: FASTA |
 | [`sesion06/`](https://github.com/jerolon/Bioinformatica_I_2026/tree/main/figuras/sesion06) | Sesión 6 — Alineamiento por pares |
 | [`sesion07/`](https://github.com/jerolon/Bioinformatica_I_2026/tree/main/figuras/sesion07) | Sesión 7 — Algoritmos: NW y SW |
-| [`sesion11/`](https://github.com/jerolon/Bioinformatica_I_2026/tree/main/figuras/sesion11) | Sesión 11 — Bases de datos |
-| [`unidad6/`](https://github.com/jerolon/Bioinformatica_I_2026/tree/main/figuras/unidad6) | Unidad 6 — Introducción a R |
+| [`sesion11/`](https://github.com/jerolon/Bioinformatica_I_2026/tree/main/figuras/sesion11) | Unidad 4 — Bases de datos y browsers (sesión 10; la carpeta conserva su nombre histórico) |
+| [`unidad6/`](https://github.com/jerolon/Bioinformatica_I_2026/tree/main/figuras/unidad6) | Unidad 5 — Introducción a R (ídem) |
 
 Cada carpeta trae un `FIGURAS.md` que explica qué es cada figura y de
 dónde salen sus números, y el

@@ -62,6 +62,6 @@ Modificaciones respecto a la plantilla original:
 
 ## Equipo docente
 
-- **Jerónimo Roberto Miranda Rodríguez** — sesión 1 y unidades 3–5.
+- **Jerónimo Roberto Miranda Rodríguez** — sesión 1 y unidades 3–4.
 - **Wilbert Gutiérrez Sarmiento** — unidad 2.
-- **Haydeé Peruyero** — unidad 6, Introducción a R.
+- **Haydeé Peruyero** — unidad 5, Introducción a R.

@@ -22,8 +22,8 @@ La regla de correspondencia es simple: **el SVG se llama como su script**.
 | `sesion05/` | Sesión 5 — Formatos de secuencia: FASTA |
 | `sesion06/` | Sesión 6 — Alineamiento por pares |
 | `sesion07/` | Sesión 7 — Algoritmos: NW y SW |
-| `sesion11/` | Sesión 11 — Bases de datos (unidad 4) |
-| `unidad6/` | Unidad 6 — Introducción a R |
+| `sesion11/` | Unidad 4 — Bases de datos y browsers (sesión 10; la carpeta conserva su nombre histórico) |
+| `unidad6/` | Unidad 5 — Introducción a R (ídem) |
 | `svg/`, `ncbi/` | Los SVG generados; se versionan |
 
 Cada carpeta de sesión trae su `FIGURAS.md`, que documenta qué es cada figura

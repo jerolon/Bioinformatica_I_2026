@@ -1,4 +1,4 @@
-## Fig. @fig-flatfile (Sesión 11, § Cómo se lee un registro)
+## Fig. @fig-flatfile (Unidad 4, § Cómo se lee un registro)
 ## Anatomía de un GenBank flat file: el registro REAL de TP53, recortado a las
 ## líneas representativas, con llaves de color señalando cada sección.
 ##

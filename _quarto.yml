@@ -82,30 +82,22 @@ website:
           - contenido/03-alineamientos/alineamiento-multiple.qmd
           - contenido/03-alineamientos/sesion09-practica.qmd
           - contenido/03-alineamientos/homologia.qmd
-          - contenido/03-alineamientos/sesion10-practica.qmd
-      - section: "4 · Bases de datos"
-        href: contenido/04-bases-datos/index.qmd
+      # La sesión 11 es el examen: no tiene capítulo ni práctica. Las
+      # antiguas unidades 4 (bases de datos) y 5 (browsers) son ahora dos
+      # capítulos de una sola unidad, y su práctica es la de la sesión 10.
+      - section: "4 · Bases de datos y browsers"
+        href: contenido/04-bases-datos-browsers/index.qmd
         contents:
-          - contenido/04-bases-datos/ncbi.qmd
-          - contenido/04-bases-datos/insdc.qmd
-          - contenido/04-bases-datos/uniprot.qmd
-          - contenido/04-bases-datos/accesiones.qmd
-      - section: "5 · Browsers"
-        href: contenido/05-browsers/index.qmd
+          - contenido/04-bases-datos-browsers/bases-de-datos.qmd
+          - contenido/04-bases-datos-browsers/browsers.qmd
+          - contenido/04-bases-datos-browsers/sesion10-practica.qmd
+      - section: "5 · Introducción a R"
+        href: contenido/05-introduccion-r/index.qmd
         contents:
-          - contenido/05-browsers/ensamblados.qmd
-          - contenido/05-browsers/ucsc.qmd
-          - contenido/05-browsers/ensembl.qmd
-          - contenido/05-browsers/formatos-de-anotacion.qmd
-          - contenido/05-browsers/igv.qmd
-          - contenido/05-browsers/sesion11-practica.qmd
-      - section: "6 · Introducción a R"
-        href: contenido/06-introduccion-r/index.qmd
-        contents:
-          - contenido/06-introduccion-r/01-fundamentos.qmd
-          - contenido/06-introduccion-r/02-datos.qmd
-          - contenido/06-introduccion-r/03-rangos-y-graficas.qmd
-          - contenido/06-introduccion-r/04-reporte.qmd
+          - contenido/05-introduccion-r/01-fundamentos.qmd
+          - contenido/05-introduccion-r/02-datos.qmd
+          - contenido/05-introduccion-r/03-rangos-y-graficas.qmd
+          - contenido/05-introduccion-r/04-reporte.qmd
       - text: "---"
       - section: "Prácticas"
         href: practicas/index.qmd
@@ -117,8 +109,7 @@ website:
           - contenido/03-alineamientos/clase07-algoritmos.qmd
           - contenido/03-alineamientos/sesion08-practica.qmd
           - contenido/03-alineamientos/sesion09-practica.qmd
-          - contenido/03-alineamientos/sesion10-practica.qmd
-          - contenido/05-browsers/sesion11-practica.qmd
+          - contenido/04-bases-datos-browsers/sesion10-practica.qmd
       - section: "Recursos"
         href: recursos/index.qmd
         contents:

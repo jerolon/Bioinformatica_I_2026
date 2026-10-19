@@ -1,4 +1,4 @@
-## Fig. @fig-tres-ensamblados (Sesión 11, § El mismo gen, tres direcciones)
+## Fig. @fig-tres-ensamblados (Unidad 4, § El mismo gen, tres direcciones)
 ## TP53 en GRCh37, GRCh38 y T2T-CHM13v2.0, sobre la MISMA ventana del
 ## cromosoma 17 y a la MISMA escala.
 ##

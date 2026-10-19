@@ -1,4 +1,4 @@
-## Fig. @fig-pe (Sesión 11, § Qué tan segura es una anotación curada)
+## Fig. @fig-pe (Unidad 4, § Qué tan segura es una anotación curada)
 ## Distribución de niveles de evidencia (PE) en Swiss-Prot.
 ##
 ## ---------------------------------------------------------------------------
@@ -89,7 +89,7 @@ verificar_api <- function() {
   if (!all(cmp$igual) || !identical(rel, RELEASE)) {
     message("")
     message("  *** CAMBIARON. Actualiza RELEASE, SWISSPROT_TOTAL y pe$n,")
-    message("      y de paso las cifras de contenido/04-bases-datos/uniprot.qmd.")
+    message("      y de paso las cifras de contenido/04-bases-datos-browsers/bases-de-datos.qmd.")
   } else {
     message("  todo coincide.")
   }

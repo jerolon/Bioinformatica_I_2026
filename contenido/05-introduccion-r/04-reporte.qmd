@@ -1,6 +1,6 @@
 ---
 title: "El reporte reproducible"
-subtitle: "Unidad 6 · Sesión 15"
+subtitle: "Unidad 5 · Sesión 15"
 author: "Haydeé Peruyero"
 ---
 

@@ -1,4 +1,4 @@
-## Fig. @fig-archivo-curado (Sesión 11, § Archivo primario contra capa curada)
+## Fig. @fig-archivo-curado (Unidad 4, § Archivo primario contra capa curada)
 ## La figura conceptual más importante de la unidad: la misma estructura, dos
 ## veces, en nucleótidos y en proteínas.
 ##

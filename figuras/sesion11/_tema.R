@@ -1,5 +1,5 @@
-## Configuración compartida de las DIEZ figuras de la Sesión 11:
-## Unidad 4 (bases de datos, figuras 1-5) y Unidad 5 (browsers, figuras 6-10).
+## Configuración compartida de las DIEZ figuras de la sesión 10 (unidad 4):
+## bases de datos (figuras 1-5) y browsers (figuras 6-10).
 ## Las dos unidades son un solo bloque de cinco horas, así que comparten
 ## carpeta, tema y script de datos.
 ##

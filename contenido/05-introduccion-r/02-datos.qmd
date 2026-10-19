@@ -1,6 +1,6 @@
 ---
 title: "Datos: del vector al data frame"
-subtitle: "Unidad 6 · Sesión 13"
+subtitle: "Unidad 5 · Sesión 13"
 author: "Haydeé Peruyero"
 ---
 
@@ -228,7 +228,7 @@ mejores <- hits %>%
 mejores
 ```
 
-Compárenlo con lo que hicieron en bash en la sesión 10:
+Compárenlo con lo que hicieron en bash en la sesión 8:
 
 ```bash
 sort -k1,1 -k12,12gr hits.tsv | awk '!seen[$1]++'
@@ -315,6 +315,14 @@ de resumen no sustituyen a mirar los datos**. La sesión que viene es
 sobre cómo mirarlos bien.
 
 ## Práctica
+
+::: pendiente
+La práctica de reciprocal best hits salió del programa (la sesión 10 ya
+no la hace; la 11 es el examen), así que los alumnos **no** llegan con
+`resultados/rbh.tsv`. Este ejercicio y el reporte de la sesión 15 deben
+reescribirse sobre lo que sí traen: `hits.tsv` de la sesión 8 y los
+archivos de TP53 de la sesión 10.
+:::
 
 ### Ejercicio 1. Traer y limpiar
 

@@ -1,5 +1,5 @@
 ---
-title: "6 · Introducción a R"
+title: "5 · Introducción a R"
 subtitle: "Sesiones 12–15 (6 nov – 27 nov) · Haydeé Peruyero"
 ---
 

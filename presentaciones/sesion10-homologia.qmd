@@ -8,13 +8,14 @@ editor:
   markdown:
     wrap: 72
 # ESQUELETO de la sesión 10 (23 de octubre). Sigue el orden del capítulo
-# contenido/03-alineamientos/homologia.qmd; la práctica (RBH entre la
-# babosa y el caracol Bradybaena, sobre el vecindario WNT) está planeada
-# en planeacion/practica_rbh/ y escrita en
-# contenido/03-alineamientos/sesion10-practica.qmd. Los "TODO" en las
-# notas del presentador marcan lo que
-# falta decidir. Única figura: images/manos-pies-primates-aakash.png
-# (todavía sin versionar en git).
+# contenido/03-alineamientos/homologia.qmd. La práctica de la tarde ya NO
+# es RBH: es la de la unidad 4 (bases de datos y browsers),
+# contenido/04-bases-datos-browsers/sesion10-practica.qmd, pendiente de
+# recortarse a lo esencial. La práctica de RBH se retiró del sitio (queda
+# en el historial de git y en planeacion/practica_rbh/). La sesión 11 es
+# el examen. Los "TODO" en las notas del presentador marcan lo que falta
+# decidir. Única figura: images/manos-pies-primates-aakash.png (todavía
+# sin versionar en git).
 ---
 
 # Homología es binaria {.section-divider}
@@ -45,7 +46,7 @@ embarazada".
 |-------------|---------------------------------------------------------------|
 | 10:00–11:45 | Teoría: Owen, Fitch, árboles, inferencia de ortología, la conjetura |
 | 11:45–12:15 | Descanso                                                      |
-| 12:15–14:30 | Práctica: reciprocal best hits entre la babosa y un caracol   |
+| 12:15–14:30 | Práctica: bases de datos y browsers, un gen y nueve paradas   |
 | 14:30–15:00 | Cierre, dudas, entregable                                     |
 
 # De dónde viene la palabra {.section-divider}
@@ -435,7 +436,8 @@ sustentado de lo que se cree.
 
 ::: callout-box
 **Advertencia de coordenadas.** rs4988235 tiene coordenadas distintas
-en hg19 y hg38. No las mezclen. Engancha directo con la sesión 11.
+en hg19 y hg38. No las mezclen. Engancha directo con la práctica de la
+tarde.
 :::
 
 # Mitos y realidades {.section-divider}
@@ -453,51 +455,49 @@ en hg19 y hg38. No las mezclen. Engancha directo con la sesión 11.
 
 # La práctica de hoy. Después del break {.section-divider}
 
-## Reciprocal best hits entre la babosa y un caracol {.smaller}
+## Un gen, nueve paradas {.smaller}
 
-- La práctica vive en el sitio: [**Práctica: reciprocal best
-  hits**](../contenido/03-alineamientos/sesion10-practica.html)
-- *Deroceras laeve* contra *Bradybaena similaris*, dos estilomatóforos:
-  el **vecindario WNT** de la sesión 8 en cada especie (632 y 713
-  proteínas)
-- Cómputo del día: **ciclos** (`for`, `while`). RBH no se puede hacer
-  sin uno: dos bases, dos búsquedas, dos tablas que cruzar
-- **El pipeline**: bases con un ciclo → buscar en las dos direcciones →
-  mejor hit por consulta → cruzar y encontrar los recíprocos
-- **Cuánto perdimos**, global y por familia
-- **Tres casos con cromosoma**: un arreglo en tándem, los dos LGR del
-  proyecto, el gen de la sonda "lgr5" (con `while read`)
-- **Segunda opinión**: los ortogrupos de OrthoFinder del proyecto
+- La práctica de la tarde no es de homología: es la de la **unidad 4,
+  bases de datos y browsers**, y vive en el sitio: [**Práctica: un gen,
+  nueve paradas**](../contenido/04-bases-datos-browsers/sesion10-practica.html)
+- Un solo gen, TP53, seguido del artículo al pixel: PubMed → NCBI → ENA
+  y DDBJ → UniProt → tres ensamblados → GTF → cruce con ClinVar → UCSC
+  y Ensembl → IGV
+- Cómputo del día: `awk`, tuberías, `md5sum`, expresiones regulares
+- Capítulos de referencia: [Bases de datos
+  biológicas](../contenido/04-bases-datos-browsers/bases-de-datos.html)
+  y [Genome browsers](../contenido/04-bases-datos-browsers/browsers.html)
+- Lo que RBH pierde ya lo midieron en pequeño en el bonus de la
+  práctica 8; el pipeline completo quedó fuera del semestre
+- La sesión 11 es el **examen**; después, R
 
 ::: callout-box
-En `ken`: `-num_threads 1` y no más; cada búsqueda tarda unos dos
-minutos. Treinta personas pidiendo ocho hilos son doscientos cuarenta
-hilos en una máquina que no los tiene.
+Los datos ya están descargados en `ken`: el NCBI limita a tres
+peticiones por segundo **por IP**, y salimos con una sola para los
+treinta. Los comandos de descarga están en la práctica, pero solo los
+corre quien yo diga.
 :::
 
 ::: notes
-Pendientes de instructor (están en la caja "Pendiente" de la práctica):
-verificar el módulo `blast+` en ken, copiar
-planeacion/practica_rbh/datos/ a la ruta $origen y correr la práctica
-una vez. Los números de las soluciones son de blast+ 2.13.0. Si las
-búsquedas de todo el grupo a la vez resultan lentas, las tablas ya
-hechas están en planeacion/practica_rbh/clave/resultados/.
+TODO: la práctica hereda las nueve paradas de la antigua sesión 11 y
+está pendiente de recortarse a lo esencial de los dos capítulos. Los
+datos del servidor deben copiarse a la ruta que diga la práctica
+(`sesion10/`). La práctica de RBH (planeacion/practica_rbh/) salió del
+semestre; su script de datos públicos sigue en practicas/datos/.
 :::
 
 ## Para entregar {.smaller}
 
 En su repositorio, dentro de `sesion10/`:
 
-- `procedencia.md` con la fecha, la versión de `blastp`, los proteomas
-  usados y los comandos
-- `resultados/rbh.tsv` (es chico; este sí se versiona, y vuelve en la
-  unidad de R)
-- La tabla de supervivencia por familia
-- Un párrafo: **qué fracción de mejores hits sobrevivió a la
-  reciprocidad**, dónde se concentra la pérdida, y un caso concreto de
-  uno a muchos, con cromosomas
+- `procedencia.md` con accession, versión, fecha y comando de cada dato
+  que usaron
+- `resultados/tp53_exones_fundidos.bed` y
+  `resultados/variantes_en_exones.txt`
+- Un párrafo: **cuántas variantes de ClinVar caen en exones de TP53**, y
+  qué pasó cuando intentaron traer `NM_000546` del ENA
 
-No suban los `.fasta` ni los índices de las bases.
+No suban el GTF, el VCF ni el cromosoma: van al `.gitignore`.
 
 ::: callout-box
 Capítulo de referencia: [Homología: ortólogo, parálogo,

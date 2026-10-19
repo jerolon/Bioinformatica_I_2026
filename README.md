@@ -28,9 +28,8 @@ calendario.
 | `contenido/01-fundamentos/`    | Qué es la bioinformática, terminal, git, buenas prácticas. Realmente markdown, bash y git son herramientas que atraviesan las prácticas de todo el semestre. |
 | `contenido/02-secuencias/`     | Tipos de secuencia, código genético, matrices de sustitución, FASTA                                                                                          |
 | `contenido/03-alineamientos/`  | Needleman–Wunsch, Smith–Waterman, BLAST, CLUSTAL, homología                                                                                                  |
-| `contenido/04-bases-datos/`    | NCBI, INSDC, UniProt, accesiones                                                                                                                             |
-| `contenido/05-browsers/`       | Ensamblados, UCSC, Ensembl, formatos de anotación, IGV                                                                                                       |
-| `contenido/06-introduccion-r/` | Introducción a R                                                                                                                                             |
+| `contenido/04-bases-datos-browsers/` | Dos capítulos: bases de datos (NCBI, INSDC, UniProt, accesiones) y browsers (ensamblados, UCSC, Ensembl, formatos de anotación, IGV), más la práctica de la sesión 10 |
+| `contenido/05-introduccion-r/` | Introducción a R                                                                                                                                             |
 | `practicas/`                   | Prácticas de terminal de cada sesión                                                                                                                         |
 | `recursos/`                    | Bibliografía                                                                                                                                                 |
 | `assets/prologue/`             | Plantilla Prologue de HTML5 UP, sin modificar (CCA 3.0)                                                                                                      |

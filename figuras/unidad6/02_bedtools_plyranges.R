@@ -59,7 +59,7 @@ Y_PUNTO <- 15       # la afirmación, en naranja
 
 p <- ggplot() +
   # encabezados
-  annotate("text", x = X_BT, y = Y_ENC, label = "en la terminal (sesión 11)",
+  annotate("text", x = X_BT, y = Y_ENC, label = "en la terminal (sesión 10)",
            hjust = 0, family = familia_base(), fontface = "bold",
            colour = GRIS, size = 3.1) +
   annotate("text", x = X_PR, y = Y_ENC, label = "en R (hoy)",

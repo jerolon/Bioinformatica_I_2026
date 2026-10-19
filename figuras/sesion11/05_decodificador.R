@@ -1,4 +1,4 @@
-## Fig. @fig-decodificador (Sesión 11, § El decodificador)
+## Fig. @fig-decodificador (Unidad 4, § El decodificador)
 ## Un identificador real de cada recurso, despiezado por color: prefijo AZUL,
 ## cuerpo gris, versión NARANJA. Es la figura que se llevan a la libreta.
 ##

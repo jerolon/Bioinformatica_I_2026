@@ -5,7 +5,7 @@
 ## ESTA FIGURA ES LA ÚNICA DE LA UNIDAD CON DATOS, Y ES DELIBERADAMENTE
 ## LA SALIDA DEL CÓDIGO DEL CAPÍTULO, NO DE UNA VERSIÓN MEJORADA.
 ##
-## nw() se copia TEXTUALMENTE de contenido/06-introduccion-r/01-fundamentos.qmd
+## nw() se copia TEXTUALMENTE de contenido/05-introduccion-r/01-fundamentos.qmd
 ## y camino() de 03-rangos-y-graficas.qmd. El bloque de ggplot2 también va tal
 ## cual. La razón: el alumno va a correr ese mismo código y tiene que obtener
 ## esta misma figura. Si sale fea, se arregla el capítulo, no el script.

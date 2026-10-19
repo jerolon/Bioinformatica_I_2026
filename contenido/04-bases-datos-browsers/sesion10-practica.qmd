@@ -1,13 +1,24 @@
 ---
 title: "Práctica: un gen, nueve paradas"
-subtitle: "Unidad 4 y 5 · Sesión 11"
+subtitle: "Unidad 4 · Sesión 10"
 author: "Jero"
 ---
 
+::: pendiente
+**Versión provisional.** Esta práctica hereda, tal cual, las nueve
+paradas de la antigua sesión 11. En la estructura nueva del curso la
+sesión 10 es homología por la mañana y bases de datos y browsers por la
+tarde, y la sesión 11 es el examen, así que esta práctica debe recortarse
+a lo esencial de los dos capítulos de la unidad 4 —[bases de
+datos](bases-de-datos.qmd) y [browsers](browsers.qmd)—, sin nada de
+homología. Hasta que se reorganice, lo que sigue es la versión completa.
+:::
+
 ## De qué se trata
 
-Hoy vimos nueve recursos distintos y es fácil que queden como nueve cosas
-sueltas. La práctica es el hilo que los amarra.
+Los dos capítulos de esta unidad presentan nueve recursos distintos y es
+fácil que queden como nueve cosas sueltas. La práctica es el hilo que los
+amarra.
 
 Vamos a tomar **un solo gen**, TP53, y seguirlo por todos: del artículo
 que lo describe a su registro en el NCBI, de ahí al ENA y a DDBJ para
@@ -24,9 +35,9 @@ memorable, y porque es chico.
 
 ```bash
 ssh usuario@ken.lavis.unam.mx
-mkdir -p ~/bioinfo1/sesion11/{datos,resultados}
-cd ~/bioinfo1/sesion11
-cp /datos/cursos/bioinfo1/sesion11/* datos/
+mkdir -p ~/bioinfo1/sesion10/{datos,resultados}
+cd ~/bioinfo1/sesion10
+cp /datos/cursos/bioinfo1/sesion10/* datos/
 ls -lh datos/
 ```
 
@@ -332,8 +343,8 @@ ClinVar.
 ## Solución
 
 El VCF no va a cargar si no tiene su índice `.tbi` al lado. Es la misma
-lección de la sesión 5 con `samtools faidx`, y de este capítulo con
-`tabix`: los archivos grandes se consultan por índice, no leyéndolos
+lección de la sesión 5 con `samtools faidx`, y del capítulo de browsers
+con `tabix`: los archivos grandes se consultan por índice, no leyéndolos
 enteros.
 
 Si les falta:
@@ -354,10 +365,10 @@ Ahí está el gen completo, desde el artículo de PubMed hasta el pixel.
 
 ## Para entregar
 
-En su repositorio, en `sesion11/`:
+En su repositorio, en `sesion10/`:
 
 - `procedencia.md` con accession, versión, fecha y comando de cada dato
-  que usaron. Es la disciplina del capítulo de accesiones, aplicada.
+  que usaron. Es la disciplina de la sección de accesiones, aplicada.
 - `resultados/tp53_exones_fundidos.bed`
 - `resultados/variantes_en_exones.txt`
 - Un párrafo contestando: cuántas variantes de ClinVar caen en exones de

@@ -1,4 +1,4 @@
-## Fig. @fig-tracks (Sesión 11, § Qué es un track)
+## Fig. @fig-tracks (Unidad 4, § Qué es un track)
 ## Cuatro pistas de tipos distintos, todas sobre el MISMO eje de coordenadas.
 ##
 ## ---------------------------------------------------------------------------

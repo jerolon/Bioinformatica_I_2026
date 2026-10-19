@@ -43,7 +43,7 @@
   </clipPath>
 </defs>
 <g clip-path='url(#cpNS42N3w0NDcuODd8My45MHwzMDcuOTE=)'>
-<text x='16.72' y='34.62' style='font-size: 8.82px; font-weight: bold;fill: #666666; font-family: "Source Sans Pro", "Segoe UI", "Roboto", "Helvetica Neue", "Arial", sans-serif;'>en la terminal (sesión 11)</text>
+<text x='16.72' y='34.62' style='font-size: 8.82px; font-weight: bold;fill: #666666; font-family: "Source Sans Pro", "Segoe UI", "Roboto", "Helvetica Neue", "Arial", sans-serif;'>en la terminal (sesión 10)</text>
 <text x='232.30' y='34.62' style='font-size: 8.82px; font-weight: bold;fill: #666666; font-family: "Source Sans Pro", "Segoe UI", "Roboto", "Helvetica Neue", "Arial", sans-serif;'>en R (hoy)</text>
 <line x1='16.72' y1='42.59' x2='436.82' y2='42.59' style='stroke-width: 0.75; stroke: #B0B0B0; stroke-linecap: butt;' />
 <text x='16.72' y='67.42' style='font-size: 8.54px;fill: #1A1A1A; font-family: "Source Code Pro", "Consolas", "DejaVu Sans Mono", "Courier New", monospace;'>bedtools intersect</text>

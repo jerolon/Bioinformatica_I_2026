@@ -18,7 +18,7 @@ En la mañana vimos que alinear N secuencias es NP-completo, que todos los progr
 5.  **La barra de error** con el ensemble de MUSCLE5.
 6.  **Ver y recortar** el alineamiento.
 
-El concepto de cómputo del día es **una variable como parámetro del pipeline**, con sus dos acompañantes: `time` y los **dos canales de salida** de un programa (`>` y `2>`). Toda la práctica se escribe una vez, con `$F` donde iría el nombre de la familia, y se corre dos veces cambiando una sola línea. Es el paso previo a los ciclos de la sesión 10. Requiere una cierta abstracción a la que hay que acostumbrarse porque los comandos de hoy ya no llevan tan explícito el nombre de una familia.
+El concepto de cómputo del día es **una variable como parámetro del pipeline**, con sus dos acompañantes: `time` y los **dos canales de salida** de un programa (`>` y `2>`). Toda la práctica se escribe una vez, con `$F` donde iría el nombre de la familia, y se corre dos veces cambiando una sola línea. Es el paso previo a los ciclos. Requiere una cierta abstracción a la que hay que acostumbrarse porque los comandos de hoy ya no llevan tan explícito el nombre de una familia.
 
 Otra vez, ningún dato es de juguete. La sesión pasada recuperaron con `blastp` a los candidatos LGR de la babosa y terminaron con un alineamiento de 10 secuencias hecho con `mafft --auto`, que no había razón para mirar con sospecha. Hoy la familia crece a **50 receptores LGR de 11 especies**, se alinea con dos programas, se mide el desacuerdo y se le pone barra de error. Soy de la filosofía de que comparar al menos dos algoritmos es un control de calidad que da robustez a los resultados.
 
@@ -29,7 +29,7 @@ Dos familias, las dos mitades del mismo módulo de señalización. Las **R-spond
 Los archivos, ya en el servidor:
 
 | archivo | contenido |
-|------------------------------------|------------------------------------|
+|----|----|
 | `familia_rspo.faa` | **17 R-spondinas** (234–316 aa): las 4 humanas, ratón, *Xenopus*, anfioxo, erizo y 9 de moluscos, incluida la única R-spondina de *D. laeve* y la de su congénere *D. lasithionense*. Es exactamente el set del árbol del proyecto. **La familia chica**. |
 | `familia_lgr.faa` | **50 receptores LGR** (280–1,682 aa): 8 de *D. laeve* (sus 6 candidatos de la sesión 8 y 2 más que el proyecto clasificó como LGR completos), 11 referencias de subtipo conocido (tipo A: FSHR, LHR, TSHR; tipo B: LGR4/5/6, LGRB de ostión, DLGR2 de mosca; tipo C: RXFP1/2, GRL101 de *Lymnaea*) y 31 LGR de 7 moluscos. **La familia grande.** |
 | `familia_rspo_metadata.tsv`, `familia_lgr_metadata.tsv` | nombre → especie, grupo, accession o locus, longitud en aminoácidos, nota. |
@@ -44,7 +44,7 @@ Dos advertencias sobre `familia_lgr.faa`, las dos deliberadas:
 Para leer los resultados, necesitaremos la anatomía de una proteína de referencia por familia. Las posiciones son de la secuencia humana:
 
 | referencia | dominio | posiciones |
-|------------------------|------------------------|------------------------|
+|----|----|----|
 | **RSPO2_human** (243 aa) | péptido señal | 1–21 |
 |  | dominios furina FU1+FU2, ricos en cisteína | 40–141 |
 |  | dominio TSP1 | 145–198 |
@@ -227,7 +227,7 @@ En un FASTA alineado todas las secuencias miden lo mismo, así que `min_len`, `a
 ## Solución
 
 |   | rspo | lgr |
-|------------------------|------------------------|------------------------|
+|----|----|----|
 | columnas: Clustal Omega / L-INS-i / FFT-NS-2 | 409 / 391 / 418 | 3,205 / 2,902 / 3,019 |
 | residuos (`sum_len − sum_gap`) | 4,656 en los tres | 48,847 en los tres |
 | identidad promedio: Clustal Omega / L-INS-i | 37 % / 38 % | 28 % / 29 % |
@@ -598,7 +598,7 @@ Promedien también el LC por dominio: es el `awk` del ejercicio 5 sobre `${F}_po
 ## Solución
 
 |   | acuerdo \< 0.5 | acuerdo ≥ 0.5 |
-|------------------------|------------------------|------------------------|
+|----|----|----|
 | rspo: LC medio (fracción con LC ≤ 6) | 7.92 (0.14), n = 51 | 8.93 (0.01), n = 192 |
 | lgr: LC medio (fracción con LC ≤ 6) | 6.25 (0.47), n = 311 | 8.07 (0.20), n = 595 |
 
@@ -710,7 +710,7 @@ Como el cruce de acuerdo y LC del ejercicio 8, pero agrupando por la columna 4 d
 :::
 
 |   | rspo | lgr |
-|------------------------|------------------------|------------------------|
+|----|----|----|
 | columnas L-INS-i → trimal | 391 → 231 (**59 %** conservadas) | 2,902 → 381 (**13 %** conservadas) |
 | residuos de la referencia eliminados | 37 de 243 (15 %) | 558 de 907 (62 %) |
 | por dominio | señal 10, enlace N 6, FU 3, TSP1 0, cola 17 | LRR 357 de 454, bisagra 87 de 119, 7TM 32 de 247, cola 82 de 87 |
@@ -741,7 +741,7 @@ El árbol ML de R-spondinas es el del proyecto: MAFFT L-INS-i, trimAl, IQ-TREE c
 Con 1 CPU:
 
 | paso | rspo (17 × 274 aa) | lgr (50 × 977 aa) |
-|------------------------|------------------------|------------------------|
+|----|----|----|
 | `clustalo` | 0.4 s / 14 MB | 14 s / 229 MB |
 | `mafft` L-INS-i | 0.7 s / 17 MB | 91 s / 150 MB |
 | `mafft` FFT-NS-2 | 0.7 s / 24 MB | 2 s / 65 MB |

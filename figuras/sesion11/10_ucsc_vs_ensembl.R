@@ -1,4 +1,4 @@
-## Fig. @fig-ucsc-ensembl (Sesión 11, § UCSC contra Ensembl)
+## Fig. @fig-ucsc-ensembl (Unidad 4, § UCSC contra Ensembl)
 ## Tabla comparativa de dos columnas, con el mnemónico abajo.
 ##
 ## ---------------------------------------------------------------------------

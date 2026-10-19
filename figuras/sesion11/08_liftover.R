@@ -1,4 +1,4 @@
-## Fig. @fig-liftover (Sesión 11, § Convertir coordenadas, y por qué duele)
+## Fig. @fig-liftover (Unidad 4, § Convertir coordenadas, y por qué duele)
 ## Los cuatro destinos de un intervalo al pasar de un ensamblado a otro.
 ##
 ## ---------------------------------------------------------------------------

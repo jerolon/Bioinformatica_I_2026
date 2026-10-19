@@ -1,6 +1,6 @@
-# Figuras de la Unidad 4 — Bases de datos (Sesión 11)
+# Figuras de la unidad 4 — Bases de datos (sesión 10; la carpeta conserva el nombre sesion11)
 
-Cinco figuras para los cuatro capítulos de `contenido/04-bases-datos/`.
+Cinco figuras para las cuatro secciones del capítulo `contenido/04-bases-datos-browsers/bases-de-datos.qmd`.
 Reglas de siempre: R con ggplot2 y **svglite**, `source("_tema.R")`, sin título
 dentro del SVG (el caption vive en el `.qmd`), `svg.fonttype = "none"`, fondo
 transparente.

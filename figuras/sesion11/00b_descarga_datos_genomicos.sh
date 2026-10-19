@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Datos GENÓMICOS de la Sesión 11 (Unidad 5, browsers y práctica TP53).
+# Datos GENÓMICOS de la sesión 10 (unidad 4, browsers y práctica TP53).
 #
 #   bash figuras/sesion11/00b_descarga_datos_genomicos.sh
 #

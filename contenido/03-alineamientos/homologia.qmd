@@ -472,7 +472,9 @@ molecular, y uno de los ejemplos canónicos de coevolución gen-cultura.
 **Advertencia de coordenadas.** Las coordenadas genómicas de rs4988235
 difieren entre hg19 y hg38. No las mezclen. UCSC tiene una página
 educativa específica sobre lactasa; úsenla para sacar las coordenadas
-correctas en ambos ensamblados. Esto engancha directo con la sesión 11.
+correctas en ambos ensamblados. Esto engancha directo con la práctica de
+esta tarde y con el [capítulo de
+browsers](/contenido/04-bases-datos-browsers/browsers.qmd).
 :::
 
 ## Mitos y realidades: el resumen
@@ -491,42 +493,25 @@ correctas en ambos ensamblados. Esto engancha directo con la sesión 11.
 
 ## Práctica
 
-La práctica de esta sesión construye un pipeline de **reciprocal best
-hits** entre dos proteomas y está en la [práctica de la sesión
-10](/contenido/03-alineamientos/sesion10-practica.qmd).
+La práctica de esta sesión no es de homología. Es la de la unidad 4,
+[bases de datos y
+browsers](/contenido/04-bases-datos-browsers/sesion10-practica.qmd): un
+solo gen, TP53, seguido del artículo que lo describe hasta verlo
+dibujado en un browser, pasando por el NCBI, el ENA, UniProt, tres
+ensamblados, un GTF y un cruce de intervalos con ClinVar. Los capítulos
+de referencia son [Bases de datos
+biológicas](/contenido/04-bases-datos-browsers/bases-de-datos.qmd) y
+[Genome browsers](/contenido/04-bases-datos-browsers/browsers.qmd). La
+sesión 11 es el examen.
 
-El concepto de cómputo del día son los **ciclos** (`for`, `while`). El
-RBH es el pretexto perfecto porque no se puede hacer sin uno: hay que
-correr la búsqueda en las dos direcciones y después cruzar las dos
-tablas.
-
-Los dos proteomas son de especies cercanas: la babosa *Deroceras laeve*
-y el caracol terrestre *Bradybaena similaris*, recortados al vecindario
-de la vía WNT que recuperaste con BLAST en la sesión 8 (632 y 713
-proteínas). Con especies así de cercanas uno esperaría que RBH fuera
-trivial, y no lo es:
-
-1.  **El pipeline.** Dos bases con un ciclo `for`, dos búsquedas, el
-    mejor hit por consulta con `sort` y `awk`, y el cruce de las dos
-    tablas con `NR==FNR`. Salen 300 pares recíprocos.
-2.  **Cuánto se pierde.** Solo el 47 % de las proteínas con hit tiene
-    par recíproco, y la pérdida no es pareja: las familias de dominios
-    repetitivos y arreglos en tándem (LRR, cadherinas) pierden más de la
-    mitad; las de una sola copia (la R-spondina, la β-catenina)
-    sobreviven casi enteras. Es el mito 2 de arriba, medido por ti.
-3.  **Tres casos con cromosoma.** Un arreglo en tándem de 24 genes que
-    apunta entero a **una** proteína del caracol; los dos receptores LGR
-    ohnólogos del proyecto, una relación 2:2 que RBH reduce a un solo
-    par por 12 bits de diferencia; y el arreglo del gen de la sonda
-    "lgr5", que se recorre con un ciclo `while read`.
-4.  **Una segunda opinión.** El 97 % de los pares recíprocos cae en el
-    mismo ortogrupo de OrthoFinder: RBH es preciso. Lo que pierde vive
-    en los ortogrupos grandes: RBH es incompleto.
-
-El repositorio conserva además un
+Lo que RBH pierde, y por qué, ya lo probaron en pequeño en el bonus de
+la práctica de la sesión 8: el mejor hit recíproco de los dos receptores
+LGR del proyecto contra las 72 consultas. El pipeline completo de
+reciprocal best hits entre dos proteomas, con ciclos `for` y `while`,
+quedó fuera del programa de este semestre; el repositorio conserva un
 [script](https://github.com/jerolon/Bioinformatica_I_2026/blob/main/practicas/datos/preparar-sesion10.sh)
-que prepara la misma práctica con datos públicos de UniProt, dos
-levaduras, para quien quiera repetirla fuera del servidor del curso.
+que prepara esa práctica con datos públicos de UniProt, dos levaduras,
+para quien quiera hacerla por su cuenta.
 
 ## Fuentes {.unnumbered}
 

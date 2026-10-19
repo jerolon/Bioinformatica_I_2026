@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Datos de la Sesión 11 (Unidad 4, bases de datos).
+# Datos de la sesión 10 (unidad 4, bases de datos).
 #
 # Baja el mismo TP53 humano que usan la práctica y dos de las figuras, y deja
 # al lado un PROCEDENCIA.md con qué se bajó y cuándo. `datos/` está en

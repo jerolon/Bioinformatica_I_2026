@@ -67,7 +67,7 @@ bedtools slop       ←→  anchor_center() %>% stretch()
 bedtools getfasta   ←→  getSeq()
 ````
 
-Encabezados: "en la terminal (sesión 11)" y "en R (hoy)".
+Encabezados: "en la terminal (sesión 10)" y "en R (hoy)".
 
 Debajo, separado por una línea, el punto que la tabla no dice sola:
 en NARANJA, "el objeto GRanges sabe su genoma y su sistema de coordenadas;

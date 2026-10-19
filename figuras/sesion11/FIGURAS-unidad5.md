@@ -1,6 +1,6 @@
-# Figuras de la Unidad 5 — Browsers (Sesión 11)
+# Figuras de la unidad 4 — Browsers (sesión 10; antes unidad 5, sesión 11)
 
-Cinco figuras para los cinco capítulos de `contenido/05-browsers/`. Comparten
+Cinco figuras para las cinco secciones del capítulo `contenido/04-bases-datos-browsers/browsers.qmd`. Comparten
 carpeta, `_tema.R` y script de datos con las de la Unidad 4: las dos unidades
 son **la misma sesión de cinco horas**.
 
@@ -121,6 +121,6 @@ Las cinco figuras de esta unidad la declaran a nivel de módulo.
 
 - **`@fig-liftover` no dibuja el caso "mapea a varios lugares"**, que la prosa
   sí menciona. Cabe como quinta fila si se quiere cerrar la simetría.
-- La práctica `contenido/05-browsers/sesion11-practica.qmd` **no se corrió de principio a fin**:
+- La práctica `contenido/04-bases-datos-browsers/sesion10-practica.qmd` **no se corrió de principio a fin**:
   necesita `bedtools`, `tabix`, `bgzip` y `liftOver`, que no están en esta
   máquina, y los datos genómicos pesados. Ver el reporte de verificaciones.

@@ -1,4 +1,4 @@
-## Fig. @fig-insdc (Sesión 11, § Los tres y el trato / qué NO se intercambia)
+## Fig. @fig-insdc (Unidad 4, § Los tres y el trato / qué NO se intercambia)
 ## El triángulo del INSDC. Lo importante de la figura es la mitad de abajo:
 ## lo que NO viaja entre los tres socios.
 ##

@@ -1,0 +1,22 @@
+---
+title: "4 · Bases de datos y browsers"
+subtitle: "Sesión 10 (23 oct) · Jero"
+---
+
+Contra qué corremos BLAST, quién decidió que eso era un gen, y el genoma
+como sistema de coordenadas: ensamblados, tracks y los formatos de
+anotación donde vive todo lo demás.
+
+Dos capítulos de referencia. La mañana de la sesión 10 es de homología
+(unidad 3); la tarde recorre lo esencial de estos dos capítulos con un
+solo gen, en la [práctica de la sesión 10](sesion10-practica.qmd). La
+sesión 11 es el examen.
+
+## Capítulos
+
+| Capítulo | Sesión | Docente |
+|----------|--------|---------|
+| [Bases de datos biológicas: NCBI, INSDC, UniProt, accesiones](bases-de-datos.qmd) | 10 | Jero |
+| [Genome browsers: ensamblados, UCSC, Ensembl, formatos de anotación, IGV](browsers.qmd) | 10 | Jero |
+
+: {tbl-colwidths="[60,20,20]"}
