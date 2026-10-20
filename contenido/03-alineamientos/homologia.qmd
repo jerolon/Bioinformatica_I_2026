@@ -9,8 +9,8 @@ editor:
 
 ::: {.callout-note appearance="simple"}
 📽️ [Diapositivas de esta
-sesión](../../presentaciones/sesion10-homologia.html) — 23 de octubre
-de 2026.
+sesión](../../presentaciones/sesion10-homologia.html) — 23 de octubre de
+2026.
 :::
 
 ## Idea central
@@ -20,42 +20,45 @@ o no lo comparten. No existe "45% homólogas", igual que no existe "30%
 embarazada".
 
 Lo que sí es continuo es la similitud: el porcentaje de residuos
-idénticos o parecidos. La similitud se mide; la homología se infiere a
-partir de ella. Son categorías distintas, y confundirlas es el error más
-extendido del campo.
+idénticos o parecidos. La similitud puede apoyar una inferencia de
+homología.
 
-De ahí los dos objetivos de la clase:
+Los dos objetivos de la clase:
 
-- Que nunca más escriban "76% de homología".
-- Que entiendan por qué el mejor hit de BLAST no es necesariamente el
-  ortólogo.
+- Qué es homología, las diferentes clases de homología.
+
+- ¿Y en todo caso, qué importa si dos genes son parálogos, ohnólogos o
+  loqueseálogos? "El concepto de homología es un intento de identificar
+  y nombrar las unidades de la organización fenótípica ... El problema
+  de identificar los bloques de construcción básicos de la realidad, sin
+  embargo, no se limita a la biología comparativa, sino que es un
+  objetivo de cada gran rama de la ciencia..." Gunther Wagner.
 
 ## 1. De dónde viene la palabra
 
 La homología es un concepto anterior a la biología molecular y anterior
-a Darwin. La biología molecular no la inventó: heredó un concepto
-morfológico de 1843 y lo trasladó a secuencias.
+a Darwin. Es un concepto morfológico que data al menos de 1843.
 
 ::: consenso
 Richard Owen acuñó el uso biológico del término en 1843, estudiando
 aletas y extremidades de vertebrados:
 
-> *"the same organ in different animals under every variety of form and
-> function"* (homólogo).
+> *"the same organ in different animals under **every variety of form
+> and function**"* (homólogo).
 >
 > *"a part or organ in one animal which has the same function as another
 > part or organ in a different animal"* (análogo).
 
 Owen fijó tres criterios para juzgar homología: **posición, desarrollo y
-composición**. Su marco era tipológico (el arquetipo, el Bauplan) y no
-tenía mecanismo evolutivo.
+composición**. Su marco era tipológico (idealista, un arquetipo, el
+*Bauplan*) y no tenía mecanismo evolutivo.
 :::
 
-Darwin (1859) puso el mecanismo: la homología surge por descendencia con
+Darwin (1859) puso el mecanismo. La homología surge por descendencia con
 modificación desde un ancestro común, y el arquetipo de los morfólogos
-fue reemplazado por el ancestro. Los antecedentes son aún más viejos:
-Aristóteles, y Pierre Belon comparando esqueletos de ave y humano en
-1555.
+fue reemplazado por el ancestro. Los antecedentes son aún más viejos, ya
+Aristóteles, y Pierre Belon habían comparado esqueletos de ave y humano
+antes de 1555.
 
 ::: callout-box
 El ejemplo morfológico canónico: el ala de murciélago, la aleta de
@@ -63,6 +66,11 @@ ballena y el brazo humano son homólogos (mismos huesos, mismas
 posiciones relativas, distinta función). El ala de ave y el ala de
 insecto son análogas: misma función, sin ancestro común alado.
 :::
+
+De manera confusa, las aletas de los peces y las extremidades de los
+tetrápodos también son homólogas. No tienen los mismos huesos, pero
+claramente tienen un origen evolutivo común. Son la "misma" estructura
+bajo cada variedad de forma y función.
 
 ### Lo mismo, en otro animal y en otro lugar
 
@@ -74,115 +82,117 @@ reproduce con fines docentes y con
 atribución.](../../images/manos-pies-primates-aakash.png){#fig-manos-pies
 fig-alt="Ilustración de los pies (izquierda) y las manos (derecha) de chimpancé, gorila, orangután, humano, siamang y babuino."}
 
-La @fig-manos-pies es la definición de Owen puesta en una lámina, y
-admite dos lecturas. Conviene hacerlas por separado, porque son las
-mismas dos que Fitch va a separar con nombres propios en la sección
-siguiente.
+La @fig-manos-pies ilustra la definición de Owen. También hay una
+distinción entre las diferentes homologías que aplicarán a la definición
+de Fitch de la la sección siguiente.
 
-**Primera lectura: dentro del panel de la derecha.** Comparen la mano
-del chimpancé con la del humano, o con la del orangután. Es *el mismo
-órgano en distintos animales*: los mismos huesos (carpo, cinco
+**Panel de la derecha. Homología de extremidades anteriores** Comparen
+la mano del chimpancé con la del humano, o con la del orangután. Es *el
+mismo órgano en distintos animales*: los mismos huesos (carpo, cinco
 metacarpianos, catorce falanges), en las mismas posiciones relativas, y
-salidos del mismo esbozo embrionario. Los tres criterios de Owen
-(posición, desarrollo, composición) se cumplen. Lo que cambia es la
-forma y la función: el orangután lleva dedos larguísimos y un pulgar
-corto para colgarse; el gorila, una palma ancha para caminar sobre los
+salidos del mismo primordio embrionario. Los tres criterios de Owen
+(posición, desarrollo, composición) se cumplen. En cuanto a variedad de
+forma y función: el orangután lleva dedos larguísimos y un pulgar corto
+para colgarse; el gorila, una palma ancha para caminar sobre los
 nudillos; el humano, un pulgar largo y dedos cortos para la pinza de
-precisión. Nada de eso toca la homología. Owen lo dijo con todas sus
-letras: *under every variety of form and function*.
+precisión.
 
-**Segunda lectura: de un panel al otro.** Comparen ahora la mano del
-humano con el pie del humano. Mismo animal, otro extremo del cuerpo. Otra
-vez los mismos huesos (tarso por carpo, metatarsianos por metacarpianos,
-las mismas catorce falanges), cinco dedos, y el mismo programa de
-desarrollo disparado dos veces, en dos niveles del eje del cuerpo. Owen
-también tenía nombre para esto. En 1848 distinguió la *homología
-especial* (la de la primera lectura: un órgano y su correspondiente en
-otro animal) de la **homología serial**, "la repetición o relación
-representativa entre los segmentos de un mismo esqueleto", y a las
-partes que se repiten las llamó *homotipos*: el brazo es el homotipo de
-la pierna, la mano lo es del pie. Van Valen (1982) la llamó *homología
-repetitiva*, por oposición a la histórica. Es la misma estructura, pero
-en otro lugar.
+**Entre paneles.** Comparen ahora la mano del humano con el pie del
+humano. Mismo animal, otro extremo del cuerpo. Otra vez los mismos
+huesos (tarso por carpo, metatarsianos por metacarpianos, las mismas
+catorce falanges), cinco dedos, y el mismo programa de desarrollo
+activado dos veces, en dos niveles del eje del cuerpo. Owen también
+tenía nombre para esto. En 1848 distinguió la *homología especial* (un
+órgano y su correspondiente en otro animal) de la **homología serial**,
+"la repetición o relación representativa entre los segmentos de un mismo
+esqueleto". A las partes que se repiten las llamó *homotipos*. El brazo
+es el homotipo de la pierna, la mano lo es del pie. Van Valen (1982) la
+llamó *homología repetitiva*, por oposición a la histórica. Es la misma
+estructura, pero en otro lugar.
 
-Y aquí está la analogía que vale la pena llevarse de esta sección,
-porque el vocabulario de Fitch es exactamente este, trasladado a genes:
+En resumen, la *regla de dedo* (pun intended) para recordar el
+vocabulario de Fitch trasladado a genes:
 
 | Comparación | Qué separó a las dos copias | Análogo molecular |
-|----|----|----|
-| Mano de chimpancé vs mano de humano | Una **especiación**, hace ~6–7 Ma. Hasta entonces eran literalmente una sola mano en un solo linaje | **Ortólogos** |
+|------------------------|------------------------|------------------------|
+| Mano de chimpancé vs mano de humano | Una **especiación**, hace \~6–7 Ma. Hasta entonces eran literalmente una sola mano en un solo linaje | **Ortólogos** |
 | Mano vs pie del mismo humano | Una **"duplicación"** del programa de extremidad, en un ancestro vertebrado con dos pares de apéndices. Desde entonces cada par evoluciona *en paralelo* (*para*) en todos los linajes | **Parálogos** |
 | Pie de chimpancé vs mano de humano | Esa misma duplicación, y después la especiación | **Parálogos**, aunque estén en distintas especies |
 
-La tercera fila es la que importa. El pie del chimpancé y la mano del
-humano están en especies distintas y no por eso son "ortólogos": lo que
-define la relación es el evento que separó las copias, y ese evento fue
-la duplicación, cientos de millones de años antes de que hubiera
-primates. Guarden esa fila. Es el mito número uno de este capítulo, y lo
-van a volver a ver en la sección 2 con la α-hemoglobina de ratón y la
-β-hemoglobina de humano.
+La tercera fila es importante. El pie del chimpancé y la mano del humano
+están en especies distintas y no por eso son "ortólogos". Lo que define
+la relación es el evento evolutivo que separó las copias, la duplicación
+en tetrápodos, cientos de millones de años antes de que hubiera
+primates.
 
-Noten también qué se parece más a qué. La mano humana se parece más a la
-del chimpancé que al pie humano: la copia separada por especiación
+Noten también los grados de similitud. La mano humana se parece más a la
+mano del chimpancé que al pie humano: la copia separada por especiación
 conservó la función, la copia separada por duplicación se fue a hacer
-otra cosa. Es la conjetura de los ortólogos de la sección 5, en versión
-anatómica, y con la misma letra chica: es una tendencia, no una ley. El
-pie del chimpancé, con su dedo gordo oponible, sigue siendo una mano
-para agarrar ramas; el nuestro es la copia que más divergió, cuando dejó
-de agarrar y se volvió una palanca para caminar en dos pies: dedo gordo
-alineado con los demás, dedos cortos, arco.
+otra cosa. Esto tiene que ver con la conjetura de los ortólogos, en
+versión anatómica. El pie de muchos primates tiene pulgar oponible y
+sigue manteniendo una función de agarre. Nuestro pie es la copia que más
+divergió, cuando dejó de agarrar y se volvió una palanca para caminar en
+dos pies y correr.
 
 ::: callout-box
-**La analogía se cierra sola.** Qué esbozo de extremidad se vuelve brazo
-y cuál pierna lo deciden dos factores de transcripción: *Tbx5* en el
-esbozo anterior y *Tbx4* en el posterior, con *Pitx1* río arriba de
-*Tbx4* dándole identidad de pierna. *Tbx4* y *Tbx5* son **parálogos**:
-descienden de la duplicación de un único gen *Tbx4/5* ancestral, que el
-anfioxo, sin extremidades pareadas, conserva como un solo gen. Esa
-duplicación es anterior a la aparición de las aletas pareadas
-(Minguillon et al. 2009). La homología serial de la mano y el pie está
-escrita en el genoma como paralogía.
+**La analogía con los genes.** Qué "capullo" de extremidad se vuelve
+brazo y cuál pierna lo deciden dos factores de transcripción: *Tbx5* en
+el primordio anterior y *Tbx4* en el posterior, con *Pitx1* río arriba
+de *Tbx4* dándole identidad de pierna. *Tbx4* y *Tbx5* son
+**parálogos**: descienden de la duplicación de un único gen *Tbx4/5*
+ancestral, que el anfioxo, sin extremidades pareadas, conserva como un
+solo gen. Esa duplicación es anterior a la aparición de las aletas
+pareadas (Minguillon et al. 2009). La homología serial de la mano y el
+pie está reflejada genómicamente como genes parálogos.
 
 Mindell & Meyer (2001) propusieron incluso una palabra única para la
 relación por duplicación en los dos niveles, órganos y genes:
-*paramorfismo*. La palabra no cuajó, pero la idea sí: **parálogo es a
+*paramorfismo*. Aunque la palabra no cuajó, la idea sí: **parálogo es a
 ortólogo lo que homología serial es a homología especial.**
 :::
 
-**Hasta dónde llega la analogía.** Un pie no es una copia de una mano
-como un gen duplicado es una copia de un segmento de ADN. Lo que se
-"duplicó" fue el despliegue de un mismo programa regulatorio en otra
-posición del eje, y por eso en evo-devo se prefiere hablar de
-*co-opción* o *redespliegue*. Y el criterio de posición de Owen, que
-funciona tan bien entre animales, se vuelve resbaloso entre homotipos:
-por definición están en lugares distintos. Úsenla como lo que es, una
-analogía, y no como una demostración.
+**Hay que respetar los límites de la analogía.** Un pie no es una copia
+de una mano como un gen duplicado es una copia de un segmento de ADN. Lo
+que se "duplicó" fue el despliegue de un mismo programa regulatorio en
+otra posición del eje, y por eso en evo-devo se prefiere hablar de
+*co-opción* o *redespliegue*.
 
-## 2. Fitch 1970: ortólogo y parálogo
+## 2. Los genes tienen diferentes grados de "mismez" o igualdad. 
 
-Las definiciones que usamos todos los días vienen de un solo párrafo.
-Fitch propuso que cuando la homología resulta de una duplicación génica,
-y las dos copias descienden lado a lado en la historia del organismo (su
-ejemplo: α y β hemoglobina), los genes son **parálogos**, de *para* = en
-paralelo. Cuando resulta de una especiación, de modo que la historia del
-gen refleja la de las especies (α hemoglobina de humano y de ratón), son
-**ortólogos**, de *ortho* = exacto. Y cerró con la frase que todavía se
-cita:
+Quizás una categoría de similitud por encima de ortólogos o parálogos
+son los alelos. Variaciones de los genes que compiten para transmitirse
+a la siguiente generación. Por consecuencia de esta herencia, los genes
+forman un linaje evolutivo. Cuando hay un evento de especiación la
+historia del gen refleja la de las especies (α hemoglobina de humano y
+de ratón). A los *mismos* genes en diferentes especies se les denomina
+**ortólogos**, de *ortho* = exacto. Fitch propuso que cuando la
+homología resulta de una duplicación génica, y las dos copias descienden
+lado a lado en la historia del organismo (su ejemplo: α y β
+hemoglobina), los genes son **parálogos**, de *para* = en paralelo.
 
 > *"Phylogenies require orthologous, not paralogous, genes."*
 >
 > — Fitch (1970), *Systematic Zoology* 19(2):99–113
 
-El artículo no trataba de eso. Su objetivo era un método estadístico
-para distinguir homología de analogía, y "ortólogo" y "parálogo" fueron
-casi un subproducto de ese párrafo. Treinta años después, Fitch (2000)
-publicó *"Homology: a personal view on some of the problems"*, un
-lamento sobre en qué se había convertido el uso del término.
+Al duplicarse un gen, hay dos copias del mismo gen en diferentes lugares
+del genoma (el criterio de posición de Owen). Ya son dos genes
+diferentes y cada uno ahora comienza a formar su propio linaje e
+historia evolutiva, aunque, puesto que descienden del mismo ancestro,
+los genes parálogos siguen siendo homólogos.
+
+La identidad de un gen está basada entonces en la continuidad
+hereditaria y no en la similitud. El "mismo" gen en diferentes especies
+puede ser muy distinto en secuencia por todos los procesos evolutivos
+que ustedes conocen. La similitud es una heurística que sirve para
+identificar genes homólogos. Es parte de su definición operativa (la que
+usamos en la práctica) en contraste con la definición conceptual (su
+historia evolutiva, un linaje compartido) que rara vez podemos observar
+pues no podemos volver al pasado.
 
 ### El vocabulario completo
 
 | Término | Relación | Origen del término |
-|------------------|-------------------|------------------------------------|
+|-------------------|-------------------|-----------------------------------|
 | **Ortólogo** | Separados por **especiación** | Fitch 1970 |
 | **Parálogo** | Separados por **duplicación** | Fitch 1970 |
 | **Xenólogo** | Separados por **transferencia horizontal (HGT)** | Gray & Fitch 1983 |
@@ -198,33 +208,19 @@ esa especiación. Distinguirlos es lo que permite manejar bien las
 relaciones uno-a-muchos y muchos-a-muchos, que son la norma y no la
 excepción.
 
-::: mito
-**"Los ortólogos están en distintas especies y los parálogos en la misma
-especie."** Falso, y es la confusión más común del tema.
+Los parálogos ya no compiten entre sí para transmitirse a la siguiente
+generación, pues se rompe la necesidad de que un gen sólo transmita dos
+alelos. Un parálogo puede estar en muchas copias. Por ello, los
+ortólogos tienden a ser los genes más parecidos entre especies (aunque
+esta heurística se rompe a menudo). Recuerden que el pie del chimpancé
+se parece más a la mano humana en forma y función que a su "paramorfo"
+el pie humano.
 
-La α-hemoglobina de ratón y la β-hemoglobina de humano son parálogas,
-aunque estén en especies distintas: descienden de una duplicación en un
-ancestro común. Lo que define la relación es el evento que separó las
-copias (duplicación o especiación), no en qué organismo acabaron.
-:::
-
-::: callout-box
-**Recordatorio, porque va a doler si se les olvida.** La homología es
-binaria: dos secuencias comparten ancestro o no lo comparten. No existe
-"76% de homología". Lo que se mide en porcentaje es la **identidad** o
-la **similitud**, que son la evidencia; la homología es la conclusión
-que se infiere a partir de ellas.
-
-El argumento completo, con la carta de Reeck et al. de 1987 que intentó
-frenar el mal uso, lo vieron en el capítulo de alineamiento por pares.
-Acá solo lo damos por sabido y lo usamos.
-
-Una excepción legítima: **"homología parcial"** sí es correcta cuando
-significa que *esta región* de una secuencia es homóloga a *aquella
-región* de la otra. Ocurre tras fusión o fisión génica, o cuando dos
-proteínas comparten un dominio. No es sinónimo de porcentaje de
-identidad.
-:::
+En biología molecular, a veces se utiliza "% de homología" en referencia
+a que es el grado de similutud esperado de dos genes que comparten un
+linaje. De cierta manera refleja una visión residual o histórica. Otras
+definiciones distintas de homología pueden aparecer en diferentes campos
+como la sistemática.
 
 ## 3. Árbol de genes ≠ árbol de especies
 
@@ -265,23 +261,23 @@ otro linaje suele traer tres marcas:
   cuadran con el resto del genoma huésped. Los dos conceptos vienen de
   las sesiones 2 y 3.
 - **Distribución filogenética irregular.** El mismo gen aparece en
-  géneros no emparentados y falta en parientes cercanos. Es
-  exactamente la incongruencia entre árbol de genes y árbol de especies
-  que acabamos de describir.
+  géneros no emparentados y falta en parientes cercanos. Es exactamente
+  la incongruencia entre árbol de genes y árbol de especies que acabamos
+  de describir.
 - **Contexto genómico.** Elementos móviles flanqueando el gen:
   secuencias de inserción, transposones, integrones.
 
-Ninguna de las tres prueba nada por sí sola. Las tres juntas son un
-caso sólido.
+Ninguna de las tres prueba nada por sí sola. Las tres juntas son un caso
+sólido.
 :::
 
 ## 4. Cómo se infiere ortología
 
-Antes de los métodos, una propiedad que van a usar sin darse cuenta.
-La homología es **transitiva**: si el gen X es homólogo del gen Y, y el
-gen Y es homólogo del gen Z en la misma región, entonces X y Z son
-homólogos, aunque BLAST no encuentre parecido directo entre ellos. Es
-la propiedad que permite construir familias de proteínas encadenando
+Antes de los métodos, una propiedad que van a usar sin darse cuenta. La
+homología es **transitiva**: si el gen X es homólogo del gen Y, y el gen
+Y es homólogo del gen Z en la misma región, entonces X y Z son
+homólogos, aunque BLAST no encuentre parecido directo entre ellos. Es la
+propiedad que permite construir familias de proteínas encadenando
 parecidos débiles, y la que hace que los métodos de perfil funcionen.
 
 ### 4.1 Reciprocal Best Hits
@@ -413,82 +409,15 @@ tested."* Que una suposición parezca obvia es precisamente la razón para
 ponerla a prueba.
 :::
 
-## 6. Otros ejemplos
-
-### 6.1 Opsinas: parálogos limpios y una convergencia
-
-En los catarrinos (primates del Viejo Mundo, nosotros incluidos), una
-duplicación de \~40 kb del gen LWS en la base del linaje (\~30–40 Ma)
-generó los genes L y M yuxtapuestos en el cromosoma X, y con ellos la
-tricromía rutinaria. L y M son \~96% idénticos. De sus 15 diferencias
-aminoacídicas, sólo 3 explican el desplazamiento espectral principal:
-los sitios 180, 277 y 285, con λ~max~ ≈ 560 nm (L) y 530 nm (M).
-
-En los platirrinos (Nuevo Mundo) la tricromía es polimórfica: un solo
-locus L/M en X con varios alelos, así que las hembras heterocigotas son
-tricromáticas y los machos no.
-
-Las excepciones: *Alouatta*, el mono aullador, evolucionó una
-duplicación L/M independiente, o sea convergencia con los catarrinos. Y
-*Aotus*, el mono nocturno, es monocromático porque perdió la opsina S
-funcional.
-
-La opsina S es ortóloga entre primates; M es parálogo de L. Un mismo
-sistema visual contiene los tres conceptos.
-
-### 6.2 TP53 en el elefante
-
-El genoma del elefante codifica \~20 copias de TP53: 1 ortólogo canónico
-más \~19 retrogenes (procesados, sin intrones). El relato conocido lo
-conecta con la **paradoja de Peto**, según la cual los animales grandes
-y longevos no tienen más cáncer pese a tener más células y más
-divisiones.
-
-::: debate
-Nunney (2022) reevaluó el caso. El retrogén ancestral ya estaba truncado
-(de 390 a 157 aa por un frameshift) antes de duplicarse; 14 de las 19
-copias están truncadas a ≤88 aa; y no hay evidencia de selección
-positiva ni negativa en esos codones. El patrón encaja con un modelo
-neutral de deriva.
-
-Sirve para dos cosas: como ejemplo de parálogos por retrotransposición,
-y como recordatorio de que un "ejemplo de libro de texto" de adaptación
-puede estar peor sustentado de lo que se cree.
-:::
-
-### 6.3 Lactasa: convergencia en el mismo enhancer
-
-Las variantes de persistencia de lactasa no están en LCT: están \~14 kb
-upstream, dentro del intrón 13 de MCM6, el gen vecino, que funciona como
-enhancer.
-
-Evolucionaron varias veces, de forma independiente, con alelos
-distintos: en Europa −13910\*T (rs4988235); en África y Medio Oriente
-−13915\*G, −14010\*C y −13907\*G (Tishkoff et al. 2007). Mismo fenotipo,
-misma región reguladora, mutaciones distintas. Es convergencia a nivel
-molecular, y uno de los ejemplos canónicos de coevolución gen-cultura.
-
-::: callout-box
-**Advertencia de coordenadas.** Las coordenadas genómicas de rs4988235
-difieren entre hg19 y hg38. No las mezclen. UCSC tiene una página
-educativa específica sobre lactasa; úsenla para sacar las coordenadas
-correctas en ambos ensamblados. Esto engancha directo con la práctica de
-esta tarde y con el [capítulo de
-browsers](/contenido/04-bases-datos-browsers/browsers.qmd).
-:::
-
 ## Mitos y realidades: el resumen
 
 ::: mito
 1.  **"Ortólogos = distintas especies, parálogos = misma especie."** Lo
     que define la relación es el evento (especiación vs duplicación), no
     el organismo.
+
 2.  **"RBH es el estándar de oro."** Pierde hasta \~60% de los ortólogos
     en eucariotas con duplicación, y no es lógicamente suficiente.
-3.  **"Porcentaje de homología."** Error categorial: la homología es
-    binaria.
-4.  **"Las 20 copias de TP53 del elefante son adaptación anticáncer."**
-    Cuestionado; el patrón es compatible con deriva neutral.
 :::
 
 ## Práctica
@@ -504,15 +433,6 @@ biológicas](/contenido/04-bases-datos-browsers/bases-de-datos.qmd) y
 [Genome browsers](/contenido/04-bases-datos-browsers/browsers.qmd). La
 sesión 11 es el examen.
 
-Lo que RBH pierde, y por qué, ya lo probaron en pequeño en el bonus de
-la práctica de la sesión 8: el mejor hit recíproco de los dos receptores
-LGR del proyecto contra las 72 consultas. El pipeline completo de
-reciprocal best hits entre dos proteomas, con ciclos `for` y `while`,
-quedó fuera del programa de este semestre; el repositorio conserva un
-[script](https://github.com/jerolon/Bioinformatica_I_2026/blob/main/practicas/datos/preparar-sesion10.sh)
-que prepara esa práctica con datos públicos de UniProt, dos levaduras,
-para quien quiera hacerla por su cuenta.
-
 ## Fuentes {.unnumbered}
 
 **Definiciones fundacionales**
@@ -521,10 +441,15 @@ para quien quiera hacerla por su cuenta.
 - Fitch WM (1970) "Distinguishing homologous from analogous proteins",
   *Syst Zool* 19(2):99–113.
   [doi:10.2307/2412448](https://doi.org/10.2307/2412448)
+- **Homology, Genes, and Evolutionary Innovation.** Günter P. Wagner.
+  Princeton University Press 2014. (En la biblioteca Campus Juriquilla).
 - Fitch WM (2000) "Homology: a personal view on some of the problems",
   *Trends Genet* 16(5):227–231.
   [doi:10.1016/S0168-9525(00)02005-9](https://doi.org/10.1016/S0168-9525(00)02005-9)
-- Una discusión de los anteriores en el obituario de Fitch: Koonin EV (2011) "Obituary: Walter Fitch and the orthology paradigm", *Brief Bioinform* Sep 21;12(5):377–378. [doi:10.1093/bib/bbr058](https://doi.org/10.1093/bib/bbr058)
+- Una discusión de los anteriores en el obituario de Fitch: Koonin
+  EV (2011) "Obituary: Walter Fitch and the orthology paradigm", *Brief
+  Bioinform* Sep 21;12(5):377–378.
+  [doi:10.1093/bib/bbr058](https://doi.org/10.1093/bib/bbr058)
 - Gray GS & Fitch WM (1983) *Mol Biol Evol* 1(1):57–66. Origen de
   "xenólogo".
 - Ohno S (1970) *Evolution by Gene Duplication*. Springer-Verlag.
