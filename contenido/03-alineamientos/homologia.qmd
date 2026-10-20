@@ -114,7 +114,7 @@ En resumen, la *regla de dedo* (pun intended) para recordar el
 vocabulario de Fitch trasladado a genes:
 
 | Comparación | Qué separó a las dos copias | Análogo molecular |
-|------------------------|------------------------|------------------------|
+|----|----|----|
 | Mano de chimpancé vs mano de humano | Una **especiación**, hace \~6–7 Ma. Hasta entonces eran literalmente una sola mano en un solo linaje | **Ortólogos** |
 | Mano vs pie del mismo humano | Una **"duplicación"** del programa de extremidad, en un ancestro vertebrado con dos pares de apéndices. Desde entonces cada par evoluciona *en paralelo* (*para*) en todos los linajes | **Parálogos** |
 | Pie de chimpancé vs mano de humano | Esa misma duplicación, y después la especiación | **Parálogos**, aunque estén en distintas especies |
@@ -157,7 +157,7 @@ que se "duplicó" fue el despliegue de un mismo programa regulatorio en
 otra posición del eje, y por eso en evo-devo se prefiere hablar de
 *co-opción* o *redespliegue*.
 
-## 2. Los genes tienen diferentes grados de "mismez" o igualdad. 
+## 2. Los genes tienen diferentes grados de "mismez" o igualdad.
 
 Quizás una categoría de similitud por encima de ortólogos o parálogos
 son los alelos. Variaciones de los genes que compiten para transmitirse
@@ -192,7 +192,7 @@ pues no podemos volver al pasado.
 ### El vocabulario completo
 
 | Término | Relación | Origen del término |
-|-------------------|-------------------|-----------------------------------|
+|----|----|----|
 | **Ortólogo** | Separados por **especiación** | Fitch 1970 |
 | **Parálogo** | Separados por **duplicación** | Fitch 1970 |
 | **Xenólogo** | Separados por **transferencia horizontal (HGT)** | Gray & Fitch 1983 |

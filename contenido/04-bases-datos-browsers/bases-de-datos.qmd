@@ -4,113 +4,69 @@ subtitle: "Unidad 4 · Sesión 10"
 author: "Jero"
 ---
 
+```{=html}
 <!-- Capítulo de referencia de la unidad 4. No tiene bloque de teoría
 propio: la mañana de la sesión 10 es de homología y la tarde recorre lo
 esencial de este capítulo y del de browsers en la práctica. Reúne, como
 secciones, los cuatro capítulos de la antigua unidad 4 (NCBI, INSDC,
 UniProt, accesiones). -->
+```
 
 ## Idea central
 
-**El NCBI no es una base de datos: son unas cuarenta conectadas entre
-sí. Debajo de todas hay un solo patrón, archivo primario contra capa
-curada, y una sola disciplina: la accesión con su versión.**
+**El NCBI son unas treinta bases de datos conectadas entre sí.**
 
-Contra qué corremos BLAST, quién decidió que eso era un gen, y por qué
-una accesión sin versión rompe la reproducibilidad. Son cuatro
-secciones: el zoológico del NCBI y cómo sacar cosas de él sin dar clics;
-el INSDC, los tres archivos que tienen exactamente los mismos datos;
-UniProt, que es el INSDC otra vez en proteínas; y las accesiones, donde
-las tres bases anteriores se vuelven una práctica.
+Contra qué corremos BLAST, quién decidió que eso era un gen, y por qué una accesión sin versión rompe la reproducibilidad.
 
 ## 1. NCBI: el zoológico {#sec-ncbi}
 
-El NCBI no es una base de datos. Son unas cuarenta, conectadas entre sí,
-y esa conexión es la mitad de lo que las hace útiles.
+El NCBI son [varias bases de datos conectadas](https://www.ncbi.nlm.nih.gov/books/NBK3837/) lo cual les da una gran utilidad.
 
-No vamos a recorrerlas todas. Vamos a entender la lógica del lugar,
-quedarnos con las ocho o nueve que van a usar de verdad, y aprender a
-sacar cosas sin dar un solo clic.
+¿Qué lógica tienen por debajo que nos permita entenderlas sin memorizar todos los esquemas de las bases de datos y sobre todo, aprovechar los datos?
 
-### Un boleto, muchas jaulas
+### La misma entrada a todos los juegos 🎡
 
-El National Center for Biotechnology Information se fundó en 1988 por
-acto del Congreso de Estados Unidos, dentro de la National Library of
-Medicine. Empezó administrando GenBank y terminó administrando casi todo.
+El National Center for Biotechnology Information se fundó en 1988 por acto del Congreso de Estados Unidos, dentro de la National Library of Medicine. Empezó administrando sólo GenBank.
 
-Lo que unifica ese zoológico se llama **Entrez**: un sistema de búsqueda
-y recuperación que cubre todas las bases a la vez. Escriben un término,
-y Entrez les dice cuántos aciertos hay en cada una.
+[**Entrez**](https://www.ncbi.nlm.nih.gov/Web/Search/entrezfs.html) es el sistema de búsqueda y recuperación que integra las bases de datos de literatura y moleculares, incluyendo secuencia, variación genética, estructura y expresión génica.
 
-Pero lo que de verdad importa de Entrez son los **enlaces cruzados**.
-Cada registro sabe con qué registros de otras bases se relaciona. Desde
-la ficha de un gen se salta a su mRNA, de ahí a la proteína traducida,
-de ahí a los artículos que la mencionan, de ahí a las variantes
-reportadas. No es un catálogo: es un grafo.
+Lo importante de Entrez son los **enlaces cruzados**. Cada registro sabe con qué registros de otras bases se relaciona. Desde la ficha de un gen se salta a su mRNA, de ahí a la proteína traducida, de ahí a los artículos que la mencionan, de ahí a las variantes reportadas. Es un grafo para la información biológica, y de nuevo, la razón de su importancia.
 
-Ese grafo es la razón por la que el NCBI ganó. Otras bases tenían los
-mismos datos; ninguna los tenía atados entre sí.
+### Las más importantes
 
-### Las jaulas que sí importan
+De las bases de datos, estas son quizás las más usadas en investigación biológica y biomédica:
 
-De las cuarenta, estas son con las que van a tropezar:
+**Nucleotide** es el punto de entrada a secuencias de DNA y RNA. **Protein** guarda secuencias de aminoácidos, muchas derivadas de traducir las CDS de Nucleotide. **Gene** está centrada en el gen como entidad biológica y no en una secuencia particular: nomenclatura oficial, ubicación, transcritos, fenotipos. Puede ser el mejor lugar para *empezar*.
 
-**Nucleotide** es el punto de entrada a secuencias de DNA y RNA.
-**Protein** guarda secuencias de aminoácidos, muchas derivadas de
-traducir las CDS de Nucleotide. **Gene** está centrada en el gen como
-entidad biológica y no en una secuencia particular: nomenclatura oficial,
-ubicación, transcritos, fenotipos. Suele ser el mejor lugar para
-*empezar*.
+**Genome** y **Datasets** son donde viven los genomas ensamblados con su anotación. **SRA** es el archivo de lecturas crudas de secuenciación. Si alguna vez reanalizan un RNA-seq público, single cell, y todos los seq, probablemente los datos crudos en fastq estén allí. **GEO** o Gene Expression Omnibus es donde viven los datos de expresión genética ya procesados, por ejemplo como matriz de conteos.
 
-**Genome** y **Datasets** son donde viven los genomas ensamblados con su
-anotación. **SRA** es el archivo de lecturas crudas de secuenciación, y
-si alguna vez reanalizan un RNA-seq público, de ahí van a salir.
+**PubMed** indexa literatura biomédica y **PMC** guarda texto completo de la parte de acceso abierto. **Taxonomy** es el árbol de organismos, donde cada especie tiene un identificador numérico (*Homo sapiens* es el 9606) que sirve para filtrar búsquedas por linaje.
 
-**PubMed** indexa literatura biomédica y **PMC** guarda texto completo de
-la parte de acceso abierto. **Taxonomy** es el árbol de organismos, donde
-cada especie tiene un identificador numérico (*Homo sapiens* es el 9606)
-que sirve para filtrar búsquedas por linaje.
+Y **dbSNP** y **ClinVar** guardan todas las variantes o las de relevancia clínica interpretada, respectivamente.
 
-Y **dbSNP** y **ClinVar** guardan variantes: la primera todas, la segunda
-las de relevancia clínica interpretada.
+### Las secciones de los registros de GenBank
 
-### Cómo se lee un registro
-
-Casi todo lo que baje de Nucleotide se puede pedir en el formato de texto
-plano de GenBank, que se llama *flat file*. Reconocer sus secciones les
-evita depender de la interfaz gráfica (@fig-flatfile).
+Casi todo lo que baje de Nucleotide se puede pedir en el formato de texto plano de GenBank o *flat file*. Veamos sus diferentes casillas (@fig-flatfile).
 
 ![Anatomía de un registro de GenBank. El mRNA de TP53 humano, recortado.](../../figuras/sesion11/flatfile-anotado.svg){#fig-flatfile}
 
-Arriba va **LOCUS** con el nombre corto, la longitud, el tipo de
-molécula y la fecha. Después **DEFINITION**, que es la descripción
-legible. **ACCESSION** y **VERSION** identifican el registro, y de eso
-hablamos en detalle en la sección 4.
+Arriba va **LOCUS** con el nombre corto, la longitud, el tipo de molécula y la fecha. Después **DEFINITION**, que es la descripción legible. **ACCESSION** y **VERSION** identifican el registro.
 
-**SOURCE** y **ORGANISM** dan el organismo con su linaje. **REFERENCE**
-lista los artículos asociados.
+**SOURCE** y **ORGANISM** dan el organismo con su linaje. **REFERENCE** lista los artículos asociados.
 
-**FEATURES** es la parte rica. Ahí está la anotación: dónde empieza y
-termina el gen, dónde está la región codificante con su traducción
-incluida, dónde caen los exones. Es la sección que vale la pena leer
-despacio.
+**FEATURES** es la anotación: dónde empieza y termina el gen, dónde está la región codificante con su traducción incluida, dónde caen los exones.
 
 Y al final **ORIGIN**, con la secuencia numerada.
 
 ### Sacar cosas sin dar clics
 
-Para cinco secuencias, la interfaz web está bien. Para quinientas, o para
-que su análisis sea reproducible, hay que pedirlas desde código.
+Para cinco secuencias, la interfaz web está bien. Para quinientas, o para que su análisis sea reproducible, hay que pedirlas desde código.
 
-El NCBI expone las **E-utilities**, que son URLs con parámetros. Las que
-importan: `esearch` busca, `efetch` descarga, `esummary` resume, `elink`
-salta entre bases, `einfo` lista qué hay.
+El NCBI expone las **E-utilities**, que son URLs con parámetros. Las que importan: `esearch` busca, `efetch` descarga, `esummary` resume, `elink` salta entre bases, `einfo` lista qué hay.
 
-Encima de ellas está **EDirect**, que las envuelve en comandos de UNIX
-conectables con pipes. Ya usaron `efetch` en la sesión de FASTA, así que
-esto es ampliar, no empezar.
+Encima de ellas está **EDirect**, que envuelve las URLs en comandos de UNIX conectables con pipes.
 
-```bash
+``` bash
 # Buscar un gen y bajarlo
 esearch -db nucleotide -query "TP53[GENE] AND Homo sapiens[ORGN]" \
 | efetch -format fasta
@@ -126,299 +82,172 @@ esearch -db pubmed -query "TP53 tumor suppressor" \
 | xtract -pattern DocumentSummary -element Id Title
 ```
 
-Ese último, `xtract`, es la joya del paquete: convierte el XML de Entrez
-en columnas que `awk` y `sort` pueden masticar. Ahí se cierra el círculo
-con todo lo que llevan hecho en terminal.
+Ese último, `xtract`, es un parser que convierte el XML de Entrez en columnas que `awk` y `sort` pueden procesar.
+
+Tabla útil quizás, con info de <https://www.ncbi.nlm.nih.gov/books/NBK25497/table/chapter2.T._entrez_unique_identifiers_ui/>
+
+| Base de datos | `db` | Tipo de UID / acceso | Ejemplo |
+|------------------|------------------|------------------|------------------|
+| Nucleotide (GenBank, RefSeq) | `nuccore` | GI (UID numérico) · accession | `NC_001416.1` |
+| Protein | `protein` | GI (UID numérico) · accession | `NP_000537.3` |
+| Gene | `gene` | GeneID | `7157` |
+| PubMed | `pubmed` | PMID | `6221115` |
+| PubMed Central | `pmc` | PMCID | `PMC1234567` |
+| GEO DataSets | `gds` | UID (`200` + número de GSE) · accession | `GSE123456`, UID `200123456` |
+| SRA | `sra` | UID interno · accessions SRP/SRX/SRR | `SRR1234567` |
+| BioProject | `bioproject` | UID interno · accession | `PRJNA12345` |
+| BioSample | `biosample` | UID interno · accession | `SAMN01234567` |
+| Assembly | `assembly` | UID interno · accession | `GCF_000840245.1` |
+| Taxonomy | `taxonomy` | TaxID | `9606` |
+| dbSNP | `snp` | UID = número de rs sin el prefijo | `rs1042522`, UID `1042522` |
+| ClinVar | `clinvar` | Variation ID · accession VCV | `VCV000012345` |
+| Structure (MMDB) | `structure` | MMDB ID · accession PDB | `1TUP` |
+| OMIM | `omim` | MIM number | `191170` |
+| Conserved Domains | `cdd` | UID · accession | `cd00057` |
+
+Hay que tener en cuenta al usar estas herramientas que UID y accession no siempre son el mismo!
 
 ::: callout-box
-**Un aviso de convivencia que hoy es crítico.**
+El NCBI limita a **tres peticiones por segundo por dirección IP**. Con una llave de API gratuita sube a diez. Pasarse devuelve un error 429.
 
-El NCBI limita a **tres peticiones por segundo por dirección IP**. Con
-una llave de API gratuita sube a diez. Pasarse devuelve un error 429.
+`ken` sale a internet con una sola IP para los treinta.
 
-`ken` sale a internet con una sola IP para los treinta. Ese límite de
-tres por segundo no es de cada quien: **es de todos juntos**. Si media
-clase corre un ciclo de `efetch` al mismo tiempo, el NCBI nos bloquea a
-todos y la práctica se acaba.
-
-Por eso los datos de hoy ya están descargados. Y por eso, cuando armen
-un script propio que haga muchas llamadas, saquen su llave de API y
-métanla en `NCBI_API_KEY`. Es gratis y toma dos minutos.
+Por eso, cuando armen un script propio que haga muchas llamadas, saquen su llave de API y métanla en `NCBI_API_KEY`. Es gratis y toma dos minutos.
 :::
-
-### El tamaño del zoológico
-
-Para dimensionar: GenBank, en su release 269.0 del 16 de diciembre de
-2025, tenía alrededor de **49.73 billones de bases** en unos **6 mil
-millones de registros**. Cuando arrancó, en 1982, tenía 606 secuencias.
-
-Ese número envejece cada dos meses. Cuando lo citen, digan de qué release
-salió, que es exactamente la disciplina de la sección de accesiones.
 
 ## 2. INSDC: NCBI, ENA y DDBJ {#sec-insdc}
 
-Hay tres archivos de secuencias de nucleótidos en el mundo, uno en
-Estados Unidos, uno en Europa y uno en Japón, y **los tres tienen
-exactamente los mismos datos**. Se sincronizan todos los días y llevan
-más de treinta años haciéndolo.
+Hay tres archivos de secuencias de nucleótidos en el mundo, uno en Estados Unidos, uno en Europa y uno en Japón, y **los tres tienen exactamente los mismos datos**. Se sincronizan todos los días desde hace treinta años.
 
-Ese acuerdo tiene una consecuencia incómoda que casi nadie les va a
-decir: nadie revisó si lo que ustedes van a bajar es correcto.
+### Uno para todos y todos para uno
 
-### Los tres y el trato
+El **INSDC**, International Nucleotide Sequence Database Collaboration, son GenBank en el NCBI, el **ENA** en el EMBL-EBI de Hinxton, y **DDBJ** en el Instituto Nacional de Genética de Japón. Cada uno recibe envíos por su cuenta, y todas las noches se pasan lo nuevo.
 
-El **INSDC**, International Nucleotide Sequence Database Collaboration,
-son GenBank en el NCBI, el **ENA** en el EMBL-EBI de Hinxton, y **DDBJ**
-en el Instituto Nacional de Genética de Japón.
+Cómo evitan que dos registros distintos acaben con el mismo identificador? Repartiéndose el espacio de nombres. Los proyectos del NCBI empiezan con `PRJNA`, los del ENA con `PRJEB`, los de DDBJ con `PRJDB`. Las corridas de secuenciación son `SRR`, `ERR` y `DRR` respectivamente.
 
-El trato es simple. Cada uno recibe envíos por su cuenta, y todas las
-noches se pasan lo nuevo. Depositen en cualquiera y aparece en los tres.
-En 2023 los tres fundadores firmaron un acuerdo formal que codificó la
-gobernanza, pero el intercambio venía funcionando desde mucho antes.
+### Historia de la copia por triplicado
 
-Cómo evitan que dos registros distintos acaben con el mismo
-identificador? Repartiéndose el espacio de nombres. Los proyectos del
-NCBI empiezan con `PRJNA`, los del ENA con `PRJEB`, los de DDBJ con
-`PRJDB`. Las corridas de secuenciación son `SRR`, `ERR` y `DRR`
-respectivamente. Tres sistemas independientes, un solo namespace, cero
-colisiones.
-
-### Cómo llegamos acá
-
-Vale la pena la cronología porque explica por qué son tres y no uno.
-
-El primero fue europeo. La **EMBL Data Library** se estableció en
-Heidelberg en octubre de 1980 y sacó su primer release en abril de 1982:
-568 entradas, medio millón de bases. **GenBank** arrancó ese mismo 1982,
-en Los Alamos, y se mudó al NCBI en 1992. **DDBJ** se sumó en 1987.
-
-En 2002 el consejo asesor formalizó la política que sostiene todo esto.
+La **EMBL Data Library** se estableció en Heidelberg en octubre de 1980 y sacó su primer release en abril de 1982: 568 entradas, medio millón de bases. **GenBank** arrancó ese mismo 1982, en Los Alamos, y se mudó al NCBI en 1992. **DDBJ** se sumó en 1987.
 
 ::: consenso
-El INSDC garantiza acceso libre e irrestricto a todos sus registros. Una
-vez depositada, una secuencia no se puede retirar ni volver privada.
+El INSDC garantiza acceso libre e irrestricto a todos sus registros. Una vez depositada, una secuencia no se puede retirar ni volver privada.
 
-Y a continuación viene la parte que quiero que subrayen:
+Importante para la reproducibilidad y confianza en los datos
 
-> *"Beyond limited editorial control and some internal integrity checks
-> (for example, proper use of INSDC formats and translation of coding
-> regions specified in CDS entries are verified), the quality and
-> accuracy of the record are the responsibility of the submitting
-> author, not of the database."*
+> *"Beyond limited editorial control and some internal integrity checks (for example, proper use of INSDC formats and translation of coding regions specified in CDS entries are verified), the quality and accuracy of the record are the responsibility of the submitting author, not of the database."*
 
-Traducido y sin diplomacia: **el archivo verifica que el formato esté
-bien, no que la biología esté bien.** Si alguien depositó una secuencia
-etiquetada como una especie que no es, o contaminada con DNA del
-huésped, ahí va a estar, para siempre, con su nombre equivocado.
+E**l archivador verifica que el formato esté bien, no que la biología esté bien.** Si alguien depositó una secuencia etiquetada como una especie que no es, o contaminada con DNA del huésped, ahí va a estar, para siempre, con su nombre equivocado.
 :::
 
-Eso no es un defecto de diseño. Es el diseño. Un archivo primario existe
-para preservar lo que se depositó, no para juzgarlo. El juicio viene
-después, y de eso trata la siguiente sección.
+Eso no es un defecto de diseño. Es el diseño. Un archivo primario existe para preservar lo que se depositó, no para juzgarlo. El juicio viene después.
 
-### Archivo primario contra capa curada
+### Archivo crudo y la curación superpuesta
 
-Acá está la idea que sostiene este capítulo entero, y que van a
-reconocer después en tres o cuatro lugares más.
+Entonces, el **archivo primario** acepta lo que la comunidad envía y lo guarda tal cual. Es enorme, redundante, y su calidad es la de quien depositó. GenBank.
 
-Un **archivo primario** acepta lo que la comunidad envía y lo guarda tal
-cual. Es enorme, redundante, y su calidad es la de quien depositó.
-GenBank es eso.
-
-Una **capa curada** se construye encima: alguien elige un representante
-por molécula, le corrige errores, lo anota de forma consistente y lo
-mantiene al día. **RefSeq** es eso (@fig-archivo-curado).
+Una **capa curada** se construye cubriéndola. Se elige un representante por molécula, le corrige errores, lo anota de forma consistente y lo mantiene al día. Eso es **RefSeq** (@fig-archivo-curado).
 
 ![Un archivo primario guarda lo que se envió. Una capa curada guarda lo que alguien decidió que está bien.](../../figuras/sesion11/archivo-vs-curado.svg){#fig-archivo-curado}
 
-Las dos son necesarias y contestan preguntas distintas. Si quieren saber
-qué se ha depositado sobre un gen, van al archivo. Si quieren *la*
-secuencia de referencia para alinear contra ella, van a la capa curada.
+Las dos son necesarias. Si quieren saber qué se ha depositado sobre un gen, van al archivo. Si quieren *la* secuencia de referencia para alinear contra ella, vayan a la capa curada.
 
 ::: mito
-**"RefSeq es parte del INSDC."** No lo es, y esta es la confusión más
-cara del tema.
+**RefSeq no es parte del INSDC.**
 
-RefSeq es un producto **exclusivo del NCBI**, construido a partir de los
-datos del INSDC pero no compartido con ENA ni con DDBJ. Si buscan un
-`NM_` en el ENA, no lo van a encontrar.
+RefSeq es **exclusivo del NCBI**, construido a partir de los datos del INSDC pero no compartido con ENA ni con DDBJ. Si buscan un `NM_` en el ENA, no lo van a encontrar.
 
-Lo que se intercambia todas las noches son los envíos originales. Lo que
-cada socio decida construir encima es asunto suyo.
+Lo que se intercambia todas las noches son los envíos originales. Lo que cada socio decida construir encima es asunto suyo.
 :::
 
-Y hay más cosas que no se intercambian (@fig-insdc). Los datos humanos
-identificables no pueden estar en un archivo abierto, así que existe una
-estructura espejo de acceso controlado: **dbGaP** en el NCBI, **EGA** en
-el EBI, **JGA** en Japón. Si alguna vez topan con un dataset que pide
-solicitud y comité, es uno de esos.
+Y hay más cosas que no se intercambian (@fig-insdc). Los datos humanos identificables no pueden estar en un archivo abierto, así que existe una estructura espejo de acceso controlado: **dbGaP** en el NCBI, **EGA** en el EBI, **JGA** en Japón.
 
-![El triángulo del INSDC. Lo interesante es lo que queda fuera.](../../figuras/sesion11/insdc-triangulo.svg){#fig-insdc}
+![](../../figuras/sesion11/insdc-triangulo.svg){#fig-insdc}
 
 ### Para qué sirve cada uno en la práctica
 
 Si los tres tienen lo mismo, por qué elegir?
 
-Porque encima de los datos compartidos cada socio construyó herramientas
-distintas, y algunas no tienen equivalente.
+Porque encima de los datos compartidos cada socio construyó herramientas distintas.
 
-El **NCBI** tiene Entrez y sus enlaces cruzados, que es lo que ya vimos.
+El **NCBI** tiene Entrez y sus enlaces cruzados.
 
-El **ENA** tiene una que vale oro y que no tiene contraparte limpia del
-otro lado: el endpoint `filereport` de su Portal API, que devuelve las
-rutas de descarga de los FASTQ de un experimento público.
+El **ENA** el endpoint `filereport` de su Portal API, que devuelve las rutas de descarga de los FASTQ de un experimento público. Digamos que quieren descargar todos los datos crudos de secuenciación públicos de la babosa *Deroceras laeve.*
 
-```bash
-curl "https://www.ebi.ac.uk/ena/portal/api/filereport?accession=SRR1234567&result=read_run&fields=run_accession,fastq_ftp,fastq_md5&format=tsv"
+``` bash
+curl -s "https://www.ebi.ac.uk/ena/portal/api/search?result=sample&query=scientific_name%3D%22Deroceras%20laeve%22&fields=all&format=tsv&limit=0"
+
+curl -s "https://www.ebi.ac.uk/ena/portal/api/search?result=read_run&query=scientific_name%3D%22Deroceras%20laeve%22&fields=run_accession,study_accession,library_strategy,read_count,fastq_ftp&format=tsv&limit=0"
 ```
 
-Eso les regresa las URLs de los archivos R1 y R2, listas para pasárselas
-a `wget`, junto con sus checksums. Del lado del NCBI el camino
-equivalente pasa por el SRA Toolkit y es bastante más incómodo. Cuando
-necesiten lecturas públicas, empiecen por el ENA.
+Eso les regresa las URLs de los archivos R1 y R2, listas para pasárselas a `wget`. Agregar `fastq_md5` antes de &format= agrega una columna con sus checksums. Del lado del NCBI el camino equivalente pasa por el SRA Toolkit que también es posible aunque con pasos extra. Cuando necesiten lecturas públicas, pueden comenzar por el ENA.
 
-**DDBJ** es el más honesto de describir: es improbable que lo necesiten
-específicamente, porque sus datos están en los otros dos. Importa por dos
-razones. Una conceptual, que es ser la prueba viviente de que el
-intercambio existe. Y una práctica y rara, que es toparse con un registro
-depositado ahí con metadatos que solo DDBJ conserva.
-
-En la práctica van a bajar el mismo registro de los tres y compararlos.
-Es la única forma de creérselo.
+**DDBJ** yo nunca lo he usado personalmente. Es posible que un registro depositado ahí tenga metadatos que solo DDBJ conserva.
 
 ## 3. UniProt: Swiss-Prot y TrEMBL {#sec-uniprot}
 
-Esta sección es la anterior otra vez, en proteínas.
+Ahora lo mismo pero con proteínas.
 
-Archivo primario contra capa curada, exactamente la misma estructura:
-**TrEMBL es a Swiss-Prot lo que GenBank es a RefSeq**. Si entendieron
-esa proporción, ya entendieron la mitad.
-
-Lo que sí es propio de acá son los números, que son brutales, y una
-sorpresa reciente que descoloca a cualquiera que crea que las bases de
-datos solo crecen.
+**TrEMBL es a Swiss-Prot lo que GenBank es a RefSeq**.
 
 ### Las dos mitades
 
-**UniProtKB** se parte en dos secciones. **Swiss-Prot** está revisada a
-mano por curadores: alguien leyó la literatura, evaluó la evidencia y
-escribió la anotación. **TrEMBL** está anotada automáticamente por
-pipelines, a la espera de una revisión que en su enorme mayoría no va a
-llegar nunca.
+**UniProtKB** se parte en dos secciones. **Swiss-Prot** está revisada a mano por curadores que leyeron la literatura, evaluaron la evidencia y escribieron la anotación. **TrEMBL** está anotada automáticamente por pipelines, a la espera de una revisión.
 
-UniProt **no es parte del INSDC**. Es un consorcio aparte (EMBL-EBI, el
-SIB suizo y el PIR estadounidense) que se alimenta de traducir las CDS
-del INSDC, entre otras fuentes. Una entrada de UniProt referencia el
-accession de nucleótidos del que salió, pero su propio identificador es
-independiente.
+UniProt **no es parte del INSDC**. Es un consorcio aparte (EMBL-EBI, el SIB suizo y el PIR estadounidense) que se alimenta de traducir las CDS del INSDC, entre otras fuentes. Una entrada de UniProt referencia el accession de nucleótidos del que salió, pero su propio identificador es independiente.
 
-### Los números, y una sorpresa
+En el release 2026_02, del 10 de junio de 2026, Swiss-Prot tenía **575,503 entradas revisadas**, curadas a partir de casi 313 mil referencias. TrEMBL tenía alrededor de **149 millones**.
 
-En el release 2026_02, del 10 de junio de 2026, Swiss-Prot tenía
-**575,503 entradas revisadas**, curadas a partir de casi 313 mil
-referencias. TrEMBL tenía alrededor de **149 millones**.
+Menos del 0.4% de UniProtKB pasó por manos humanas. Esa es la **brecha de anotación** que vimos en la sesión 1.
 
-Menos del 0.4% de UniProtKB pasó por manos humanas. Esa es la **brecha de
-anotación** que vieron en la sesión 1, ahora con las cifras al día.
-
-Y acá va la sorpresa. En 2025, TrEMBL tenía unos **253 millones** de
-entradas. Bajó a 149. **Perdió cien millones de entradas en menos de un
-año.**
+La sorpresa es que en 2025, TrEMBL tenía unos **253 millones** de entradas. Bajó a 149. **Perdió cien millones de entradas en menos de un año.**
 
 ::: callout-box
-No se perdió nada. UniProt hizo una reorganización que eliminó
-redundancia masiva: secuencias esencialmente idénticas depositadas
-muchas veces, sobre todo de proyectos de metagenómica.
-
-Vale la pena detenerse en lo que eso implica. **El tamaño de una base de
-datos no es una medida de su contenido, es una decisión de diseño.** Una
-base más chica puede tener exactamente la misma información y ser más
-útil.
-
-Cuando comparen bases por número de entradas, pregúntense primero qué
-cuenta cada una como entrada.
+No se perdió nada. UniProt hizo una reorganización que eliminó redundancia masiva: secuencias esencialmente idénticas depositadas muchas veces, sobre todo de proyectos de metagenómica.
 :::
 
 ### Qué tan segura es una anotación curada
 
-Acá viene lo que de verdad quiero que se lleven, y que sorprende incluso
-a quien ya conoce Swiss-Prot.
-
-Cada entrada trae un nivel de **evidencia de existencia de la proteína**,
-que va del PE1 al PE5. PE1 significa que hay evidencia experimental a
-nivel de proteína. PE2, a nivel de transcrito. PE3, que se infirió por
-homología con otra proteína. PE4, predicha. PE5, incierta.
-
-Vean cómo se reparten los 575 mil de Swiss-Prot (@fig-pe):
+Cada entrada trae un nivel de **evidencia de existencia de la proteína**, que va del PE1 al PE5. PE1 significa que hay evidencia experimental a nivel de proteína. PE2, a nivel de transcrito. PE3, que se infirió por homología con otra proteína. PE4, predicha. PE5, incierta (@fig-pe):
 
 ![Niveles de evidencia en Swiss-Prot, release 2026_02. Dos tercios de lo curado es inferencia por homología.](../../figuras/sesion11/niveles-pe.svg){#fig-pe}
 
-**El 67% es PE3**, o sea inferido por homología. Apenas el 21% tiene
-evidencia experimental a nivel de proteína.
+**El 67% es PE3**, o sea inferido por homología. Apenas el 21% tiene evidencia experimental a nivel de proteína.
 
-Léanlo despacio. En la parte *manualmente curada* de la base de proteínas
-más cuidada del mundo, dos de cada tres entradas existen porque se
-parecen a algo que sí se caracterizó, no porque alguien haya visto la
-proteína.
+Esto es en la parte *manualmente curada* de la base de proteínas más cuidada del mundo. Sólo un recordatorio, aunque probables, muchas de estas proteínas no han sido observadas experimentalmente, sólo se infieren por modelos génicos y similitud con otras especies.
 
-Eso no descalifica a Swiss-Prot. La inferencia por homología es
-legítima, es lo que llevamos cinco sesiones aprendiendo a hacer bien. Lo
-que descalifica es leer una anotación como si fuera un hecho medido.
+Tres piezas adicionales
 
-Cuando en la sesión de BLAST les creyeron a las anotaciones de los hits,
-esto es lo que estaban heredando.
+**UniParc** es el archivo puro: todas las secuencias de proteína que alguna vez se han visto, sin anotación, con su historial de versiones. Si una secuencia desapareció de UniProtKB sigue en UniParc.
 
-### Lo demás del ecosistema
+**UniRef** son agrupamientos por identidad: UniRef100, UniRef90 y UniRef50 juntan secuencias con al menos ese porcentaje de identidad en un solo representante. Sirve para reducir redundancia antes de un análisis.
 
-Tres piezas más que van a ver nombradas.
+Otra herramienta útil para el trabajo día a día es el servicio de **ID mapping** traduce identificadores entre UniProt y unas 180 bases distintas.
 
-**UniParc** es el archivo puro: todas las secuencias de proteína que
-alguna vez se han visto, sin anotación, con su historial de versiones. Si
-una secuencia desapareció de UniProtKB, en UniParc sigue.
-
-**UniRef** son agrupamientos por identidad: UniRef100, UniRef90 y
-UniRef50 juntan secuencias con al menos ese porcentaje de identidad en un
-solo representante. Sirve para reducir redundancia antes de un análisis.
-
-Y el servicio de **ID mapping** traduce identificadores entre UniProt y
-unas 180 bases distintas. Es la herramienta que van a maldecir menos el
-día que tengan una lista de identificadores del recurso equivocado.
-
-### Sacar cosas
+### Extracción de datos
 
 La API REST es directa:
 
-```bash
+``` bash
 curl "https://rest.uniprot.org/uniprotkb/P04637.fasta"
 curl "https://rest.uniprot.org/uniprotkb/P04637.txt"
 ```
 
-El primero devuelve FASTA. El segundo, el registro completo en formato de
-texto, con la anotación, las referencias y los enlaces cruzados. Vale la
-pena abrirlo entero al menos una vez.
+El primero devuelve FASTA. El segundo, el registro completo en formato de texto, con la anotación, las referencias y los enlaces cruzados.
 
 ## 4. Accesiones, versiones y reproducibilidad {#sec-accesiones}
 
-Un número de acceso es la dirección permanente de un registro. Es lo que
-permite que alguien más, en otro país y en otro año, baje exactamente lo
-mismo que ustedes bajaron.
+Un número de acceso es la dirección permanente de un registro. Es lo que permite volver a descargar los mismos datos en otro momento. Exactamente los mismos datos, siempre y cuando sea la misma versión.
 
-Exactamente lo mismo, siempre y cuando anoten la versión. Si no la
-anotan, están dando una dirección de calle sin número.
+Esta sección cierra el capítulo porque es donde las tres bases anteriores se vuelven una práctica.
 
-Esta sección cierra el capítulo porque es donde las tres bases
-anteriores se vuelven una práctica.
+### Diferentes IDs
 
-### El decodificador
-
-Van a encontrarse identificadores de media docena de recursos distintos y
-todos se ven parecidos. Esta tabla es para que aprendan a distinguirlos
-de un vistazo (@fig-decodificador).
+Recursos distintos tienen diferentes identificadores. Algunos se vuelven familiares y permiten distinguir rápidamente qué clase de dato es y de dónde viene (@fig-decodificador).
 
 ![Cómo reconocer de dónde viene un identificador.](../../figuras/sesion11/decodificador.svg){#fig-decodificador}
 
 | Recurso | Forma | La pista |
-|---|---|---|
+|------------------------|------------------------|------------------------|
 | INSDC (GenBank, ENA, DDBJ) | `X02469`, `AF231982` | Nunca lleva guión bajo |
 | RefSeq | `NM_000546.6`, `NC_000017.11` | **El guión bajo** |
 | UniProt | `P04637`, `A0A023GPI8` | Seis o diez alfanuméricos |
@@ -426,88 +255,45 @@ de un vistazo (@fig-decodificador).
 | SRA, corridas | `SRR`, `ERR`, `DRR` | La letra dice el socio |
 | BioProject | `PRJNA`, `PRJEB`, `PRJDB` | Igual |
 
-La regla más útil de todas es la del guión bajo. **Si lleva guión bajo,
-es RefSeq**, o sea capa curada del NCBI. Si no lo lleva, es un envío
-original del INSDC. Con eso solo ya saben si están mirando lo que alguien
-depositó o lo que alguien curó.
+**Si lleva guión bajo, es RefSeq**, o sea capa curada del NCBI. Si no lo lleva, es un envío original del INSDC.
 
-Dentro de RefSeq, las dos letras dicen más. La primera es el nivel de
-curación: **N** significa validado o revisado, **X** significa predicho
-por un pipeline automático. La segunda es el tipo de molécula: `M` mRNA,
-`R` RNA no codificante, `P` proteína, `C` cromosoma, `G` región genómica.
+Dentro de RefSeq, hay otras dos letras. La primera es el nivel de curación: **N** significa validado o revisado, **X** significa predicho por un pipeline automático. La segunda es el tipo de molécula: `M` mRNA, `R` RNA no codificante, `P` proteína, `C` cromosoma, `G` región genómica.
 
-Así que `NM_000546` es un mRNA curado y `XM_011526103` es un mRNA
-predicho. Se ven casi iguales y no valen lo mismo.
+Así que `NM_000546` es un mRNA curado y `XM_011526103` es un mRNA predicho.
 
-### Accession, versión y el fantasma del GI
+**El accession** es `NM_000546` y es estable para siempre. Identifica al registro como entidad.
 
-Un identificador de INSDC o RefSeq viene en dos partes: `NM_000546.6`.
-
-**El accession** es `NM_000546` y es estable para siempre. Identifica al
-registro como entidad.
-
-**La versión** es el `.6`, y sube en uno cada vez que **cambia la
-secuencia**. Ese seis quiere decir que la secuencia de referencia del
-mRNA de TP53 se ha corregido cinco veces desde que se creó el registro.
-Las actualizaciones que no tocan la secuencia no suben la versión.
-
-Y hay un tercero que ya no deben usar. Los **números GI** eran
-identificadores puramente numéricos que el NCBI dejó de mostrar en 2016 y
-ya no asigna a secuencias nuevas. Si encuentran un tutorial que los use,
-el tutorial está viejo.
+**La versión** es el `.6`, y sube en uno cada vez que **cambia la secuencia**. Ese seis quiere decir que la secuencia de referencia del mRNA de TP53 se ha corregido cinco veces desde que se creó el registro. Las actualizaciones que no tocan la secuencia no suben la versión.
 
 ::: mito
-**"Con el accession basta."**
+**El accession apunta a la versión actual**
 
-No. `NM_000546` sin versión apunta a "la versión actual, sea cual sea".
-Si su análisis dice que usó `NM_000546` y alguien lo reproduce dos años
-después, va a bajar una secuencia distinta y va a obtener números
-distintos, sin que nada le avise.
-
-Citar un accession sin versión en una sección de métodos es tan preciso
-como citar "la Wikipedia".
+Si su análisis dice que usó `NM_000546` y alguien lo reproduce dos años después puede va a bajar una secuencia distinta.
 :::
 
 ### Qué pasa cuando un registro cambia
 
-Tres destinos posibles, y conviene reconocerlos.
+Una **actualización** sube la versión. La anterior sigue siendo recuperable, así que un análisis viejo se puede reproducir si anotaron cuál usaron.
 
-Una **actualización** sube la versión. La anterior sigue siendo
-recuperable, así que un análisis viejo se puede reproducir si anotaron
-cuál usaron.
+Un registro **suprimido** se retira de la circulación, casi siempre porque resultó ser un error. El accession **nunca se reutiliza**. Queda quemado para que un *script* que lo requiera falle no silenciosamente.
 
-Un registro **suprimido** se retira de la circulación, casi siempre
-porque resultó ser un error. El accession **nunca se reutiliza**: queda
-quemado. Si su script pide uno suprimido, va a fallar, y eso es mejor que
-devolver otra cosa en silencio.
-
-Y cuando dos registros resultan ser el mismo, se **fusionan**: uno
-sobrevive y el otro queda como **accession secundario**, apuntando al
-superviviente. Por eso a veces un identificador viejo los lleva a un
-registro con otro nombre.
+Cuando dos registros resultan ser el mismo, se **fusionan**: uno sobrevive y el otro queda como **accession secundario**, apuntando al superviviente. Por eso a veces un identificador viejo los lleva a un registro con otro nombre.
 
 ### La disciplina
 
-Acá es donde cierra el círculo con la sesión 1.
+Revisitamos la sesión 1 y la reproducibilidad.
 
-Aquel día quedamos en que un resultado que no pueden reproducir no es un
-resultado, y en que los datos crudos no se versionan: se versiona la
-receta para conseguirlos. Ahora ya tienen todas las piezas de esa receta.
+Si utilizamos un archivo de la base de datos necesitamos
 
-Para cada archivo que bajen, anoten cuatro cosas:
+**El accession con su versión.** `NM_000546.6` por ejemplo.
 
-**El accession con su versión.** `NM_000546.6`, no `NM_000546`.
+**La fecha de descarga.** Porque incluso con versión, los metadatos alrededor del registro pueden haber cambiado.
 
-**La fecha de descarga.** Porque incluso con versión, los metadatos
-alrededor del registro pueden haber cambiado.
+**El comando exacto.**
 
-**El comando exacto.** No "lo bajé del NCBI", sino la línea que corrieron.
+**El checksum.** `sha256sum archivo.fasta`, guardado junto al archivo. Es la prueba de que lo que ustedes usaron es bit por bit lo que cualquiera puede volver a bajar.
 
-**El checksum.** `sha256sum archivo.fasta`, guardado junto al archivo. Es
-la prueba de que lo que ustedes usaron es bit por bit lo que cualquiera
-puede volver a bajar.
-
-```markdown
+``` markdown
 ## Datos
 - Accession: NM_000546.6 (RefSeq, mRNA curado)
 - Descargado: 2026-10-23
@@ -515,17 +301,12 @@ puede volver a bajar.
 - sha256: (pegar la salida de sha256sum)
 ```
 
-Cuatro líneas. Es todo lo que separa un análisis reproducible de uno que
-solo funcionó una vez.
+Cuatro líneas que pueden asegurar un análisis más reproducible.
 
 ::: callout-box
-Un extra que vale la pena conocer: el NCBI publica archivos
-`md5checksums.txt` junto a las descargas de genomas ensamblados. En esos
-casos no tienen que confiar en su propio cálculo, pueden verificar
-contra el de ellos con `md5sum -c`.
+El NCBI publica archivos `md5checksums.txt` junto a las descargas de genomas ensamblados. En esos casos no tienen que confiar en su propio cálculo, pueden verificar contra el de ellos con `md5sum -c`.
 
-En Mac los comandos son `shasum -a 256` y `md5` en lugar de `sha256sum` y
-`md5sum`.
+En Mac los comandos son `shasum -a 256` y `md5` en lugar de `sha256sum` y `md5sum`.
 :::
 
 ## Fuentes {.unnumbered}
