@@ -21,9 +21,10 @@ editor:
 ## Un genoma, siete paradas {.smaller}
 
 - Dos capítulos de referencia en el sitio: [Bases de datos
-  biológicas](../contenido/04-bases-datos-browsers/bases-de-datos.html) y
-  [Genome browsers](../contenido/04-bases-datos-browsers/browsers.html).
-  Hoy no los recorremos: los **usamos**
+  biológicas](../contenido/04-bases-datos-browsers/bases-de-datos.html)
+  y [Genome
+  browsers](../contenido/04-bases-datos-browsers/browsers.html). Hoy no
+  los recorremos: los **usamos**
 - El hilo es un genoma que conocen: el de *Deroceras laeve*, que este
   laboratorio secuenció, ensambló y depositó
 - Qué hay de la babosa en el archivo público y cómo se pide sin dar
@@ -36,7 +37,8 @@ editor:
 
 ::: callout-box
 La práctica, con soluciones, vive en el sitio: [Práctica: un genoma,
-siete paradas](../contenido/04-bases-datos-browsers/sesion10-practica.html).
+siete
+paradas](../contenido/04-bases-datos-browsers/sesion10-practica.html).
 Los datos ya están bajados: en `ken` y en una USB, porque las dos
 últimas paradas van en su laptop.
 :::
@@ -44,7 +46,7 @@ Los datos ya están bajados: en `ken` y en una USB, porque las dos
 ## Qué se corre y qué no {.smaller}
 
 | Parada | Va a | ¿En vivo? |
-|---|---|---|
+|----|----|----|
 | 1 Pedir sin dar clics | ENA Portal API | sí, es texto chico |
 | 2 Un registro, dos formatos | NCBI E-utilities y ENA | NCBI: una persona; ENA: todos |
 | 3 La proteína que no está | UniProt REST | sí |
@@ -65,8 +67,8 @@ consultas al NCBI las corre una persona.
 
 - Se fundó en 1988 dentro de la National Library of Medicine; empezó
   administrando sólo GenBank
-- **Entrez** es el sistema de búsqueda que integra literatura, secuencia,
-  variación, estructura y expresión
+- **Entrez** es el sistema de búsqueda que integra literatura,
+  secuencia, variación, estructura y expresión
 - Lo importante son los **enlaces cruzados**: cada registro sabe con qué
   registros de otras bases se relaciona. De la ficha de un gen al mRNA,
   a la proteína, a los artículos, a las variantes. Es un grafo para la
@@ -112,7 +114,7 @@ haga muchas llamadas, saquen la suya y métanla en `NCBI_API_KEY`.
 
 El ENA tiene una API de portal donde una URL es una consulta:
 
-```bash
+``` bash
 curl -s "https://www.ebi.ac.uk/ena/portal/api/search?result=sample&query=scientific_name%3D%22Deroceras%20laeve%22&fields=sample_accession,sample_alias,tissue_type,dev_stage,sex,collection_date,country,study_accession&format=tsv&limit=0" > resultados/muestras.tsv
 
 curl -s "https://www.ebi.ac.uk/ena/portal/api/search?result=read_run&query=scientific_name%3D%22Deroceras%20laeve%22&fields=run_accession,study_accession,sample_accession,library_strategy,library_source,instrument_platform,read_count,fastq_bytes,fastq_md5,fastq_ftp&format=tsv&limit=0" > resultados/corridas.tsv
@@ -120,10 +122,10 @@ curl -s "https://www.ebi.ac.uk/ena/portal/api/search?result=read_run&query=scien
 
 - `result`: qué tipo de registro · `query`: el filtro, con `%3D` por `=`
   y `%22` por comillas · `fields`: qué columnas · `limit=0`: todas
-- ¿Cuántas muestras, de qué tejidos, de dónde? ¿Cuántas corridas, de
-  qué tipo, de cuántos proyectos? ¿Cuántas lecturas suman?
+- ¿Cuántas muestras, de qué tejidos, de dónde? ¿Cuántas corridas, de qué
+  tipo, de cuántos proyectos? ¿Cuántas lecturas suman?
 
-```bash
+``` bash
 awk -F'\t' 'NR>1{split($7,p,":"); c[p[1]]++} END{for(k in c) print c[k], k}' resultados/muestras.tsv | sort -rn
 cut -f4 resultados/corridas.tsv | sort | uniq -c | sort -rn
 awk -F'\t' 'NR>1{s+=$7} END{printf "%.0f millones\n", s/1e6}' resultados/corridas.tsv
@@ -188,7 +190,7 @@ curada del NCBI, tampoco se intercambia.
 El ensamblado es `GCA_051403575.1`; sus 31 cromosomas son `CM120896.1` a
 `CM120926.1`. El cromosoma 28, recortado a 120 bases, al NCBI y al ENA:
 
-```bash
+``` bash
 curl -s "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/efetch.fcgi?db=nucleotide&id=CM120923.1&rettype=gb&retmode=text&seq_start=1&seq_stop=120" > resultados/CM120923_genbank.txt
 curl -s "https://www.ebi.ac.uk/ena/browser/api/embl/CM120923?lineLimit=60" > resultados/CM120923_embl.txt
 
@@ -201,14 +203,16 @@ head -25 resultados/CM120923_embl.txt
 - Identifiquen: accession y versión, BioProject y BioSample, quién
   depositó, con qué se ensambló. ¿Qué cambia entre los dos y qué no?
 - ¿Existe un **RefSeq** de este genoma? Cuenten base por base con
-  `esearch` escrito como URL (`db=nucleotide,sra,assembly,biosample,bioproject`)
+  `esearch` escrito como URL
+  (`db=nucleotide,sra,assembly,biosample,bioproject`)
 
 ## Parada 2 · lo que deben ver {.smaller}
 
 - `VERSION CM120923.1` · `DBLINK BioProject: PRJNA1237345`,
   `BioSample: SAMN47417209` · autores: el laboratorio · envío del NHGRI,
-  marzo de 2025 · Verkko 2.2, 200×, PacBio y Nanopore · `/isolate=
-  "INB-UNAM"`, `/chromosome="28"`, `/collection_date="2022-06-01"`
+  marzo de 2025 · Verkko 2.2, 200×, PacBio y Nanopore ·
+  `/isolate= "INB-UNAM"`, `/chromosome="28"`,
+  `/collection_date="2022-06-01"`
 - El ENA dice lo mismo con otras líneas: `ID`/`AC`/`PR`/`DE`/`OS`/`RA`
   por `LOCUS`/`ACCESSION`/`DBLINK`/`DEFINITION`/`SOURCE`/`AUTHORS`.
   **Mismo contenido, distinta presentación**: depositaron una vez y
@@ -247,15 +251,15 @@ anotación de la babosa, acuérdense de quién la hizo.
 
 UniProt tiene su propia API REST. Por organismo, con su TaxID:
 
-```bash
+``` bash
 curl -s "https://rest.uniprot.org/uniprotkb/search?query=organism_id:147581&fields=accession,reviewed,protein_name,organism_name,length&format=tsv"
 
 curl -sI "https://rest.uniprot.org/uniprotkb/search?query=organism_id:9606+AND+reviewed:true&size=1" | grep -i x-total-results
 curl -sI "https://rest.uniprot.org/uniprotkb/search?query=taxonomy_id:6447+AND+reviewed:true&size=1" | grep -i x-total-results
 ```
 
-- ¿Cuántas proteínas de la babosa hay en UniProt? ¿De dónde salió la
-  que hay? Las 43,905 proteínas con las que trabajan desde la sesión 8,
+- ¿Cuántas proteínas de la babosa hay en UniProt? ¿De dónde salió la que
+  hay? Las 43,905 proteínas con las que trabajan desde la sesión 8,
   ¿dónde están?
 
 ## Parada 3 · lo que deben ver {.smaller}
@@ -290,7 +294,7 @@ height="300"}
 
 Si usamos un archivo de una base de datos, necesitamos cuatro cosas:
 
-```markdown
+``` markdown
 ## Datos
 - Accession: GCA_051403575.1 (GenBank, ensamblado a cromosomas)
 - Descargado: 2026-10-23
@@ -307,14 +311,14 @@ Si usamos un archivo de una base de datos, necesitamos cuatro cosas:
 
 ## Parada 4 · Cómo se bajan las lecturas (y por qué hoy no) {.smaller}
 
-```bash
+``` bash
 curl -s "https://www.ebi.ac.uk/ena/portal/api/filereport?accession=SRR32071304&result=read_run&fields=run_accession,sample_accession,library_strategy,instrument_model,read_count,fastq_bytes,fastq_md5,fastq_ftp&format=tsv" | tr '\t' '\n'
 ```
 
 - La corrida más chica de la babosa: small RNA de cabeza, 8.9 millones
   de lecturas, **366 MB**. Así se bajaría, y así se verificaría; no hoy:
 
-```bash
+``` bash
 wget https://ftp.sra.ebi.ac.uk/vol1/fastq/SRR320/004/SRR32071304/SRR32071304.fastq.gz
 echo "1cda4edc714fa3fe920193593ea0f7ca  SRR32071304.fastq.gz" | md5sum -c
 prefetch SRR32071304 && fasterq-dump SRR32071304     # la vía del NCBI: SRA Toolkit
@@ -324,7 +328,7 @@ prefetch SRR32071304 && fasterq-dump SRR32071304     # la vía del NCBI: SRA Too
   `sh -c "$(curl -fsSL https://ftp.ncbi.nlm.nih.gov/entrez/entrezdirect/install-edirect.sh)"`
 - Y lo que hace por debajo es lo que ustedes llevan haciendo:
 
-```bash
+``` bash
 esearch -db sra -query '"Deroceras laeve"[ORGN]' | efetch -format runinfo
 curl -s "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/esearch.fcgi?db=sra&term=%22Deroceras%20laeve%22%5BORGN%5D&retmode=json"
 ```
@@ -402,14 +406,15 @@ una tabla. No hace falta explicarlo más que eso.
 La babosa no está en UCSC, pero UCSC lee track hubs. El laboratorio de
 Petr Svoboda (IMG, Praga) mantiene uno con cinco genomas de moluscos:
 
-1. **My Data → Track Hubs → URL**, pegar y conectar:
-   `https://epi-tools.img.cas.cz/epitracks/public/hubs/hub_28/slug_hub.txt`
-2. Genoma **dlaeve1_am** (*Deroceras laeve (Americas)* = `GCA_051403575.1`)
-3. Posición `HiC_scaffold_3:30,900,000-31,050,000`: el LGR del cromosoma
-   6, el `dlaeveM00000441839` de las sesiones 7 a 9
-4. Tracks `annotation` y `repeatMasker` en *full*
-5. **My Data → Custom Tracks → Paste URLs or data**: las tres líneas de
-   bigWig polyA (cabeza, ovotestis, juvenil) que están en la práctica
+1.  **My Data → Track Hubs → URL**, pegar y conectar:
+    `https://epi-tools.img.cas.cz/epitracks/public/hubs/hub_28/slug_hub.txt`
+2.  Genoma **dlaeve1_am** (*Deroceras laeve (Americas)* =
+    `GCA_051403575.1`)
+3.  Posición `HiC_scaffold_3:30,900,000-31,050,000`: el LGR del
+    cromosoma 6, el `dlaeveM00000441839` de las sesiones 7 a 9
+4.  Tracks `annotation` y `repeatMasker` en *full*
+5.  **My Data → Custom Tracks → Paste URLs or data**: las tres líneas de
+    bigWig polyA (cabeza, ovotestis, juvenil) que están en la práctica
 
 ::: callout-box
 El hub numera los cromosomas **por tamaño**: chr6 es `HiC_scaffold_3`,
@@ -433,10 +438,11 @@ práctica; con eso basta.
   entregable
 
 ::: notes
-El hub vive detrás de un firewall en Praga: UCSC lo lee bien (verificado),
-pero si un día no responde, la parada 7 hace lo mismo con los archivos
-locales. Metilación solo existe sobre el genoma europeo (dlaeve1_eu),
-que es otro ensamblado; por eso no está en la USB salvo que se pida.
+El hub vive detrás de un firewall en Praga: UCSC lo lee bien
+(verificado), pero si un día no responde, la parada 7 hace lo mismo con
+los archivos locales. Metilación solo existe sobre el genoma europeo
+(dlaeve1_eu), que es otro ensamblado; por eso no está en la USB salvo
+que se pida.
 :::
 
 ## Ensembl: para traer {.smaller}
@@ -466,7 +472,8 @@ height="200"}
   conversión ingenua corre todo una base a la derecha, **sin un solo
   mensaje de error**
 
-![](../figuras/sesion02/coordenadas.svg){fig-align="center" height="220"}
+![](../figuras/sesion02/coordenadas.svg){fig-align="center"
+height="220"}
 
 - Un GTF humano pesa cientos de megabytes y casi siempre necesitan un
   pedazo: `bgzip` + `tabix`, y una consulta por región es instantánea.
@@ -478,7 +485,7 @@ Lo que UCSC dibujó son archivos, y los tienen: el genoma (`.2bit`), la
 anotación y los repetidos (`.bb`) y la expresión (`.bw`). Para `awk` y
 `bedtools` hay que pasarlos a texto:
 
-```bash
+``` bash
 bigBedToBed datos/hub/derLae1/anotacion_dlaeve_am.bb resultados/genes.bed     # o pybigtools
 head -3 datos/hub/derLae1/genes_dlaeve_am.bed | cut -f1-6
 wc -l datos/hub/derLae1/genes_dlaeve_am.bed
@@ -528,12 +535,12 @@ sigue (GFF a GTF, extraer transcritos, filtrar por atributos):
 
 ## Parada 7 · Los mismos archivos, en IGV {.smaller}
 
-1. Instalen [IGV de escritorio](https://igv.org/doc/desktop/)
-2. **Genomes → Load Genome from File** → `derLae1.2bit` de la USB
-3. **File → Load from File** → `anotacion_dlaeve_am.bb`,
-   `repeats_LTR.bb`, `polyA_cabeza.bw`, `polyA_ovotestis.bw`,
-   `polyA_juvenil.bw`
-4. Posición: `HiC_scaffold_3:30,900,000-31,050,000`
+1.  Instalen [IGV de escritorio](https://igv.org/doc/desktop/)
+2.  **Genomes → Load Genome from File** → `derLae1.2bit` de la USB
+3.  **File → Load from File** → `anotacion_dlaeve_am.bb`,
+    `repeats_LTR.bb`, `polyA_cabeza.bw`, `polyA_ovotestis.bw`,
+    `polyA_juvenil.bw`
+4.  Posición: `HiC_scaffold_3:30,900,000-31,050,000`
 
 Es la vista de la parada 5, con los mismos archivos, sin servidor de por
 medio.

@@ -208,6 +208,17 @@ esa especiación. Distinguirlos es lo que permite manejar bien las
 relaciones uno-a-muchos y muchos-a-muchos, que son la norma y no la
 excepción.
 
+::: mito
+**Mitos y realidades sobre los parálogos** (adaptado de Gabaldón &
+Koonin 2013).
+
+| Mito | Realidad |
+|----|----|
+| "Parálogos son genes duplicados *dentro* de una especie." | La paralogía se da también entre especies. Con pérdidas diferenciales de genes y escenarios complejos, distinguir ortología de paralogía no es trivial. |
+| "Si son parálogos, ya hacen cosas distintas." | La paralogía no implica divergencia funcional: dos parálogos pueden hacer lo mismo y, por ejemplo, modular la dosis de una proteína. |
+| "Entonces ortólogo y parálogo dan igual para predecir función." | No: la conjetura generalizada de los ortólogos dice que, como tendencia, a la misma divergencia de secuencia los parálogos difieren más en función que los ortólogos. |
+:::
+
 Los parálogos ya no compiten entre sí para transmitirse a la siguiente
 generación, pues se rompe la necesidad de que un gen sólo transmita dos
 alelos. Un parálogo puede estar en muchas copias. Por ello, los
@@ -215,6 +226,20 @@ ortólogos tienden a ser los genes más parecidos entre especies (aunque
 esta heurística se rompe a menudo). Recuerden que el pie del chimpancé
 se parece más a la mano humana en forma y función que a su "paramorfo"
 el pie humano.
+
+::: mito
+**Mitos y realidades sobre los ortólogos** (adaptado de Gabaldón &
+Koonin 2013).
+
+| Mito | Realidad |
+|----|----|
+| "Un gen tiene *un* ortólogo en la otra especie." | La ortología no implica una relación uno a uno: las duplicaciones específicas de linaje producen co-ortología uno-a-muchos y muchos-a-muchos. Lo que sí garantiza la definición es que, en un árbol correcto, los ortólogos forman un clado: son monofiléticos. |
+| "Los ortólogos evolucionan al mismo ritmo." | El reloj molecular no está en la definición: ortólogos de distintos linajes pueden evolucionar a tasas distintas, en principio arbitrariamente distintas. |
+| "Los ortólogos conservan la secuencia, la estructura o el vecindario genómico." | Nada de eso está implícito en la definición. |
+| "El ortólogo es la secuencia más parecida en el otro genoma." | No necesariamente, ni siquiera sin duplicaciones de linaje. Y al revés tampoco: el par más parecido (el mejor hit bidireccional, BBH o RBH) puede no ser ortólogo. Puede ser paralogía críptica, cuando cada linaje perdió un parálogo ancestral distinto, o xenología, cuando uno de los dos llegó por transferencia horizontal. |
+| "Ortólogo quiere decir misma función." | La ortología no implica conservación de función. Y genes con funciones equivalentes no son necesariamente ortólogos. |
+| "Entonces la ortología no sirve para predecir nada." | Sirve, como tendencia: la conjetura generalizada de los ortólogos predice que, a escala de genoma y en promedio, los ortólogos son los genes más parecidos entre especies en secuencia, estructura y función. Lo que no sirve es tomarla como regla gen por gen. |
+:::
 
 En biología molecular, a veces se utiliza "% de homología" en referencia
 a que es el grado de similutud esperado de dos genes que comparten un
@@ -324,6 +349,37 @@ SonicParanoid, Broccoli, Proteinortho, Hieranoid.
 el de especies para identificar qué nodos son duplicación y cuáles
 especiación. Es lo que hacen TreeFam, Ensembl Compara, PhylomeDB y
 PANTHER. El fundamento es Page & Charleston (1997).
+
+Los dos tipos de método devuelven **ortogrupos**: el conjunto de genes,
+de varias especies, que descienden de un solo gen en el último ancestro
+común de esas especies (Emms & Kelly 2015). La definición lleva una
+decisión escondida: *cuál* ancestro. Un ortogrupo no existe en
+abstracto; existe respecto al ancestro que uno eligió, y cambia cuando
+cambia el ancestro (@fig-ortogrupos).
+
+![Un árbol de genes con las duplicaciones marcadas en rojo: dos en la
+base de los vertebrados y una en el ancestro de los mamíferos (y dos más
+en el linaje de *Drosophila*, fuera de la caja). Qué es "un ortogrupo"
+depende del ancestro elegido. Respecto al ancestro de los cordados (la
+caja punteada, con *Ciona*) todo es un solo grupo, porque desciende de
+un solo gen. Respecto al ancestro de los vertebrados hay tres: A1, A2 y
+A3. Respecto al de los mamíferos, A2 se parte en A2.1 y A2.2, que son
+parálogos entre sí y, a la vez, co-ortólogos de los A2 de pez, rana y
+pollo; A1.1 es el mismo A1 visto desde ese ancestro, sin duplicación de
+por medio. Tomada de Gabaldón & Koonin (2013), *Nat Rev Genet*
+14:360–366, fig. 2 (© Springer Nature); se reproduce con fines docentes
+y con
+atribución.](../../images/gabaldon-koonin-2013-ortogrupos.png){#fig-ortogrupos
+fig-alt="Árbol de genes de Drosophila, Ciona y vertebrados con cajas anidadas A1, A2, A3, A2.1, A2.2 y A1.1 que marcan ortogrupos a distintos niveles."}
+
+Por eso los grupos son **jerárquicos**: uno por nivel taxonómico,
+anidados como las cajas de la figura. OMA los llama HOGs, *hierarchical
+orthologous groups* (Altenhoff et al. 2013), y OrthoFinder los deriva de
+los árboles de genes enraizados. Y por eso la pregunta correcta ante un
+ortogrupo nunca es sólo "qué genes tiene", sino "respecto a qué
+ancestro": un ortogrupo de la babosa y el caracol está definido en el
+ancestro de los dos estilomatóforos; el mismo gen, en un ortogrupo de
+todos los moluscos, llevaría más parálogos adentro.
 
 **OrthoFinder** (Emms & Kelly 2015, 2019) es hoy el método de
 referencia: el más preciso en el benchmark Quest for Orthologs, y
@@ -515,6 +571,15 @@ sesión 11 es el examen.
   [doi:10.1093/nar/gkad1020](https://doi.org/10.1093/nar/gkad1020)
 - Page RDM & Charleston MA (1997) *Mol Phylogenet Evol* 7:231–240.
   Reconciliación.
+- Gabaldón T & Koonin EV (2013) "Functional and evolutionary
+  implications of gene orthology", *Nat Rev Genet* 14(5):360–366.
+  [doi:10.1038/nrg3456](https://doi.org/10.1038/nrg3456); libre en
+  [PMC5877793](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC5877793/).
+  Fig. 2: ortogrupos jerárquicos.
+- Altenhoff AM, Gil M, Gonnet GH, Dessimoz C (2013) "Inferring
+  hierarchical orthologous groups from orthologous gene pairs", *PLoS
+  ONE* 8(1):e53786.
+  [doi:10.1371/journal.pone.0053786](https://doi.org/10.1371/journal.pone.0053786)
 
 **Ortholog conjecture**
 

@@ -105,7 +105,7 @@ Los parámetros se llaman igual que las opciones de EDirect (`db`, `term`, `id`,
 Tabla útil quizás, con info de <https://www.ncbi.nlm.nih.gov/books/NBK25497/table/chapter2.T._entrez_unique_identifiers_ui/>
 
 | Base de datos | `db` | Tipo de UID / acceso | Ejemplo |
-|----|----|----|----|
+|------------------|------------------|------------------|------------------|
 | Nucleotide (GenBank, RefSeq) | `nuccore` | GI (UID numérico) · accession | `NC_001416.1` |
 | Protein | `protein` | GI (UID numérico) · accession | `NP_000537.3` |
 | Gene | `gene` | GeneID | `7157` |
@@ -265,7 +265,7 @@ Recursos distintos tienen diferentes identificadores. Algunos se vuelven familia
 ![Cómo reconocer de dónde viene un identificador.](../../figuras/sesion11/decodificador.svg){#fig-decodificador}
 
 | Recurso | Forma | La pista |
-|----|----|----|
+|------------------------|------------------------|------------------------|
 | INSDC (GenBank, ENA, DDBJ) | `X02469`, `AF231982` | Nunca lleva guión bajo |
 | RefSeq | `NM_000546.6`, `NC_000017.11` | **El guión bajo** |
 | UniProt | `P04637`, `A0A023GPI8` | Seis o diez alfanuméricos |
@@ -281,12 +281,12 @@ Así que `NM_000546` es un mRNA curado y `XM_011526103` es un mRNA predicho.
 
 **El accession** es `NM_000546` y es estable para siempre. Identifica al registro como entidad.
 
-**La versión** es el `.6`, y sube en uno cada vez que **cambia la secuencia**. Ese seis quiere decir que la secuencia de referencia del mRNA de TP53 se ha corregido cinco veces desde que se creó el registro. Las actualizaciones que no tocan la secuencia no suben la versión.
+**La versión** es el `.6`. Sube cada vez que **cambia la secuencia**. La referencia del mRNA de TP53 se ha corregido cinco veces desde que se creó el registro. Las actualizaciones que no tocan la secuencia no suben la versión.
 
 ::: mito
 **El accession apunta a la versión actual**
 
-Si su análisis dice que usó `NM_000546` y alguien lo reproduce dos años después puede va a bajar una secuencia distinta.
+Si su análisis sólo dice que se usó `NM_000546` y alguien lo reproduce dos años después puede bajar una secuencia distinta.
 :::
 
 ### Qué pasa cuando un registro cambia
