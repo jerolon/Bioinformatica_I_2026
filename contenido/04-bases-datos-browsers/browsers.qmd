@@ -11,6 +11,10 @@ Ensembl, formatos de anotación, IGV). La práctica de la sesión 10 recorre
 lo esencial de este capítulo y del de bases de datos. -->
 ```
 
+::: {.callout-note appearance="simple"}
+📽️ [Diapositivas de la tarde de la sesión 10](../../presentaciones/sesion10-bases-datos-browsers.html) — 23 de octubre de 2026. Llevan lo esencial de este capítulo y del de bases de datos, intercalado con la [práctica](sesion10-practica.qmd).
+:::
+
 ## Idea central
 
 **Una coordenada genómica no significa nada sin su ensamblado. Un browser es un sistema de coordenadas con datos apilados. Mucho de la genómica puede generalizarse como una aritmética de intervalos.**
@@ -405,7 +409,7 @@ Para hoy usamos IGV-web, porque instalar treinta copias de una aplicación de es
 
 **Libros**
 
-- Buffalo, V. (2015). *Bioinformatics Data Skills*. O'Reilly. Capítulos 9 (rangos y coordenadas, `bedtools`, GenomicRanges), 11 (alineamientos, `samtools`, IGV) y 13 (`tabix`). <https://vincebuffalo.com/book/> · datos de los ejemplos: <https://github.com/vsbuffalo/bds-files>
+- Buffalo, V. (2015). *Bioinformatics Data Skills*. O'Reilly. Capítulos 9 (rangos y coordenadas, `bedtools`, GenomicRanges), 11 (alineamientos, `samtools`, IGV) y 13 (`tabix`). <https://vincebuffalo.com/book/> · datos de los ejemplos: <https://github.com/vsbuffalo/bds-files> El libro está en la biblioteca UNAM-J.
 - Akalin, A. (2020). *Computational Genomics with R*. CRC Press. Gratis en línea: <https://compgenomr.github.io/book/>. Capítulo 6, *Operations on Genomic Intervals and Genome Arithmetic*; sección 1.5, *Visualization and data repositories for genomics*.
 
 **Ensamblados y coordenadas**

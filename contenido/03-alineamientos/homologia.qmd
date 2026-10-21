@@ -424,11 +424,11 @@ ponerla a prueba.
 
 La práctica de esta sesión no es de homología. Es la de la unidad 4,
 [bases de datos y
-browsers](/contenido/04-bases-datos-browsers/sesion10-practica.qmd): un
-solo gen, TP53, seguido del artículo que lo describe hasta verlo
-dibujado en un browser, pasando por el NCBI, el ENA, UniProt, tres
-ensamblados, un GTF y un cruce de intervalos con ClinVar. Los capítulos
-de referencia son [Bases de datos
+browsers](/contenido/04-bases-datos-browsers/sesion10-practica.qmd): el
+genoma de *Deroceras laeve*, seguido del archivo público hasta verlo
+dibujado en un browser, pasando por el ENA, el NCBI, UniProt, el track
+hub de la babosa en UCSC, un cruce de intervalos e IGV. Los capítulos de
+referencia son [Bases de datos
 biológicas](/contenido/04-bases-datos-browsers/bases-de-datos.qmd) y
 [Genome browsers](/contenido/04-bases-datos-browsers/browsers.qmd). La
 sesión 11 es el examen.

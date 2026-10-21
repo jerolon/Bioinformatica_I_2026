@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 # Datos de la sesión 10 (unidad 4, bases de datos).
 #
-# Baja el mismo TP53 humano que usan la práctica y dos de las figuras, y deja
+# Baja el TP53 humano que usan dos de las figuras (la práctica ya usa la babosa), y deja
 # al lado un PROCEDENCIA.md con qué se bajó y cuándo. `datos/` está en
 # .gitignore: lo que se versiona es este script y el PROCEDENCIA.
 #

@@ -8,8 +8,10 @@ como sistema de coordenadas: ensamblados, tracks y los formatos de
 anotación donde vive todo lo demás.
 
 Dos capítulos de referencia. La mañana de la sesión 10 es de homología
-(unidad 3); la tarde recorre lo esencial de estos dos capítulos con un
-solo gen, en la [práctica de la sesión 10](sesion10-practica.qmd). La
+(unidad 3); la tarde recorre lo esencial de estos dos capítulos siguiendo el
+genoma de *Deroceras laeve*, en la [práctica de la sesión
+10](sesion10-practica.qmd), con sus
+[diapositivas](../../presentaciones/sesion10-bases-datos-browsers.qmd). La
 sesión 11 es el examen.
 
 ## Capítulos

@@ -12,6 +12,10 @@ secciones, los cuatro capítulos de la antigua unidad 4 (NCBI, INSDC,
 UniProt, accesiones). -->
 ```
 
+::: {.callout-note appearance="simple"}
+📽️ [Diapositivas de la tarde de la sesión 10](../../presentaciones/sesion10-bases-datos-browsers.html) — 23 de octubre de 2026. Llevan lo esencial de este capítulo y del de browsers, intercalado con la [práctica](sesion10-practica.qmd).
+:::
+
 ## Idea central
 
 **El NCBI son unas treinta bases de datos conectadas entre sí.**
@@ -84,10 +88,24 @@ esearch -db pubmed -query "TP53 tumor suppressor" \
 
 Ese último, `xtract`, es un parser que convierte el XML de Entrez en columnas que `awk` y `sort` pueden procesar.
 
+::: callout-box
+**Sin EDirect.** En `ken` no está instalado, y no hace falta: cada comando de EDirect es una URL de las E-utilities, y `curl` la pide igual. Se instala en dos minutos con `sh -c "$(curl -fsSL https://ftp.ncbi.nlm.nih.gov/entrez/entrezdirect/install-edirect.sh)"`, pero esto es lo que hace por debajo:
+
+``` bash
+# esearch -db nucleotide -query '"Deroceras laeve"[ORGN]' | efetch -format uid
+curl -s "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/esearch.fcgi?db=nucleotide&term=%22Deroceras%20laeve%22%5BORGN%5D&retmode=json&retmax=20"
+
+# efetch -db nucleotide -id CM120923.1 -format gb -seq_start 1 -seq_stop 120
+curl -s "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/efetch.fcgi?db=nucleotide&id=CM120923.1&rettype=gb&retmode=text&seq_start=1&seq_stop=120"
+```
+
+Los parámetros se llaman igual que las opciones de EDirect (`db`, `term`, `id`, `rettype`, `retmode`), y la documentación de las E-utilities los lista todos.
+:::
+
 Tabla útil quizás, con info de <https://www.ncbi.nlm.nih.gov/books/NBK25497/table/chapter2.T._entrez_unique_identifiers_ui/>
 
 | Base de datos | `db` | Tipo de UID / acceso | Ejemplo |
-|------------------|------------------|------------------|------------------|
+|----|----|----|----|
 | Nucleotide (GenBank, RefSeq) | `nuccore` | GI (UID numérico) · accession | `NC_001416.1` |
 | Protein | `protein` | GI (UID numérico) · accession | `NP_000537.3` |
 | Gene | `gene` | GeneID | `7157` |
@@ -247,7 +265,7 @@ Recursos distintos tienen diferentes identificadores. Algunos se vuelven familia
 ![Cómo reconocer de dónde viene un identificador.](../../figuras/sesion11/decodificador.svg){#fig-decodificador}
 
 | Recurso | Forma | La pista |
-|------------------------|------------------------|------------------------|
+|----|----|----|
 | INSDC (GenBank, ENA, DDBJ) | `X02469`, `AF231982` | Nunca lleva guión bajo |
 | RefSeq | `NM_000546.6`, `NC_000017.11` | **El guión bajo** |
 | UniProt | `P04637`, `A0A023GPI8` | Seis o diez alfanuméricos |

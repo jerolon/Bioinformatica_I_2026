@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Datos GENÓMICOS de la sesión 10 (unidad 4, browsers y práctica TP53).
+# Datos GENÓMICOS de la unidad 4 (figuras de browsers; la práctica ya usa la babosa).
 #
 #   bash figuras/sesion11/00b_descarga_datos_genomicos.sh
 #
@@ -10,7 +10,7 @@
 # ---------------------------------------------------------------------------
 # TODO SE RECORTA AL CROMOSOMA 17 ANTES DE GUARDARSE
 #
-# La práctica sólo mira TP53. Guardar el genoma completo en un servidor
+# Las figuras sólo miran TP53. Guardar el genoma completo en un servidor
 # compartido con treinta cuentas es tirar disco a la basura, así que cada
 # archivo se filtra en el momento de bajarlo:
 #

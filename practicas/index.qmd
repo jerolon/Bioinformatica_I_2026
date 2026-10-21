@@ -23,7 +23,7 @@ siempre. La idea de Jero es que la biología del día es el pretexto para el con
 | 7 | Alineamiento | Variables, primer script con argumentos | [needle y water](../contenido/03-alineamientos/clase07-algoritmos.qmd) |
 | 8 | BLAST | Scripts, `cut`/`sort`, salida tabular | [BLAST+ local](../contenido/03-alineamientos/sesion08-practica.qmd) |
 | 9 | Alineamiento múltiple | Una variable como parámetro del pipeline, `time`, *stdout* y *stderr* (`>`, `2>`) | [Clustal Omega contra MAFFT](../contenido/03-alineamientos/sesion09-practica.qmd) |
-| 10 | Bases de datos y browsers (la mañana es de homología) | `awk`, tuberías, `md5sum`, expresiones regulares | [Un gen, nueve paradas](../contenido/04-bases-datos-browsers/sesion10-practica.qmd) |
+| 10 | Bases de datos y browsers (la mañana es de homología) | `curl` como cliente de APIs, `awk`, `cut`/`sort`/`uniq`, `md5sum` | [Un genoma, siete paradas](../contenido/04-bases-datos-browsers/sesion10-practica.qmd) |
 | 11 | **Examen** | — | sin práctica |
 
 : {tbl-colwidths="[10,25,40,25]"}
@@ -41,5 +41,5 @@ a la barra lateral en `_quarto.yml`.
 | 7 | Matriz de Needleman–Wunsch resuelta a mano (foto) + script que corra `needle` |
 | 8 | Script que reciba un FASTA, corra BLAST contra una base local y reporte los top-5 hits |
 | 9 | Un párrafo por familia (R-spondinas y LGR) sobre dónde discrepan Clustal Omega y MAFFT, con la tabla por dominio de acuerdo, confianza de MUSCLE5 y recorte de trimAl |
-| 10 | `procedencia.md` con accession, versión, fecha y comando de cada dato; el BED de exones fundidos y el cruce con ClinVar; un párrafo sobre cuántas variantes caen en exones de TP53 y qué pasó al pedir `NM_000546` al ENA |
+| 10 | `procedencia.md` con fecha, comandos y checksums; tabla de corridas de *D. laeve* por estrategia y proyecto; modelos por cromosoma y cuántos solapan LTR; captura del LGR de chr6 con la expresión por tejido; un párrafo sobre dónde se expresa y por qué la babosa no está en UniProt |
 | 11 | Examen (sin entregable de práctica) |

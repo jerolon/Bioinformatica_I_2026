@@ -7,15 +7,16 @@ date-format: "D [de] MMMM [de] YYYY"
 editor:
   markdown:
     wrap: 72
-# ESQUELETO de la sesión 10 (23 de octubre). Sigue el orden del capítulo
-# contenido/03-alineamientos/homologia.qmd. La práctica de la tarde ya NO
-# es RBH: es la de la unidad 4 (bases de datos y browsers),
-# contenido/04-bases-datos-browsers/sesion10-practica.qmd, pendiente de
-# recortarse a lo esencial. La práctica de RBH se retiró del sitio (queda
-# en el historial de git y en planeacion/practica_rbh/). La sesión 11 es
-# el examen. Los "TODO" en las notas del presentador marcan lo que falta
-# decidir. Única figura: images/manos-pies-primates-aakash.png (todavía
-# sin versionar en git).
+# Sesión 10 (23 de octubre). Sigue el orden y el fraseo del capítulo
+# contenido/03-alineamientos/homologia.qmd (versión del 20 de octubre de
+# 2026): Owen y la lámina de manos y pies, los grados de "mismez" de los
+# genes, árbol de genes contra árbol de especies, inferencia de ortología
+# y la conjetura. La sección de ejemplos (opsinas, TP53 del elefante,
+# lactasa) salió del capítulo y por eso salió de aquí; sus fuentes siguen
+# en el capítulo. La práctica de la tarde es la de la unidad 4 (bases de
+# datos y browsers), contenido/04-bases-datos-browsers/sesion10-practica.qmd.
+# La sesión 11 es el examen. Única figura: images/manos-pies-primates-aakash.png
+# (todavía sin versionar en git).
 ---
 
 # Homología es binaria {.section-divider}
@@ -28,17 +29,24 @@ o no lo comparten. No existe "45% homólogas", igual que no existe "30%
 embarazada".
 :::
 
-- Lo continuo es la **similitud**: porcentaje de residuos idénticos o
-  parecidos
-- La similitud se **mide**; la homología se **infiere** a partir de
-  ella
-- Confundirlas es el error más extendido del campo
+- Lo que sí es continuo es la **similitud**: el porcentaje de residuos
+  idénticos o parecidos
+- La similitud puede **apoyar una inferencia** de homología
 
-## Los dos objetivos de hoy
+## Los dos objetivos de hoy {.smaller}
 
-1.  Que nunca más escriban **"76% de homología"**
-2.  Que entiendan por qué el mejor hit de BLAST **no** es
-    necesariamente el ortólogo
+1.  Qué es homología, y las diferentes **clases** de homología
+2.  Y en todo caso, ¿qué importa si dos genes son parálogos, ohnólogos
+    o *loqueseálogos*?
+
+> *"El concepto de homología es un intento de identificar y nombrar las
+> unidades de la organización fenotípica... El problema de identificar
+> los bloques de construcción básicos de la realidad, sin embargo, no se
+> limita a la biología comparativa, sino que es un objetivo de cada gran
+> rama de la ciencia."*
+
+[Günter P. Wagner, *Homology, Genes, and Evolutionary Innovation*,
+Princeton 2014 (está en la biblioteca del Campus Juriquilla)]{.ref}
 
 ## El plan del día
 
@@ -46,33 +54,48 @@ embarazada".
 |-------------|---------------------------------------------------------------|
 | 10:00–11:45 | Teoría: Owen, Fitch, árboles, inferencia de ortología, la conjetura |
 | 11:45–12:15 | Descanso                                                      |
-| 12:15–14:30 | Práctica: bases de datos y browsers, un gen y nueve paradas   |
+| 12:15–14:30 | Práctica: bases de datos y browsers, un genoma y siete paradas |
 | 14:30–15:00 | Cierre, dudas, entregable                                     |
 
 # De dónde viene la palabra {.section-divider}
 
 ## Owen, 1843: antes de Darwin {.smaller}
 
-- La biología molecular no inventó la homología: heredó un concepto
-  morfológico y lo trasladó a secuencias
+- La homología es un concepto anterior a la biología molecular y
+  anterior a Darwin: un concepto **morfológico** que data al menos de
+  1843
 
-> **Homólogo**: *"the same organ in different animals under every
-> variety of form and function"*
+> **Homólogo**: *"the same organ in different animals under **every
+> variety of form and function**"*
 >
 > **Análogo**: *"a part or organ in one animal which has the same
 > function as another part or organ in a different animal"*
 
-- Tres criterios: **posición, desarrollo y composición**. Marco
-  tipológico (el arquetipo), sin mecanismo
-- Darwin 1859 puso el mecanismo: descendencia con modificación desde un
-  ancestro común
+- Owen fijó tres criterios para juzgar homología: **posición, desarrollo
+  y composición**. Su marco era tipológico (idealista: un arquetipo, el
+  *Bauplan*) y no tenía mecanismo evolutivo
+- Darwin (1859) puso el mecanismo: la homología surge por **descendencia
+  con modificación** desde un ancestro común. El arquetipo de los
+  morfólogos fue reemplazado por el ancestro
 
 ::: notes
-Antecedentes aún más viejos: Aristóteles; Pierre Belon comparando
-esqueletos de ave y humano en 1555. Ejemplo canónico: ala de
-murciélago, aleta de ballena y brazo humano (homólogos); ala de ave y
-ala de insecto (análogas).
+Los antecedentes son aún más viejos: ya Aristóteles, y Pierre Belon,
+habían comparado esqueletos de ave y humano antes de 1555.
 :::
+
+## Homólogo, análogo, y un caso confuso {.smaller}
+
+::: callout-box
+**El ejemplo morfológico canónico.** El ala de murciélago, la aleta de
+ballena y el brazo humano son homólogos: mismos huesos, mismas
+posiciones relativas, distinta función. El ala de ave y el ala de
+insecto son análogas: misma función, sin ancestro común alado.
+:::
+
+- De manera confusa, las aletas de los peces y las extremidades de los
+  tetrápodos **también son homólogas**. No tienen los mismos huesos,
+  pero claramente tienen un origen evolutivo común
+- Son la "misma" estructura *bajo cada variedad de forma y función*
 
 ## Lo mismo, en otro animal y en otro lugar
 
@@ -85,93 +108,121 @@ reproduce con fines docentes y con atribución]{.ref}
 
 ::: notes
 Seis pies (izquierda) y seis manos (derecha): chimpancé, gorila,
-orangután, humano, siamang, babuino. Hacer las dos lecturas por
-separado; son las mismas dos que Fitch va a separar con nombres.
+orangután, humano, siamang, babuino. Cada pie de la izquierda tiene su
+pareja a la derecha: el mismo animal, el mismo plan de extremidad, en el
+otro extremo del cuerpo. La lámina ilustra la definición de Owen, y
+además una distinción entre homologías que aplica a la definición de
+Fitch de la sección siguiente. Hacer las dos lecturas por separado.
 :::
 
 ## Dos lecturas de la misma lámina {.smaller}
 
 :::: columns-equal
 ::: {}
-**Dentro del panel de la derecha**
+**Panel de la derecha: extremidades anteriores**
 
-- Mano de chimpancé contra mano de humano: *el mismo órgano en
-  distintos animales*
-- Mismos huesos, mismas posiciones, mismo esbozo embrionario
-- Cambian forma y función (dedos del orangután, palma del gorila,
-  pulgar humano). Nada de eso toca la homología
+- Mano de chimpancé contra mano de humano, o de orangután: *el mismo
+  órgano en distintos animales*
+- Los mismos huesos (carpo, cinco metacarpianos, catorce falanges), en
+  las mismas posiciones relativas, salidos del mismo primordio
+  embrionario: los tres criterios de Owen se cumplen
+- Variedad de forma y función: dedos larguísimos y pulgar corto para
+  colgarse (orangután); palma ancha para caminar sobre los nudillos
+  (gorila); pulgar largo y dedos cortos para la pinza de precisión
+  (humano)
 - **Homología especial** (Owen 1848)
 :::
 
 ::: {}
-**De un panel al otro**
+**Entre paneles**
 
 - Mano de humano contra pie de humano: mismo animal, otro extremo del
   cuerpo
-- Los mismos huesos, cinco dedos, el mismo programa de desarrollo
-  disparado dos veces
-- **Homología serial**: el brazo es el *homotipo* de la pierna (Owen
-  1848); "homología repetitiva" (Van Valen 1982)
+- Otra vez los mismos huesos (tarso por carpo, metatarsianos por
+  metacarpianos, las mismas catorce falanges), cinco dedos, y el mismo
+  programa de desarrollo activado dos veces, en dos niveles del eje
+- **Homología serial** (Owen 1848): *"la repetición o relación
+  representativa entre los segmentos de un mismo esqueleto"*. El brazo
+  es el *homotipo* de la pierna; la mano, del pie. Van Valen (1982) la
+  llamó *homología repetitiva*, por oposición a la histórica
+- La misma estructura, pero en otro lugar
 :::
 ::::
 
-## La analogía que vale la pena llevarse {.smaller}
+## La regla de dedo (*pun intended*) {.smaller}
+
+El vocabulario de Fitch, trasladado a genes:
 
 | Comparación | Qué separó a las dos copias | Análogo molecular |
 |----|----|----|
-| Mano de chimpancé vs mano de humano | Una **especiación**, hace ~6–7 Ma | **Ortólogos** |
-| Mano vs pie del mismo humano | Una **"duplicación"** del programa de extremidad, en un ancestro vertebrado | **Parálogos** |
+| Mano de chimpancé vs mano de humano | Una **especiación**, hace ~6–7 Ma. Hasta entonces eran literalmente una sola mano en un solo linaje | **Ortólogos** |
+| Mano vs pie del mismo humano | Una **"duplicación"** del programa de extremidad, en un ancestro vertebrado con dos pares de apéndices. Desde entonces cada par evoluciona *en paralelo* (*para*) en todos los linajes | **Parálogos** |
 | Pie de chimpancé vs mano de humano | Esa misma duplicación, y después la especiación | **Parálogos**, aunque estén en distintas especies |
 
 ::: callout-box
-**La tercera fila es la que importa.** Lo que define la relación es el
-evento que separó las copias, no en qué organismo acabaron. Guárdenla:
-es el mito número uno de hoy.
+**La tercera fila es importante.** El pie del chimpancé y la mano del
+humano están en especies distintas y no por eso son "ortólogos". Lo que
+define la relación es el evento evolutivo que separó las copias: la
+duplicación en tetrápodos, cientos de millones de años antes de que
+hubiera primates. Guárdenla: es el mito número uno de hoy.
 :::
 
-::: notes
-Qué se parece más a qué: la mano humana se parece más a la del
-chimpancé que al pie humano. La copia separada por especiación conservó
-la función; la separada por duplicación se fue a hacer otra cosa. Es la
-conjetura de los ortólogos en versión anatómica, con la misma letra
-chica: tendencia, no ley (el pie del chimpancé sigue siendo una mano
-para agarrar ramas).
-:::
+## Noten los grados de similitud {.smaller}
 
-## La analogía se cierra sola {.smaller}
+- La mano humana se parece más a la mano del chimpancé que al pie
+  humano: la copia separada por **especiación** conservó la función; la
+  copia separada por **duplicación** se fue a hacer otra cosa
+- Esto tiene que ver con la **conjetura de los ortólogos**, en versión
+  anatómica. Volvemos a ella al final
+- El pie de muchos primates tiene pulgar oponible y sigue manteniendo
+  una función de agarre. Nuestro pie es la copia que más divergió:
+  dejó de agarrar y se volvió una palanca para caminar en dos pies y
+  correr
 
-- Qué esbozo se vuelve brazo y cuál pierna lo deciden **Tbx5** (anterior)
-  y **Tbx4** (posterior), con *Pitx1* río arriba de *Tbx4*
-- *Tbx4* y *Tbx5* son **parálogos**: descienden de un único *Tbx4/5*
-  ancestral, que el anfioxo, sin extremidades pareadas, conserva como un
-  solo gen (Minguillon et al. 2009)
-- La homología serial de la mano y el pie está escrita en el genoma
-  como paralogía
+## La analogía con los genes {.smaller}
+
+- Qué "capullo" de extremidad se vuelve brazo y cuál pierna lo deciden
+  dos factores de transcripción: ***Tbx5*** en el primordio anterior y
+  ***Tbx4*** en el posterior, con *Pitx1* río arriba de *Tbx4* dándole
+  identidad de pierna
+- *Tbx4* y *Tbx5* son **parálogos**: descienden de la duplicación de un
+  único gen *Tbx4/5* ancestral, que el anfioxo, sin extremidades
+  pareadas, conserva como un solo gen. Esa duplicación es anterior a la
+  aparición de las aletas pareadas (Minguillon et al. 2009)
+- La homología serial de la mano y el pie está **reflejada
+  genómicamente** como genes parálogos
 
 ::: callout-box
 **Parálogo es a ortólogo lo que homología serial es a homología
-especial.** (Mindell & Meyer 2001 lo llamaron *paramorfismo*; la
-palabra no cuajó, la idea sí.)
+especial.** Mindell & Meyer (2001) propusieron incluso una palabra única
+para la relación por duplicación en los dos niveles, órganos y genes:
+*paramorfismo*. La palabra no cuajó; la idea sí.
 :::
 
 ::: notes
-Hasta dónde llega la analogía: un pie no es una copia de una mano como
-un gen duplicado es una copia de ADN. Se "duplicó" el despliegue de un
-programa regulatorio (co-opción, redespliegue). Y el criterio de
-posición de Owen se vuelve resbaloso entre homotipos. Es una analogía,
-no una demostración.
+Hay que respetar los límites de la analogía. Un pie no es una copia de
+una mano como un gen duplicado es una copia de un segmento de ADN. Lo
+que se "duplicó" fue el despliegue de un mismo programa regulatorio en
+otra posición del eje, y por eso en evo-devo se prefiere hablar de
+co-opción o redespliegue.
 :::
 
-# Fitch 1970 {.section-divider}
+# Los genes tienen grados de "mismez" {.section-divider}
 
-## Un solo párrafo {.smaller}
+## De los alelos a los parálogos {.smaller}
 
-- **Parálogos** (*para* = en paralelo): la homología resulta de una
-  **duplicación génica** y las copias descienden lado a lado. Ejemplo
-  de Fitch: α y β hemoglobina
-- **Ortólogos** (*ortho* = exacto): la homología resulta de una
-  **especiación**; la historia del gen refleja la de las especies. α
-  hemoglobina de humano y de ratón
+- Quizás una categoría de similitud por encima de ortólogos o parálogos
+  son los **alelos**: variaciones de los genes que compiten para
+  transmitirse a la siguiente generación
+- Por consecuencia de esta herencia, los genes forman un **linaje
+  evolutivo**. Cuando hay un evento de especiación, la historia del gen
+  refleja la de las especies (α hemoglobina de humano y de ratón). A los
+  *mismos* genes en diferentes especies se les denomina **ortólogos**,
+  de *ortho* = exacto
+- Fitch propuso que cuando la homología resulta de una **duplicación
+  génica**, y las dos copias descienden lado a lado en la historia del
+  organismo (su ejemplo: α y β hemoglobina), los genes son
+  **parálogos**, de *para* = en paralelo
 
 > *"Phylogenies require orthologous, not paralogous, genes."*
 
@@ -183,6 +234,27 @@ distinguir homología de analogía; los términos fueron casi un
 subproducto. Fitch 2000, "Homology: a personal view on some of the
 problems", es un lamento sobre en qué se convirtió el uso del término.
 :::
+
+## Dos copias, dos linajes {.smaller}
+
+- Al duplicarse un gen hay dos copias del mismo gen en diferentes
+  lugares del genoma (el criterio de **posición** de Owen)
+- Ya son dos genes diferentes y cada uno comienza a formar su propio
+  linaje e historia evolutiva. Pero, puesto que descienden del mismo
+  ancestro, los parálogos **siguen siendo homólogos**
+
+::: callout-box
+**La identidad de un gen está basada en la continuidad hereditaria, no
+en la similitud.** El "mismo" gen en diferentes especies puede ser muy
+distinto en secuencia por todos los procesos evolutivos que ustedes
+conocen.
+:::
+
+- La similitud es una **heurística** que sirve para identificar genes
+  homólogos. Es parte de su definición *operativa* (la que usamos en la
+  práctica), en contraste con la definición *conceptual* (su historia
+  evolutiva, un linaje compartido), que rara vez podemos observar porque
+  no podemos volver al pasado
 
 ## El vocabulario completo {.smaller}
 
@@ -196,31 +268,42 @@ problems", es un lamento sobre en qué se convirtió el uso del término.
 | **Out-paralog** | Duplicado **antes** de la especiación considerada | Sonnhammer & Koonin 2002  |
 
 - Los in-paralogs son **co-ortólogos** en conjunto respecto al gen de la
-  otra especie. Uno-a-muchos y muchos-a-muchos son la norma, no la
-  excepción
+  otra especie: si un gen se duplicó después de que los linajes se
+  separaron, ambas copias son ortólogas del gen de la otra especie,
+  colectivamente. Los out-paralogs nunca lo son
+- Distinguirlos es lo que permite manejar las relaciones uno-a-muchos y
+  muchos-a-muchos, que son la **norma** y no la excepción
 
 ::: notes
 Los ohnólogos ya los vieron en la práctica de la sesión 7: los dos
 receptores LGR de la babosa en los cromosomas 6 y 10.
 :::
 
+## Por qué los ortólogos suelen ser los más parecidos {.smaller}
+
+- Los parálogos ya no compiten entre sí para transmitirse a la
+  siguiente generación: se rompe la necesidad de que un gen sólo
+  transmita dos alelos. Un parálogo puede estar en **muchas copias**
+- Por ello los ortólogos tienden a ser los genes más parecidos entre
+  especies, aunque esta heurística **se rompe a menudo**
+- Recuerden: el pie del chimpancé se parece más a la mano humana en
+  forma y función que a su "paramorfo", el pie humano
+
+::: callout-box
+**Sobre el "% de homología".** En biología molecular a veces se usa en
+referencia al grado de similitud esperado de dos genes que comparten un
+linaje. De cierta manera refleja una visión residual o histórica. Otras
+definiciones de homología aparecen en otros campos, como la sistemática.
+:::
+
 ## El mito número uno {.smaller}
 
 ::: desventaja
 **"Los ortólogos están en distintas especies y los parálogos en la
-misma."** Falso. La α-hemoglobina de ratón y la β-hemoglobina de humano
-son **parálogas** aunque estén en especies distintas: descienden de una
-duplicación en un ancestro común.
-:::
-
-::: callout-box
-**Recordatorio, porque va a doler si se les olvida.** Lo que se mide en
-porcentaje es la **identidad** o la **similitud** (la evidencia). La
-homología es la conclusión.
-
-Excepción legítima: **"homología parcial"**, cuando *esta región* de una
-secuencia es homóloga a *aquella región* de la otra (fusión, fisión,
-dominios compartidos).
+misma."** Falso. Lo que define la relación es el **evento** que separó
+las copias, no el organismo donde acabaron. La α-hemoglobina de ratón y
+la β-hemoglobina de humano son **parálogas** aunque estén en especies
+distintas; el pie del chimpancé y la mano del humano, también.
 :::
 
 # Árbol de genes ≠ árbol de especies {.section-divider}
@@ -231,7 +314,8 @@ dominios compartidos).
 incomplete lineage sorting (ILS) · hibridación / introgresión**
 
 El modelo **DTL** (Duplication–Transfer–Loss) mapea el árbol de genes
-sobre el de especies y asigna un evento a cada nodo interno:
+sobre el de especies y asigna un evento a cada nodo interno. La
+correspondencia es exacta:
 
 | Nodo del árbol de genes | Relación entre las hojas |
 |-------------------------|--------------------------|
@@ -243,22 +327,25 @@ Es la base de todos los métodos de reconciliación.
 
 ## Dos ejemplos para el aula
 
-- **Globinas**: α y β, parálogos por duplicación. El ejemplo original de
-  Fitch, y el que van a reconocer en cualquier árbol de genes mal
-  enraizado
-- **ILS**: humano, chimpancé y gorila. Hay regiones del genoma donde
-  humano agrupa con gorila y no con chimpancé, sin que nadie haya
+- **Globinas**: α y β hemoglobina, parálogos por duplicación. El ejemplo
+  original de Fitch, y el que van a reconocer en cualquier árbol de
+  genes mal enraizado
+- **ILS**: el trío humano, chimpancé y gorila. Hay regiones del genoma
+  donde humano agrupa con gorila y no con chimpancé, sin que nadie haya
   transferido nada. El árbol de especies es uno; el de cada región del
   genoma no siempre lo respeta
 
 ## Cómo se delata una transferencia horizontal {.smaller}
 
-- **Composición atípica**: GC y uso de codones que no cuadran con el
-  resto del genoma huésped (sesiones 2 y 3)
-- **Distribución filogenética irregular**: el gen aparece en géneros no
-  emparentados y falta en parientes cercanos
-- **Contexto genómico**: secuencias de inserción, transposones,
-  integrones flanqueando el gen
+Un gen que llegó de otro linaje suele traer tres marcas:
+
+- **Composición atípica**: contenido de GC y uso de codones que no
+  cuadran con el resto del genoma huésped (sesiones 2 y 3)
+- **Distribución filogenética irregular**: el mismo gen aparece en
+  géneros no emparentados y falta en parientes cercanos. Es exactamente
+  la incongruencia entre árbol de genes y árbol de especies
+- **Contexto genómico**: elementos móviles flanqueando el gen:
+  secuencias de inserción, transposones, integrones
 
 Ninguna de las tres prueba nada por sí sola. Las tres juntas son un
 caso sólido.
@@ -267,74 +354,80 @@ caso sólido.
 
 ## Una propiedad que van a usar sin darse cuenta
 
-- La homología es **transitiva**: si X es homólogo de Y, y Y de Z en la
-  misma región, X y Z son homólogos aunque BLAST no encuentre parecido
-  directo
-- Es lo que permite construir familias encadenando parecidos débiles,
-  y lo que hace que los métodos de perfil funcionen
+- La homología es **transitiva**: si el gen X es homólogo del gen Y, y
+  Y es homólogo de Z en la misma región, entonces X y Z son homólogos,
+  aunque BLAST no encuentre parecido directo entre ellos
+- Es la propiedad que permite construir familias de proteínas
+  encadenando parecidos débiles, y la que hace que los métodos de
+  perfil funcionen
 
 ## Reciprocal Best Hits {.smaller}
 
-- A es ortólogo de B si A es el mejor hit de B **y** B es el mejor hit
-  de A. Viene de los COGs (Tatusov, Koonin & Lipman 1997)
-- Supuesto oculto: los ortólogos son las secuencias que **menos han
+- La heurística que todo el mundo usa: A es ortólogo de B si A es el
+  mejor hit de B **y** B es el mejor hit de A. Viene de los COGs
+  (Tatusov, Koonin & Lipman 1997) y de Overbeek et al. (1999)
+- El supuesto oculto: los ortólogos son las secuencias que **menos han
   divergido** entre dos especies, porque hasta la especiación eran el
   mismo gen. Ese supuesto falla, y falla mucho
 
 ::: desventaja
-**"RBH es el estándar de oro."** Dalquen & Dessimoz 2013: en clados
-ricos en duplicación (plantas y animales) se pierden hasta **~60%** de
-las relaciones ortólogas. Johnson 2007: RBH no es condición lógicamente
-suficiente para ortología. Ni necesaria.
+**"RBH es el estándar de oro para ortología."** Dalquen & Dessimoz
+(2013) lo midieron: en clados ricos en duplicación (plantas y animales,
+es decir, casi todo lo que nos interesa) hasta **~60%** de las
+relaciones ortólogas se pierden con el criterio BBH. RBH no maneja
+relaciones muchos-a-muchos. Y Johnson (2007): RBH no es una condición
+lógicamente suficiente para ortología. Ni necesaria.
 :::
 
 Úsenlo como heurística rápida, no como verdad.
 
 ## Cómo falla RBH {.smaller}
 
+Los modos de falla documentados, que conviene reconocer:
+
 - **Duplicaciones específicas de linaje**: rompen la reciprocidad
 - **Pérdida diferencial de genes**: el ortólogo verdadero ya no está y
   gana otro
 - **Tasas evolutivas dispares**: un parálogo que evolucionó más lento
   gana el best hit
-- **Genes fusionados / arquitecturas de dominios**: el best hit cae
+- **Genes fusionados o arquitecturas de dominios**: el best hit cae
   sobre un dominio compartido
 - **Errores de modelo génico** y genes de evolución rápida
 
 ::: notes
-En la práctica de la tarde van a medir en sus propios datos qué
-fracción de mejores hits sobrevive a la reciprocidad (ejercicio 5: el
-47 %) y a encontrar casos de uno a muchos con cromosoma (ejercicios 6 a
-8). Casi todos los modos de falla de esta lámina tienen ejemplo ahí:
-duplicaciones de linaje (el arreglo en tándem de chr14, 24 genes contra
-una proteína del caracol), tasas y longitudes dispares (los ohnólogos
-de chr6 y chr10: el par de chr15 del caracol es 70 % idéntico a chr10 y
-elige a chr6 por bit score), arquitecturas de dominios (LRR y
-cadherinas pierden más de la mitad) y, quizá, modelos génicos (la
-proteína de chr6 mide 1,682 aa en la anotación automática, contra los
-1,080 de la versión de la sesión 7).
+Ejemplo de casa: los dos receptores LGR de la babosa (chr6 y chr10, los
+ohnólogos de la sesión 7) contra el caracol Bradybaena de la sesión 8
+son una relación 2:2 que un solo "mejor hit" reduce a 1:1. El bonus de
+la práctica 8 (mejor hit recíproco contra las 72 consultas) fue la
+versión en pequeño de esto.
 :::
 
 ## Grafos, árboles y OrthoFinder {.smaller}
 
-- **Basados en grafos**: OrthoMCL, InParanoid, SonicParanoid, Broccoli,
-  Proteinortho
+- **Basados en grafos**: OrthoMCL, InParanoid / InParanoiDB 9,
+  SonicParanoid, Broccoli, Proteinortho, Hieranoid
 - **Basados en árboles (reconciliación)**: comparan el árbol de genes
-  con el de especies para etiquetar cada nodo. TreeFam, Ensembl Compara,
-  PhylomeDB, PANTHER (Page & Charleston 1997)
-- **OrthoFinder** (Emms & Kelly 2015, 2019): el método de referencia.
-  Orthogroups, árboles de genes enraizados, eventos de duplicación y
-  árbol de especies, a velocidad de heurística
+  con el de especies para identificar qué nodos son duplicación y
+  cuáles especiación. TreeFam, Ensembl Compara, PhylomeDB, PANTHER. El
+  fundamento es Page & Charleston (1997)
+- **OrthoFinder** (Emms & Kelly 2015, 2019) es hoy el método de
+  referencia: el más preciso en el benchmark Quest for Orthologs.
+  Produce orthogroups, árboles de genes enraizados, eventos de
+  duplicación y un árbol de especies enraizado, a velocidad comparable
+  a las heurísticas
 
 ## Bases de datos y qué método uso {.smaller}
 
-- **OrthoDB** (la base de BUSCO) · **eggNOG** · **OMA** · Ensembl
-  Compara · InParanoiDB 9 · PANTHER
+- **OrthoDB** (catálogo jerárquico; la base de BUSCO) · **eggNOG**
+  (pre-clustering por dominios más detección filogenética) · **OMA**
+  ([omabrowser.org](https://omabrowser.org)) · Ensembl Compara ·
+  InParanoiDB 9 · PANTHER
 
 ::: desventaja
-**HomoloGene está descontinuada** (enero 2024; última build de 2014).
-Si un tutorial la usa, el tutorial está viejo. Reemplazo: NCBI Orthologs
-vía NCBI Datasets.
+**HomoloGene (NCBI) está descontinuada.** Se retiró en enero de 2024;
+su última compilación es de 2014. Si encuentran un tutorial que la use,
+el tutorial está viejo. El reemplazo es **NCBI Orthologs**, vía NCBI
+Datasets y la base Gene.
 :::
 
 | Necesitas                                  | Opciones                          |
@@ -345,8 +438,9 @@ vía NCBI Datasets.
 | Especies modelo                            | Alliance of Genome Resources      |
 
 ::: notes
-Quest for Orthologs (Altenhoff et al. 2016) mantiene el benchmark y
-deliberadamente no corona un único método.
+El consorcio Quest for Orthologs (Altenhoff et al. 2016) mantiene el
+benchmark y un servicio web público, y deliberadamente no corona un
+único mejor método, porque la elección depende de para qué.
 :::
 
 # La conjetura de los ortólogos {.section-divider}
@@ -357,32 +451,38 @@ deliberadamente no corona un único método.
   parálogos**
 - Es el fundamento de todo el *transfer* de anotación funcional: cada
   vez que alguien anota un gen porque "se parece a este otro que sí está
-  caracterizado", se apoya en esto
-- Y es exactamente eso: una **conjetura**
+  caracterizado", se está apoyando en esta conjetura
+- Que es exactamente eso: una **conjetura**
 
 ## Un debate de una década {.smaller}
 
-- **2011, el desafío**: Nehrt et al. comparan expresión y GO en humano y
-  ratón; los parálogos con alta identidad parecían más similares
-  funcionalmente que los ortólogos
-- **2012, las réplicas**: Altenhoff et al., *"Orthologs Tend to Be
-  Weakly, but Significantly, More Similar in Function than Paralogs"*.
-  Chen & Zhang, Thomas et al.: GO es un mal instrumento para esto
-- **El confounder**: sesgo de anotación en Gene Ontology (autoría,
-  términos desiguales por especie, rasgos que sólo se estudian en
-  ciertas especies)
-- **2016–2020**: Kryuchkova-Mostacci & Robinson-Rechavi con expresión en
-  tejidos apoyan la conjetura; Stamboulian et al. separan la lectura
-  evolutiva de la predictiva
+- **2011, el desafío**: Nehrt et al. compararon expresión y anotaciones
+  GO en humano y ratón, y encontraron lo contrario de lo esperado: los
+  parálogos con alta identidad eran más similares funcionalmente que
+  los ortólogos
+- **2012, las réplicas**: Altenhoff et al. rebatieron con un título que
+  ya es la respuesta: *"Orthologs Tend to Be Weakly, but Significantly,
+  More Similar in Function than Paralogs"*. Chen & Zhang y Thomas et
+  al.: las anotaciones GO son un mal instrumento para probar esto
+- **El confounder**: el sesgo de anotación en Gene Ontology domina el
+  resultado (sesgo de autoría, términos desiguales por especie, rasgos
+  que sólo se estudian en ciertas especies). Si las colas sólo se
+  estudian en ratón, más genes de ratón se anotan con funciones "de
+  cola"
+- **2016–2020**: Kryuchkova-Mostacci & Robinson-Rechavi, con expresión
+  en tejidos (menos sesgada que GO), apoyan la conjetura; Stamboulian
+  et al. separan la lectura evolutiva de la predictiva, y concluyen que
+  ortólogos y parálogos aportan información valiosa para predecir
+  función
 
 ## Veredicto {.smaller}
 
 ::: callout-box
-La conjetura sobrevive en **forma débil**: los ortólogos tienden a ser,
+La conjetura sobrevive en **forma débil**. Los ortólogos tienden a ser,
 en promedio, algo más conservados funcionalmente, pero el efecto es
 pequeño, los parálogos también predicen función, y buena parte del
-debate original fue un artefacto de las anotaciones. Debate
-parcialmente resuelto, no dogma.
+debate original fue un artefacto de las anotaciones. Es un debate
+parcialmente resuelto, no un dogma.
 :::
 
 > *"Some researchers were 'baffled' that such an obvious assumption
@@ -393,111 +493,62 @@ a prueba.
 
 [Stamboulian et al. 2020, *Bioinformatics* 36(Suppl_1):i219–i226]{.ref}
 
-# Otros ejemplos {.section-divider}
-
-## Opsinas: parálogos limpios y una convergencia {.smaller}
-
-- Catarrinos (nosotros incluidos): duplicación de ~40 kb del gen LWS
-  hace ~30–40 Ma → genes **L** y **M** yuxtapuestos en el X; ~96%
-  idénticos; sólo 3 sitios (180, 277, 285) explican el desplazamiento
-  espectral (560 contra 530 nm)
-- Platirrinos: un solo locus L/M polimórfico; sólo las hembras
-  heterocigotas son tricromáticas
-- *Alouatta* (aullador): duplicación L/M **independiente**, convergencia
-  · *Aotus* (nocturno): monocromático, perdió la opsina S
-- La opsina S es **ortóloga** entre primates; M es **parálogo** de L.
-  Un mismo sistema visual contiene los tres conceptos
-
-## TP53 en el elefante {.smaller}
-
-- ~20 copias: 1 ortólogo canónico + ~19 **retrogenes** (sin intrones)
-- El relato conocido: la paradoja de Peto (los animales grandes y
-  longevos no tienen más cáncer)
-
-::: desventaja
-**Nunney 2022** reevaluó el caso: el retrogén ancestral ya estaba
-truncado antes de duplicarse, 14 de 19 copias están truncadas a ≤88 aa,
-y no hay evidencia de selección. El patrón encaja con **deriva
-neutral**.
-:::
-
-Un "ejemplo de libro de texto" de adaptación puede estar peor
-sustentado de lo que se cree.
-
-## Lactasa: convergencia en el mismo enhancer {.smaller}
-
-- Las variantes de persistencia no están en *LCT*: están ~14 kb
-  upstream, en el intrón 13 de *MCM6*, que funciona como enhancer
-- Evolucionaron varias veces, con alelos distintos: Europa −13910\*T
-  (rs4988235); África y Medio Oriente −13915\*G, −14010\*C, −13907\*G
-  (Tishkoff et al. 2007)
-- Mismo fenotipo, misma región reguladora, mutaciones distintas:
-  convergencia molecular y coevolución gen-cultura
-
-::: callout-box
-**Advertencia de coordenadas.** rs4988235 tiene coordenadas distintas
-en hg19 y hg38. No las mezclen. Engancha directo con la práctica de la
-tarde.
-:::
-
 # Mitos y realidades {.section-divider}
 
-## El resumen {.smaller}
+## El resumen
 
-1.  **"Ortólogos = distintas especies, parálogos = misma especie"**: lo
-    que define la relación es el evento, no el organismo
-2.  **"RBH es el estándar de oro"**: pierde hasta ~60% de los ortólogos
+1.  **"Ortólogos = distintas especies, parálogos = misma especie."** Lo
+    que define la relación es el evento (especiación vs duplicación),
+    no el organismo
+2.  **"RBH es el estándar de oro."** Pierde hasta ~60% de los ortólogos
     en eucariotas con duplicación, y no es lógicamente suficiente
-3.  **"Porcentaje de homología"**: error categorial; la homología es
-    binaria
-4.  **"Las 20 copias de TP53 del elefante son adaptación anticáncer"**:
-    cuestionado; compatible con deriva neutral
 
 # La práctica de hoy. Después del break {.section-divider}
 
-## Un gen, nueve paradas {.smaller}
+## Un genoma, siete paradas {.smaller}
 
-- La práctica de la tarde no es de homología: es la de la **unidad 4,
-  bases de datos y browsers**, y vive en el sitio: [**Práctica: un gen,
-  nueve paradas**](../contenido/04-bases-datos-browsers/sesion10-practica.html)
-- Un solo gen, TP53, seguido del artículo al pixel: PubMed → NCBI → ENA
-  y DDBJ → UniProt → tres ensamblados → GTF → cruce con ClinVar → UCSC
-  y Ensembl → IGV
-- Cómputo del día: `awk`, tuberías, `md5sum`, expresiones regulares
+- La práctica de esta sesión no es de homología: es la de la **unidad
+  4, bases de datos y browsers**, con sus propias
+  [diapositivas](sesion10-bases-datos-browsers.html) y su [página con
+  soluciones](../contenido/04-bases-datos-browsers/sesion10-practica.html)
+- El hilo es el genoma de *Deroceras laeve*: qué hay de la babosa en
+  el ENA y el NCBI y cómo se pide con `curl`; un registro en dos
+  formatos; la proteína que no está en UniProt; cómo se bajarían las
+  lecturas; el genoma en UCSC vía el track hub de Praga, con los LGR de
+  las sesiones 7–9 y la expresión por tejido; un cruce con `bedtools`; e
+  IGV en su laptop con los mismos archivos
+- Cómputo del día: `curl` como cliente de bases de datos, `awk`,
+  `cut`/`sort`/`uniq`, `md5sum`
 - Capítulos de referencia: [Bases de datos
   biológicas](../contenido/04-bases-datos-browsers/bases-de-datos.html)
   y [Genome browsers](../contenido/04-bases-datos-browsers/browsers.html)
-- Lo que RBH pierde ya lo midieron en pequeño en el bonus de la
-  práctica 8; el pipeline completo quedó fuera del semestre
 - La sesión 11 es el **examen**; después, R
 
 ::: callout-box
-Los datos ya están descargados en `ken`: el NCBI limita a tres
-peticiones por segundo **por IP**, y salimos con una sola para los
-treinta. Los comandos de descarga están en la práctica, pero solo los
-corre quien yo diga.
+Los datos ya están bajados, en `ken` y en una USB: el NCBI limita a
+tres peticiones por segundo **por IP**, y salimos con una sola para los
+treinta. Las consultas al ENA y a UniProt sí se corren en vivo; las del
+NCBI, una persona; lecturas crudas, nadie.
 :::
 
 ::: notes
-TODO: la práctica hereda las nueve paradas de la antigua sesión 11 y
-está pendiente de recortarse a lo esencial de los dos capítulos. Los
-datos del servidor deben copiarse a la ruta que diga la práctica
-(`sesion10/`). La práctica de RBH (planeacion/practica_rbh/) salió del
-semestre; su script de datos públicos sigue en practicas/datos/.
+Pendientes de instructor: correr practicas/datos/descargar-babosa.sh,
+copiar la carpeta babosa/ a /datos/cursos/bioinfo1/sesion10/ y a la USB,
+y verificar-herramientas-sesion10.sh en ken.
 :::
 
 ## Para entregar {.smaller}
 
 En su repositorio, dentro de `sesion10/`:
 
-- `procedencia.md` con accession, versión, fecha y comando de cada dato
-  que usaron
-- `resultados/tp53_exones_fundidos.bed` y
-  `resultados/variantes_en_exones.txt`
-- Un párrafo: **cuántas variantes de ClinVar caen en exones de TP53**, y
-  qué pasó cuando intentaron traer `NM_000546` del ENA
+- `procedencia.md`: fecha, cada `curl` que corrieron y los `md5sum` de
+  la USB contra `md5sums.txt`
+- La tabla de corridas de la babosa por estrategia y por proyecto
+- Modelos por cromosoma y cuántos solapan LTR
+- Una captura del LGR de chr6 con los tres tejidos, y un párrafo:
+  dónde se expresa más, y qué significa que la babosa no esté en UniProt
 
-No suban el GTF, el VCF ni el cromosoma: van al `.gitignore`.
+No suban el `.2bit`, los `.bb` ni los `.bw`.
 
 ::: callout-box
 Capítulo de referencia: [Homología: ortólogo, parálogo,
@@ -507,6 +558,8 @@ xenólogo](../contenido/03-alineamientos/homologia.html)
 ## Lectura
 
 - Fitch 1970, *Syst Zool*: el párrafo original
+- Wagner 2014, *Homology, Genes, and Evolutionary Innovation*, Princeton:
+  en la biblioteca del Campus Juriquilla
 - Koonin 2005, *Annu Rev Genet*: *Orthologs, paralogs, and evolutionary
   genomics*
 - Dalquen & Dessimoz 2013, *Genome Biol Evol*: por qué RBH pierde

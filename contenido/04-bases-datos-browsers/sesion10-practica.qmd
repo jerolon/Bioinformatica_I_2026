@@ -1,377 +1,505 @@
 ---
-title: "Práctica: un gen, nueve paradas"
+title: "Práctica: un genoma, siete paradas"
 subtitle: "Unidad 4 · Sesión 10"
 author: "Jero"
 ---
 
-::: pendiente
-**Versión provisional.** Esta práctica hereda, tal cual, las nueve
-paradas de la antigua sesión 11. En la estructura nueva del curso la
-sesión 10 es homología por la mañana y bases de datos y browsers por la
-tarde, y la sesión 11 es el examen, así que esta práctica debe recortarse
-a lo esencial de los dos capítulos de la unidad 4 —[bases de
-datos](bases-de-datos.qmd) y [browsers](browsers.qmd)—, sin nada de
-homología. Hasta que se reorganice, lo que sigue es la versión completa.
+::: {.callout-note appearance="simple"}
+📽️ [Diapositivas de la
+tarde](../../presentaciones/sesion10-bases-datos-browsers.html) — 23 de
+octubre de 2026. Llevan lo esencial de los dos capítulos de la unidad
+intercalado con estas paradas.
 :::
 
 ## De qué se trata
 
-Los dos capítulos de esta unidad presentan nueve recursos distintos y es
-fácil que queden como nueve cosas sueltas. La práctica es el hilo que los
-amarra.
+Los dos capítulos de esta unidad presentan muchos recursos y es fácil
+que queden como cosas sueltas. La práctica es el hilo que los amarra, y
+el hilo es un genoma que conocen: el de la babosa *Deroceras laeve*, que
+este laboratorio secuenció, ensambló y depositó.
 
-Vamos a tomar **un solo gen**, TP53, y seguirlo por todos: del artículo
-que lo describe a su registro en el NCBI, de ahí al ENA y a DDBJ para
-comprobar que el intercambio diario es real, a su proteína en UniProt, a
-sus coordenadas en tres ensamblados, a su anotación, a un cruce de
-intervalos, y finalmente a verlo dibujado.
+Vamos a seguirlo de un extremo al otro: qué hay de la babosa en el
+archivo público y cómo se pide sin dar clics, cómo se lee un registro,
+qué **no** hay (y por qué), cómo se bajarían las lecturas crudas, y al
+final el genoma dibujado en un browser con la anotación y la expresión
+por tejido encima.
 
-Un gen, nueve paradas.
+Un genoma, siete paradas.
 
-Elegí TP53 porque está en todo, porque su historia clínica lo hace
-memorable, y porque es chico.
+El concepto de cómputo del día es **`curl` como cliente de bases de
+datos**: una URL con parámetros es una consulta, y lo que regresa es
+texto que `awk`, `cut`, `sort` y `uniq` saben masticar. Más `md5sum`,
+que es lo que separa "lo bajé" de "bajé esto".
 
 ## Preparación
+
+Los datos ya están bajados: en el servidor en
+`/datos/cursos/bioinfo1/sesion10/` y en una USB, porque las dos últimas
+paradas van en su laptop. Quien quiera repetir la descarga tiene el
+script en
+[`practicas/datos/descargar-babosa.sh`](https://github.com/jerolon/Bioinformatica_I_2026/blob/main/practicas/datos/descargar-babosa.sh).
 
 ```bash
 ssh usuario@ken.lavis.unam.mx
 mkdir -p ~/bioinfo1/sesion10/{datos,resultados}
 cd ~/bioinfo1/sesion10
-cp /datos/cursos/bioinfo1/sesion10/* datos/
-ls -lh datos/
+cp -r /datos/cursos/bioinfo1/sesion10/* datos/
+ls -lh datos/insdc datos/hub/derLae1
 ```
 
 ::: callout-box
-**Los datos ya están descargados y esta vez no es solo cortesía.**
-
-El NCBI limita a tres peticiones por segundo **por dirección IP**, y
-`ken` sale con una sola para los treinta. Si media clase corre `efetch` a
-la vez, nos bloquean a todos con un error 429 y la práctica se acaba en
-la parada dos.
-
-Los comandos de descarga están escritos en cada ejercicio para que sepan
-cómo se obtuvieron, pero solo los corre quien yo diga.
+**Qué se puede correr en vivo y qué no.** Las consultas al ENA y a
+UniProt de las paradas 1 a 3 devuelven texto chico y se pueden correr
+en clase. Las que van al NCBI están escritas para que sepan cómo se
+hacen, pero el NCBI limita a tres peticiones por segundo **por
+dirección IP** y `ken` sale con una sola para los treinta: esas las
+corre una persona. Y nadie baja lecturas crudas hoy: la corrida más
+chica pesa 366 MB.
 :::
 
-### Parada 1. Del artículo al dato
+### Parada 1. Pedir sin dar clics
 
-Toda secuencia en una base de datos llegó ahí porque alguien la publicó.
-Empecemos por el papel.
+El ENA tiene una API de portal en la que una URL es una consulta. Lo que
+hay de la babosa, en dos preguntas:
 
 ```bash
-esearch -db pubmed -query "TP53 tumor suppressor" | efetch -format uid | head -5
+# las muestras (BioSamples) de Deroceras laeve
+curl -s "https://www.ebi.ac.uk/ena/portal/api/search?result=sample&query=scientific_name%3D%22Deroceras%20laeve%22&fields=sample_accession,sample_alias,tissue_type,dev_stage,sex,collection_date,country,study_accession&format=tsv&limit=0" \
+  > resultados/muestras.tsv
+
+# las corridas de secuenciación
+curl -s "https://www.ebi.ac.uk/ena/portal/api/search?result=read_run&query=scientific_name%3D%22Deroceras%20laeve%22&fields=run_accession,study_accession,sample_accession,library_strategy,library_source,instrument_platform,read_count,fastq_bytes,fastq_md5,fastq_ftp&format=tsv&limit=0" \
+  > resultados/corridas.tsv
+
+head -3 resultados/muestras.tsv
+wc -l resultados/*.tsv
+```
+
+Desarmen la URL: `result` dice qué tipo de registro quieren, `query`
+cómo filtrar (`scientific_name="Deroceras laeve"`, con los caracteres
+raros codificados: `%3D` es `=`, `%22` son comillas, `%20` es espacio),
+`fields` qué columnas, `format` cómo, y `limit=0` quiere decir *todas*.
+Con `fields=all` regresan más de cien columnas; pedir las que importan
+es lo que hace que el `awk` de abajo sea legible.
+
+¿Cuántas muestras hay, de qué tejidos y de dónde? ¿Cuántas corridas, de
+qué tipo, de cuántos proyectos? ¿Cuántas lecturas suman?
+
+```bash
+awk -F'\t' 'NR>1{split($7,p,":"); c[p[1]]++} END{for(k in c) print c[k], k}' resultados/muestras.tsv | sort -rn
+awk -F'\t' 'NR>1{c[tolower($3)]++} END{for(k in c) print c[k], k}' resultados/muestras.tsv | sort -rn
+cut -f4 resultados/corridas.tsv | sort | uniq -c | sort -rn
+cut -f2 resultados/corridas.tsv | sort | uniq -c
+awk -F'\t' 'NR>1{s+=$7} END{printf "%.0f millones de lecturas\n", s/1e6}' resultados/corridas.tsv
 ```
 
 ::: {.callout-note collapse="true"}
 ## Solución
 
-Les devuelve identificadores de PubMed, los PMID. Son las direcciones
-permanentes de los artículos, el equivalente del accession para
-literatura.
+Al 20 de octubre de 2026: **45 muestras** y **44 corridas**.
 
-De ahí se puede saltar al dato con `elink`:
+Las muestras vienen de dos lugares: 24 de México (Querétaro, las del
+proyecto) y 21 de colonias de laboratorio en Europa (19 de Frankfurt, 2
+de Glasgow). Los tejidos: 15 de pared corporal, 7 de cola, 6 de
+ovotestis, 6 de cabeza, 6 de juveniles enteros, 3 de pie, y las dos del
+ensamblado (pared corporal con masa visceral; pared corporal con
+intestino, la de Hi-C).
 
-```bash
-esearch -db pubmed -query "TP53[TITLE] AND human[ORGN]" \
-  | elink -target gene \
-  | efetch -format docsum \
-  | xtract -pattern DocumentSummary -element Id Name Description \
-  | head
-```
+Las corridas: **38 de RNA-seq, 5 de WGS y 1 de Hi-C**, repartidas en
+dos BioProjects: 23 en `PRJNA1035784` (el del proyecto: RNA-seq de cola
+y pared corporal, WGS metagenómico y el Hi-C) y 21 en `PRJNA1213857`
+(RNA-seq polyA y small RNA de cabeza, pie, ovotestis y juveniles, de la
+colonia europea). Suman **1,758 millones de lecturas** y unos 200 GB de
+FASTQ.
 
-Ese salto de PubMed a Gene es el grafo de Entrez en acción. No buscaron
-el gen: llegaron a él desde la literatura que lo menciona.
+Lo que acaban de hacer es lo que el capítulo llama *sacar cosas sin dar
+clics*, y es reproducible: la URL es el comando.
 :::
 
-### Parada 2. El registro en el NCBI
+### Parada 2. Un registro, dos formatos
+
+El ensamblado se llama `GCA_051403575.1` y sus 31 cromosomas están en
+GenBank como `CM120896.1` a `CM120926.1`. Pidan el del cromosoma 28 al
+NCBI, en formato GenBank, **recortado** a las primeras 120 bases (el
+cromosoma entero mide 35 Mb):
 
 ```bash
-head -30 datos/tp53_refseq.gb
-grep "^VERSION" datos/tp53_refseq.gb
-grep -A2 "     CDS " datos/tp53_refseq.gb | head
+curl -s "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/efetch.fcgi?db=nucleotide&id=CM120923.1&rettype=gb&retmode=text&seq_start=1&seq_stop=120" \
+  > resultados/CM120923_genbank.txt      # una persona; el resto: cp datos/insdc/CM120923_genbank.txt resultados/
+
+head -45 resultados/CM120923_genbank.txt
+grep -E '^(ACCESSION|VERSION|DBLINK)' resultados/CM120923_genbank.txt
+grep -A3 '^  AUTHORS' resultados/CM120923_genbank.txt | head -4
+grep -A6 'Genome-Assembly-Data-START' resultados/CM120923_genbank.txt
 ```
 
-Identifiquen: qué tipo de registro es, qué versión, y dónde está la
-región codificante.
-
-::: {.callout-note collapse="true"}
-## Solución
-
-Es `NM_000546.6`. El guión bajo lo delata como **RefSeq**, la `M` dice
-que es un mRNA, la `N` que está curado y no predicho. El `.6` significa
-que la secuencia se ha corregido cinco veces desde que se creó el
-registro.
-
-En FEATURES, la línea `CDS` da las coordenadas de la región codificante
-**dentro del mRNA**, no dentro del cromosoma. Es una fuente clásica de
-confusión: un mismo gen tiene coordenadas distintas según contra qué se
-midan.
-
-Bajo `/translation` está la proteína completa, incrustada en el registro
-de nucleótidos. Es redundante y es útil.
-:::
-
-### Parada 3. Los tres archivos
-
-Acá probamos que el intercambio diario del INSDC existe. Empecemos por
-donde falla.
-
-Intenten traer el registro de RefSeq desde el ENA:
+Y el **mismo** registro al ENA, en su formato:
 
 ```bash
-curl -s "https://www.ebi.ac.uk/ena/browser/api/embl/NM_000546" | head
+curl -s "https://www.ebi.ac.uk/ena/browser/api/embl/CM120923?lineLimit=60" > resultados/CM120923_embl.txt
+head -25 resultados/CM120923_embl.txt
 ```
 
-Qué pasó, y por qué?
+Identifiquen en cada uno: el accession y su versión, el BioProject y el
+BioSample, quién lo depositó, con qué se ensambló. ¿Qué cambia entre los
+dos archivos y qué no?
 
-::: {.callout-note collapse="true"}
-## Solución
-
-No lo encuentra. Y esa falla es el punto del ejercicio.
-
-**RefSeq no es INSDC.** Es una capa curada que construye el NCBI a partir
-de los datos compartidos, pero que no se intercambia con ENA ni con
-DDBJ. Buscar un `NM_` en el ENA es como buscar un libro de una editorial
-en el catálogo de otra.
-
-Lo que sí se intercambia son los envíos originales. Para TP53, uno de
-ellos es `X02469`:
+Una pregunta más: ¿existe una versión **RefSeq** de este genoma? Cuenten
+qué tiene el NCBI de la babosa, base por base, con la E-utility
+`esearch` escrita como URL:
 
 ```bash
-curl -s "https://www.ebi.ac.uk/ena/browser/api/embl/X02469" | head -20
-```
-
-Ese sí está. Y está también en el NCBI (`datos/tp53_insdc.gb`) y en
-DDBJ. Compárenlos:
-
-```bash
-curl -s "https://www.ebi.ac.uk/ena/browser/api/fasta/X02469" > resultados/ena.fa
-efetch -db nucleotide -id X02469 -format fasta > resultados/ncbi.fa   # solo si les toca
-
-grep -v "^>" resultados/ena.fa  | tr -d '\n' | md5sum
-grep -v "^>" resultados/ncbi.fa | tr -d '\n' | md5sum
-```
-
-Los dos checksums coinciden: **es la misma secuencia, bit por bit**, en
-servidores de dos continentes.
-
-Los encabezados y el formato del flat file sí difieren, porque cada socio
-presenta los datos a su manera. EMBL usa líneas `ID`, `AC`, `SQ`; GenBank
-usa `LOCUS`, `ACCESSION`, `ORIGIN`. Mismo contenido, distinta
-presentación.
-:::
-
-### Parada 4. La proteína
-
-```bash
-head -40 datos/p04637.txt
-grep "^PE " datos/p04637.txt
-grep "^DR   EMBL" datos/p04637.txt | head
+for db in nucleotide sra assembly biosample bioproject; do
+  printf "%-12s" $db
+  curl -s "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/esearch.fcgi?db=$db&term=%22Deroceras%20laeve%22%5BORGN%5D&retmode=json&retmax=0" \
+    | grep -o '"count":"[0-9]*"'
+  sleep 0.5
+done
 ```
 
 ::: {.callout-note collapse="true"}
 ## Solución
 
-`P04637` es la entrada de Swiss-Prot para p53 humano. Está en la sección
-revisada, o sea que un curador leyó literatura y escribió la anotación.
+`VERSION CM120923.1`, `DBLINK BioProject: PRJNA1237345` y
+`BioSample: SAMN47417209`. Los autores son el laboratorio (Miranda-
+Rodríguez, Okendo, Gutiérrez-Sarmiento… Varela-Echavarría), el envío lo
+hizo el NHGRI en marzo de 2025, y el bloque `##Genome-Assembly-Data##`
+dice Verkko 2.2, cobertura 200×, PacBio y Nanopore. En `FEATURES`, el
+`source` trae `/isolate="INB-UNAM"`, `/chromosome="28"`,
+`/sex="hermaphrodite"` y `/collection_date="2022-06-01"`: los metadatos
+del BioSample, incrustados en cada cromosoma.
 
-La línea `PE` da el nivel de evidencia de existencia. Para p53 es **PE1**,
-evidencia a nivel de proteína, que es lo máximo. Recuerden que solo el
-21% de Swiss-Prot llega a PE1: p53 está entre las proteínas mejor
-caracterizadas que existen.
+El ENA presenta lo mismo con otras líneas: `ID` por `LOCUS`, `AC` por
+`ACCESSION` (y ahí aparece también el *master* del WGS,
+`JBNOKR010000000`), `PR` por `DBLINK`, `DE` por `DEFINITION`, `OS`/`OC`
+por `SOURCE`/`ORGANISM`, `RA` por `AUTHORS`. **Mismo contenido, distinta
+presentación**: eso es el INSDC. Depositaron una vez, en el NCBI, y
+aparece en los tres.
 
-Las líneas `DR EMBL` son las referencias cruzadas a los registros de
-nucleótidos de los que se tradujo. Ahí van a encontrar `X02469` y varios
-más. Ese es el puente entre UniProt y el INSDC: la proteína apunta a los
-nucleótidos de donde salió, aunque su accession sea independiente.
+Los conteos: 292 en nucleotide (los 31 cromosomas, el *master* y unos
+260 barcodes de COI y 16S de colecciones), 44 en sra, 1 en assembly, 45
+en biosample, 3 en bioproject. Y **ningún RefSeq**: no hay `NC_` ni
+`NM_` ni `XM_` de la babosa. La capa curada no existe para este genoma;
+lo que hay es el envío original, tal cual lo depositaron. Cuando BLAST
+les devuelva una anotación de la babosa, acuérdense de quién la hizo.
 :::
 
-### Parada 5. Tres direcciones para el mismo gen
+### Parada 3. La proteína que no está
 
-Comparen dónde vive TP53 según el ensamblado:
-
-| Ensamblado | Coordenadas |
-|---|---|
-| GRCh37 / hg19 | `17:7,571,739-7,590,808` |
-| GRCh38 / hg38 | `17:7,668,421-7,687,490` |
-| T2T-CHM13v2.0 | `17:7,572,544-7,591,594` |
-
-Ahora conviertan un intervalo de hg38 a hg19 y revisen qué se perdió:
+UniProt tiene su propia API REST. Pregúntenle por el organismo, con su
+identificador de taxonomía (147581):
 
 ```bash
-printf "chr17\t7668420\t7687490\tTP53\n" > resultados/tp53_hg38.bed
+curl -s "https://rest.uniprot.org/uniprotkb/search?query=organism_id:147581&fields=accession,reviewed,protein_name,organism_name,length&format=tsv"
 
-liftOver resultados/tp53_hg38.bed datos/hg38ToHg19.over.chain.gz \
-         resultados/tp53_hg19.bed resultados/sin_mapear.bed
+# para comparar: cuántas entradas REVISADAS (Swiss-Prot) tiene el humano, y cuántas todos los moluscos
+curl -sI "https://rest.uniprot.org/uniprotkb/search?query=organism_id:9606+AND+reviewed:true&size=1" | grep -i x-total-results
+curl -sI "https://rest.uniprot.org/uniprotkb/search?query=taxonomy_id:6447+AND+reviewed:true&size=1" | grep -i x-total-results
+```
 
-cat resultados/tp53_hg19.bed
-cat resultados/sin_mapear.bed
+¿Cuántas proteínas de la babosa hay en UniProt? ¿De dónde salió la que
+hay? Las 43,905 proteínas de la anotación con las que han trabajado
+desde la sesión 8, ¿dónde están?
+
+::: {.callout-note collapse="true"}
+## Solución
+
+**Una.** `W8FNJ8`, un fragmento de 206 aminoácidos de la citocromo
+oxidasa I, no revisado (TrEMBL), traducido automáticamente de un barcode
+de COI depositado en GenBank. Humano tiene 20,431 entradas revisadas;
+todos los moluscos juntos, 2,216.
+
+Las 43,905 proteínas del proteoma anotado no están en UniProt porque la
+anotación **no se ha depositado** en GenBank todavía: el ensamblado
+está, los genes no. UniProt se alimenta de traducir las CDS del INSDC;
+sin CDS depositadas no hay nada que traducir. Es la brecha de anotación
+del capítulo, pero vista desde el lado de quien produce los datos: un
+genoma público con cero proteínas públicas. Y es la razón por la que en
+la sesión 8 montaron su propia base de BLAST en vez de buscar en `nr`.
+:::
+
+### Parada 4. Cómo se bajan las lecturas (y por qué hoy no)
+
+El `filereport` del ENA devuelve, para una corrida, las rutas de sus
+FASTQ y sus checksums. La corrida más chica de la babosa es
+`SRR32071304` (small RNA de cabeza, 8.9 millones de lecturas):
+
+```bash
+curl -s "https://www.ebi.ac.uk/ena/portal/api/filereport?accession=SRR32071304&result=read_run&fields=run_accession,sample_accession,library_strategy,instrument_model,read_count,fastq_bytes,fastq_md5,fastq_ftp&format=tsv" \
+  | tr '\t' '\n'
+```
+
+Con eso, la descarga es una línea, y la verificación otra. **No las
+corran hoy**: son 366 MB por persona.
+
+```bash
+# así se bajaría
+wget https://ftp.sra.ebi.ac.uk/vol1/fastq/SRR320/004/SRR32071304/SRR32071304.fastq.gz
+echo "1cda4edc714fa3fe920193593ea0f7ca  SRR32071304.fastq.gz" | md5sum -c
+
+# o desde el NCBI, con el SRA Toolkit (prefetch + fasterq-dump), una vez instalado
+prefetch SRR32071304
+fasterq-dump SRR32071304
+```
+
+Dos cosas sobre el NCBI que conviene saber aunque hoy no las usen.
+Existe **EDirect**, que envuelve las E-utilities en comandos de UNIX con
+pipes. Se instala en dos minutos:
+
+```bash
+sh -c "$(curl -fsSL https://ftp.ncbi.nlm.nih.gov/entrez/entrezdirect/install-edirect.sh)"
+export PATH=$HOME/edirect:$PATH
+```
+
+Y lo que hace por debajo es exactamente lo que ustedes llevan haciendo
+con `curl`: cada comando es una URL.
+
+```bash
+# con EDirect                                   # lo mismo, con curl
+esearch -db sra -query '"Deroceras laeve"[ORGN]' \
+  | efetch -format runinfo | head -3
+curl -s "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/esearch.fcgi?db=sra&term=%22Deroceras%20laeve%22%5BORGN%5D&retmode=json&retmax=5"
+
+efetch -db nucleotide -id CM120923.1 -format fasta -seq_start 1 -seq_stop 120
+curl -s "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/efetch.fcgi?db=nucleotide&id=CM120923.1&rettype=fasta&retmode=text&seq_start=1&seq_stop=120"
 ```
 
 ::: {.callout-note collapse="true"}
 ## Solución
 
-TP53 es un gen bien portado en una región bien ensamblada, así que
-convierte limpio y `sin_mapear.bed` sale vacío. El resultado debe caer
-cerca de 7,571,739-7,590,808.
+El `filereport` dice: Illumina NextSeq 2000, small RNA, 8,882,011
+lecturas, un solo FASTQ de 365,712,872 bytes, md5
+`1cda4edc714fa3fe920193593ea0f7ca`, en `ftp.sra.ebi.ac.uk/vol1/fastq/…`.
+La ruta `ftp.` también se sirve por `https://`.
 
-Pero fíjense en dos cosas.
+El md5 es la parte que importa. Una descarga interrumpida deja un
+archivo que *parece* completo; `md5sum -c` es lo único que distingue
+"bajé 366 MB" de "bajé el archivo". Es la misma disciplina de la
+sección de accesiones, aplicada a datos que pesan.
 
-La primera es el `7668420` del BED cuando el gen empieza en 7,668,421. Un
-BED es 0-based, así que el inicio va con un menos uno. Si escribieron
-7668421, su intervalo está corrido.
-
-La segunda es que **abrieron el archivo de los que no mapearon**, aunque
-estuviera vacío. Háganlo siempre. Con un gen bien portado sale vacío; con
-un conjunto de mil regiones en zonas repetitivas no, y ahí es donde
-liftOver muerde.
+Y la equivalencia con EDirect no es un detalle: cuando una herramienta
+les parezca mágica, busquen la URL que hay debajo. Suele estar en la
+documentación de la API, y verla les quita la magia y les da control.
 :::
 
-### Parada 6. La anotación
+### Parada 5. El genoma en UCSC
 
-Saquen los exones de TP53 del GTF.
+El genoma de la babosa no está en UCSC. Pero UCSC lee **track hubs**:
+una carpeta en cualquier servidor con un archivo `hub.txt`, un genoma en
+`.2bit` y tracks en formatos binarios indexados. El laboratorio de Petr
+Svoboda en Praga mantiene uno con cinco genomas de moluscos, entre ellos
+los dos de *D. laeve*.
 
-```bash
-awk -F'\t' '$9 ~ /gene_name "TP53"/ && $3=="exon"' datos/gencode_chr17.gtf \
-  | wc -l
+Abran [genome.ucsc.edu](https://genome.ucsc.edu) → **My Data → Track
+Hubs → Connected Hubs / URL**, peguen esta dirección y conecten:
 
-awk -F'\t' 'BEGIN{OFS="\t"} $9 ~ /gene_name "TP53"/ && $3=="exon" {print $1, $4-1, $5}' \
-  datos/gencode_chr17.gtf \
-  | sort -k1,1 -k2,2n \
-  > resultados/tp53_exones.bed
-
-head -3 resultados/tp53_exones.bed
+```
+https://epi-tools.img.cas.cz/epitracks/public/hubs/hub_28/slug_hub.txt
 ```
 
-Por qué el `$4-1`?
+Elijan el genoma **dlaeve1_am** (*Deroceras laeve (Americas)*: es
+`GCA_051403575.1`, el del proyecto) y vayan a esta región:
+
+```
+HiC_scaffold_3:30,900,000-31,050,000
+```
+
+Ahí vive el receptor LGR del cromosoma 6, el `dlaeveM00000441839` de las
+sesiones 7 a 9. El hub numera los cromosomas por tamaño, no como la
+anotación del proyecto: chr6 es `HiC_scaffold_3` y chr10 es
+`HiC_scaffold_13` (la tabla completa está en el anexo).
+
+Activen los tracks `annotation` y `repeatMasker`. Después, **My Data →
+Custom Tracks → Paste URLs or data**, peguen estas tres líneas (son los
+mismos bigWigs que tienen en la USB) y envíen:
+
+```
+track type=bigWig name="polyA cabeza" visibility=full autoScale=on alwaysZero=on bigDataUrl=https://epi-tools.img.cas.cz/epitracks/public/tmp-SFM/polyA-lib/DLHead_polyA_noscale.bw
+track type=bigWig name="polyA ovotestis" visibility=full autoScale=on alwaysZero=on bigDataUrl=https://epi-tools.img.cas.cz/epitracks/public/tmp-SFM/polyA-lib/DLOvo_polyA_noscale.bw
+track type=bigWig name="polyA juvenil" visibility=full autoScale=on alwaysZero=on bigDataUrl=https://epi-tools.img.cas.cz/epitracks/public/tmp-SFM/polyA-lib/DLJuv_polyA_noscale.bw
+```
+
+¿Cuántos exones tiene el gen y en qué hebra está? ¿Qué pasa con la señal
+de RNA-seq sobre los exones y entre ellos? ¿En qué tejido se expresa
+más? Comparen con su parálogo de chr10 en
+`HiC_scaffold_13:23,650,000-24,100,000` y con la R-spondina de chr7 en
+`HiC_scaffold_8:65,260,000-65,290,000`.
 
 ::: {.callout-note collapse="true"}
 ## Solución
 
-Porque el GTF es 1-based cerrado y el BED es 0-based semiabierto. El
-inicio se corre uno hacia atrás; el final se queda igual.
+El modelo se llama `evm.model.HiC_scaffold_3.383`: 18 exones en la
+hebra +, de 30,923,021 a 31,028,841 (106 kb). Fíjense en la fila de
+exones de 72 pares de bases, uno tras otro: son las repeticiones ricas en
+leucina, 24 aminoácidos cada una, el dominio que en la sesión 9 hacía
+sufrir al alineamiento múltiple. El de chr10 es `…HiC_scaffold_13.287`,
+20 exones en la hebra −, y la R-spondina es `…HiC_scaffold_8.77`, 5
+exones.
 
-Sin ese `-1`, cada exón queda corrido una base a la derecha. No hay error
-ni advertencia: el archivo se ve bien y todos los cruces posteriores
-salen mal.
+La señal polyA cae sobre los exones y se apaga en los intrones: es la
+definición operativa de exón, vista con datos. En cuál tejido se expresa
+más cada gen lo deciden ustedes mirando; anótenlo con captura, que es
+parte del entregable.
 
-Van a obtener más exones de los que tiene el gen, porque el GTF trae
-todos los transcritos alternativos y muchos comparten exones. Para
-quedarse con un solo transcrito hay que filtrar por `transcript_id`, o
-usar `bedtools merge` para fundir los que se traslapan:
-
-```bash
-bedtools merge -i resultados/tp53_exones.bed > resultados/tp53_exones_fundidos.bed
-wc -l resultados/tp53_exones_fundidos.bed
-```
+El hub vive en un servidor de Praga detrás de un firewall: UCSC lo lee
+sin problema, pero si un día no responde, la parada 7 hace lo mismo con
+los archivos locales.
 :::
 
-### Parada 7. Cruzar intervalos
+### Parada 6. Los archivos, en la terminal
 
-Ahora la pregunta biológica: qué variantes de ClinVar caen dentro de los
-exones de TP53?
+Lo que UCSC dibujó son archivos, y los tienen en `datos/hub/derLae1/`:
+el genoma (`.2bit`), la anotación y los repetidos (`.bb`, bigBed) y la
+expresión (`.bw`, bigWig). Los binarios indexados son para servir por
+HTTP; para `awk` y `bedtools` hay que convertirlos a texto. El script
+de datos ya dejó los BED, con `bigBedToBed` (utilidad de UCSC) o con
+`pybigtools` (Python); si no están, una de las dos líneas los produce:
 
 ```bash
-bedtools intersect \
-  -a resultados/tp53_exones_fundidos.bed \
-  -b datos/clinvar_chr17.vcf.gz \
-  -wa -wb \
-  > resultados/variantes_en_exones.txt
+ls -lh datos/hub/derLae1/
+bigBedToBed datos/hub/derLae1/anotacion_dlaeve_am.bb resultados/genes.bed      # UCSC
+head -3 datos/hub/derLae1/genes_dlaeve_am.bed | cut -f1-6
+```
 
-wc -l resultados/variantes_en_exones.txt
-head -3 resultados/variantes_en_exones.txt
+Un modelo génico por línea, en BED: cromosoma, inicio (0-based), fin,
+nombre, puntaje, hebra, y después los bloques (los exones). Cuántos
+genes hay, y cuántos por cromosoma:
+
+```bash
+wc -l datos/hub/derLae1/genes_dlaeve_am.bed
+cut -f1 datos/hub/derLae1/genes_dlaeve_am.bed | sort | uniq -c | sort -rn | head -8
+```
+
+Y **un** cruce de intervalos, el único verbo que importa: ¿cuántos genes
+solapan con al menos un elemento LTR?
+
+```bash
+bedtools intersect -a datos/hub/derLae1/genes_dlaeve_am.bed \
+                   -b datos/hub/derLae1/repeats_LTR.bed -u | wc -l
 ```
 
 ::: {.callout-note collapse="true"}
 ## Solución
 
-Cada línea trae el exón y la variante que cae dentro de él. TP53 es de
-los genes más estudiados en cáncer, así que van a ver muchísimas.
+**33,019 modelos** (son modelos de transcrito, no genes: algunos nombres
+repiten con sufijo `.1.…`, isoformas del mismo locus). Por cromosoma:
+2,418 en `HiC_scaffold_1`, 1,687 en el 2, 1,677 en el 5, 1,475 en el 3…
+En los 31 cromosomas van 32,638; los otros 381 están en andamios sin
+colocar.
 
-Si les dio **cero**, no concluyan nada biológico todavía. Revisen la
-nomenclatura de cromosomas:
+**9,570** modelos (29 %) solapan con al menos uno de los 46,076
+elementos LTR. `-u` reporta cada entrada de A una sola vez aunque
+solape con varios de B; sin `-u` contarían pares. El LGR de chr6 tiene
+tres LTR adentro, en sus intrones.
 
-```bash
-cut -f1 resultados/tp53_exones_fundidos.bed | head -1
-zcat datos/clinvar_chr17.vcf.gz | grep -v "^#" | cut -f1 | head -1
-```
+`bedtools` es una herramienta, no la única. Para esto mismo, y para lo
+que sigue (pasar de GFF a GTF, extraer transcritos, filtrar por
+atributos), estas son las que van a encontrar en pipelines actuales:
 
-Si uno dice `chr17` y el otro dice `17`, ahí está su cero. La solución:
-
-```bash
-awk 'BEGIN{OFS="\t"}{sub(/^chr/,"",$1); print}' \
-  resultados/tp53_exones_fundidos.bed > resultados/exones_sin_chr.bed
-```
-
-Es el error silencioso más común de la genómica práctica y acabo de
-provocarlo a propósito.
+- [bedtools](https://bedtools.readthedocs.io/) (Quinlan & Hall 2010): la
+  aritmética de intervalos sobre BED/GFF/VCF.
+- [Utilidades de UCSC](https://hgdownload.soe.ucsc.edu/admin/exe/):
+  `bigBedToBed`, `bigWigToBedGraph`, `twoBitToFa`, `liftOver`. Son las
+  que convierten entre los binarios del browser y el texto.
+- [gffread](https://github.com/gpertea/gffread) (Pertea & Pertea 2020):
+  GFF3 ↔ GTF, extraer secuencias de transcritos y proteínas de una
+  anotación con el genoma.
+- [AGAT](https://github.com/NBISweden/AGAT) (Dainat et al.): el
+  cortaplumas de los GFF; `agat_convert_sp_gff2bed.pl`,
+  `agat_sp_statistics.pl`, y arregla GFF rotos. La anotación europea del
+  hub pasó por AGAT (lo dice el nombre del archivo).
+- [pybigtools](https://github.com/jackh726/bigtools) (Rust, con interfaz
+  de Python): leer y escribir bigWig/bigBed sin las utilidades de UCSC.
+  Es lo que usa el script de datos si `bigBedToBed` no está.
 :::
 
-### Parada 8. Verlo dibujado
+### Parada 7. Sus propios archivos, en IGV
 
-Abran UCSC en `genome.ucsc.edu`, elijan hg38 y busquen TP53. Después
-abran Ensembl en `ensembl.org` y hagan lo mismo.
+Última parada, en su laptop. IGV de escritorio lee el genoma directo
+del `.2bit`:
 
-Comparen: qué muestra cada uno por defecto, cómo se llama el cromosoma en
-cada interfaz, y cuál les resultó más fácil de leer.
+1.  Instalen [IGV](https://igv.org/doc/desktop/) si no lo tienen.
+2.  **Genomes → Load Genome from File** → `derLae1.2bit` de la USB.
+3.  **File → Load from File** → `anotacion_dlaeve_am.bb`,
+    `repeats_LTR.bb`, y los bigWigs `polyA_cabeza.bw`,
+    `polyA_ovotestis.bw`, `polyA_juvenil.bw`.
+4.  Escriban `HiC_scaffold_3:30,900,000-31,050,000` en la caja de
+    posición.
+
+Es la misma vista de la parada 5, con los mismos archivos, sin servidor
+de por medio.
 
 ::: {.callout-note collapse="true"}
 ## Solución
 
-En UCSC el gen aparece con muchos tracks encima por defecto:
-conservación, variantes comunes, marcas de regulación. La vista está
-pensada para explorar contexto.
+Lo que deben ver: el gen con sus 18 exones, los LTR en los intrones, y
+la señal de los tres tejidos encima. Si un bigWig no carga, revisen que
+el nombre de cromosoma dentro del archivo sea `HiC_scaffold_…` (los
+archivos del hub lo son; un BED que ustedes fabriquen con `chr6` no va a
+pintar nada, y no va a avisar). Si IGV se niega a cargar el `.2bit`,
+actualícenlo: el soporte es de las versiones recientes.
 
-En Ensembl la vista es más limpia y la estructura del gen con sus
-transcritos alternativos está más clara. La navegación está pensada para
-llegar al dato.
-
-Y el detalle de nomenclatura: UCSC dice `chr17`, Ensembl dice `17`. La
-misma diferencia que les rompió el ejercicio anterior, ahora visible en
-la barra de direcciones.
-
-Ninguno es mejor. UCSC para mirar, Ensembl para traer.
-:::
-
-### Parada 9. Sus propios archivos
-
-Última parada. Abran IGV-web en `igv.org/app`, carguen el genoma hg38 y
-súbanle sus resultados: el BED de exones que fabricaron y el VCF de
-ClinVar.
-
-::: {.callout-note collapse="true"}
-## Solución
-
-El VCF no va a cargar si no tiene su índice `.tbi` al lado. Es la misma
-lección de la sesión 5 con `samtools faidx`, y del capítulo de browsers
-con `tabix`: los archivos grandes se consultan por índice, no leyéndolos
-enteros.
-
-Si les falta:
-
-```bash
-tabix -p vcf datos/clinvar_chr17.vcf.gz
-```
-
-Y si el archivo se comprimió con `gzip` en lugar de `bgzip`, `tabix` se
-niega. Hay que recomprimir.
-
-Lo que deben ver: sus exones alineados con los de la anotación oficial (si
-no coinciden, hay un off-by-one en algún lado), y las variantes de
-ClinVar cayendo sobre ellos.
-
-Ahí está el gen completo, desde el artículo de PubMed hasta el pixel.
+UCSC y Ensembl viven en un servidor y les muestran datos públicos. IGV
+vive en su computadora y les muestra sus archivos. Hoy fueron los mismos
+archivos; el día que tengan datos propios, no.
 :::
 
 ## Para entregar
 
 En su repositorio, en `sesion10/`:
 
-- `procedencia.md` con accession, versión, fecha y comando de cada dato
-  que usaron. Es la disciplina de la sección de accesiones, aplicada.
-- `resultados/tp53_exones_fundidos.bed`
-- `resultados/variantes_en_exones.txt`
-- Un párrafo contestando: cuántas variantes de ClinVar caen en exones de
-  TP53, y qué pasó cuando intentaron traer `NM_000546` del ENA.
+- `procedencia.md` con la fecha, cada comando `curl` que corrieron y,
+  para los archivos de la USB, el `md5sum` que verificaron contra
+  `md5sums.txt`.
+- `resultados/corridas.tsv` y la tabla de corridas por estrategia y por
+  proyecto (la salida de los `uniq -c`, en Markdown).
+- El conteo de modelos por cromosoma (los ocho primeros) y el número de
+  modelos que solapan LTR.
+- Una captura de UCSC o de IGV del LGR de chr6 con los tres tejidos.
+- Un párrafo: en qué tejido se expresa más ese gen, qué significa que la
+  babosa no esté en UniProt, y qué cambiaría si la anotación se
+  depositara.
 
-No suban el GTF, el VCF ni el cromosoma. Van al `.gitignore`.
+No suban el `.2bit`, los `.bb` ni los `.bw`: pesan y se regeneran con el
+script.
+
+## Anexo. Los cromosomas en el hub y en GenBank
+
+El hub ordena por tamaño; GenBank y la anotación del proyecto usan la
+numeración original. Es el mismo ensamblado, al par de bases.
+
+| hub (`dlaeve1_am`) | anotación / GenBank | accession | pb |
+|---|---|---|---|
+| HiC_scaffold_1 | chr1 | CM120896.1 | 128,885,024 |
+| HiC_scaffold_2 | chr5 | CM120900.1 | 81,858,987 |
+| HiC_scaffold_3 | chr6 | CM120901.1 | 79,173,670 |
+| HiC_scaffold_4 | chr3 | CM120898.1 | 79,112,602 |
+| HiC_scaffold_5 | chr2 | CM120897.1 | 78,829,071 |
+| HiC_scaffold_6 | chr9 | CM120904.1 | 74,106,445 |
+| HiC_scaffold_7 | chr4 | CM120899.1 | 73,134,500 |
+| HiC_scaffold_8 | chr7 | CM120902.1 | 70,852,919 |
+| HiC_scaffold_9 | chr14 | CM120909.1 | 65,388,136 |
+| HiC_scaffold_10 | chr8 | CM120903.1 | 64,789,412 |
+| HiC_scaffold_11 | chr15 | CM120910.1 | 62,472,078 |
+| HiC_scaffold_12 | chr11 | CM120906.1 | 61,159,659 |
+| HiC_scaffold_13 | chr10 | CM120905.1 | 60,060,236 |
+| HiC_scaffold_14 | chr12 | CM120907.1 | 59,470,895 |
+| HiC_scaffold_15 | chr17 | CM120912.1 | 59,256,073 |
+| HiC_scaffold_16 | chr13 | CM120908.1 | 57,841,049 |
+| HiC_scaffold_17 | chr16 | CM120911.1 | 56,248,094 |
+| HiC_scaffold_18 | chr18 | CM120913.1 | 53,266,941 |
+| HiC_scaffold_19 | chr21 | CM120916.1 | 52,954,884 |
+| HiC_scaffold_20 | chr20 | CM120915.1 | 52,086,630 |
+| HiC_scaffold_21 | chr19 | CM120914.1 | 50,871,884 |
+| HiC_scaffold_22 | chr23 | CM120918.1 | 46,063,097 |
+| HiC_scaffold_23 | chr22 | CM120917.1 | 44,600,660 |
+| HiC_scaffold_24 | chr26 | CM120921.1 | 40,983,500 |
+| HiC_scaffold_25 | chr25 | CM120920.1 | 40,133,349 |
+| HiC_scaffold_26 | chr24 | CM120919.1 | 39,282,849 |
+| HiC_scaffold_27 | chr28 | CM120923.1 | 35,323,367 |
+| HiC_scaffold_28 | chr29 | CM120924.1 | 31,843,789 |
+| HiC_scaffold_29 | chr27 | CM120922.1 | 30,367,240 |
+| HiC_scaffold_30 | chr31 | CM120926.1 | 26,586,351 |
+| HiC_scaffold_31 | chr30 | CM120925.1 | 26,138,324 |
+
+: Tamaños tomados del `derLae1.2bit` del hub y del reporte de secuencias de NCBI Datasets para GCA_051403575.1, el 2026-10-20. {tbl-colwidths="[28,24,24,24]"}
