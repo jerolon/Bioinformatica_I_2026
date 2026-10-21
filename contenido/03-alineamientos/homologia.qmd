@@ -547,9 +547,6 @@ sesión 11 es el examen.
 - Ghiselin MT (1969) *Syst Zool* 18:148–149.
 - Marabotti A & Facchiano AM (2009) *Trends Biochem Sci* 34(3):98–99.
   [doi:10.1016/j.tibs.2008.12.001](https://doi.org/10.1016/j.tibs.2008.12.001)
-- Dessimoz C et al. "Orthology: definitions, inference, and impact on
-  species phylogeny".
-  [arXiv:1903.04530](https://arxiv.org/abs/1903.04530)
 
 **Inferencia de ortología**
 
@@ -580,6 +577,20 @@ sesión 11 es el examen.
   hierarchical orthologous groups from orthologous gene pairs", *PLoS
   ONE* 8(1):e53786.
   [doi:10.1371/journal.pone.0053786](https://doi.org/10.1371/journal.pone.0053786)
+- Altenhoff AM, Glover NM, Dessimoz C (2019) "Inferring orthology and
+  paralogy". En Anisimova M (ed.) *Evolutionary Genomics: Statistical
+  and Computational Methods*, *Methods Mol Biol* 1910:149–175.
+  [doi:10.1007/978-1-4939-9074-0_5](https://doi.org/10.1007/978-1-4939-9074-0_5)
+- Fernández R, Gabaldón T, Dessimoz C (2020) "Orthology: definitions,
+  inference, and impact on species phylogeny inference". En Scornavacca
+  C, Delsuc F, Galtier N (eds.) *Phylogenetics in the Genomic Era*, cap.
+  2.4, pp. 2.4:1–2.4:14. Libro de acceso abierto;
+  [arXiv:1903.04530](https://arxiv.org/abs/1903.04530)
+- Majidian S, Hadziahmetovic A, Langschied F, et al. y el Quest for
+  Orthologs Consortium (2025) "Quest for Orthologs in the era of Data
+  Deluge and AI: Challenges and Innovations in Orthology Prediction and
+  Data Integration", *J Mol Evol* 93(6):702–719.
+  [doi:10.1007/s00239-025-10272-6](https://doi.org/10.1007/s00239-025-10272-6)
 
 **Ortholog conjecture**
 
