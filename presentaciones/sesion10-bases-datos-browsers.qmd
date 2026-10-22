@@ -46,9 +46,9 @@ Los datos ya están bajados: en `ken` y en una USB, porque las dos
 ## Qué se corre y qué no {.smaller}
 
 | Parada | Va a | ¿En vivo? |
-|----|----|----|
+|------------------------|------------------------|------------------------|
 | 1 Pedir sin dar clics | ENA Portal API | sí, es texto chico |
-| 2 Un registro, dos formatos | NCBI E-utilities y ENA | NCBI: una persona; ENA: todos |
+| 2 Un registro, dos formatos | NCBI E-utilities y ENA | NCBI: nop; ENA: todos |
 | 3 La proteína que no está | UniProt REST | sí |
 | 4 Bajar lecturas | ENA filereport, SRA | la consulta sí; la descarga **no** |
 | 5 El genoma en UCSC | el hub de Praga | sí, en el navegador |
@@ -202,9 +202,6 @@ head -25 resultados/CM120923_embl.txt
 
 - Identifiquen: accession y versión, BioProject y BioSample, quién
   depositó, con qué se ensambló. ¿Qué cambia entre los dos y qué no?
-- ¿Existe un **RefSeq** de este genoma? Cuenten base por base con
-  `esearch` escrito como URL
-  (`db=nucleotide,sra,assembly,biosample,bioproject`)
 
 ## Parada 2 · lo que deben ver {.smaller}
 
@@ -213,18 +210,11 @@ head -25 resultados/CM120923_embl.txt
   marzo de 2025 · Verkko 2.2, 200×, PacBio y Nanopore ·
   `/isolate= "INB-UNAM"`, `/chromosome="28"`,
   `/collection_date="2022-06-01"`
+
 - El ENA dice lo mismo con otras líneas: `ID`/`AC`/`PR`/`DE`/`OS`/`RA`
   por `LOCUS`/`ACCESSION`/`DBLINK`/`DEFINITION`/`SOURCE`/`AUTHORS`.
   **Mismo contenido, distinta presentación**: depositaron una vez y
   aparece en los tres
-- NCBI: 292 nucleotide, 44 sra, 1 assembly, 45 biosample, 3 bioproject.
-  Y **ningún RefSeq**: ni `NC_`, ni `NM_`, ni `XM_`
-
-::: callout-box
-La capa curada no existe para este genoma. Lo que hay es el envío
-original, tal cual lo depositaron. Cuando BLAST les devuelva una
-anotación de la babosa, acuérdense de quién la hizo.
-:::
 
 ## UniProt: lo mismo, con proteínas {.smaller}
 
@@ -324,7 +314,7 @@ echo "1cda4edc714fa3fe920193593ea0f7ca  SRR32071304.fastq.gz" | md5sum -c
 prefetch SRR32071304 && fasterq-dump SRR32071304     # la vía del NCBI: SRA Toolkit
 ```
 
-- **EDirect** existe y se instala en dos minutos:
+- **EDirect** se puede instalar en dos minutos:
   `sh -c "$(curl -fsSL https://ftp.ncbi.nlm.nih.gov/entrez/entrezdirect/install-edirect.sh)"`
 - Y lo que hace por debajo es lo que ustedes llevan haciendo:
 
@@ -334,10 +324,8 @@ curl -s "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/esearch.fcgi?db=sra&term=
 ```
 
 ::: notes
-El md5 es la parte que importa: una descarga interrumpida deja un
-archivo que parece completo. Y la equivalencia con EDirect no es un
-detalle: cuando una herramienta parezca mágica, busquen la URL que hay
-debajo.
+El md5 es importante porque una descarga interrumpida deja un archivo
+que parece completo.
 :::
 
 # Browsers {.section-divider}
@@ -399,7 +387,6 @@ una tabla. No hace falta explicarlo más que eso.
   formatos binarios indexados: **.2bit** (el genoma), **bigWig** (señal
   continua), **bigBed** (intervalos). Es la idea del `.fai` de samtools,
   aplicada a datos remotos
-- API REST en `api.genome.ucsc.edu`; coordenadas 0-based, sin aviso
 
 ## Parada 5 · El genoma en UCSC {.smaller}
 
@@ -413,8 +400,7 @@ Petr Svoboda (IMG, Praga) mantiene uno con cinco genomas de moluscos:
 3.  Posición `HiC_scaffold_3:30,900,000-31,050,000`: el LGR del
     cromosoma 6, el `dlaeveM00000441839` de las sesiones 7 a 9
 4.  Tracks `annotation` y `repeatMasker` en *full*
-5.  **My Data → Custom Tracks → Paste URLs or data**: las tres líneas de
-    bigWig polyA (cabeza, ovotestis, juvenil) que están en la práctica
+5.  **My Data → Custom Tracks → Paste URLs or data**
 
 ::: callout-box
 El hub numera los cromosomas **por tamaño**: chr6 es `HiC_scaffold_3`,
@@ -434,8 +420,6 @@ práctica; con eso basta.
 - El parálogo de chr10: `HiC_scaffold_13:23,650,000-24,100,000`
   (`…13.287`, 20 exones, hebra −). La R-spondina:
   `HiC_scaffold_8:65,260,000-65,290,000` (`…8.77`, 5 exones)
-- En qué tejido se expresa más cada uno lo deciden mirando; captura al
-  entregable
 
 ::: notes
 El hub vive detrás de un firewall en Praga: UCSC lo lee bien
