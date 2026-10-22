@@ -421,12 +421,9 @@ práctica; con eso basta.
   (`…13.287`, 20 exones, hebra −). La R-spondina:
   `HiC_scaffold_8:65,260,000-65,290,000` (`…8.77`, 5 exones)
 
-::: notes
-El hub vive detrás de un firewall en Praga: UCSC lo lee bien
-(verificado), pero si un día no responde, la parada 7 hace lo mismo con
-los archivos locales. Metilación solo existe sobre el genoma europeo
-(dlaeve1_eu), que es otro ensamblado; por eso no está en la USB salvo
-que se pida.
+::: callout-box
+El hub Kateryna Nemesh en el IMG de Praga. UCSC lo lee bien, pero puede
+no responder, más adelante, haremos lo mismo con archivos locales.
 :::
 
 ## Ensembl: para traer {.smaller}
@@ -452,9 +449,7 @@ height="200"}
   todas son la misma pregunta, **qué se solapa con qué**, y hay una
   herramienta: `bedtools intersect`, `merge`, `subtract`, `closest`,
   `getfasta`
-- BED es 0-based semiabierto; GTF y VCF son 1-based cerrados. La
-  conversión ingenua corre todo una base a la derecha, **sin un solo
-  mensaje de error**
+- BED es 0-based semiabierto; GTF y VCF son 1-based cerrados.
 
 ![](../figuras/sesion02/coordenadas.svg){fig-align="center"
 height="220"}
@@ -465,18 +460,21 @@ height="220"}
 
 ## Parada 6 · Los archivos, en la terminal {.smaller}
 
-Lo que UCSC dibujó son archivos, y los tienen: el genoma (`.2bit`), la
-anotación y los repetidos (`.bb`) y la expresión (`.bw`). Para `awk` y
-`bedtools` hay que pasarlos a texto:
+Lo que UCSC está carganod son archivos binarios de rápido acceso. Estos
+los tenemos en la carpeta de la sesión 11 `datos/hub/derLae1`. El genoma
+(`.2bit`), la anotación y los repetidos en bigbed (`.bb`) y la expresión
+bigWig (`.bw`). Para `awk` y `bedtools` hay que pasarlos a texto:
 
 ``` bash
-bigBedToBed datos/hub/derLae1/anotacion_dlaeve_am.bb resultados/genes.bed     # o pybigtools
-head -3 datos/hub/derLae1/genes_dlaeve_am.bed | cut -f1-6
-wc -l datos/hub/derLae1/genes_dlaeve_am.bed
-cut -f1 datos/hub/derLae1/genes_dlaeve_am.bed | sort | uniq -c | sort -rn | head -8
+#bigBedToBed datos/hub/derLae1/anotacion_dlaeve_am.bb resultados/genes.bed     # o pybigtools
+head -3 genes_dlaeve_am.bed | cut -f1-6
+wc -l genes_dlaeve_am.bed
+cut -f1 genes_dlaeve_am.bed | sort | uniq -c | sort -rn | head -8
 
 # un cruce, el único verbo: ¿cuántos genes solapan con al menos un LTR?
-bedtools intersect -a datos/hub/derLae1/genes_dlaeve_am.bed -b datos/hub/derLae1/repeats_LTR.bed -u | wc -l
+bedtools intersect -a genes_dlaeve_am.bed -b repeats_LTR.bed -u | wc -l
+#Si se queja, prueban a cortar sólo las primeras 6 columnas que son las esenciales de bed
+ bedtools intersect -a <(cut -f1-6 genes_dlaeve_am.bed) -b <(cut -f1-6 repeats_LTR.bed) -u | wc -l
 ```
 
 - **33,019** modelos; 2,418 en `HiC_scaffold_1`, 1,687 en el 2, 1,677 en
@@ -485,7 +483,7 @@ bedtools intersect -a datos/hub/derLae1/genes_dlaeve_am.bed -b datos/hub/derLae1
 - **9,570** (29 %) solapan con alguno de los 46,076 LTR; el LGR de chr6
   tiene tres adentro. `-u` cuenta cada gen una vez
 
-## Las herramientas que van a encontrar {.smaller}
+## Herramientas para manipulación de intervalos {.smaller}
 
 `bedtools` es una herramienta, no la única. Para esto y para lo que
 sigue (GFF a GTF, extraer transcritos, filtrar por atributos):
@@ -498,22 +496,28 @@ sigue (GFF a GTF, extraer transcritos, filtrar por atributos):
 - [gffread](https://github.com/gpertea/gffread): GFF3 ↔ GTF, y
   secuencias de transcritos y proteínas a partir de la anotación y el
   genoma
-- [AGAT](https://github.com/NBISweden/AGAT): el cortaplumas de los GFF;
-  convierte, resume y arregla. La anotación europea del hub pasó por
-  AGAT (lo dice el nombre del archivo)
+- [AGAT](https://github.com/NBISweden/AGAT): navaja suiza de los GFF;
+  convierte, resume, arregla y extrae. La anotación europea del hub pasó
+  por AGAT (lo dice el nombre del archivo)
 - [pybigtools](https://github.com/jackh726/bigtools): bigWig y bigBed
-  desde Python, sin las utilidades de UCSC. Es lo que usa el script de
-  datos si `bigBedToBed` no está
+  desde Python, sin las utilidades de UCSC.
+- [pygenomics](https://academic.oup.com/bioinformatics/article/39/6/btad346/7179791)
+  y [pyranges](https://github.com/pyranges/pyranges0) para manipularlos
+  desde sus scripts de python
+- En R
+  [GenomicRanges](https://bioconductor.org/packages/release/bioc/html/GenomicRanges.html)
+  (classic) o
+  [tidyranges](https://tidyomics.github.io/tidy-ranges-tutorial/) si
+  prefieren el tidyverse.
 
 ## IGV: vive en su computadora {.smaller}
 
 - UCSC y Ensembl viven en un servidor y les muestran datos públicos.
-  **IGV vive en su computadora y les muestra sus archivos.** Esa es toda
-  la diferencia, y es la que importa el día que tengan datos propios
+  **IGV vive en su computadora y les muestra sus archivos.**
 - Su uso canónico es mirar lecturas alineadas contra la referencia, que
-  es como se detectan a ojo los artefactos que ningún filtro atrapa. Eso
-  viene en cuarto semestre
-- **El índice no es opcional**: FASTA con `.fai`, VCF comprimido con
+  es como se detectan a ojo los artefactos que un filtro genérico puede
+  obviar. Eso viene en cuarto semestre
+- **Índices para acceso rápido**: FASTA con `.fai`, VCF comprimido con
   `.tbi`, BAM con `.bai`. Hoy los formatos ya vienen indexados por
   dentro: `.2bit`, bigBed, bigWig
 
@@ -523,7 +527,7 @@ sigue (GFF a GTF, extraer transcritos, filtrar por atributos):
 2.  **Genomes → Load Genome from File** → `derLae1.2bit` de la USB
 3.  **File → Load from File** → `anotacion_dlaeve_am.bb`,
     `repeats_LTR.bb`, `polyA_cabeza.bw`, `polyA_ovotestis.bw`,
-    `polyA_juvenil.bw`
+    `polyA_cabeza.bw`
 4.  Posición: `HiC_scaffold_3:30,900,000-31,050,000`
 
 Es la vista de la parada 5, con los mismos archivos, sin servidor de por
@@ -537,38 +541,20 @@ fabriquen con `chr6` no va a pintar nada y no va a avisar.
 
 # Para cerrar {.section-divider}
 
-## Para entregar {.smaller}
-
-En su repositorio, en `sesion10/`:
-
-- `procedencia.md`: fecha, cada `curl` que corrieron, y el `md5sum` de
-  los archivos de la USB contra `md5sums.txt`
-- `resultados/corridas.tsv` y la tabla de corridas por estrategia y por
-  proyecto, en Markdown
-- Modelos por cromosoma (los ocho primeros) y cuántos solapan LTR
-- Una captura de UCSC o de IGV del LGR de chr6 con los tres tejidos
-- Un párrafo: en qué tejido se expresa más ese gen, qué significa que la
-  babosa no esté en UniProt, y qué cambiaría si la anotación se
-  depositara
-
-No suban el `.2bit`, los `.bb` ni los `.bw`. La sesión 11 es el
-**examen**; después, R.
+No hay tarea. Estudien para el examen. La sesión 11 es el **examen**;
+después, R.
 
 ## Lectura
 
 - Buffalo, *Bioinformatics Data Skills* (O'Reilly 2015): cap. 6, datos
   reproducibles; cap. 9, rangos y coordenadas
+
 - Akalin, *Computational Genomics with R*, gratis en
   [compgenomr.github.io/book](https://compgenomr.github.io/book/): cap.
   6, aritmética de intervalos en R
+
 - [ENA Portal API](https://www.ebi.ac.uk/ena/portal/api/) y
   [E-utilities](https://www.ncbi.nlm.nih.gov/books/NBK25501/): la
   documentación de las URLs que usaron hoy
-- Kent WJ (2002) BLAT, *Genome Res* 12:656: de dónde salió UCSC
 
-::: notes
-Pendientes de instructor: correr practicas/datos/descargar-babosa.sh y
-copiar `babosa/` a /datos/cursos/bioinfo1/sesion10/ y a la USB;
-verificar-herramientas-sesion10.sh en ken (bedtools y bigBedToBed o
-pybigtools); avisar a Kateryna que aboutHub.html del hub da 404.
-:::
+- Kent WJ (2002) BLAT, *Genome Res* 12:656: de dónde salió UCSC

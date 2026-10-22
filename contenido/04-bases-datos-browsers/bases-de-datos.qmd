@@ -105,7 +105,7 @@ Los parámetros se llaman igual que las opciones de EDirect (`db`, `term`, `id`,
 Tabla útil quizás, con info de <https://www.ncbi.nlm.nih.gov/books/NBK25497/table/chapter2.T._entrez_unique_identifiers_ui/>
 
 | Base de datos | `db` | Tipo de UID / acceso | Ejemplo |
-|------------------|------------------|------------------|------------------|
+|----|----|----|----|
 | Nucleotide (GenBank, RefSeq) | `nuccore` | GI (UID numérico) · accession | `NC_001416.1` |
 | Protein | `protein` | GI (UID numérico) · accession | `NP_000537.3` |
 | Gene | `gene` | GeneID | `7157` |
@@ -265,7 +265,7 @@ Recursos distintos tienen diferentes identificadores. Algunos se vuelven familia
 ![Cómo reconocer de dónde viene un identificador.](../../figuras/sesion11/decodificador.svg){#fig-decodificador}
 
 | Recurso | Forma | La pista |
-|------------------------|------------------------|------------------------|
+|----|----|----|
 | INSDC (GenBank, ENA, DDBJ) | `X02469`, `AF231982` | Nunca lleva guión bajo |
 | RefSeq | `NM_000546.6`, `NC_000017.11` | **El guión bajo** |
 | UniProt | `P04637`, `A0A023GPI8` | Seis o diez alfanuméricos |
