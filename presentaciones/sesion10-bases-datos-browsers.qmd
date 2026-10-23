@@ -46,7 +46,7 @@ Los datos ya están bajados: en `ken` y en una USB, porque las dos
 ## Qué se corre y qué no {.smaller}
 
 | Parada | Va a | ¿En vivo? |
-|------------------------|------------------------|------------------------|
+|----|----|----|
 | 1 Pedir sin dar clics | ENA Portal API | sí, es texto chico |
 | 2 Un registro, dos formatos | NCBI E-utilities y ENA | NCBI: nop; ENA: todos |
 | 3 La proteína que no está | UniProt REST | sí |

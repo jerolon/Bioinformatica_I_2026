@@ -53,11 +53,11 @@ Princeton 2014 (está en la biblioteca del Campus Juriquilla)]{.ref}
 ## El plan del día
 
 | Horario | Bloque |
-|----|----|
-| 10:00–11:45 | Teoría: Owen, Fitch, árboles, inferencia de ortología, la conjetura |
-| 11:45–12:15 | Descanso |
-| 12:15–14:30 | Práctica: bases de datos y browsers, un genoma y siete paradas |
-| 14:30–15:00 | Cierre, dudas |
+|------------------------------------|------------------------------------|
+| 09:00–10:45 | Teoría: Owen, Fitch, conjetura de ortólogos, inferencia de ortología |
+| 10:45–11:15 | Descanso |
+| 11:15–13:30 | Práctica: bases de datos y browsers |
+| 13:30–14:00 | Cierre, dudas |
 
 # De dónde viene la palabra {.section-divider}
 
@@ -154,7 +154,7 @@ Fitch de la sección siguiente. Hacer las dos lecturas por separado.
 ## La regla de dedo (*pun intended*) {.smaller}
 
 | Comparación | Qué separó a las dos copias | Análogo molecular |
-|----|----|----|
+|------------------------|------------------------|------------------------|
 | Mano de chimpancé vs mano de humano | Una **especiación**, hace \~6–7 Ma. Hasta entonces eran literalmente una sola mano en un solo linaje | **Ortólogos** |
 | Mano vs pie del mismo humano | Una **"duplicación"** del programa de extremidad, en un ancestro vertebrado con dos pares de apéndices. Desde entonces cada par evoluciona *en paralelo* (*para*) en todos los linajes | **Parálogos** |
 | Pie de chimpancé vs mano de humano | Esa misma duplicación, y después la especiación | **Parálogos**, aunque estén en distintas especies |
@@ -285,7 +285,7 @@ prueba.
 ## Mitos y realidades: los ortólogos (1/2) {.smaller}
 
 | Mito | Realidad |
-|----|----|
+|------------------------------------|------------------------------------|
 | "Un gen tiene *un* ortólogo en la otra especie" | No implica uno a uno: las duplicaciones de linaje dan co-ortología uno-a-muchos y muchos-a-muchos. Lo que sí garantiza la definición: en un árbol correcto, los ortólogos forman un **clado que refleja la especiación** |
 | "Evolucionan al mismo ritmo" | El reloj molecular no está en la definición; las tasas pueden ser arbitrariamente distintas |
 | "Conservan secuencia, estructura o vecindario genómico" | Nada de eso está implícito |
@@ -295,7 +295,7 @@ prueba.
 ## Mitos y realidades: los ortólogos (2/2) {.smaller}
 
 | Mito | Realidad |
-|----|----|
+|------------------------------------|------------------------------------|
 | "El ortólogo es la secuencia más parecida" | No necesariamente, ni sin duplicaciones. Y al revés: el mejor hit bidireccional puede no ser ortólogo (paralogía críptica tras pérdida diferencial; xenología) |
 | "Ortólogo = misma función" | No lo implica; y genes con la misma función no son necesariamente ortólogos |
 | "Entonces no sirve para predecir" | Sirve como **tendencia**: a escala de genoma, los ortólogos son en promedio los genes más parecidos en secuencia, estructura y función |
@@ -305,7 +305,7 @@ prueba.
 ## Mitos y realidades: los parálogos {.smaller}
 
 | Mito | Realidad |
-|----|----|
+|------------------------------------|------------------------------------|
 | "Parálogos son genes duplicados *dentro* de una especie" | La paralogía se da también entre especies. Con pérdidas diferenciales y escenarios complejos, distinguir ortología de paralogía no es trivial |
 | "Si son parálogos, ya hacen cosas distintas" | La paralogía no implica divergencia funcional: dos parálogos pueden hacer lo mismo y, por ejemplo, modular la dosis de una proteína |
 | "Entonces da igual ortólogo o parálogo para predecir función" | Como tendencia general, los ortólogos son más similares en función que los parálogos, si bien, ambos aportan información. |
@@ -317,8 +317,7 @@ prueba.
 ## Reciprocal Best Hits {.smaller}
 
 - La heurística más utilizada A es ortólogo de B si A es el mejor hit de
-  B **y** B es el mejor hit de A. Viene de los COGs (Tatusov, Koonin &
-  Lipman 1997) y de Overbeek et al. (1999)
+  B **y** B es el mejor hit de A.
 - El supuesto es que los ortólogos son las secuencias que **menos han
   divergido** entre dos especies, porque hasta la especiación eran el
   mismo gen. Como ya vimos, ese supuesto falla de diversas maneras.
@@ -364,7 +363,7 @@ complicaría calificar ortólogos 1:1.
 - No así la ortología y la paralogía! Ortología 1 a 1 en Ortogrupos
   "estrictos" sí. Ortogrupos jerárquicos no.
 
-## Grafos, árboles y OrthoFinder {.smaller}
+## Grafos o árboles. Métodos de inferencia de ortología {.smaller}
 
 - **Basados en grafos**: OrthoMCL, InParanoid / InParanoiDB 9,
   SonicParanoid, Broccoli, Proteinortho, Hieranoid
@@ -424,7 +423,7 @@ NCBI Datasets y la base Gene.
 :::
 
 | Necesitas                                | Opciones                        |
-|------------------------------------------|---------------------------------|
+|----------------------------------------|--------------------------------|
 | Alta **sensibilidad**                    | Ensembl Compara, OMA HOGs       |
 | Alta **especificidad**, relaciones 1-a-1 | RSD, InParanoid                 |
 | Análisis propio de novo                  | **OrthoFinder, REvolutionH-tl** |
@@ -464,7 +463,7 @@ sólido.
 ## El vocabulario completo {.smaller}
 
 | Término | Relación | Origen |
-|----|----|----|
+|------------------------|------------------------|------------------------|
 | **Ortólogo** | Separados por **especiación** | Fitch 1970 |
 | **Parálogo** | Separados por **duplicación** | Fitch 1970 |
 | **Xenólogo** | Separados por **transferencia horizontal** | Gray & Fitch 1983 |

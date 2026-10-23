@@ -1,6 +1,6 @@
 ---
 title: "5 · Introducción a R"
-subtitle: "Sesiones 12–15 (6 nov – 27 nov) · Haydeé Peruyero"
+subtitle: "Sesiones 12–15 (4 – 26 nov, miércoles y jueves por la tarde) · Haydeé Peruyero"
 ---
 
 Primeros pasos en R para análisis de datos biológicos.
